@@ -13,6 +13,7 @@
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
 
+
                 <a href="index.html"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
 
             </div>
@@ -30,6 +31,7 @@
             </div>
             <!-- Logo -->
             <div class="logo">
+
 
                 <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>

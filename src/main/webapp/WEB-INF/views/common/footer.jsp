@@ -17,6 +17,7 @@
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
 
+
                             <a href="index.html"><img src="/billy/resources/img/core-img/logo2.png" alt=""></a>
 
                         </div>
