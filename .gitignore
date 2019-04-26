@@ -65,6 +65,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+MANIFEST.MF
 
 # External tool builders
 .externalToolBuilders/
@@ -133,6 +134,5 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-animalProject/web/WEB-INF/jspwork/org/apache/jsp/
-animalProject/web/WEB-INF/jspwork/org/apache/jsp/index_jsp.java
 
+pom.properties
