@@ -12,7 +12,7 @@
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="/myapp/resources/img/core-img/billylogo4.png" alt=""></a>
+                <a href="index.html"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
@@ -28,11 +28,11 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="/myapp/resources/img/core-img/billylogo3.png" alt=""></a>
+                <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
-                <a href="#" class="search-nav"><img src="/myapp/resources/img/core-img/search.png" alt=""> Login</a>
+                <a href="#" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
             </div>
            
             <!-- Amado Nav -->
