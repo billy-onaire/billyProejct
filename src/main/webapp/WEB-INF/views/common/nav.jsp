@@ -32,7 +32,7 @@
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
-                <a href="#" class="search-nav"><img src="/myapp/resources/img/core-img/search.png" alt=""> Login</a>
+                <a href="login.do" class="search-nav"><img src="/myapp/resources/img/core-img/search.png" alt=""> Login</a>
             </div>
            
             <!-- Amado Nav -->
