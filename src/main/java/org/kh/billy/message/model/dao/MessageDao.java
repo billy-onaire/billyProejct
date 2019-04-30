@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-@Repository("memberDao")
+/*@Repository("memberDao")*/
 //annotation할 때 이름을 지어줄 수 있다, 괄호 안에 넣어주면 됌
 public class MessageDao {
 	
-	@Autowired
+	/*@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	public Message selectLogin(SqlSessionTemplate session, Message member) {		
@@ -37,6 +37,6 @@ public class MessageDao {
 
 	public int updateMember(SqlSessionTemplate session, Message member) {
 		return session.update("memberMapper.updateMember", member);
-	}
+	}*/
 
 }

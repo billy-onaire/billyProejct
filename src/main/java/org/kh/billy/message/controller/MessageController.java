@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MessageController {
 	
-	//해당 클래스와 관련된 로그를 출력 또는 저장하기 위한 로그 객체 생성
+	/*//해당 클래스와 관련된 로그를 출력 또는 저장하기 위한 로그 객체 생성
 	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 	
 	@Autowired
@@ -44,7 +44,7 @@ public class MessageController {
 		
 		if(loginMember != null) {
 		session.setAttribute("loginMember", loginMember);
-		/*member.setUsername("홍길동");*/
+		member.setUsername("홍길동");
 		status.setComplete();
 		
 		return "home";
@@ -71,12 +71,12 @@ public class MessageController {
 	
 	@RequestMapping(value="minsert.do", method=RequestMethod.POST)
 	public String insertMember(Model model, Message member, @RequestParam(name="photo", required=false ) MultipartFile mphoto, HttpServletRequest request) {
-		/*@RequestParam 어쩌구 이거가  MultipartFile mphoto = new MultipartFile(mrequest.getParameter("photo"))*/
+		@RequestParam 어쩌구 이거가  MultipartFile mphoto = new MultipartFile(mrequest.getParameter("photo"))
 		//syso 대신 logger.info 이용!
 		logger.info("member : " + member);
 		logger.info("프로필 사진 : " + mphoto);
-	/*	System.out.println("member : " + member);
-		System.err.println("프로필사진 : " + mphoto);*/
+		System.out.println("member : " + member);
+		System.err.println("프로필사진 : " + mphoto);
 		
 		//폴더에 전송 온 파일 저장 처리
 		String savePath = request.getSession().getServletContext().getRealPath("resources/files/photo");
@@ -99,7 +99,7 @@ public class MessageController {
 	}
 	
 	@RequestMapping("myinfo.do")
-	public ModelAndView selectMember(ModelAndView mv, /*HttpServletRequest request*/ @RequestParam(name="userid") String userid) {
+	public ModelAndView selectMember(ModelAndView mv, HttpServletRequest request @RequestParam(name="userid") String userid) {
 		//ModelAndView mv = new ModelAndView();
 		//String userid = request.getParameter("userid");
 		
@@ -154,7 +154,7 @@ public class MessageController {
 			model.addAttribute("message", "회원정보 수정 실패!");
 			return "common/error";
 		}
-	}
+	}*/
 	
 
 	

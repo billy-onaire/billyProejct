@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("memberService")
-public class MessageServiceImpl implements MessageService{
-	//마이바티스 연동 객체 선언
+/*@Service("memberService")*/
+public class MessageServiceImpl {
+	/*//마이바티스 연동 객체 선언
 	@Autowired
 	private SqlSessionTemplate mybatisSession;
 	
@@ -27,10 +27,10 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public int insertMember(Message member) {
 		int result = memberDao.insertMember(mybatisSession, member);
-/*		if(result > 0) {
+		if(result > 0) {
 			mybatisSession.commit();
 		}else
-			mybatisSession.rollback();*/
+			mybatisSession.rollback();
 		return result;
 	}
 
@@ -53,6 +53,6 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public Message selectMember(String userid) {
 		return memberDao.selectMember(mybatisSession, userid);
-	}
+	}*/
 
 }
