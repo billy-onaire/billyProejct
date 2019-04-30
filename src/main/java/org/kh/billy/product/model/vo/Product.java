@@ -27,7 +27,7 @@ USER_ID	VARCHAR2(50 BYTE)
 	 */
 	private static final long serialVersionUID = 3708339374204180142L;
 
-	private int product_code;
+	private int product_no;
 	private String product_name;
 	private int price;
 	private int product_quantity;
@@ -43,17 +43,18 @@ USER_ID	VARCHAR2(50 BYTE)
 	private int category_code;
 	private String seller_id;
 	private String user_id;
+	private int img_no;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(int product_code, String product_name, int price, int product_quantity, String product_content,
+	public Product(int product_no, String product_name, int price, int product_quantity, String product_content,
 			String progress, Date product_startdate, Date product_enddate, String weekend_yn, String weekday_yn,
 			Date product_date, Date product_modifydate, String delete_yn, int category_code, String seller_id,
-			String user_id) {
+			String user_id, int img_no) {
 		super();
-		this.product_code = product_code;
+		this.product_no = product_no;
 		this.product_name = product_name;
 		this.price = price;
 		this.product_quantity = product_quantity;
@@ -69,9 +70,16 @@ USER_ID	VARCHAR2(50 BYTE)
 		this.category_code = category_code;
 		this.seller_id = seller_id;
 		this.user_id = user_id;
+		this.img_no = img_no;
 	}
 
-	
+	public int getProduct_no() {
+		return product_no;
+	}
+
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
+	}
 
 	public String getProduct_name() {
 		return product_name;
@@ -79,14 +87,6 @@ USER_ID	VARCHAR2(50 BYTE)
 
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
-	}
-
-	public int getProduct_code() {
-		return product_code;
-	}
-
-	public void setProduct_code(int product_code) {
-		this.product_code = product_code;
 	}
 
 	public int getPrice() {
@@ -201,20 +201,26 @@ USER_ID	VARCHAR2(50 BYTE)
 		this.user_id = user_id;
 	}
 
+	public int getImg_no() {
+		return img_no;
+	}
+
+	public void setImg_no(int img_no) {
+		this.img_no = img_no;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return product_code + ", " + product_name + ", " + price + ", " + product_quantity + ", " + product_content
-				+ ", " + progress + ", " + product_startdate + ", " + product_enddate + ", " + weekend_yn + ", "
-				+ weekday_yn + ", " + product_date + ", " + product_modifydate + ", " + delete_yn + ", " + category_code
-				+ ", " + seller_id + ", " + user_id;
+		return "Product [product_no=" + product_no + ", product_name=" + product_name + ", price=" + price
+				+ ", product_quantity=" + product_quantity + ", product_content=" + product_content + ", progress="
+				+ progress + ", product_startdate=" + product_startdate + ", product_enddate=" + product_enddate
+				+ ", weekend_yn=" + weekend_yn + ", weekday_yn=" + weekday_yn + ", product_date=" + product_date
+				+ ", product_modifydate=" + product_modifydate + ", delete_yn=" + delete_yn + ", category_code="
+				+ category_code + ", seller_id=" + seller_id + ", user_id=" + user_id + ", img_no=" + img_no + "]";
 	}
-
-	
-	
-	
 	
 }
