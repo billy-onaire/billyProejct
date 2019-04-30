@@ -33,6 +33,7 @@
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
+                <a href="mmsList.do"> 쪽지</a>
             </div>
            
             <!-- Amado Nav -->
