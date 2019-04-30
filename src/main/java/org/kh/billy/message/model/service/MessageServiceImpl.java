@@ -9,9 +9,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("memberService")
-public class MessageServiceImpl implements MessageService{
-	//마이바티스 연동 객체 선언
+/*@Service("memberService")*/
+public class MessageServiceImpl {
+	/*//마이바티스 연동 객체 선언
 	@Autowired
 	private SqlSessionTemplate mybatisSession;
 	
@@ -24,6 +24,4 @@ public class MessageServiceImpl implements MessageService{
 		
 		return (ArrayList<Message>)messageDao.selectMessageList(mybatisSession);
 	}
-
-
 }

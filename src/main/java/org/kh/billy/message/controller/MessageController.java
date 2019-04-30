@@ -34,18 +34,18 @@ import net.sf.json.JSONObject;
 @Controller
 public class MessageController {
 	
+
 	@Autowired
 	private MessageService mms;
 
 	@RequestMapping("mmsList.do")
 	public String mmsListPage() throws IOException {
-		
 		return "message/messageMain";
 	}
 	
+
 	@RequestMapping(value="getMmsList.do", method=RequestMethod.POST)
 	public void getMmsList(@RequestBody SettingList setting, HttpServletResponse response) throws IOException {
-		
 		ArrayList<Message> list = mms.selectMessageList();
 		JSONObject sendObj = new JSONObject();
 		JSONArray arrJSON = new JSONArray();
@@ -64,6 +64,7 @@ public class MessageController {
 			
 			arrJSON.add(jo);
 		}
+
 			sendObj.put("list", arrJSON);
 			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out = response.getWriter();
@@ -72,5 +73,4 @@ public class MessageController {
 			out.close();
 	}	
 
-	
 }
