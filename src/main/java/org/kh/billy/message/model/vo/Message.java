@@ -15,6 +15,7 @@ public class Message implements java.io.Serializable{
 	private String mms_content;
 	private Date sent_date;
 	private Date read_date;
+	private String recv_read;
 	private String recv_del;
 	private String sent_del;
 	
@@ -25,7 +26,7 @@ public class Message implements java.io.Serializable{
 
 
 	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_del, String sent_del) {
+			String recv_read, String recv_del, String sent_del) {
 		super();
 		this.mms_no = mms_no;
 		this.recv_id = recv_id;
@@ -33,6 +34,7 @@ public class Message implements java.io.Serializable{
 		this.mms_content = mms_content;
 		this.sent_date = sent_date;
 		this.read_date = read_date;
+		this.recv_read = recv_read;
 		this.recv_del = recv_del;
 		this.sent_del = sent_del;
 	}
@@ -98,6 +100,16 @@ public class Message implements java.io.Serializable{
 	}
 
 
+	public String getRecv_read() {
+		return recv_read;
+	}
+
+
+	public void setRecv_read(String recv_read) {
+		this.recv_read = recv_read;
+	}
+
+
 	public String getRecv_del() {
 		return recv_del;
 	}
@@ -126,8 +138,8 @@ public class Message implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Message [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
-				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_del=" + recv_del
-				+ ", sent_del=" + sent_del + "]";
+				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
+				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + "]";
 	}
 
 	
