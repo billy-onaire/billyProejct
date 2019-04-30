@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,93 +12,24 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Product Details</title>
+    <title>Billy Product Details</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+    <link rel="stylesheet" href="/billy/resources/css/style.css">
 
+	<!-- datepicker -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	
 </head>
 
 <body>
-    <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Wrapper Area End -->
 
-    <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-
-        <!-- Mobile Nav (max width 767px)-->
-        <div class="mobile-nav">
-            <!-- Navbar Brand -->
-            <div class="amado-navbar-brand">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-            </div>
-            <!-- Navbar Toggler -->
-            <div class="amado-navbar-toggler">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-
-        <!-- Header Area Start -->
-        <header class="header-area clearfix">
-            <!-- Close Icon -->
-            <div class="nav-close">
-                <i class="fa fa-close" aria-hidden="true"></i>
-            </div>
-            <!-- Logo -->
-            <div class="logo">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-            </div>
-            <!-- Amado Nav -->
-            <nav class="amado-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li class="active"><a href="product-details.html">Product</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                </ul>
-            </nav>
-            <!-- Button Group -->
-            <div class="amado-btn-group mt-30 mb-100">
-                <a href="#" class="btn amado-btn mb-15">%Discount%</a>
-                <a href="#" class="btn amado-btn active">New this week</a>
-            </div>
-            <!-- Cart Menu -->
-            <div class="cart-fav-search mb-100">
-                <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-                <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
-                <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
-            </div>
-            <!-- Social Button -->
-            <div class="social-info d-flex justify-content-between">
-                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            </div>
-        </header>
-        <!-- Header Area End -->
+	<c:import url="../common/nav.jsp" />
 
         <!-- Product Details Area Start -->
         <div class="single-product-area section-padding-100 clearfix">
@@ -119,34 +51,34 @@
                         <div class="single_product_thumb">
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/pro-big-1.jpg);">
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/billy/resources/img/product-img/pro-big-1.jpg);">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/pro-big-2.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/billy/resources/img/product-img/pro-big-2.jpg);">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pro-big-3.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/billy/resources/img/product-img/pro-big-3.jpg);">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/pro-big-4.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/billy/resources/img/product-img/pro-big-4.jpg);">
                                     </li>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
+                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-1.jpg">
+                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-1.jpg" alt="First slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-2.jpg" alt="Second slide">
+                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-2.jpg">
+                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-2.jpg" alt="Second slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-3.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-3.jpg" alt="Third slide">
+                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-3.jpg">
+                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-3.jpg" alt="Third slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-4.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-4.jpg" alt="Fourth slide">
+                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-4.jpg">
+                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-4.jpg" alt="Fourth slide">
                                         </a>
                                     </div>
                                 </div>
@@ -172,7 +104,7 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="review">
-                                        <a href="#"><img width="80px" height="80px" src="신고아이콘.jpg"></a>
+                                        <a href="#" style="color:red">신고하기</a>
                                     </div>
                                 </div>
                                 <!-- Avaiable -->
@@ -182,24 +114,30 @@
                             <div class="short_overview my-5">
                                 <p>나의 더러운 신발을 빌려줍니다. 물론 공짜는 아닙니다............ㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹ</p>
                             </div>
-
+							<div id="map" style="width:300px;height:300px; float:left;"></div>
+							<br><br><br><br><h3>거래지역주소</h3>
+							<div id="mapAddress">서울특별시 강남구 테헤란로14길 6</div>
+							
+						
                             <!-- Add to Cart Form -->
-                            <form class="cart clearfix" method="post">
-                                <!-- <div class="cart-btn d-flex mb-50">
-                                    <p>Qty</p>
+                            <form class="cart clearfix" method="post" style="clear:both;">
+                            	<br><br>
+                                <div class="cart-btn d-flex mb-50">
+                                    <p>갯수</p>
                                     <div class="quantity">
                                         <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                                         <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
                                         <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                     </div>
-                                </div> <br> -->
+                                </div>
+                                <br>
                                 <div style="float:left;">
-                                    대여시작일<br>
-                                    <input type="datetime-local">&nbsp;&nbsp;
+                                	희망대여시작일 <br>
+                                    <input type="text" class="datepicker"> &nbsp;&nbsp;&nbsp;
                                 </div>
                                 <div>
-                                    대여반납일<br>
-                                    <input type="datetime-local">
+                                   	 희망대여반납일 <br>
+                                    <input type="text" class="datepicker">
                                 </div><br><br>
                                 <button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
                             </form>
@@ -211,101 +149,82 @@
             <hr>
             <h3>리뷰 1건</h3> <br>
             <table>
-                <tr><th width="150px">ID</th><th width="600px">내용</th><th width="300px">이미지</th></tr>
-                <tr><td>user01</td><td>대여자가 친절했어요~</td><td><img src="이미지.jpg" width="100px" height="100px"></td></tr>
+                <tr><th width="150px">ID</th><th width="150px">별점</th><th width="600px">내용</th><th width="300px">이미지</th></tr>
+                <tr><td>user01</td><th><div class="ratings">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div></th><td>대여자가 친절했어요~</td><td><img src="/billy/resources/img/core-img/logo.png" width="100px" height="100px"></td></tr>
             </table>
         </div>
         <!-- Product Details Area End -->
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
-
-    <!-- ##### Newsletter Area Start ##### -->
-    <section class="newsletter-area section-padding-100-0">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Newsletter Text -->
-                <div class="col-12 col-lg-6 col-xl-7">
-                    <div class="newsletter-text mb-100">
-                        <h2>Subscribe for a <span>25% Discount</span></h2>
-                        <p>Nulla ac convallis lorem, eget euismod nisl. Donec in libero sit amet mi vulputate consectetur. Donec auctor interdum purus, ac finibus massa bibendum nec.</p>
-                    </div>
-                </div>
-                <!-- Newsletter Form -->
-                <div class="col-12 col-lg-6 col-xl-5">
-                    <div class="newsletter-form mb-100">
-                        <form action="#" method="post">
-                            <input type="email" name="email" class="nl-email" placeholder="Your E-mail">
-                            <input type="submit" value="Subscribe">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Newsletter Area End ##### -->
-
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer_area clearfix">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single_widget_area">
-                        <!-- Logo -->
-                        <div class="footer-logo mr-50">
-                            <a href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
-                        </div>
-                        <!-- Copywrite Text -->
-                        <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                    </div>
-                </div>
-                <!-- Single Widget Area -->
-                <div class="col-12 col-lg-8">
-                    <div class="single_widget_area">
-                        <!-- Footer Menu -->
-                        <div class="footer_menu">
-                            <nav class="navbar navbar-expand-lg justify-content-end">
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                                <div class="collapse navbar-collapse" id="footerNavContent">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item active">
-                                            <a class="nav-link" href="index.html">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="shop.html">Shop</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="product-details.html">Product</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="cart.html">Cart</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="checkout.html">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
+	<c:import url="../common/footer.jsp" />
+    
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
+							<script>
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							    mapOption = {
+							        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+							        level: 3 // 지도의 확대 레벨
+							    };  
+							
+							// 지도를 생성합니다    
+							var map = new daum.maps.Map(mapContainer, mapOption); 
+							
+							// 주소-좌표 변환 객체를 생성합니다
+							var geocoder = new daum.maps.services.Geocoder();
+							
+							
+							var mapAddress = $("#mapAddress").text();
+							// 주소로 좌표를 검색합니다
+							geocoder.addressSearch(mapAddress, function(result, status) {
+							
+							    // 정상적으로 검색이 완료됐으면 
+							     if (status === daum.maps.services.Status.OK) {
+							
+							        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+							
+							        // 결과값으로 받은 위치를 마커로 표시합니다
+							        var marker = new daum.maps.Marker({
+							            map: map,
+							            position: coords
+							        });
+							
+							        // 인포윈도우로 장소에 대한 설명을 표시합니다
+							        var infowindow = new daum.maps.InfoWindow({
+							            content: '<div style="width:150px;text-align:center;padding:6px 0;">거래지역</div>'
+							        });
+							        infowindow.open(map, marker);
+							
+							        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							        map.setCenter(coords);
+							    } 
+							});    
+							</script>
+	
+	<!-- datepicker -->
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+		flatpickr(".datepicker", {
+			enableTime: true,
+			dateFormat: "Y-m-d H:i"
+		});
+	</script>
     <!-- Popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="/billy/resources/js/popper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/billy/resources/js/bootstrap.min.js"></script>
     <!-- Plugins js -->
-    <script src="js/plugins.js"></script>
+    <script src="/billy/resources/js/plugins.js"></script>
     <!-- Active js -->
-    <script src="js/active.js"></script>
+    <script src="/billy/resources/js/active.js"></script>
 
 </body>
 
