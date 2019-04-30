@@ -117,9 +117,10 @@
             <button type="button" class="btn btn-success btn-lg btn-block login-btn">로그인</button>
         </div>
         <div class="form-group">
-            <button type="button" class="btn btn-success btn-lg btn-block login-btn">회원가입</button>
+            <button type="button" class="btn btn-success btn-lg btn-block login-btn"
+            onclick="location.href='enroll.do'">회원가입</button>
         </div>
-        <a href="#">아이디/비밀번호찾기</a>
+        <a href="#" onclick="window.open('mfind.do', 'findIdPwd', 'width=500, height=450, menubar=no, status=no, toolbar=no, left=700, top=200'); return false;">아이디/비밀번호찾기</a>
 		<div class="or-seperator"><b>or</b></div>
         <div class="text-center social-btn">
             <a href="#" class="btn btn-info btn-lg btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Naver</b></a>

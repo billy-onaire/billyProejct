@@ -10,4 +10,16 @@ public class MemberController {
 	public String loginPage() {
 		return "member/login";
 	}
+	
+	@RequestMapping("mfind.do")
+	public String findPage() {
+		return "member/findPage";
+	}
+	
+	@RequestMapping("enroll.do")
+	public String enrollPage() {
+		return "member/enrollPage";
+	}
+		
+	
 }

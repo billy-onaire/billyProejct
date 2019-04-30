@@ -27,6 +27,7 @@ public class Member implements java.io.Serializable{
 	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String verify,
 			String address, String my_introduce, String location_area, Date user_enroll, Date user_update,
 			int report_count, String delete_yn, int total_count) {
+
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -138,5 +139,4 @@ public class Member implements java.io.Serializable{
 				+ user_update + ", report_count=" + report_count + ", delete_yn=" + delete_yn + ", total_count="
 				+ total_count + "]";
 	}
-	   
 }
