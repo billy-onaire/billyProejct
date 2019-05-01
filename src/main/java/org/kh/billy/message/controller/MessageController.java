@@ -1,4 +1,4 @@
-package org.kh.billy.message.controller;
+/*package org.kh.billy.message.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,3 +74,4 @@ public class MessageController {
 	}	
 
 }
+*/

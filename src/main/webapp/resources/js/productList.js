@@ -1,58 +1,123 @@
-let chosenPage = 1;
-let listCount = 12;
-let minPrice = 0;
-let maxPrice = 100000;
-let sub = [];
+/*
+    상품 리스트 출력 페이지 자바스크립트
+    작성자 : 윤석호
+    최종 수정일 : 2019/04/30
+*/
+
+let chosenPage = 1; // 페이징 선택 값
+let listCount = 12; // 한 페이지에 보여질 게시물 수
+let minPrice = 0; // 최소 가격 설정
+let maxPrice = 100000; // 최대 가격 설정
+let subCategories = []; // 하위 카테고리 배열
+let mainCategory = ""; // 상위 카테고리
+let sortby = "product_no desc";
+
+// 정렬 및 갯수 출력 방식 선택
+
+
+
+const listTabs = document.querySelectorAll('.nice-select ul');
+// 정렬
+listTabs[0].addEventListener('click', (e) => {
+    sortby = e.target.getAttribute('data-value');
+    requestProductListAjax();
+});
+listTabs[1].addEventListener('click', (e) => {
+    listCount = e.target.getAttribute('data-value');
+    requestProductListAjax();
+});
+
+
+
+
+// 가격 제한 설정 변경용 자바 스크립트
+function targetPrice(min, max) {
+    minPrice = min;
+    maxPrice = max;
+    requestProductListAjax();
+}
 
 // 서브 카테고리 변경용 자바 스크립트
 const catagoryRadios = document.querySelectorAll('.catagories-menu input[name="item"]');
 const subCatagory = document.querySelector('.widget-desc');
-for(let i = 0; i < catagoryRadios.length; i++){
-    catagoryRadios[i].addEventListener('change', ()=>{
-        while(subCatagory.firstChild){
+for (let i = 0; i < catagoryRadios.length; i++) {
+    catagoryRadios[i].addEventListener('change', () => {
+
+        while (subCatagory.firstChild) {
             subCatagory.removeChild(subCatagory.firstChild);
         }
-        
-        if(catagoryRadios[i].value === 'living'){
-            const sub = [{cno:1, cname:"생활용품"},{cno:2, cname:"주방용품"},{cno:3,cname:"가구/인테리어"},{cno:4,cname:"키덜트/취미"}];
-            for(let i = 0; i < sub.length; i++){
-                const formCheck = document.createElement('div');
-                const checkbox = document.createElement('input');
-                const label = document.createElement('label');
+        mainCategory = catagoryRadios[i].value;
+        subCategories = []; // 다른 메인 카테고리 선택 시 초기화
+        let sub = [];
+        if (catagoryRadios[i].value === 'living')
+            sub = [{ cno: 1, cname: "생활용품" }, { cno: 2, cname: "주방용품" }, { cno: 3, cname: "가구/인테리어" }, { cno: 4, cname: "키덜트/취미" }];
+        else if (catagoryRadios[i].value === 'sports')
+            sub = [{ cno: 11, cname: "야구용품" }, { cno: 12, cname: "농구용품" }, { cno: 13, cname: "축구용품" }, { cno: 14, cname: "트레이닝/기타용품" }];
+        else if (catagoryRadios[i].value === 'electronics')
+            sub = [{ cno: 21, cname: "핸드폰" }, { cno: 22, cname: "컴퓨터" }, { cno: 23, cname: "스피커" }, { cno: 24, cname: "모니터/영상기기" }, { cno: 25, cname: "카메라/주변기기" }, { cno: 26, cname: "계절가전" }];
+        else if (catagoryRadios[i].value === 'clothes')
+            sub = [{ cno: 31, cname: "여성의류" }, { cno: 32, cname: "남성의류" }, { cno: 33, cname: "여성신발" }, { cno: 34, cname: "남성신발" }, { cno: 35, cname: "여성가방/잡화" }, { cno: 36, cname: "남성가방/잡화" }];
+        else if (catagoryRadios[i].value === 'kids')
+            sub = [{ cno: 41, cname: "출산/돌 기념품" }, { cno: 42, cname: "장난감" }, { cno: 43, cname: "아동의류" }, { cno: 44, cname: "임부복/소품" }, { cno: 45, cname: "유아안전/실내용품" }, { cno: 46, cname: "수유용품" }];
+        else if (catagoryRadios[i].value === 'etc')
+            sub = [{ cno: 50, cname: "기타" }]
 
-                formCheck.classList = "form-check";
-                checkbox.classList= "form-check-input";
-                label.classList = "form-check-label";
-
-                checkbox.setAttribute('type','checkbox');
-                checkbox.setAttribute('value',sub[i].cno);
-                checkbox.setAttribute('id',sub[i].cno);
-                label.setAttribute('for',sub[i].cno);
-
-                label.textContent = sub[i].cname;
-                const form = subCatagory.appendChild(formCheck);
-                form.appendChild(checkbox);
-                form.appendChild(label);
-                console.log("created!");
-            }
-        }
+        createSubMenus(sub);
+        requestProductListAjax();
     })
 }
+// 서브메뉴 DOM 생성
+function createSubMenus(sub) {
+    for (let i = 0; i < sub.length; i++) {
+        const formCheck = document.createElement('div');
+        const checkbox = document.createElement('input');
+        const label = document.createElement('label');
 
-function requestProductListAjax(){
+        formCheck.classList = "form-check";
+        checkbox.classList = "form-check-input";
+        label.classList = "form-check-label";
+
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('value', sub[i].cno);
+        checkbox.setAttribute('id', sub[i].cno);
+        checkbox.setAttribute('checked', true);
+
+        label.setAttribute('for', sub[i].cno);
+        label.textContent = sub[i].cname;
+
+        const form = subCatagory.appendChild(formCheck);
+        form.appendChild(checkbox);
+        form.appendChild(label);
+
+        subCategories.push(checkbox.value);
+
+        checkbox.addEventListener('change', (event) => {
+            if (event.target.checked)
+                subCategories.push(event.target.value);
+            else
+                subCategories.splice(subCategories.indexOf(event.target.value),1); // 배열 요소 삭제 (인덱싱 -> splice 사용)
+            requestProductListAjax();
+        })
+    }
+}
+
+function requestProductListAjax() {
     const xhr = new XMLHttpRequest();
+    const listRow = document.getElementById('product_list_row');
+    while (listRow.firstChild) {
+        listRow.removeChild(listRow.firstChild);
+    }
 
-    xhr.onload = ()=>{
+    xhr.onload = () => {
         const products = JSON.parse(xhr.responseText);
-        
-        for(let i = 0; i < products.list.length; i++){
-            const listRow = document.getElementById('product_list_row');
-        
+
+        for (let i = 0; i < products.list.length; i++) {
+
             const gridDiv = document.createElement('div');
             const singleProductWrapper = document.createElement('div');
             const productImg = document.createElement("div");
             const mainImg = document.createElement('img');
-            
+
             const description = document.createElement('div');
             const productMetaData = document.createElement('div');
             const divLine = document.createElement('div');
@@ -60,35 +125,35 @@ function requestProductListAjax(){
             const productName = document.createElement('h6');
             const ratingDiv = document.createElement('div');
             const ratingBox = document.createElement('div');
-            
+
             gridDiv.classList = "col-12 col-sm-6 col-md-12 col-xl-6";
             singleProductWrapper.classList = "single-product-wrapper";
             productImg.classList = "product-img";
-            
+
             description.classList = "product-description d-flex align-items-center justify-content-between";
             productMetaData.classList = "product-meta-data";
             divLine.classList = "line";
             productPrice.classList = "product-price";
             ratingDiv.classList = "ratings-cart text-right";
             ratingBox.classList = "ratings";
-            productPrice.textContent = numberWithCommas(products.list[i].price)+"원";
+            productPrice.textContent = numberWithCommas(products.list[i].price) + "원";
             productName.textContent = products.list[i].pname;
-            
+
             const wrapper = listRow.appendChild(gridDiv).appendChild(singleProductWrapper);
             const imageSection = wrapper.appendChild(productImg);
             imageSection.appendChild(mainImg);
-            
-            mainImg.setAttribute('src','/myapp/resources/files/product/'+products.list[i].img);
-            
+
+            mainImg.setAttribute('src', '/billy/resources/files/product/' + products.list[i].img);
+
             const descSection = wrapper.appendChild(description);
             const metaDataSection = descSection.appendChild(productMetaData);
             metaDataSection.appendChild(divLine);
             metaDataSection.appendChild(productPrice);
             metaDataSection.appendChild(productName);
             // const ratingSection = descSection.appendChild(ratingDiv).appendChild(ratingBox);
-            
+
             // const ratingIndex = products[i].rating/2;
-            
+
             // for(let i = 0; i < ratingIndex; i++){
             //     const starIcon = document.createElement('i');
             //     starIcon.classList = "fa fa-star";
@@ -104,16 +169,17 @@ function requestProductListAjax(){
             // }
         }
     }
-    
+
     const requestData = {
-        pcategory_name: 12,
-        sub_pcategory_name: 23,
-        page : chosenPage,
+        pcategory_name: mainCategory,
+        page: chosenPage,
         listCount: listCount,
-
-
+        sub_pcategory_no: subCategories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        sort: sortby
     }
-    xhr.open('POST','getProductList.do');
+    xhr.open('POST', 'getProductList.do');
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(requestData));
 }
@@ -123,6 +189,6 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 // 페이지 로드시 AJAX 실행
-document.addEventListener('DOMContentLoaded',() =>{
-    requestProductListAjax();
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#living').click();
 })

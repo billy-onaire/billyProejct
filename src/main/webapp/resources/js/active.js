@@ -94,7 +94,7 @@
         $.preventDefault();
     });
 
-    // :: 11.0 Slider Range Price Active Code
+ // :: 11.0 Slider Range Price Active Code
     $('.slider-range-price').each(function () {
         var min = jQuery(this).data('min');
         var max = jQuery(this).data('max');
@@ -107,11 +107,12 @@
             range: true,
             min: min,
             max: max,
+            step: 10000,
             values: [value_min, value_max],
             slide: function (event, ui) {
-                var result = label_result + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
-                console.log(t);
+                var result = label_result + " " + unit + ui.values[0].toLocaleString() + ' - ' + unit + numberWithCommas(ui.values[1]);
                 t.closest('.slider-range').find('.range-price').html(result);
+                targetPrice(ui.values[0],ui.values[1]);
             }
         });
     });
