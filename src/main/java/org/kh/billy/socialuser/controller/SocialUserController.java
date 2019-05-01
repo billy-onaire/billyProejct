@@ -49,24 +49,48 @@ public class SocialUserController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	
-	  @Inject private AuthInfo authInfo;
-	  
-	  @Autowired private GoogleOAuth2Template googleOAuth2Template;
-	  
-	  @Autowired private OAuth2Parameters googleOAuth2Parameters;
-	  
-	  // 회원 가입 페이지
-	  
-	  @RequestMapping(value = "login.do", method = { RequestMethod.GET,
-	  RequestMethod.POST }) public String join(HttpServletResponse response, Model
-	  model) {
-	  
-	  //URL을 생성한다. String url =
-	  googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE,
-	  googleOAuth2Parameters); System.out.println("/googleLogin, url : " + url);
-	  model.addAttribute("google_url", url);
-	  
-	  return "member/login"; }
+
+	 @Inject
+	    private AuthInfo authInfo;
+	    
+	    @Autowired
+	    private GoogleOAuth2Template googleOAuth2Template;
+	    
+	    @Autowired
+	    private OAuth2Parameters googleOAuth2Parameters;
+	 
+	    // 회원 가입 페이지
+	    @RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
+	    public String join(HttpServletResponse response, Model model) {
+	 
+	        //URL을 생성한다.
+	        String url = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+	        System.out.println("/googleLogin, url : " + url);
+	        model.addAttribute("google_url", url);
+	        
+	        return "member/login";
+	    }
+	 
+	    @RequestMapping(value = "token.do", method=RequestMethod.POST)
+	    public String doSessionAssignActionPage(HttpServletRequest request, Model model) throws Exception {
+	        String code = request.getParameter("code");
+	        System.out.println(code);
+	        
+	        //RestTemplate을 사용하여 Access Token 및 profile을 요청한다.
+	        RestTemplate restTemplate = new RestTemplate();
+	        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+	        parameters.add("code", code);
+	        parameters.add("client_id", authInfo.getClientId());
+	        parameters.add("client_secret", authInfo.getClientSecret());
+	        parameters.add("redirect_uri", googleOAuth2Parameters.getRedirectUri());
+	        parameters.add("grant_type", "authorization_code");
+	 
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+	        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
+	        ResponseEntity<Map> responseEntity = restTemplate.exchange("https://www.googleapis.com/oauth2/v4/token", HttpMethod.POST, requestEntity, Map.class);
+	        Map<String, Object> responseMap = responseEntity.getBody();
+
 	 
 
 	
