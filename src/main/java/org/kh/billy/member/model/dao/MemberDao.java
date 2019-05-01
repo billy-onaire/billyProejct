@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository("memberDao")
 public class MemberDao {
 
+	public Member selectLogin(SqlSessionTemplate session, Member member) {
+		Member loginMember = session.selectOne("memberMapper.selectLogin", member);
+		
+		return loginMember;
+	}
+	
 	public List<Member> searchId(SqlSessionTemplate session, Member member) {
 		return session.selectList("memberMapper.selectMember", member);
 	}

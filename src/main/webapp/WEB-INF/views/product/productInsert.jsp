@@ -68,28 +68,28 @@
                         
                         <br><br><br>
                        
-                        <form action="productinput.do" method="post"  enctype="multipart/form-data">
+                        <form action="productinsert.do" method="post"  enctype="multipart/form-data">
                            <div class="form-group">
                               <label for="usr">카테고리:</label><br>
-                              <select onchange="categoryChange(this)">
+                              <select onchange="categoryChange(this)" id="sel1" name="sel1">
 								  <option>카테고리를 선택해주세요.</option>
-								  <option value="a">LIVING</option>
-								  <option value="b">SPORTS</option>
-								  <option value="c">ELECTRONICS</option>
-								  <option value="c">CLOTHES</option>
-								  <option value="c">KIDS</option>
-								  <option value="c">ETC</option>
+								  <option value="LIVING">LIVING</option>
+								  <option value="SPORTS">SPORTS</option>
+								  <option value="ELECTRONICS">ELECTRONICS</option>
+								  <option value="CLOTHES">CLOTHES</option>
+								  <option value="KIDS">KIDS</option>
+								  <option value="ETC">ETC</option>
 								</select>
  
-							<select id="good">
+							<select id="sel2" name="sel2">
 							<option>세부카테고리를 선택해주세요.</option>
 							</select>
                               <br>
-                              <div class="row">
+                              <!-- <div class="row">
                                   <div class="col-sm-6">
                                     <label for="sel1">대 카테고리 : </label>
                                     <BR>
-                                    <select class="form-control" id="sel1" name="sellist1" onchange="categoryChange(this)">
+                                    <select class="form-control" id="sel1" name="sel1" onchange="categoryChange(this)">
                                         <option value="a">LIVING</option>
                                         <option value="b">SPORTS</option>
                                         <option>ELECTRONICS</option>
@@ -100,11 +100,11 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="sel2">세부 카테고리 : </label><BR>
-                                    <select multiple class="form-control" id="sel2" name="sellist2">
+                                    <select multiple class="form-control" id="sel2" name="sel2">
                                         
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row">
                           <div class="col-sm-8"">
@@ -189,27 +189,27 @@
                         <label for="pwd">직거래가능요일(월,화,수,목,금):</label><br>
                         <div class="form-check-inline">
                           <label class="form-check-label" for="check1">
-                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="mon">월
+                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="monday">월
                          </label>
                          </div>
                         <div class="form-check-inline">
                             <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tue">화
+                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday">화
                             </label>
                         </div>
 	                	<div class="form-check-inline">
 	                  		<label class="form-check-label" for="check3">
-	                   		<input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wend">수
+	                   		<input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday">수
 	                		</label>
 	            		</div>
 	            		<div class="form-check-inline">
 	              			<label class="form-check-label" for="check4">
-	                		<input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thur">목
+	                		<input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday">목
 	            			</label>
 	        			</div>
 	        			<div class="form-check-inline">
 	          				<label class="form-check-label" for="check5">
-	            			<input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="fri">금
+	            			<input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="friday">금
 	        				</label>
     					</div>
                                     <!-- <div class="form-check-inline">
@@ -285,20 +285,19 @@
         
         <script type="text/javascript">
         function categoryChange(e) {
-  var good_a = ["생활용품", "주방용품", "가구/인테리어", "키덜트/취미"];
-  var good_b = ["야구용품", "농구용품", "축구용품", "트레이닝/기타용품"];
+  var good_a = ["생활 용품", "주방 용품", "가구/인테리어", "키덜트/취미"];
+  var good_b = ["야구 용품", "농구 용품", "축구 용품", "트레이닝/기타 용품"];
   var good_c = ["핸드폰", "컴퓨터", "스피커", "모니터/영상기기", "카메라/주변기기", "계절가전"];
-  var good_d = ["여성의류", "남성의류", "여성신발", "남성신발", "여성가방/잡화", "남성가방/잡화"];
-  var good_e = ["출산/돌기념품", "장난감", "아동의류", "임부복/소품", "유아안전/실내용품", "수유용품"];
+  var good_d = ["여성 의류", "남성 의류", "여성 신발", "남성 신발", "여성 가방/잡화", "남성 가방/잡화"];
+  var good_e = ["출산/돌 기념품", "장난감", "아동의류", "임부복/소품", "유아안전/실내용품", "수유용품"];
   var good_f = ["기타"];
-  var target = document.getElementById("good");
- 
-  if(e.value == "a") var d = good_a;
-  else if(e.value == "b") var d = good_b;
-  else if(e.value == "c") var d = good_c;
-    else if(e.value == "d") var d = good_d;
-  else if(e.value == "e") var d = good_e;
-    else if(e.value == "f") var d = good_f;
+  var target = document.getElementById("sel2");
+    if(e.value == "LIVING") var d = good_a;
+  else if(e.value == "SPORTS") var d = good_b;
+  else if(e.value == "ELECTRONICS") var d = good_c;
+    else if(e.value == "CLOTHES") var d = good_d;
+  else if(e.value == "KIDS") var d = good_e;
+    else if(e.value == "ETC") var d = good_f;
  
   target.options.length = 0;
  
@@ -329,7 +328,7 @@
 
             $("#coba").spartanMultiImagePicker({
                 fieldName:        'fileUpload[]',
-                maxCount:         5,
+                maxCount:         4,
                 rowHeight:        '200px',
                 groupClassName:   'col-md-4 col-sm-4 col-xs-6',
                 maxFileSize:      '5000000',

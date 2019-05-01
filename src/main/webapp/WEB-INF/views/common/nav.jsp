@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,11 +32,11 @@
                 <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
+            
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
-                <a href="mmsList.do"> 쪽지</a>
             </div>
-           
+       
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
@@ -49,7 +50,7 @@
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
                 <a href="showlist.do" class="btn amado-btn mb-15">Product List</a>
-                <a href="productinputmain.do" class="btn amado-btn mb-15">Add a Product</a>
+                <a href="productinsertmain.do" class="btn amado-btn mb-15">Add a Product</a>
                 <a href="goPayPage.do" class="btn amado-btn mb-15">Payment</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
             </div>

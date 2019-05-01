@@ -2,6 +2,9 @@ package org.kh.billy.productimg.model.vo;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ProductImg implements Serializable {
 	private static final long serialVersionUID = 4495416994470649801L;
 	
