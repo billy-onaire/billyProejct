@@ -6,7 +6,7 @@ BootPay.request({
 	application_id: "5cc01b9c396fa67735bd0665",
 	name: '블링블링 마스카라', //결제창에서 보여질 이름
 	pg: 'inicis',
-	method: 'phone', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
+	//method: 'phone', //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
 	show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
 	items: [
 		{
@@ -26,7 +26,7 @@ BootPay.request({
 		phone: '010-1234-4567'
 	},
 	order_id: '고유order_id_1234', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
-	params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
+	params: {callback1: BootPay.method, callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
 	account_expire_at: '2018-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
 	extra: {
 	    start_at: '2018-10-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
