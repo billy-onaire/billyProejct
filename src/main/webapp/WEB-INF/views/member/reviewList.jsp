@@ -56,7 +56,7 @@
 				<h3>더러운 신발</h3><br><br><h6>2019.4.12 ~ 2019.4.15</h6>
 			</div> 
 	        <div class="cart-btn mt-100">
-	        	<c:url var="insertReview" value="insertReview.do">
+	        	<c:url var="insertReview" value="writeReview.do">
 	        		<c:param name="payNo" value="hi" />
 	        	</c:url>
                 <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
@@ -87,15 +87,15 @@
 
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="/billy/resources/js/popper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/billy/resources/js/bootstrap.min.js"></script>
     <!-- Plugins js -->
-    <script src="js/plugins.js"></script>
+    <script src="/billy/resources/js/plugins.js"></script>
     <!-- Active js -->
-    <script src="js/active.js"></script>
+    <script src="/billy/resources/js/active.js"></script>
 
 </body>
 

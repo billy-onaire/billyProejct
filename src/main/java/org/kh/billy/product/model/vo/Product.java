@@ -42,7 +42,6 @@ USER_ID	VARCHAR2(50 BYTE)
 	private String delete_yn;
 	private int category_code;
 	private String seller_id;
-	private String user_id;
 	private int img_no;
 	
 	public Product() {
@@ -52,7 +51,7 @@ USER_ID	VARCHAR2(50 BYTE)
 	public Product(int product_no, String product_name, int price, int product_quantity, String product_content,
 			String progress, Date product_startdate, Date product_enddate, String weekend_yn, String weekday_yn,
 			Date product_date, Date product_modifydate, String delete_yn, int category_code, String seller_id,
-			String user_id, int img_no) {
+			int img_no) {
 		super();
 		this.product_no = product_no;
 		this.product_name = product_name;
@@ -69,7 +68,6 @@ USER_ID	VARCHAR2(50 BYTE)
 		this.delete_yn = delete_yn;
 		this.category_code = category_code;
 		this.seller_id = seller_id;
-		this.user_id = user_id;
 		this.img_no = img_no;
 	}
 
@@ -193,14 +191,6 @@ USER_ID	VARCHAR2(50 BYTE)
 		this.seller_id = seller_id;
 	}
 
-	public String getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-
 	public int getImg_no() {
 		return img_no;
 	}
@@ -220,7 +210,6 @@ USER_ID	VARCHAR2(50 BYTE)
 				+ progress + ", product_startdate=" + product_startdate + ", product_enddate=" + product_enddate
 				+ ", weekend_yn=" + weekend_yn + ", weekday_yn=" + weekday_yn + ", product_date=" + product_date
 				+ ", product_modifydate=" + product_modifydate + ", delete_yn=" + delete_yn + ", category_code="
-				+ category_code + ", seller_id=" + seller_id + ", user_id=" + user_id + ", img_no=" + img_no + "]";
+				+ category_code + ", seller_id=" + seller_id + ", img_no=" + img_no + "]";
 	}
-	
 }
