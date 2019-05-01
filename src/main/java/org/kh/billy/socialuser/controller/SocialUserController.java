@@ -1,4 +1,4 @@
-/*package org.kh.billy.socialuser.controller;
+package org.kh.billy.socialuser.controller;
 
 import java.util.Map;
 
@@ -101,4 +101,3 @@ public class SocialUserController {
 	        return "home";
 	    }
 }
-*/
