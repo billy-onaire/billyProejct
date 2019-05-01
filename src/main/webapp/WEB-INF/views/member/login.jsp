@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <style type="text/css">
-    /*.logo-form {
-        width: 100px;
-        height: 100px;
-        background-image: url('BillyLogo1.png');
-        background-size: 100%;
-        position: relative;
-        left: 48%;
-    }*/
 	body {
 		background: #aaaaaa;
 		font-family: 'Roboto', sans-serif;
@@ -112,7 +105,6 @@
 </style>
 </head>
 <body>
-<!--<div class="logo-form"></div>-->
 <div class="login-form">
     <form action="/examples/actions/confirmation.php" method="post">		
         <div class="form-group">
@@ -125,18 +117,18 @@
             <button type="button" class="btn btn-success btn-lg btn-block login-btn">로그인</button>
         </div>
         <div class="form-group">
-            <button type="button" class="btn btn-success btn-lg btn-block login-btn">회원가입</button>
+            <button type="button" class="btn btn-success btn-lg btn-block login-btn"
+            onclick="location.href='enroll.do'">회원가입</button>
         </div>
-        <a href="#">아이디/비밀번호찾기</a>
+        <a href="#" onclick="window.open('mfind.do', 'findIdPwd', 'width=500, height=450, menubar=no, status=no, toolbar=no, left=700, top=200'); return false;">아이디/비밀번호찾기</a>
 		<div class="or-seperator"><b>or</b></div>
         <div class="text-center social-btn">
             <a href="#" class="btn btn-info btn-lg btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Naver</b></a>
             <a href="#" class="btn btn-four btn-lg btn-block"><i class="fa fa-kakao"></i> Sign in with <b>Kakao</b></a>
-            <a href="#" class="btn btn-danger btn-lg btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+            <a href="${google_url}" class="btn btn-danger btn-lg btn-block" ><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
             <a href="#" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
         </div>
     </form>
-    <!--<div class="text-center"><span class="text-muted">Don't have an account?</span> <a href="#">Sign up here</a></div>-->
 </div>
 </body>
 </html>                            
