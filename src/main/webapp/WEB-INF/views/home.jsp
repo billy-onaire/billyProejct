@@ -19,11 +19,36 @@
 
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		$.ajax({
+			url: "token.do",
+			data: { code: "${param.code}", 
+				client_id: "1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com", 
+				client_secret: "PgasrNGtVq5aRtEci9joCM8v",
+				redirect_uri: "http://localhost:8888/billy",
+				grant_type: "authorization_code"},
+			type: "post",
+			enctype: "application/x-www-form-urlencoded",
+			success: function(result){
+				if(result != null){
+					alert("토큰성공!");
+					console.log(result);
+				}
+			},error: function(request, status, errorData){
+				console.log("error code : " + request.status
+						+ "\nmessage : " + request.responseText
+						+ "\nerror : " + errorData);
+			}
+		}); //ajax
+			
+	}); //ready
+</script>
 </head>
 
 <body> 
-
 	<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
 		<div class="search-close">
@@ -135,10 +160,7 @@
 		</div>
 		<!-- Product Catagories Area End -->
 	</div>
-
-	
 	<c:import url="common/footer.jsp" />
-
 
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>

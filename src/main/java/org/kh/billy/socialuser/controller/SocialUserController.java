@@ -56,12 +56,12 @@ public class SocialUserController {
 	        String url = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 	        System.out.println("/googleLogin, url : " + url);
 	        model.addAttribute("google_url", url);
-	 
+	        
 	        return "member/login";
 	    }
 	 
-	    @RequestMapping(value = "/billy/index.jsp", method = { RequestMethod.GET, RequestMethod.POST })
-	    public String doSessionAssignActionPage(HttpServletRequest request) throws Exception {
+	    @RequestMapping(value = "token.do", method=RequestMethod.POST)
+	    public String doSessionAssignActionPage(HttpServletRequest request, Model model) throws Exception {
 	        String code = request.getParameter("code");
 	        System.out.println(code);
 	        
