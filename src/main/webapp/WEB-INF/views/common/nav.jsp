@@ -49,7 +49,7 @@
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-                <a href="#" class="btn amado-btn mb-15">Product List</a>
+                <a href="showlist.do" class="btn amado-btn mb-15">Product List</a>
                 <a href="productinsertmain.do" class="btn amado-btn mb-15">Add a Product</a>
                 <a href="goPayPage.do" class="btn amado-btn mb-15">Payment</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
