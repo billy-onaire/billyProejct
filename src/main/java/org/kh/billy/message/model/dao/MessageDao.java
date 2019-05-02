@@ -17,4 +17,8 @@ public class MessageDao {
 	public List<Message> selectMessageList(SqlSessionTemplate mybatisSession) {
 		return mybatisSession.selectList("messageMapper.selectMessageList");
 	}
+
+	public int insertMessage(SqlSessionTemplate mybatisSession, Message message) {
+		return mybatisSession.insert("messageMapper.insertMessage", message);
+	}
 }
