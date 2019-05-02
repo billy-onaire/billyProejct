@@ -11,7 +11,6 @@ import org.codehaus.jackson.JsonNode;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.controller.KakaoController;
-import org.kh.billy.socialuser.controller.SocialUserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
