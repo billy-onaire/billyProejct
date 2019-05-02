@@ -13,155 +13,91 @@
 <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-    <style type="text/css">
-        .amado_product_area .container-fluid .row .col-12 .view > button {
-          border: none;
-          outline: none;
-          padding: 10px 16px;
-          background-color: #f1f1f1;
-          cursor: pointer;
-          font-size: 14px;
-        }
-        .amado_product_area .container-fluid .row .col-12 .view > button:first-child{
-          background-color: #fab336;
-          color: white;
-        }
-        .amado_product_area .container-fluid .row .col-12 .view > button.active::before{
-             background-color: red;
-          color: white;
-        }
-    </style>
+<!-- Message List js -->
+<script src="/billy/resources/js/messageList.js"></script>
+<style type="text/css">
+.amado_product_area .container-fluid .row .col-12 .view>.tablinks {
+	border: none;
+	outline: none;
+	padding: 10px 16px;
+	background-color: #f1f1f1;
+	cursor: pointer;
+}
 
-    <script type="text/javascript">
-        $('.amado_product_area .container-fluid .row .col-12 .view > button').click(function() {
-    // 클릭된 당사자 => this
-    // 이 함수를 실행한 주어 => this
-    // $(this) => 이거 포장해주세요.
-    // 굳이 포장을 하는 이유
-    var $클릭된_녀석 = $(this);
-    
-    var $part5 = $클릭된_녀석.closest('.container-fluid');
-    //var $part5 = $클릭된_녀석.parent().parent().parent(); // $part5를 얻는 또 다른 방법
-    // 오직 $part5 안에서만 .body 로 검색해서 나온 것들 포장해주세요.
-    var $body = $part5.find('.cart-table clearfix');
-    
-    // 기존에 active 가진 녀석에게 active 빼앗기
-    $클릭된_녀석.parent().find('.active').removeClass('active');
-    $클릭된_녀석.addClass('active');
-    
-    // 클릭된 녀석이 형제 중에서 몇 번째 인지 확인(참고로 0부터 셉니다.);
-    var index = $클릭된_녀석.index();
-    
-    // part-5 라는 클래스를 가진 나의 조상중에 나랑 가장 가까운 1개를 포장해주세요.
-    
-    // 기존의 active 된 요소들에서 active 제거
-    $body.find('.active').removeClass('active');
-    
-    $body.find('div:nth-child(' + (index + 1) + ')').addClass('active');
-});
+.amado_product_area .container-fluid .row .col-12 .view>.tablinks.active
+	{
+	background-color: #fab336;
+	color: white;
+}
 
-    </script>
+
+</style>
 
 <body>
-
-    <!-- ##### Main Content Wrapper Start ##### -->
-    <div class="main-content-wrapper d-flex clearfix">
-
-        <!-- Mobile Nav (max width 767px)-->
-        <div class="mobile-nav">
-            <!-- Navbar Brand -->
-            <div class="amado-navbar-brand">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
-            </div>
-            <!-- Navbar Toggler -->
-            <div class="amado-navbar-toggler">
-                <span></span><span></span><span></span>
+	<!-- Search Wrapper Area Start -->
+    <div class="search-wrapper section-padding-100">
+        <div class="search-close">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-content">
+                        <form action="#" method="get">
+                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
+                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Header Area Start -->
-        <header class="header-area clearfix">
-            <!-- Close Icon -->
-            <div class="nav-close">
-                <i class="fa fa-close" aria-hidden="true"></i>
-            </div>
-           
-        </header>
-        <!-- Header Area End -->
-
+    </div>
+    <!-- Search Wrapper Area End -->
+<!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
+	<c:import url="../common/nav.jsp" />
         <div class="shop_sidebar_area">
 
             <!-- ##### Single Widget ##### -->
             <div class="widget catagory mb-50">
                 <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Catagories</h6>
+                <h6 class="widget-title mb-30">하위 카테고리 추가 예정</h6>
 
-                <!--  Catagories  -->
-                <div class="catagories-menu">
-                    <ul>
-                        <li><a href="#">Chairs</a></li>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Accesories</a></li>
-                        <li><a href="#">Furniture</a></li>
-                        <li><a href="#">Home Deco</a></li>
-                        <li><a href="#">Dressings</a></li>
-                        <li><a href="#">Tables</a></li>
-                    </ul>
-                </div>
             </div>
 
             <!-- ##### Single Widget ##### -->
             <div class="widget brands mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Brands</h6>
+             
+            </div>
 
-                <div class="widget-desc">
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="amado">
-                        <label class="form-check-label" for="amado">Amado</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="ikea">
-                        <label class="form-check-label" for="ikea">Ikea</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="furniture">
-                        <label class="form-check-label" for="furniture">Furniture Inc</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="factory">
-                        <label class="form-check-label" for="factory">The factory</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="artdeco">
-                        <label class="form-check-label" for="artdeco">Artdeco</label>
-                    </div>
-                </div>
+
+            <!-- ##### Single Widget ##### -->
+            <div class="widget price mb-50">
+                <!-- Widget Title -->
+                <h6 class="widget-title mb-30">마이페이지</h6>
             </div>
         </div>
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
-                    <div class="col-12">  
+                    <div class="col-12">
+                    <!-- 쪽지 보내기 팝업창 연습 -->
+                    	<a href="#" onclick="window.open('mmsWrite.do', 'popForm', 'width=550, height=500, menubar=no, status=no, toolbar=no, left=700, top=200'); return false;">쪽지보내기</a>
                         <div class="view d-flex">
-                                    <button class="active"><a href="#">받은 쪽지함</a></button>
-                                    <button><a href="#">보낸 쪽지함</a></button>
-                                    <button><a href="#">삭제한 쪽지함</a></button>
+                                    <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지함</button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지함</button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab3')">삭제한 쪽지함</button>
                         </div>
                     </div>
-                </div>            
+                </div>
         <br>
         <br>
         <br>
-                   <div class="container-fluid" style="padding-left: 40px;">	<!-- amado_product_area에서 컨테이너검색 -->
+                    
+                    <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
                         <div class="cart-table clearfix" style="padding-left: 40px;">
-                            <div class="active">
+                            <div id="tab1" class="tabcontent" style="display: block;">
                                 <table class="table table-responsive">
                                     
                                     <thead style="text-align: center;">
@@ -172,7 +108,7 @@
                                             <th>읽음 여부</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody>                                 
                                         <tr>
                                             <td class="cart_product_img">
                                                 user01
@@ -191,7 +127,7 @@
                                 </table>
                             </div>
 
-                             <div>
+                             <div id="tab2" class="tabcontent" style="display: none;">
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
@@ -218,13 +154,12 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-
-                            <div>
+                            </div> 
+                            <div id="tab3" class="tabcontent" style="display: none;">
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
-                                            <th>보낸 사람/받는 사람</th>
+                                            <th>받은 사람/보낸 사람</th>
                                             <th style="width: 200px">내용</th>
                                             <th>날짜</th>
                                             <th>읽음 여부</th>
@@ -247,8 +182,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>                  
+                            </div>                             
+                        </div>                                 
+
                     </div>
 
                 <div class="row">
@@ -268,17 +204,23 @@
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
+   <c:import url="../common/footer.jsp" />
+    
 
-    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-    <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="/billy/resources/js/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="/billy/resources/js/bootstrap.min.js"></script>
-    <!-- Plugins js -->
-    <script src="/billy/resources/js/plugins.js"></script>
-    <!-- Active js -->
-    <script src="/billy/resources/js/active.js"></script>
+   
+
+   <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<!-- Popper js -->
+	<script src="/billy/resources/js/popper.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="/billy/resources/js/bootstrap.min.js"></script>
+	<!-- Plugins js -->
+	<script src="/billy/resources/js/plugins.js"></script>
+	<!-- Active js -->
+	<script src="/billy/resources/js/active.js"></script>
+    <!-- Product List js -->
+    <script src="/billy/resources/js/productList.js"></script>
 
 </body>
 

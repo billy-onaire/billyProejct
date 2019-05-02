@@ -24,6 +24,59 @@
 	<!-- datepicker -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	
+	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url: "printReview.do",
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr);
+				
+				for(var i in json.list){
+					console.log(json.list[i].review_date);
+				} 
+				
+				
+			},
+			error: function(request, status, errorData){
+				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
+			}
+		});
+	});
+	</script>
+	
+	<style type="text/css">
+		table.type09 {
+		    border-collapse: collapse;
+		    text-align: left;
+		    line-height: 1.5;
+		
+		}
+		table.type09 thead th {
+		    padding: 10px;
+		    font-weight: bold;
+		    vertical-align: top;	
+		    color: orange;
+		    border-bottom: 3px solid orange;
+		}
+		table.type09 tbody th {
+		    width: 150px;
+		    padding: 10px;
+		    font-weight: bold;
+		    vertical-align: top;
+		    border-bottom: 1px solid #ccc;
+		    background: #f3f6f7;
+		}
+		table.type09 td {
+		    width: 350px;
+		    padding: 10px;
+		    vertical-align: center;
+		    border-bottom: 1px solid #ccc;
+		}
+	</style>
 </head>
 
 <body>
@@ -148,16 +201,64 @@
             </div><br><br>
             <hr>
             <h3>리뷰 1건</h3> <br>
-            <table>
-                <tr><th width="150px">ID</th><th width="150px">별점</th><th width="600px">내용</th><th width="300px">이미지</th></tr>
-                <tr><td>user01</td><th><div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                    </div></th><td>대여자가 친절했어요~</td><td><img src="/billy/resources/img/core-img/logo.png" width="100px" height="100px"></td></tr>
-            </table>
+            <table class="type09">
+			    <thead>
+			    <tr>
+			        <th>ID</th>
+			        <th>별점</th>
+			        <th>내용</th>
+			        <th>작성일</th>
+			        <th>이미지</th>
+			    </tr>
+			    </thead>
+			    <tbody>
+			    <tr>
+			        <td>user01</td>
+			        <td>
+			        	<!-- <div class="ratings">
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                    	</div> -->
+			        </td>
+			        <td id="content1"></td>
+			        <td id="date1"></td>
+			        <td id="img1"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+			    </tr>
+			    <tr>
+			        <td>user01</td>
+			        <td>
+			        	<div class="ratings">
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                    	</div>
+			        </td>
+			        <td id="content2"></td>
+			        <td id="date2"></td>
+			        <td id="img2"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+			    </tr>
+			    <tr>
+			        <td>user01</td>
+			        <td>
+			        	<div class="ratings">
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                        	<i class="fa fa-star" aria-hidden="true"></i>
+                    	</div>
+			        </td>
+			        <td id="content3"></td>
+			        <td id="date3"></td>
+			        <td id="img3"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+			    </tr>
+			    </tbody>
+			</table>
         </div>
         <!-- Product Details Area End -->
     </div>
@@ -167,6 +268,7 @@
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
 							<script>
 							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
