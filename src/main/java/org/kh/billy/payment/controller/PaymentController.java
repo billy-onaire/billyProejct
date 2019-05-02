@@ -54,7 +54,6 @@ public class PaymentController {
 			HttpResponse res = api.verify("5cc01b9c396fa67735bd0668");
 			String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
 			
-			//System.out.println("goVerify : " + str);
 			logger.info("goVerigy : " + str);
 			
 		} catch (Exception e) {
@@ -80,6 +79,7 @@ public class PaymentController {
 	}
 	
 	public static void goSubscribebilling() {
+		//정기결제용
 		SubscribeBilling subscribeBilling = new SubscribeBilling();
 		subscribeBilling.billing_key = "5b025b33e13f33310ce560fb";
 		subscribeBilling.item_name = "결제 테스트 아이템";
@@ -90,8 +90,6 @@ public class PaymentController {
 			HttpResponse res = api.subscribe_billing(subscribeBilling);
 			String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
 			
-			//System.out.println("gosubscribeBilling : " + str);
-			//System.out.println("gosubscribeBilling GSON: " + new Gson().toJson(subscribeBilling));
 			logger.info("gosubscribeBilling : " + str);
 			logger.info("gosubscribeBilling GSON: " + new Gson().toJson(subscribeBilling));
 		} catch (Exception e) {
