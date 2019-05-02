@@ -80,7 +80,9 @@ public class ProductInsertController {
 		productImgService.insertProductImg(productImg);
 		int img_no = productImgService.selectProductImgNo(productImg.getFirst_img());
 		product.setImg_no(img_no);
+		product.setSeller_id("user01");
 		System.out.println("이미지 키값 확인 : " + img_no);
+		System.out.println("입력 전 상품정보 확인 : "+product);
 		productInsertService.insertProduct(product);
 		/*if(productInsertService.insertProduct(product) > 0)
 			System.out.println("상품등록 성공");

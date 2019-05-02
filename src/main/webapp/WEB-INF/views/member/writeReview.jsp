@@ -26,22 +26,22 @@
 		table.type04 {
 		    border-collapse: separate;
 		    border-spacing: 1px;
-		    text-align: left;
+		    text-align: center;
 		    line-height: 1.5;
 		    border-top: 1px solid #ccc;
 		  margin : 20px 10px;
 		}
 		table.type04 th {
-		    width: 150px;
+		    width: 350px;
 		    padding: 10px;
 		    font-weight: bold;
-		    vertical-align: top;
+		    vertical-align: center;
 		    border-bottom: 1px solid #ccc;
 		}
 		table.type04 td {
-		    width: 350px;
+		    width: 650px;
 		    padding: 10px;
-		    vertical-align: top;
+		    vertical-align: center;
 		    border-bottom: 1px solid #ccc;
 		}
 		.starR{
@@ -113,7 +113,7 @@
                     </td>
 			    </tr>
 			</table>
-        	<button type="submit" name="addtocart" value="5" class="btn amado-btn">작성완료</button>
+        	<center><button type="submit" name="addtocart" value="5" class="btn amado-btn">작성완료</button></center>
         	<input type="hidden" name="point" id="point" value="1">
         </form>
        

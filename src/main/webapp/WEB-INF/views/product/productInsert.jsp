@@ -22,7 +22,16 @@
     <!-- <link rel="stylesheet" href="/billy/resources/css/style.css"> -->
     <link  href="/billy/resources/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <style type="text/css">
+      /*datepicker에서 사용한 이미지 버튼 style적용*/
+      img.ui-datepicker-trigger {
+        margin-left:5px; 
+        vertical-align:middle; 
+        cursor:pointer;
+        width: 8%;
+      }
+    </style>
 </head>
 
 <body>
@@ -68,34 +77,20 @@
                         
                         <br><br><br>
                        
-                        <form action="productinsert.do" method="post"  enctype="multipart/form-data">
-                           <div class="form-group">
-                              <label for="usr">카테고리:</label><br>
-                              <select onchange="categoryChange(this)" id="sel1" name="sel1">
-								  <option>카테고리를 선택해주세요.</option>
-								  <option value="LIVING">LIVING</option>
-								  <option value="SPORTS">SPORTS</option>
-								  <option value="ELECTRONICS">ELECTRONICS</option>
-								  <option value="CLOTHES">CLOTHES</option>
-								  <option value="KIDS">KIDS</option>
-								  <option value="ETC">ETC</option>
-								</select>
- 
-							<select id="sel2" name="sel2">
-							<option>세부카테고리를 선택해주세요.</option>
-							</select>
-                              <br>
-                              <!-- <div class="row">
+                        <form action="productinsert.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
+                          <div class="form-group">                              
+                              <div class="row">
                                   <div class="col-sm-6">
                                     <label for="sel1">대 카테고리 : </label>
                                     <BR>
                                     <select class="form-control" id="sel1" name="sel1" onchange="categoryChange(this)">
-                                        <option value="a">LIVING</option>
-                                        <option value="b">SPORTS</option>
-                                        <option>ELECTRONICS</option>
-                                        <option>CLOTHES</option>
-                                        <option>KIDS</option>
-                                        <option>ETC</option>
+                                        <option>카테고리를 선택해주세요.</option>
+                                        <option value="LIVING">LIVING</option>
+                                        <option value="SPORTS">SPORTS</option>
+                                        <option value="ELECTRONICS">ELECTRONICS</option>
+                                        <option value="CLOTHES">CLOTHES</option>
+                                        <option value="KIDS">KIDS</option>
+                                        <option value="ETC">ETC</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
@@ -104,19 +99,19 @@
                                         
                                     </select>
                                 </div>
-                            </div> -->
-                        </div>
+                              </div> 
+                          </div>
                         <div class="row">
                           <div class="col-sm-8"">
                             <div class="form-group">
-                              <label for="usr">상품명:</label>
-                              <input type="text" class="form-control" id="product_name" name="product_name">
+                              <label for="usr">상품명(최대 20글자):</label>
+                              <input type="text" class="form-control" id="product_name" name="product_name" maxlength="20" required>
                           	</div>
                      	 </div>
                       	<div class="col-sm-4"">
                        		<div class="form-group">
                           		<label for="usr">상품수량:</label>
-                          		<input type="text" class="form-control" id="product_quantity" name="product_quantity" style="width: 50%;">
+                          		<input type="text" class="form-control" id="product_quantity" name="product_quantity" style="width: 50%;" maxlength="2" required>
                       		</div>
                   		</div>
               			</div>
@@ -124,29 +119,13 @@
                                
                               <div class="form-group">
                                   <label for="usr">상품설명:</label><br>
-                                  <textarea class="form-control" id="product_content" name="product_content" rows="10" style="resize: none; width:100%;" placeholder="최대 500글자 작성 가능합니다."></textarea>          
+                                  <textarea class="form-control" id="product_content" name="product_content" rows="10" style="resize: none; width:100%;" placeholder="최대 500글자 작성 가능합니다." required></textarea>          
                               </div>
                               <div class="form-group">
-                                  <label for="usr">대여가:</label>
-                                  <input type="text" class="form-control" id="price" name="price">
+                                  <label for="usr">대여가(원):</label>
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" required style="width: 50%">
                               </div>
-                              <!-- <div class="form-group">
-                                  <label for="pwd">상품사진:</label>
-                                  <input type="password" class="form-control" id="pwd" name="password">
-                              </div> -->
-
-                                <!-- <div class="form-group">
-                                <label for="InputSubject1">파일첨부</label>
-                                <input id="fileInput" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control" data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
-                                <div class="bootstrap-filestyle input-group">
-                                <input type="text" id="userfile" class="form-control" name="userfile" disabled="">
-                                <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                <label for="fileInput" class="btn btn-default ">
-                                <span class="glyphicon fa fa-upload"></span>
-                                </label>
-                                </span>
-                                </div>
-                            </div> -->
+                              
                             <div class="container">
                                 <br>
                                 <br>
@@ -155,7 +134,6 @@
                                         <label class="control-label col-md-3">상품사진(최대 4장 가능)</label>
                                         <div class="col-md-20">
                                             <div class="row">
-
                                                 <div id="coba"></div>
                                             </div>
                                         </div>
@@ -163,16 +141,6 @@
                                 </div>  
                             </div>
 
-
-
-                           <!--  <div class="form-group">
-                              <label for="usr">대여불가일:</label>
-                              <input type="text" class="form-control" id="username" name="username">
-                          </div>
-                          <div class="form-group">
-                              <label for="usr">직거래불가일:</label>
-                              <input type="text" class="form-control" id="username" name="username">
-                          </div> -->
                           <h3>직거래주말여부</h3>
                           <div class="form-check">
                               <label class="form-check-label" for="radio1">
@@ -189,68 +157,46 @@
                         <label for="pwd">직거래가능요일(월,화,수,목,금):</label><br>
                         <div class="form-check-inline">
                           <label class="form-check-label" for="check1">
-                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="monday">월
+                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="monday" checked>월
                          </label>
                          </div>
                         <div class="form-check-inline">
                             <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday">화
+                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday" checked>화
                             </label>
                         </div>
-	                	<div class="form-check-inline">
-	                  		<label class="form-check-label" for="check3">
-	                   		<input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday">수
-	                		</label>
-	            		</div>
-	            		<div class="form-check-inline">
-	              			<label class="form-check-label" for="check4">
-	                		<input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday">목
-	            			</label>
-	        			</div>
-	        			<div class="form-check-inline">
-	          				<label class="form-check-label" for="check5">
-	            			<input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="friday">금
-	        				</label>
-    					</div>
-                                    <!-- <div class="form-check-inline">
-                                      <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" disabled>수
-                                      </label>
-                                  </div> -->
+	                	    <div class="form-check-inline">
+	                  		  <label class="form-check-label" for="check3">
+	                   		    <input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday" checked>수
+	                		    </label>
+	            		      </div>
+	            		      <div class="form-check-inline">
+                          <label class="form-check-label" for="check4">
+                           <input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday" checked>목
+                          </label>
+                        </div>
+                        <div class="form-check-inline">
+                          <label class="form-check-label" for="check5">
+                            <input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="friday" checked>금
+                          </label>
+                        </div>
                      </div>
                      <div class="row">
                                   <div class="col-sm-6">
                                     <label for="sel1">대여가능시작일 </label>
                                     <BR>
-                                    <input data-toggle="datepicker" id="product_startdate" name="product_startdate" type="text">
+                                    <input data-toggle="datepicker" id="product_startdate" name="product_startdate" type="text" readonly>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="sel2">대여가능종료일</label><BR>
-                                    <input data-toggle="datepicker" id="product_enddate" name="product_enddate" type="text">
+                                    <input data-toggle="datepicker" id="product_enddate" name="product_enddate" type="text" readonly>
                                 </div>
                      </div>
                               <!-- <input data-toggle="datepicker" type="text"> -->
-                              
+                              <br><br>
                               <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품등록하기</button>
-                 </form>
-
-
-
-                          <!-- Add to Cart Form -->
-                         <!--  <form class="cart clearfix" method="post">
-                            <div class="cart-btn d-flex mb-50">
-                                <p>Qty</p>
-                                <div class="quantity">
-                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty > 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                                </div>
-                            </div>
-                            <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품등록하기</button>
-                        </form> -->
-
+                      </form>
                     </div>
-
                 </div>
 
             </div>
@@ -271,7 +217,9 @@
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script> -->
         <!-- datepicker css,js -->
         <!-- <script src="//github.com/fyneworks/multifile/blob/master/jquery.MultiFile.min.js" type="text/javascript" language="javascript"></script> -->
-        <script src="/billy/resources/js/datepicker.js"></script>
+        <!-- <script src="/billy/resources/js/datepicker.js"></script> -->
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
         <!-- Popper js -->
         <script src="/billy/resources/js/popper.min.js"></script>
         <!-- Bootstrap js -->
@@ -285,45 +233,99 @@
         
         <script type="text/javascript">
         function categoryChange(e) {
-  var good_a = ["생활 용품", "주방 용품", "가구/인테리어", "키덜트/취미"];
-  var good_b = ["야구 용품", "농구 용품", "축구 용품", "트레이닝/기타 용품"];
-  var good_c = ["핸드폰", "컴퓨터", "스피커", "모니터/영상기기", "카메라/주변기기", "계절가전"];
-  var good_d = ["여성 의류", "남성 의류", "여성 신발", "남성 신발", "여성 가방/잡화", "남성 가방/잡화"];
-  var good_e = ["출산/돌 기념품", "장난감", "아동의류", "임부복/소품", "유아안전/실내용품", "수유용품"];
-  var good_f = ["기타"];
-  var target = document.getElementById("sel2");
-    if(e.value == "LIVING") var d = good_a;
-  else if(e.value == "SPORTS") var d = good_b;
-  else if(e.value == "ELECTRONICS") var d = good_c;
-    else if(e.value == "CLOTHES") var d = good_d;
-  else if(e.value == "KIDS") var d = good_e;
-    else if(e.value == "ETC") var d = good_f;
- 
-  target.options.length = 0;
- 
-  for (x in d) {
-    var opt = document.createElement("option");
-    opt.value = d[x];
-    opt.innerHTML = d[x];
-    target.appendChild(opt);
-  } 
-}
+          var good_a = ["생활 용품", "주방 용품", "가구/인테리어", "키덜트/취미"];
+          var good_b = ["야구 용품", "농구 용품", "축구 용품", "트레이닝/기타 용품"];
+          var good_c = ["핸드폰", "컴퓨터", "스피커", "모니터/영상기기", "카메라/주변기기", "계절가전"];
+          var good_d = ["여성 의류", "남성 의류", "여성 신발", "남성 신발", "여성 가방/잡화", "남성 가방/잡화"];
+          var good_e = ["출산/돌 기념품", "장난감", "아동의류", "임부복/소품", "유아안전/실내용품", "수유용품"];
+          var good_f = ["기타"];
+          var target = document.getElementById("sel2");
+            if(e.value == "LIVING") var d = good_a;
+            else if(e.value == "SPORTS") var d = good_b;
+            else if(e.value == "ELECTRONICS") var d = good_c;
+            else if(e.value == "CLOTHES") var d = good_d;
+            else if(e.value == "KIDS") var d = good_e;
+            else if(e.value == "ETC") var d = good_f;
+         
+          target.options.length = 0;
+         
+          for (x in d) {
+            var opt = document.createElement("option");
+            opt.value = d[x];
+            opt.innerHTML = d[x];
+            target.appendChild(opt);
+          } 
+          console.log('sel2 : '+$('#sel2').val());
+        }
+
         </script>
         
-
         <script type="text/javascript">
-        $(function(){
+           $(function() {  
+            
+              console.log('싲가일 확인 : '+$('product_startdate').val());
+              // 시작일(fromDate)은 종료일(toDate) 이후 날짜 선택 불가
+              // 종료일(toDate)은 시작일(fromDate) 이전 날짜 선택 불가
+
+              //시작일.
+              $('#product_startdate').datepicker({
+                showOn: "both",           // 달력을 표시할 타이밍 (both: focus or button)
+                buttonImage: "/billy/resources/img/productinput/calendar.png", // 버튼 이미지
+                buttonImageOnly : true,       // 버튼 이미지만 표시할지 여부
+                buttonText: "날짜선택",       // 버튼의 대체 텍스트
+                dateFormat: "yy-mm-dd",       // 날짜의 형식
+                format: 'yyyy-mm-dd',
+                changeMonth: true,          // 월을 이동하기 위한 선택상자 표시여부
+                //minDate: 0,           // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+                onClose: function( selectedDate ) { 
+                  // 시작일(fromDate) datepicker가 닫힐때
+                  // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                  $("#product_enddate").datepicker( "option", "minDate", selectedDate );
+                }       
+              });
+
+              //종료일
+              $('#product_enddate').datepicker({
+                showOn: "both", 
+                buttonImage: "/billy/resources/img/productinput/calendar.png", 
+                buttonImageOnly : true,
+                buttonText: "날짜선택",
+                dateFormat: "yy-mm-dd",
+                format: 'yyyy-mm-dd',
+                changeMonth: true,
+                //minDate: 0, // 오늘 이전 날짜 선택 불가
+                onClose: function( selectedDate ) {
+                  // 종료일(toDate) datepicker가 닫힐때
+                  // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
+                  $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
+                }       
+              });
+            });
+
+        /*$(function(){
         	$('#product_startdate').datepicker({ 
         		format: 'yyyy-mm-dd',
-        		dateFormat: 'yyyy-mm-dd'
+        		dateFormat: 'yyyy-mm-dd',
+            onClose: function( selectedDate ) {    
+                        // 시작일(fromDate) datepicker가 닫힐때
+                        // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                        $("#product_enddate").datepicker( "option", "minDate", selectedDate );
+            }  
+            
         	});
             $('#product_enddate').datepicker({ 
             	format: 'yyyy-mm-dd',
-            	dateFormat: 'yyyy-mm-dd' 
+            	dateFormat: 'yyyy-mm-dd',
+              onClose: function( selectedDate ) {
+                        // 종료일(toDate) datepicker가 닫힐때
+                        // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
+                        $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
+                    }
+              
             });
-        });
+        });*/
         </script>
-<script type="text/javascript">
+        <script type="text/javascript">
         $(function(){
 
             $("#coba").spartanMultiImagePicker({
@@ -358,15 +360,105 @@
                 }
             });
         });
-    </script>
-    <script type="text/javascript">
-   	    $("#coba").find('img').each(function(){
-    		console.log($(this).attr('src'));
-    	});
-    </script>
+        </script>
+        <script type="text/javascript">
+          $("#coba").find('img').each(function(){
+            console.log($(this).attr('src'));
+          });
+        </script>
 
+        <script type="text/javascript">
+          //가격, 수량 input에 숫자만 입력되게 처리
 
+          //3자리 단위마다 콤마 생성
+          function addCommas(x) {
+              return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+             
+          //모든 콤마 제거
+          function removeCommas(x) {
+            if(!x || x.length == 0) return "";
+                else return x.split(",").join("");
+          }
 
+          $("#price").on("focus", function() {
+            var x = $(this).val();
+            x = removeCommas(x);
+            $(this).val(x);
+          }).on("focusout", function() {
+            var x = $(this).val();
+            if(x && x.length > 0) {
+              if(!$.isNumeric(x)) {
+                x = x.replace(/[^0-9]/g,"");
+              }
+              x = addCommas(x);
+              $(this).val(x);
+            }
+          }).on("keyup", function() {
+            //앞자리에 0이 입력 안되게
+            $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
+          });
+
+          $("#product_quantity").on("focus", function() {
+            var x = $(this).val();
+            $(this).val(x);
+          }).on("focusout", function() {
+            var x = $(this).val();
+            if(x && x.length > 0) {
+              if(!$.isNumeric(x)) {
+                x = x.replace(/[^0-9]/g,"");
+              }
+              $(this).val(x);
+            }
+          }).on("keyup", function() {
+            //앞자리에 0이 입력 안되게
+            $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
+          });
+        </script>
+        <script type="text/javascript">
+          $('#product_content').on('keyup', function() {
+
+            if($(this).val().length > 500) {
+
+                alert("글자수는 500자로 이내로 제한됩니다.");
+
+              $(this).val($(this).val().substring(0, 500));
+
+            }
+
+          });
+
+        </script>
+        <script type="text/javascript">
+          //form 전송시 입력값 확인
+          function validate() {
+            if($('#sel1').val() == '카테고리를 선택해주세요.'){
+              alert("카테고리를 선택해주세요");
+              $('#sel1').focus();
+              return false;
+            }
+            if($('#sel2').val() == null){
+              alert('세부카테고리를 선택해주세요');
+              $('#sel2').focus();
+              return false;
+            }
+            /*if($('._img').val() == null){
+              alert('사진을 등록해주세요.');
+              $('#coba').focus();
+              return false;
+            }*/
+            if($('product_startdate').val() == null){
+              alert('대여가능시작일 입력하세요');
+              $('#product_startdate').focus();
+              return false;
+            }
+            if($('product_enddate').val() == null){
+              alert('대여가능종료일 입력하세요');
+              $('#product_enddate').focus();
+              return false;
+            }
+          }
+        </script>
 </body>
 
 </html>
