@@ -19,10 +19,10 @@
 
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	
 	$(function(){
+	<c:if test="${!empty param.code}">
 		$.ajax({
 			url: "token.do",
 			data: { code: "${param.code}", 
@@ -31,11 +31,12 @@
 				redirect_uri: "http://localhost:8888/billy",
 				grant_type: "authorization_code"},
 			type: "post",
-			enctype: "application/x-www-form-urlencoded",
+			dataType: "json",
 			success: function(result){
 				if(result != null){
 					alert("토큰성공!");
-					console.log(result);
+					console.log("result : " + result.hashMap.access_token + "body : " + result.hashMap.body + "name : " + result.hashMap.name + "profile : " + result.hashMap.profile);
+					$("#googleLogin").html("<img src='"+result.hashMap.profile+"'/><h4>"+result.hashMap.name+"</h4>");
 				}
 			},error: function(request, status, errorData){
 				console.log("error code : " + request.status
@@ -43,6 +44,7 @@
 						+ "\nerror : " + errorData);
 			}
 		}); //ajax
+	</c:if>
 			
 	}); //ready
 </script>
@@ -163,7 +165,7 @@
 	<c:import url="common/footer.jsp" />
 
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->
@@ -172,7 +174,6 @@
 	<script src="/billy/resources/js/plugins.js"></script>
 	<!-- Active js -->
 	<script src="/billy/resources/js/active.js"></script>
-
 </body>
 
 </html>

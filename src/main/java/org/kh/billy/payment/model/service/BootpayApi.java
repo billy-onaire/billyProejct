@@ -8,7 +8,7 @@ import org.kh.billy.javaApache.model.request.Token;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.response.ResToken;
-import org.kh.billy.payment.controller.PaymentController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
