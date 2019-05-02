@@ -31,6 +31,7 @@ import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Parameters;*/
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +49,7 @@ public class SocialUserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	
-
-	 @Inject
+	 /*@Inject
 	    private AuthInfo authInfo;
 	    
 	    @Autowired
@@ -94,9 +93,8 @@ public class SocialUserController {
 	 
 
 	
-	  @RequestMapping(value = "/billy/index.jsp", method = { RequestMethod.GET,
-	  RequestMethod.POST }) public String
-	  doSessionAssignActionPage(HttpServletRequest request) throws Exception {
+	  @RequestMapping(value = "/billy/index.jsp", method = { RequestMethod.GET,RequestMethod.POST }) 
+	  public String doSessionAssignActionPage(HttpServletRequest request) throws Exception {
 	  String code = request.getParameter("code"); System.out.println(code);
 	  
 	  //RestTemplate을 사용하여 Access Token 및 profile을 요청한다. RestTemplate restTemplate
@@ -134,7 +132,7 @@ public class SocialUserController {
 	  
 	  return "home";
 	  
-	  }
+	  }*/
 	 
 	
 
