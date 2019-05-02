@@ -32,11 +32,16 @@
                 <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
-            
+            <c:if test="${empty param.code }">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
             </div>
-       
+       		</c:if>
+       		<c:if test="${!empty param.code }">
+       		<div class="cart-fav-search mb-100" id="googleLogin">
+       			
+       		</div>
+       		</c:if>
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>

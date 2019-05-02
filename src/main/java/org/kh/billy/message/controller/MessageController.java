@@ -33,7 +33,6 @@ import net.sf.json.JSONObject;
 
 @Controller
 public class MessageController {
-	
 
 	@Autowired
 	private MessageService mms;
