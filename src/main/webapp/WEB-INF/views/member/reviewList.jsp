@@ -22,6 +22,31 @@
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
     <link rel="stylesheet" href="/billy/resources/css/style.css">
 
+	<style type="text/css">
+		table.type06 {
+		    border-collapse: collapse;
+		    text-align: left;
+		    line-height: 1.5;
+		    border-top: 1px solid #ccc;
+		    border-bottom: 1px solid #ccc;
+		    margin: 20px 10px;
+		}
+		table.type06 th {
+		    width: 150px;
+		    padding: 10px;
+		    font-weight: bold;
+		    vertical-align: center;
+		}
+		table.type06 td {
+		    width: 350px;
+		    padding: 10px;
+		    vertical-align: center;
+		}
+		table.type06 .even {
+		    /* background: #efefef; */
+		    background: #ffe2b8;
+		}
+	</style>
 </head>
 
 <body>
@@ -47,36 +72,44 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
-		<div class="list">
-		<center>
-			<div>
-				<img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px">	
-			</div>
-			<div>
-				<h3>더러운 신발</h3><br><br><h6>2019.4.12 ~ 2019.4.15</h6>
-			</div> 
-	        <div class="cart-btn mt-100">
-	        	<c:url var="insertReview" value="writeReview.do">
-	        		<c:param name="payNo" value="hi" />
-	        	</c:url>
-                <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
-             </div><hr>
-        </center>
-	    </div> &nbsp;&nbsp;&nbsp;
-        <div class="list">
-		<center>
-			<div>
-				<img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px">	
-			</div>
-			<div>
-				<h3>더러운 신발</h3><br><br><h6>2019.4.12 ~ 2019.4.15</h6>
-			</div> 
-	        <div class="cart-btn mt-100">
-                <a href="#" class="btn amado-btn w-100">대여후기 쓰기</a>
-             </div><hr>
-        </center>
-	    </div>
-	    
+	    <table class="type06">
+	    	<tr>
+		        <th class="even">이미지</th>
+		        <th class="even">제품명</th>
+		        <th class="even">대여기간</th>
+		        <th class="even">후기작성</th>
+		    </tr>
+		    <tr>
+		        <td><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+		        <td>더러운신발</td>
+		        <td>2019.04.05-2019.04.08</td>
+		        <td><div class="cart-btn mt-100">
+		        	<c:url var="insertReview" value="writeReview.do">
+		        		<c:param name="payNo" value="hi" />
+		        	</c:url>
+	                <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
+	             	</div>
+             	</td>
+		    </tr>
+		    <tr>
+		        <td class="even"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+		        <td class="even">더러운신발</td>
+		        <td class="even">2019.04.05-2019.04.08</td>
+		        <td class="even"><button>대여후기 쓰기</button></td>
+		    </tr>
+		    <tr>
+		        <td><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+		        <td>더러운신발</td>
+		        <td>2019.04.05-2019.04.08</td>
+		        <td><button>대여후기 쓰기</button></td>
+		    </tr>
+		    <tr>
+		        <td class="even"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+		        <td class="even">더러운신발</td>
+		        <td class="even">2019.04.05-2019.04.08</td>
+		        <td class="even"><button>대여후기 쓰기</button></td>
+		    </tr>
+		</table>
         
         
     </div>
