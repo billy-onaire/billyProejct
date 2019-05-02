@@ -19,8 +19,8 @@ import com.google.gson.Gson;
 public class PaymentController {
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
-/*	@Autowired
-	private PaymentService payService;*/
+	@Autowired
+	private PaymentService payService;
 	
 	static BootpayApi api;
 	

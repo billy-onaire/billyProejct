@@ -23,33 +23,33 @@ import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 public class MemberController {
-	
-	/*private static final Logger logger = 
-			LoggerFactory.getLogger(MemberController.class);*/
-		
-	private KakaoController kakaoLogin  = new KakaoController();
-	
-	@Autowired
-	private MemberService memberService;
-	
-	@RequestMapping(value="login.do")
-	public String loginPage() {
-		return "member/login";
-	}
-	
-	@RequestMapping("mfind.do")
-	public String findPage() {
-		return "member/findPage";
-	}
-	
-	@RequestMapping("enroll.do")
-	public String enrollPage() {
-		return "member/enrollPage";
-	}
-	
-	@RequestMapping(value = "/oauth", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
+   
+   /*private static final Logger logger = 
+         LoggerFactory.getLogger(MemberController.class);*/
+      
+   private KakaoController kakaoLogin  = new KakaoController();
+   
+   @Autowired
+   private MemberService memberService;
+   
+   @RequestMapping(value="login.do")
+   public String loginPage() {
+      return "member/login";
+   }
+   
+   @RequestMapping("mfind.do")
+   public String findPage() {
+      return "member/findPage";
+   }
+   
+   @RequestMapping("enroll.do")
+   public String enrollPage() {
+      return "member/enrollPage";
+   }
+   
+   @RequestMapping(value = "/oauth", produces = "application/json", method = {RequestMethod.GET, RequestMethod.POST})
     public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
-    		 HttpServletRequest request, HttpServletResponse response) {
+           HttpServletRequest request, HttpServletResponse response) {
         System.out.println("로그인 할때 임시 코드값");
         //카카오 홈페이지에서 받은 결과 코드
         System.out.println(code);

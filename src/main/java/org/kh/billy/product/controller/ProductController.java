@@ -2,6 +2,7 @@ package org.kh.billy.product.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +62,7 @@ public class ProductController {
 		
 		System.out.println(setting);
 		ArrayList<ProductForList> list = ps.selectProductList(setting);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		JSONObject sendObj = new JSONObject();
 		JSONArray arrJSON = new JSONArray();
 		for(ProductForList e: list) {
@@ -69,10 +71,19 @@ public class ProductController {
 			jo.put("pname", e.getProduct_name());
 			jo.put("price", e.getPrice());
 			jo.put("img", e.getFirst_img());
-			
+			jo.put("rating", e.getAvg());
+			jo.put("date", sdf.format(e.getProduct_date()));
 			arrJSON.add(jo);
 		}
-			sendObj.put("list", arrJSON);
+		JSONObject jp = new JSONObject();
+		jp.put("start", startPage);
+		jp.put("end", endPage);
+		jp.put("currentPage", currentPage);
+		jp.put("totalPage", totalPage);
+		
+		sendObj.put("list", arrJSON);
+		sendObj.put("page", jp);
+			
 			response.setContentType("application/json; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.print(sendObj.toString());

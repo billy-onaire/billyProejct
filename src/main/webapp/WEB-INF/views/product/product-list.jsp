@@ -12,7 +12,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Shop</title>
+    <title>Billy 빌리</title>
 
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
@@ -100,23 +100,23 @@
                     <div class="col-12">
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
-                            <div class="total-products">
+                            <!-- <div class="total-products">
                                 <p>Showing 1-8 0f 25</p>
                                 <div class="view d-flex">
                                     <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                     <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- Sorting -->
                             <div class="product-sorting d-flex">
                                 <div class="sort-by-date d-flex align-items-center mr-15">
                                     <p>Sort by</p>
                                     <form id="sortForm" method="get">
                                         <select name="select">
-                                            <option value="product_no desc">Newest</option>
-                                            <option value="price asc">Price (Low to High)</option>
-                                            <option value="price desc">Price (High to Low)</option>
-                                            <option value="popular">Popular</option>
+                                            <option value="2 DESC NULLS LAST">Newest</option>
+                                            <option value="4 NULLS LAST">Price (Low to High)</option>
+                                            <option value="4 DESC NULLS LAST">Price (High to Low)</option>
+                                            <option value="7 DESC NULLS LAST">Popular</option>
                                         </select>
                                     </form>
                                 </div>
