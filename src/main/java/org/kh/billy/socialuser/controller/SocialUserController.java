@@ -111,58 +111,6 @@ public class SocialUserController {
 	  return "home";
 	  
 	  }
-	 
-	
 
-	/* 카카오 로그인 restspi */
-	public JsonNode getAccessToken(String autorize_code) {
-
-		final String RequestUrl = "https://kauth.kakao.com/oauth/token";
-
-		final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
-
-		postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
-
-		postParams.add(new BasicNameValuePair("client_id", "46bbcfbc7eb226c945c88a9cee6f6f2f"));
-
-		postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost/billy/oauth"));
-
-		postParams.add(new BasicNameValuePair("code", autorize_code));
-
-		final HttpClient client = HttpClientBuilder.create().build();
-
-		final HttpPost post = new HttpPost(RequestUrl);
-
-		JsonNode returnNode = null;
-
-		try {
-
-			post.setEntity(new UrlEncodedFormEntity(postParams));
-
-			final HttpResponse response = client.execute(post);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			returnNode = mapper.readTree(response.getEntity().getContent());
-
-		} catch (UnsupportedEncodingException e) {
-
-			e.printStackTrace();
-
-		} catch (ClientProtocolException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-		}
-
-		return returnNode;
-
-	}
 
 }
