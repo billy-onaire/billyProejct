@@ -1,23 +1,19 @@
 /*
     상품 리스트 출력 페이지 자바스크립트
     작성자 : 윤석호
-    최종 수정일 : 2019/04/30
+    최종 수정일 : 2019/05/02
 */
 
 let chosenPage = 1; // 페이징 선택 값
-let listCount = 12; // 한 페이지에 보여질 게시물 수
+let listCount = 6; // 한 페이지에 보여질 게시물 수
 let minPrice = 0; // 최소 가격 설정
 let maxPrice = 100000; // 최대 가격 설정
 let subCategories = []; // 하위 카테고리 배열
 let mainCategory = ""; // 상위 카테고리
-let sortby = "product_no desc";
+let sortby = "2 DESC NULLS LAST";
 
 // 정렬 및 갯수 출력 방식 선택
-
-
-
 const listTabs = document.querySelectorAll('.nice-select ul');
-// 정렬
 listTabs[0].addEventListener('click', (e) => {
     sortby = e.target.getAttribute('data-value');
     requestProductListAjax();
@@ -26,8 +22,6 @@ listTabs[1].addEventListener('click', (e) => {
     listCount = e.target.getAttribute('data-value');
     requestProductListAjax();
 });
-
-
 
 
 // 가격 제한 설정 변경용 자바 스크립트
@@ -42,7 +36,7 @@ const catagoryRadios = document.querySelectorAll('.catagories-menu input[name="i
 const subCatagory = document.querySelector('.widget-desc');
 for (let i = 0; i < catagoryRadios.length; i++) {
     catagoryRadios[i].addEventListener('change', () => {
-
+        chosenPage = 1; // 현재 페이지 초기화
         while (subCatagory.firstChild) {
             subCatagory.removeChild(subCatagory.firstChild);
         }
@@ -52,7 +46,7 @@ for (let i = 0; i < catagoryRadios.length; i++) {
         if (catagoryRadios[i].value === 'living')
             sub = [{ cno: 1, cname: "생활용품" }, { cno: 2, cname: "주방용품" }, { cno: 3, cname: "가구/인테리어" }, { cno: 4, cname: "키덜트/취미" }];
         else if (catagoryRadios[i].value === 'sports')
-            sub = [{ cno: 11, cname: "야구용품" }, { cno: 12, cname: "농구용품" }, { cno: 13, cname: "축구용품" }, { cno: 14, cname: "트레이닝/기타용품" }];
+            sub = [{ cno: 11, cname: "야구용품" }, { cno: 12, cname: "농구용품" }, { cno: 13, cname: "축구용품" }, { cno: 14, cname: "트레이닝/기타" }];
         else if (catagoryRadios[i].value === 'electronics')
             sub = [{ cno: 21, cname: "핸드폰" }, { cno: 22, cname: "컴퓨터" }, { cno: 23, cname: "스피커" }, { cno: 24, cname: "모니터/영상기기" }, { cno: 25, cname: "카메라/주변기기" }, { cno: 26, cname: "계절가전" }];
         else if (catagoryRadios[i].value === 'clothes')
@@ -112,7 +106,7 @@ function requestProductListAjax() {
         const products = JSON.parse(xhr.responseText);
 
         for (let i = 0; i < products.list.length; i++) {
-
+            
             const gridDiv = document.createElement('div');
             const singleProductWrapper = document.createElement('div');
             const productImg = document.createElement("div");
@@ -150,24 +144,55 @@ function requestProductListAjax() {
             metaDataSection.appendChild(divLine);
             metaDataSection.appendChild(productPrice);
             metaDataSection.appendChild(productName);
-            // const ratingSection = descSection.appendChild(ratingDiv).appendChild(ratingBox);
+            const ratingSection = descSection.appendChild(ratingDiv).appendChild(ratingBox);
 
-            // const ratingIndex = products[i].rating/2;
+            const ratingIndex = products.list[i].rating/2;
 
-            // for(let i = 0; i < ratingIndex; i++){
-            //     const starIcon = document.createElement('i');
-            //     starIcon.classList = "fa fa-star";
-            //     starIcon.setAttribute('aria-hidden','true');
-            //     ratingSection.appendChild(starIcon);
-            // }
-            // if(ratingIndex%2 === 0.5){
-            //     ratingSection.removeChild(ratingSection.firstChild)
-            //     const starIcon = document.createElement('i');
-            //     starIcon.classList = "fa fa-star-half-o";
-            //     starIcon.setAttribute('aria-hidden','true');
-            //     ratingSection.appendChild(starIcon);
-            // }
+            for(let i = 0; i < ratingIndex; i++){
+                const starIcon = document.createElement('i');
+                starIcon.classList = "fa fa-star";
+                starIcon.setAttribute('aria-hidden','true');
+                ratingSection.appendChild(starIcon);
+            }
+            if(ratingIndex%2 === 0.5){
+                ratingSection.removeChild(ratingSection.firstChild)
+                const starIcon = document.createElement('i');
+                starIcon.classList = "fa fa-star-half-o";
+                starIcon.setAttribute('aria-hidden','true');
+                ratingSection.appendChild(starIcon);
+            }
+            // 상세보기 처리
+            productImg.addEventListener('click',()=>{
+                location.href = "pdetail.do?product_no="+products.list[i].pno;
+            });
+
         }
+        
+
+        // 페이징 처리 섹션
+        const pagination = document.querySelector('.pagination');
+        while(pagination.firstChild){
+            pagination.removeChild(pagination.firstChild);
+        }
+
+        for(let i = products.page.start; i <= products.page.end; i++){
+
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
+            
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+
+            pageLink.textContent = i;
+            
+            pagination.appendChild(pageItem).appendChild(pageLink);
+
+            pageItem.addEventListener('click',()=>{
+                chosenPage = i;
+                requestProductListAjax(); 
+            })
+        }
+
     }
 
     const requestData = {

@@ -1,4 +1,4 @@
-package org.kh.billy.member.controller;
+/*package org.kh.billy.member.controller;
 
 import java.util.logging.Logger;
 
@@ -19,10 +19,10 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 public class MemberController {
 	
-/*	private static final Logger logger = 
+	private static final Logger logger = 
 			LoggerFactory.getLogger(MemberController.class);
-		*/
-	/*private SocialUserController kakao_restapi = new SocialUserController();*/
+		
+	private SocialUserController kakao_restapi = new SocialUserController();
 	
 	@Autowired
 	private MemberService memberService;
@@ -49,7 +49,7 @@ public class MemberController {
     	//카카오 홈페엦에서 받은 임시 결과 코드
     	System.out.println("로그인 할 때 임시 코드값 : " + code);
         //결과값을 노드에 담아줌
-    	/*JsonNode node = kakao_restapi.getAccessToken(code);*/
+    	JsonNode node = kakao_restapi.getAccessToken(code);
         //결과값 출력
     	System.out.println(node);
     	//노드 안에 있는 access_token값을 꺼내 문자열로 변환
@@ -61,3 +61,4 @@ public class MemberController {
     }
 
 }
+*/
