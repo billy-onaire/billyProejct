@@ -124,8 +124,8 @@
 		<div class="or-seperator"><b>or</b></div>
         <div class="text-center social-btn">
             <a href="#" class="btn btn-info btn-lg btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Naver</b></a>
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=8820ef6337a09d8f33573af30f80442c&redirect_uri=http://localhost:8888/billy&response_type=code" class="btn btn-four btn-lg btn-block"><i class="fa fa-kakao"></i> Sign in with <b>Kakao</b></a>
-            <a href="${google_url }" class="btn btn-danger btn-lg btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=8820ef6337a09d8f33573af30f80442c&redirect_uri=http://localhost:8888/billy/oauth&response_type=code" class="btn btn-four btn-lg btn-block"><i class="fa fa-kakao"></i> Sign in with <b>Kakao</b></a>
+            <a href="${google_url}" class="btn btn-danger btn-lg btn-block" ><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
             <a href="#" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
         </div>
     </form>
