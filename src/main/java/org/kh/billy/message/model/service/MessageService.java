@@ -9,8 +9,13 @@ public interface MessageService {
 	//추상메소드만 멤버로 가짐
 	//[public abstract] 반환형 메소드명(자료형 매개변수);
 
-	ArrayList<Message> selectMessageList(SettingList setting);
 
 	int insertMessage(Message message);
+
+	Message selectMessage(int mms_no);
+
+	ArrayList<Message> selectRecvList();
+
+	
 
 }
