@@ -10,7 +10,7 @@ let minPrice = 0; // 최소 가격 설정
 let maxPrice = 100000; // 최대 가격 설정
 let subCategories = []; // 하위 카테고리 배열
 let mainCategory = ""; // 상위 카테고리
-let sortby = "2 DESC NULLS LAST";
+let sortby = "1 DESC NULLS LAST";
 
 // 정렬 및 갯수 출력 방식 선택
 const listTabs = document.querySelectorAll('.nice-select ul');
@@ -162,8 +162,9 @@ function requestProductListAjax() {
                 ratingSection.appendChild(starIcon);
             }
             // 상세보기 처리
-            productImg.addEventListener('click',()=>{
-                location.href = "pdetail.do?product_no="+products.list[i].pno;
+            singleProductWrapper.addEventListener('click',()=>{
+                // location.href = "pdetail.do?product_no="+products.list[i].pno;
+                location.href = "goReport.do?pno="+products.list[i].pno;
             });
 
         }
@@ -217,3 +218,24 @@ function numberWithCommas(x) {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#living').click();
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 신고기능 테스트용 (삭제예정)
+function moveReport(){
+    location.href="goReport.do?pno=1";
+}
