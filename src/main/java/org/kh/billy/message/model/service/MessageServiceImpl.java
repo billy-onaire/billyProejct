@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.kh.billy.message.model.dao.MessageDao;
 import org.kh.billy.message.model.vo.Message;
-import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +19,22 @@ public class MessageServiceImpl implements MessageService{
 	private MessageDao messageDao;
 
 	@Override
-	public ArrayList<Message> selectMessageList(SettingList setting) {
-		// TODO Auto-generated method stub
-		return (ArrayList<Message>)messageDao.selectMessageList(mybatisSession);
-	}
-
-	@Override
 	public int insertMessage(Message message) {
 
 		return messageDao.insertMessage(mybatisSession, message);
 		
 	}
+
+	@Override
+	public Message selectMessage(int mms_no) {
+
+		return messageDao.selectMessage(mybatisSession, mms_no);
+	}
+
+	@Override
+	public ArrayList<Message> selectRecvList() {
+		// TODO Auto-generated method stub
+		return messageDao.selectRecvList(mybatisSession);
+	}
+
 }

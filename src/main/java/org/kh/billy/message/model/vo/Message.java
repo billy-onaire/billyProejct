@@ -18,6 +18,7 @@ public class Message implements java.io.Serializable{
 	private String recv_read;
 	private String recv_del;
 	private String sent_del;
+	private int product_no;
 	
 	
 	public Message() {
@@ -26,7 +27,7 @@ public class Message implements java.io.Serializable{
 
 
 	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_read, String recv_del, String sent_del) {
+			String recv_read, String recv_del, String sent_del, int product_no) {
 		super();
 		this.mms_no = mms_no;
 		this.recv_id = recv_id;
@@ -37,6 +38,7 @@ public class Message implements java.io.Serializable{
 		this.recv_read = recv_read;
 		this.recv_del = recv_del;
 		this.sent_del = sent_del;
+		this.product_no = product_no;
 	}
 
 
@@ -130,6 +132,16 @@ public class Message implements java.io.Serializable{
 	}
 
 
+	public int getProduct_no() {
+		return product_no;
+	}
+
+
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -139,9 +151,11 @@ public class Message implements java.io.Serializable{
 	public String toString() {
 		return "Message [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
 				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
-				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + "]";
+				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + "]";
 	}
 
+
+	
 	
 
 }

@@ -15,8 +15,17 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+function checkContent(){
+	var mms_content = $("#mms_content").val();
+	if(!(mms_content.length >= 1)){
+		alert("반드시 내용을 입력 해주세요.");
+		$("#mms_content").select();
+		return false;
+	}
+}
+</script>
 </head>
 
 <body>
@@ -24,7 +33,7 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<div id="mmsWrite" style="height:500px;">
-					<form>
+					<form action="insertMms.do" method="post" onsubmit="return checkContent();">
 						<div class="form-group" >
 							<label for="name">상품명 : </label> <input type="text"
 								class="form-control" name="pname" value="product_name" readonly >
@@ -34,7 +43,7 @@
 
 						<div class="form-group">
 							<label for="content">내용 : </label> <textarea cols="70" rows="6"
-								class="form-control" placeholder="반드시 작성해주세요."
+								class="form-control" placeholder="반드시 작성해주세요." id="mms_content"
 								name="mms_content" required></textarea>
 						</div>
 						<br> <br> <span id="message"></span>
@@ -48,7 +57,7 @@
 	
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

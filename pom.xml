@@ -239,9 +239,9 @@
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-compiler-plugin</artifactId>
          <version>3.7.0</version>
-      </dependency>
-       
+         
    <!-- google login -->      
+      </dependency>
            <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -249,11 +249,11 @@
         </dependency>
    
    <!-- httpcore(카카오) -->
-		<dependency>
-  		<groupId>org.apache.httpcomponents</groupId>
-  		<artifactId>httpcore</artifactId>
-  		<version>4.4.6</version>
-		</dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>4.4.6</version>
+      </dependency>
         
         
 <!-- https://mvnrepository.com/artifact/com.github.spring-social/spring-social-google -->
