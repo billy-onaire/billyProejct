@@ -12,15 +12,14 @@
         <constructor-arg value="PgasrNGtVq5aRtEci9joCM8v" />
     </bean>
  
- 
     <bean id="googleOAuth2Parameters"
-        class="org.springframework.social.oauth2.OAuth2Parameters">
+       class="org.springframework.social.oauth2.OAuth2Parameters">
         <property name="scope"
             value="profile"></property>
         <property name="redirectUri"
-            value="http://localhost:8888/billy" />
+            value="http://localhost:8888/billy/check.do" />
     </bean>
- 
+
     <bean id="authInfo" class="org.kh.billy.socialuser.model.vo.AuthInfo">
         <constructor-arg
             value="1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com" />
