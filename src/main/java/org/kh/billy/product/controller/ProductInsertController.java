@@ -35,6 +35,11 @@ public class ProductInsertController {
 		return "product/productInsert";
 	} 
 	
+	@RequestMapping(value="myproductlist.do")
+	public String myProductList() {
+		return "product/myProductList";
+	}
+	
 	@RequestMapping(value="productinsert.do", method=RequestMethod.POST)
 	public String productInsert(Product product, @RequestParam("sel1") String pcategory_name, @RequestParam("sel2") String sub_pcategory_name,@RequestParam(name="fileUpload[]") MultipartFile[] file/*String[] args*/, HttpServletRequest request) throws IllegalStateException, IOException{
 		System.out.println(product);

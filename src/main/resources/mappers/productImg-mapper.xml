@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productImgMapper">
+
+	<insert id="insertProductImg" parameterType="ProductImg" useGeneratedKeys="true">
+		<!-- insert into product_img values (SQ_IMGNO.nextval, #{first_img}, #{second_img, jdbcType=VARCHAR}, #{third_img, jdbcType=VARCHAR}, #{fourth_img, jdbcType=VARCHAR}) -->
+		insert into product_img values (SQ_IMGNO.nextval, #{first_img}, #{second_img}, #{third_img}, #{fourth_img})
+	</insert>
+	<select id="selectProductImgNo" parameterType="String" resultType="_int">
+		select img_no from product_img where first_img = #{first_img}
+	</select>
+	<!-- 
+	<update id="updateProduct" parameterType="Product">
+		update member set userpwd = #{userpwd}, age = #{age}, email = #{email}, phone = #{phone}, etc = #{etc}, 
+				 hobby = #{hobby} where userid = #{userid}
+	</update>
+	<delete id="deleteProduct" parameterType="string">
+		delete from member where userid = #{userid}
+	</delete> -->	
+</mapper>

@@ -39,7 +39,7 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
+                <a href="main.do"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
             <c:if test="${empty accessToken }">
@@ -55,11 +55,10 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Notice</a></li>
-                    <li><a href="product-details.html">About us</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
+                    <li class="active"><a href="main.do">Home</a></li>
+                    <li><a href="#">Notice</a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="myproductlist.do">MyPage</a></li>
                 </ul>
             </nav>
             <!-- Button Group -->
