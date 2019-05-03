@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productListMapper">
+
+	<resultMap id="resultProductList" type="ProductForList">
+		<id property="product_no" column="product_no" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price"/>
+		<result property="first_img" column="first_img"/>
+	</resultMap>
+	
+	<resultMap type="Product" id="resultProduct">
+	<id property="product_no" column="product_no"/>
+	<result property="product_name" column="product_name" />
+	<result property="price" column="price" />
+	<result property="product_quantity" column="product_quantity" />
+	<result property="product_content" column="product_content" />
+	<result property="progress" column="progress" />
+	<result property="product_startdate" column="product_startdate" />
+	<result property="product_enddate" column="product_enddate" />
+	<result property="weekend_yn" column="weekend_yn" />
+	<result property="weekday_yn" column="weekday_yn" />
+	<result property="product_date" column="product_date" />
+	<result property="product_modifydate" column="product_modifydate" />
+	<result property="delete_yn" column="delete_yn" />
+	<result property="category_code" column="category_code" />
+	<result property="seller_id" column="seller_id" />
+	<result property="img_no" column="img_no" />
+	</resultMap>
+	
+	<select id="selectProductForReport" resultMap="resultProduct">
+		SELECT *
+		FROM PRODUCT
+		WHERE PRODUCT_NO = #{pno}
+	</select>
+	
+	<select id="selectProductList" resultMap="resultProductList">
+		SELECT X.RNUM, X.PRODUCT_NO, X.PRODUCT_NAME, X.PRICE, X.FIRST_IMG, X.PRODUCT_DATE, X.AVG
+		FROM	 (	SELECT	ROWNUM AS RNUM, S.PRODUCT_NO, S.PRODUCT_NAME, S.PRICE, S.FIRST_IMG, S.PRODUCT_DATE, S.AVG
+	  				FROM 	(	SELECT P.PRODUCT_NO, PRODUCT_NAME, PRICE, FIRST_IMG, PRODUCT_DATE, ROUND(AVG(R.POINT),1) AS "AVG"
+								FROM PRODUCT P
+								JOIN PRODUCT_IMG I ON (P.IMG_NO = I.IMG_NO)
+								LEFT JOIN REVIEW R ON (P.PRODUCT_NO = R.PRODUCT_NO)
+	<choose>
+		<when test="sub_pcategory_no.length != 0">
+		WHERE CATEGORY_CODE IN
+			<foreach item="item" collection="sub_pcategory_no" open="(" separator="," close=")">
+		#{item}
+			</foreach>
+		</when>
+		<otherwise>
+		WHERE CATEGORY_CODE = 0
+		</otherwise>
+	</choose>
+	<![CDATA[	
+		AND PRICE >= #{minPrice}
+		AND PRICE <= #{maxPrice}		
+								GROUP BY  P.PRODUCT_NO, PRODUCT_NAME, PRICE, FIRST_IMG, PRODUCT_DATE
+								ORDER BY ${sort} ) S
+	  				WHERE ROWNUM <= #{endList}) X
+		WHERE X.RNUM >= #{startList}
+	]]>
+	</select>
+
+	<select id="selectTotalListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+	<choose>
+		<when test="sub_pcategory_no.length != 0">
+		WHERE CATEGORY_CODE IN
+			<foreach item="item" collection="sub_pcategory_no" open="(" separator="," close=")">
+		#{item}
+			</foreach>
+		</when>
+		<otherwise>
+		WHERE CATEGORY_CODE = 0
+		</otherwise>
+	</choose>
+	<![CDATA[	
+		AND PRICE >= #{minPrice}
+		AND PRICE <= #{maxPrice}		
+	]]>
+		
+	</select>
+
+
+</mapper>

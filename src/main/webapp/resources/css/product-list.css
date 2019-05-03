@@ -2,7 +2,7 @@
     padding-left: 50px;
 }
 
-.product-img:hover{
+.single-product-wrapper:hover{
     cursor: pointer;
     opacity: 0.7;
 }

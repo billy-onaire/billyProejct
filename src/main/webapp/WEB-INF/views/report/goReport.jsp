@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,13 +12,14 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Billy 빌리</title>
+    <title>Billy</title>
 
-<!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <!-- Favicon  -->
+    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 
-<!-- Core Style CSS -->
-<link rel="stylesheet" href="/billy/resources/css/core-style.css">
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+    <link rel="stylesheet" href="/billy/resources/css/report.css">
 </head>
 
 <body>
@@ -46,133 +44,117 @@
     <!-- Search Wrapper Area End -->
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-	<c:import url="../common/nav.jsp" />
-        <div class="shop_sidebar_area">
+        <c:import url="../common/nav.jsp" />
 
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Catagories</h6>
-
-                <!--  Catagories  -->
-                <div class="catagories-menu">
-                    <ul>
-                        <li><input type="radio" name="item" id="living" value="living" hidden><label for="living"><span class="catagories-menu-radios">LIVING</span></label></li>
-                        <li><input type="radio" name="item" id="sports" value="sports" hidden><label for="sports"><span class="catagories-menu-radios">SPORTS</span></label></li>
-                        <li><input type="radio" name="item" id="electronics" value="electronics" hidden><label for="electronics"><span class="catagories-menu-radios">ELECTRONICS</span></label></li>
-                        <li><input type="radio" name="item" id="clothes" value="clothes" hidden><label for="clothes"><span class="catagories-menu-radios">CLOTHES</span></label></li>
-                        <li><input type="radio" name="item" id="kids" value="kids" hidden><label for="kids"><span class="catagories-menu-radios">KIDS</span></label></li>
-                        <li><input type="radio" name="item" id="etc" value="etc" hidden><label for="etc"><span class="catagories-menu-radios">ETC</span></label></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Sub-Categories</h6>
-
-                <div class="widget-desc">
-                </div>
-            </div>
-
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Price</h6>
-
-                <div class="widget-desc">
-                    <div class="slider-range">
-                        <div data-min="0" data-max="100000" data-unit="&#8361" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="100000" data-label-result="">
-                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                            <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                        </div>
-                        <div class="range-price">&#8361;0 - &#8361;100,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="amado_product_area section-padding-100">
+        <div class="cart-table-area section-padding-100">
             <div class="container-fluid">
-
                 <div class="row">
-                    <div class="col-12">
-                        <div class="product-topbar d-xl-flex align-items-end justify-content-between">
-                            <!-- Total Products -->
-                            <!-- <div class="total-products">
-                                <p>Showing 1-8 0f 25</p>
-                                <div class="view d-flex">
-                                    <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
-                                </div>
-                            </div> -->
-                            <!-- Sorting -->
-                            <div class="product-sorting d-flex">
-                                <div class="sort-by-date d-flex align-items-center mr-15">
-                                    <p>Sort by</p>
-                                    <form id="sortForm" method="get">
-                                        <select name="select">
-                                            <option value="2 DESC NULLS LAST">Newest</option>
-                                            <option value="4 NULLS LAST">Price (Low to High)</option>
-                                            <option value="4 DESC NULLS LAST">Price (High to Low)</option>
-                                            <option value="7 DESC NULLS LAST">Popular</option>
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-title">
+                                <h2>신고 내용 작성</h2>
+                            </div>
+
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <p>신고 할 상품명</p>
+                                        <input type="text" class="form-control" id="company" value="${prod.product_name}"
+                                            readonly>
+                                    </div>
+
+                                    <div class="col-12 mb-3">
+                                        <p>신고자 아이디</p>
+                                        <input type="text" class="form-control mb-3" id="street_address" value="${prod.seller_id}">
+                                    </div>
+
+                                    <div class="col-12 mb-3">
+                                        <p>신고 카테고리 / 내용</p>
+                                        <select class="w-100" id="country">
+                                            <option value="usa">[ 부적절한 이미지인 경우 ]</option>
+                                            <option value="uk">[ 욕설 및 스팸 게시물인 경우 ]</option>
+                                            <option value="ger">[ 거래 시간 미준수한 경우 ]</option>
+                                            <option value="fra">[ 사진과 상이한 물품의 품질인 경우 ]</option>
+                                            <option value="ind">[ 거래 시 욕설 또는 협박을 한 경우 ]</option>
+                                            <option value="aus">[ 기타 ]</option>
                                         </select>
-                                    </form>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <textarea name="comment" class="form-control w-100" id="comment" cols="30"
+                                            rows="10" placeholder="상세 신고 내용을 입력해주세요"></textarea>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p>신고 날짜</p>
+                                        <input type="date" class="form-control" id="rdate"  value="" readonly>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="custom-control custom-checkbox d-block mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                            <label class="custom-control-label" for="customCheck2">Create an
+                                                accout</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox d-block">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                            <label class="custom-control-label" for="customCheck3">Ship to a different
+                                                address</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="view-product d-flex align-items-center">
-                                    <p>View</p>
-                                    <form id="" method="get">
-                                        <select name="select">
-                                            <option value="6">6</option>
-                                            <option value="12">12</option>
-                                            <option value="18">18</option>
-                                            <option value="24">24</option>
-                                        </select>
-                                    </form>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="cart-summary">
+                            <h5>신고 접수</h5>
+                            <ul class="summary-table">
+                                <li><span>Product No:</span> <span>${prod.product_no}</span></li>
+                                <li><span>Product Name:</span> <span>${prod.product_name}</span></li>
+                                <li><span>ID:</span> <span>${prod.seller_id}</span></li>
+                                <li><span>Category:</span> <span>$140.00</span></li>
+                                
+                            </ul>
+
+                            <div class="payment-method">
+                                <!-- Cash on delivery -->
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="cod" onclick="return false;">
+                                    <label class="custom-control-label" for="cod">신고 진행 안내 메일받기</label>
                                 </div>
+                                <!-- Paypal -->
+                                
+                            </div>
+
+                            <div class="cart-btn mt-100">
+                                <a href="#" class="btn amado-btn w-100">REPORT</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Single Products-->
-                <div class="row" id="product_list_row">                 
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
-	<c:import url="../common/footer.jsp" />
-    
+    </div>
+    <!-- ##### Main Content Wrapper End ##### -->
+    <c:import url="../common/footer.jsp" />
 
-   
 
-   <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-	<!-- Popper js -->
-	<script src="/billy/resources/js/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script src="/billy/resources/js/bootstrap.min.js"></script>
-	<!-- Plugins js -->
-	<script src="/billy/resources/js/plugins.js"></script>
-	<!-- Active js -->
-	<script src="/billy/resources/js/active.js"></script>
+
+
+    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+    <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+    <!-- Popper js -->
+    <script src="/billy/resources/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/billy/resources/js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="/billy/resources/js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/billy/resources/js/active.js"></script>
+    <!-- goReport.js -->
+    <script src="/billy/resources/js/goReport.js"></script>
 
 </body>
 
