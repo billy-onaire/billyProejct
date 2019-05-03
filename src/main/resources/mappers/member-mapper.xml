@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+   <resultMap id="resultMember" type="Member">
+      <id property="user_id" column="user_id" />
+      <result property="user_pwd" column="user_pwd" />
+      <result property="user_moblie" column="user_mobile" />
+      <result property="user_name" column="user_name" />
+      <result property="email" column="email" />
+      <result property="verify" column="verify" />
+      <result property="address" column="address" />
+      <result property="my_introduce" column="my_introduce" />
+      <result property="location_area" column="location_area" />
+      <result property="user_enroll" column="user_enroll" />
+      <result property="user_update" column="user_update" />
+      <result property="report_count" column="report_count" />
+      <result property="delete_yn" column="delete_yn" />
+      <result property="total_count" column="total_count" />
+   </resultMap>
+   
+   <sql id="userInfo">
+      #{email}, #{address}, sysdate, #{verify}
+      , sysdate, default, default, #{my_introduce}, #{location_area}, default
+   </sql>
+   
+   
+   <select id="selectLogin" parameterType="Member" resultMap="resultMember">
+      select * from member where user_id = #{user_id} and user_pwd = #{user_pwd}
+   </select>
+   
+   <select id="selectCheckid" parameterType="string" resultType="_int" useCache="true" >
+      select count(user_id) from member where user_id = #{user_id}
+   </select>
+   
+   <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
+      insert into member values (#{user_id}, #{user_pwd}, #{user_mobile}, #{user_name}, #{email}, #{verify}, #{address}, #{my_introduce}, #{location_area}, sysdate, 
+      sysdate, default, default, default})
+   </insert>
+   
+   <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
+      select * from member where user_id = #{user_id}      
+   </select>
+   
+   <update id="updateMember" parameterType="Member" >
+      update member set user_pwd = #{user_pwd}, #{user_name}, <include refid="userInfo"/> where user_id = #{user_id}
+   </update>
+   
+   <delete id="deleteMember" parameterType="string" >
+      delete from member where user_id = #{user_id}
+   </delete>
+   
+   <select id="selectList" resultMap="resultMember">
+      select * from member where user_name = #{user_name} and phone = #{phone}
+   </select>
+   
+   
+
+</mapper>
