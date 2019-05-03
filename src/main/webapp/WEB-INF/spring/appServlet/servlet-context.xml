@@ -47,7 +47,5 @@
 	<context:component-scan base-package="org.kh.billy" />
 	
 	
-	<beans:bean id="jsonCheck"
-		class="net.sf.json.spring.web.servlet.view.JsonView">
-	</beans:bean>
+
 </beans:beans>
