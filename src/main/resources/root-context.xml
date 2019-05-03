@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+    <!-- Google 소셜 로그인 연결 설정 -->
+    <bean id="googleOAuth2Template"
+        class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg
+            value="1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com" />
+        <constructor-arg value="PgasrNGtVq5aRtEci9joCM8v" />
+    </bean>
+ 
+ 
+    <bean id="googleOAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope"
+            value="profile"></property>
+        <property name="redirectUri"
+            value="http://localhost:8888/billy" />
+    </bean>
+ 
+    <bean id="authInfo" class="org.kh.billy.socialuser.model.vo.AuthInfo">
+        <constructor-arg
+            value="1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com" />
+        <constructor-arg value="PgasrNGtVq5aRtEci9joCM8v" />
+    </bean>
+   
+   <!-- DataSrouce 등록 -->
+   <bean id="dataSource"
+      class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+   <property name="driverClassName"
+      value="oracle.jdbc.driver.OracleDriver"/>
+   <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe
+   " />
+   <property name="username" value="billy" />
+   <property name="password" value="billy" />
+   </bean>
+   
+   <!-- Spring 과 MyBatis 연동 설정 -->
+   <bean class="org.mybatis.spring.SqlSessionFactoryBean"
+      id="sqlSession">
+      <property name="configLocation"
+         value="classpath:mybatis-config.xml">
+      </property>
+      <property name="dataSource" ref="dataSource"></property>
+   </bean>
+   <bean class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg ref="sqlSession"></constructor-arg>
+   </bean>
+
+   <!-- 트랜잭션 관리 설정 -->
+   <bean id="transactionManager"
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   <property name="dataSource" ref="dataSource"></property>
+   </bean>
+</beans>

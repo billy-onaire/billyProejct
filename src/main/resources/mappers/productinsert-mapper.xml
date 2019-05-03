@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productInsertMapper">
+
+	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true">
+	insert into product values(SQ_PDNO.nextval, #{product_name}, #{price}, #{product_quantity}, #{product_content}, default, #{product_startdate}, #{product_enddate}, #{weekend_yn}, #{weekday_yn}, sysdate, sysdate, default, #{category_code}, #{seller_id}, #{img_no})
+	
+	</insert>
+	
+	<!-- <update id="updateProduct" parameterType="Product">
+		update member set userpwd = #{userpwd}, age = #{age}, email = #{email}, phone = #{phone}, etc = #{etc}, 
+				 hobby = #{hobby} where userid = #{userid}
+	</update>
+	<delete id="deleteProduct" parameterType="string">
+		delete from member where userid = #{userid}
+	</delete>	 -->
+</mapper>

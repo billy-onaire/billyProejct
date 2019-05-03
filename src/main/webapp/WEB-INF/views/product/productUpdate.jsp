@@ -12,7 +12,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>상품등록</title>
+    <title>상품수정</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    <!-- Search Wrapper Area Start -->
+     <!-- Search Wrapper Area Start -->
     <div class="search-wrapper section-padding-100">
         <div class="search-close">
             <i class="fa fa-close" aria-hidden="true"></i>
@@ -58,15 +58,17 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
+	<c:import url="../common/myPage.jsp" />
+	
        
 
         <!-- Product Details Area Start -->
-        <div class="single-product-area section-padding-100 clearfix">
+        <div class="amado_product_area section-padding-100">
             <div class="container-fluid">
 
 
                 <div class="row">
-                    <div class="col-12 col-lg-7">
+                    <div class="col-12">
                      <div class="single_product_desc">
                         <!-- Product Meta Data -->
                         <div class="product-meta-data">
@@ -473,7 +475,6 @@
               return false;
             }
           }
-        </script>
-</body>
+        </script></body>
 
 </html>
