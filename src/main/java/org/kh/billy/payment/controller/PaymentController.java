@@ -1,17 +1,22 @@
 package org.kh.billy.payment.controller;
 
+import java.util.ArrayList;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.payment.model.service.BootpayApi;
 import org.kh.billy.payment.model.service.PaymentService;
+import org.kh.billy.payment.model.vo.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
@@ -24,9 +29,21 @@ public class PaymentController {
 	
 	static BootpayApi api;
 	
-	@RequestMapping(value="resultPay.do", method=RequestMethod.POST)
+	/*@RequestMapping(value="resultPay.do", method=RequestMethod.POST)
 	public String resultPay() {
 		return "payment/paymentPage";
+	}*/
+	
+	@RequestMapping(value="resultPay.do")
+	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {
+		 pmList = payService.selectPaymentList();
+		logger.info("payment : " + payment);
+		
+		mav.addObject("pmList", pmList);
+		mav.setViewName("payment/paymentPage");
+		logger.info("mav pay : " + mav.toString());
+		
+		return mav;
 	}
 	 
 	@RequestMapping("goPayPage.do")

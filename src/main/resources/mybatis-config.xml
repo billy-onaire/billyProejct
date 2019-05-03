@@ -3,27 +3,27 @@
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>
-		<setting name="jdbcTypeForNull" value="NULL" /><!-- null값 insert할 때 필요  -->
-	</settings>
-	<typeAliases>
-		<typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product" />
-		<typeAlias type="org.kh.billy.productcategory.model.vo.ProductCategory" alias="ProductCategory" />
-		<typeAlias type="org.kh.billy.productimg.model.vo.ProductImg" alias="ProductImg" />
-		<typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product"/>
-      	<typeAlias type="org.kh.billy.product.model.vo.ProductForList" alias="ProductForList"/>
-      	<typeAlias type="org.kh.billy.product.model.vo.SettingList" alias="SettingList"/>
-      	<typeAlias type="org.kh.billy.payment.model.vo.Payment" alias="Payment" />
-      	<typeAlias type="org.kh.billy.message.model.vo.Message" alias="Message" />
-      	<typeAlias type="org.kh.billy.socialuser.model.vo.SocialUser" alias="SocialUser" />
-	</typeAliases>
-	<mappers>
-		<mapper resource="mappers/productinsert-mapper.xml" />
-		<mapper resource="mappers/productCategory-mapper.xml" />
-		<mapper resource="mappers/productImg-mapper.xml" />
-		<mapper resource="mappers/productList-mapper.xml"/>
-		<mapper resource="mappers/payment-mapper.xml" />
-		<mapper resource="mappers/message-mapper.xml" />
-		<mapper resource="mappers/social-mapper.xml" />
-	</mappers>
+   <settings>
+      <setting name="jdbcTypeForNull" value="NULL" /><!-- null값 insert할 때 필요  -->
+   </settings>
+   <typeAliases>
+      <typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product" />
+      <typeAlias type="org.kh.billy.productcategory.model.vo.ProductCategory" alias="ProductCategory" />
+      <typeAlias type="org.kh.billy.productimg.model.vo.ProductImg" alias="ProductImg" />
+      <typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product"/>
+         <typeAlias type="org.kh.billy.product.model.vo.ProductForList" alias="ProductForList"/>
+         <typeAlias type="org.kh.billy.product.model.vo.SettingList" alias="SettingList"/>
+         <typeAlias type="org.kh.billy.payment.model.vo.Payment" alias="Payment" />
+         <typeAlias type="org.kh.billy.message.model.vo.Message" alias="Message" />
+         <typeAlias type="org.kh.billy.socialuser.model.vo.SocialUser" alias="SocialUser" />
+   </typeAliases>
+   <mappers>
+      <mapper resource="mappers/productinsert-mapper.xml" />
+      <mapper resource="mappers/productCategory-mapper.xml" />
+      <mapper resource="mappers/productImg-mapper.xml" />
+      <mapper resource="mappers/productList-mapper.xml"/>
+      <mapper resource="mappers/payment-mapper.xml" />
+      <mapper resource="mappers/message-mapper.xml" />
+      <mapper resource="mappers/social-mapper.xml" />
+   </mappers>
 </configuration>

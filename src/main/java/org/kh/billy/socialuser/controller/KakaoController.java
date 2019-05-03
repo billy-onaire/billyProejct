@@ -33,7 +33,7 @@ public class KakaoController {
 
       postParams.add(new BasicNameValuePair("client_id", "8820ef6337a09d8f33573af30f80442c"));
 
-      postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8888/billy/oauth")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
+      postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8888/oauth")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
 
       postParams.add(new BasicNameValuePair("code", autorize_code));
       //기타 설명은 생략 자세히 알고 싶으면 구글링하세요.

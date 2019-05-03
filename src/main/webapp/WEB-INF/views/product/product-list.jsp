@@ -113,10 +113,10 @@
                                     <p>Sort by</p>
                                     <form id="sortForm" method="get">
                                         <select name="select">
-                                            <option value="2 DESC NULLS LAST">Newest</option>
-                                            <option value="4 NULLS LAST">Price (Low to High)</option>
-                                            <option value="4 DESC NULLS LAST">Price (High to Low)</option>
-                                            <option value="7 DESC NULLS LAST">Popular</option>
+                                            <option value="1 DESC NULLS LAST">Newest</option>
+                                            <option value="3 NULLS LAST">Price (Low to High)</option>
+                                            <option value="3 DESC NULLS LAST">Price (High to Low)</option>
+                                            <option value="6 DESC NULLS LAST">Popular</option>
                                         </select>
                                     </form>
                                 </div>
@@ -156,13 +156,15 @@
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
+    <!-- 신고 기능 테스트 용-->
+    <button onclick="moveReport();"> 신고하기 </button>
 	<c:import url="../common/footer.jsp" />
     
 
    
 
    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

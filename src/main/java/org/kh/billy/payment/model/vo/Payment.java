@@ -13,11 +13,12 @@ public class Payment implements Serializable {
 	private Date payment_enddate;
 	private String status;
 	private int product_no;
+	private String customer;
 	
 	public Payment() {}
 	
 	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
-			Date payment_enddate, String status, int product_no) {
+			Date payment_enddate, String status, int product_no, String customer) {
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
 		this.payment_quantity = payment_quantity;
@@ -25,6 +26,7 @@ public class Payment implements Serializable {
 		this.payment_enddate = payment_enddate;
 		this.status = status;
 		this.product_no = product_no;
+		this.customer = customer;
 	}
 	public int getPayment_no() {
 		return payment_no;
@@ -68,6 +70,12 @@ public class Payment implements Serializable {
 	public void setProduct_no(int product_no) {
 		this.product_no = product_no;
 	}
+	public String getCustomer() {
+		return customer;
+	}
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -76,7 +84,7 @@ public class Payment implements Serializable {
 	public String toString() {
 		return "Payment [payment_no=" + payment_no + ", payment_price=" + payment_price + ", payment_quantity="
 				+ payment_quantity + ", payment_begindate=" + payment_begindate + ", payment_enddate=" + payment_enddate
-				+ ", status=" + status + ", product_no=" + product_no + "]";
+				+ ", status=" + status + ", product_no=" + product_no + ", customer=" + customer + "]";
 	}
 	
 }
