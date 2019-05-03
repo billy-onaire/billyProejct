@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="messageMapper">
+
+	<resultMap id="resultMessage" type="Message">
+		<id property="mms_no" column="mms_no" />
+		<result property="recv_id" column="recv_id" />
+		<result property="sent_id" column="sent_id" />
+		<result property="mms_content" column="mms_content" />
+		<result property="sent_date" column="sent_date" />
+		<result property="read_date" column="read_date" />
+		<result property="recv_read" column="recv_read" />
+		<result property="recv_del" column="recv_del" />
+		<result property="sent_del" column="sent_del" />
+		<result property="product_no" column="product_no" />
+	</resultMap>
+
+	<select id="selectRecvList" parameterType="Message" 
+	 resultMap="resultMessage" useCache="true">
+		SELECT * from message
+		where recv_id = 'testmk'
+	</select>
+	
+	<insert id="insertMessage" parameterType="message">
+		insert into message(
+			mms_no, 
+			recv_id, 
+			sent_id, 
+			mms_content, 
+			sent_date, 
+			read_date, 
+			recv_read, 
+			recv_del, 
+			sent_del,
+			product_no
+		) values(
+			sq_mno.nextval, 
+			#{recv_id}, 
+			#{sent_id}, 
+			#{mms_content}, 
+			sysdate, 
+			default, 
+			default, 
+			default,
+			product_no)
+	</insert>
+ -->
+</mapper>

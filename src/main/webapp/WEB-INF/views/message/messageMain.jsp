@@ -10,7 +10,7 @@
 
 <!-- Favicon  -->
 <link rel="icon" href="img/core-img/favicon.ico">
-<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 <!-- Message List js -->
@@ -99,30 +99,36 @@
                         <div class="cart-table clearfix" style="padding-left: 40px;">
                             <div id="tab1" class="tabcontent" style="display: block;">
                                 <table class="table table-responsive">
-                                    
+                              
                                     <thead style="text-align: center;">
                                         <tr>
                                             <th>보낸 사람</th>
+                                            <th>상품명</th>
                                             <th style="width: 200px">내용</th>
                                             <th>날짜</th>
                                             <th>읽음 여부</th>
                                         </tr>
                                     </thead>
-                                    <tbody>                                 
+                                    <tbody>
+                                    	<c:forEach items="${list }" var="mms">                                                                 
                                         <tr>
                                             <td class="cart_product_img">
-                                                user01
-                                            </td>
-                                            <td class="cart_product_desc">
-                                                네고 되나요?
-                                            </td>
-                                            <td class="price">
-                                                2019-04-24
+                                                ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
-                                                읽음
+                                                product_name
+                                            </td>
+                                            <td class="cart_product_desc">
+                                                ${mms.mms_content }
+                                            </td>
+                                            <td class="price">
+                                                ${mms.sent_date }
+                                            </td>h
+                                            <td class="cart_product_img">
+                                                ${mms.recv_read }
                                             </td>
                                         </tr>
+										</c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -132,6 +138,7 @@
                                     <thead style="text-align: center;">
                                         <tr>
                                             <th>받은 사람</th>
+                                            <th>상품명</th>
                                             <th style="width: 200px">내용</th>
                                             <th>날짜</th>
                                             <th>읽음 여부</th>
@@ -140,16 +147,19 @@
                                     <tbody>
                                         <tr>
                                             <td class="cart_product_img">
-                                                user01
-                                            </td>
-                                            <td class="cart_product_desc">
-                                                네고 되나요?
-                                            </td>
-                                            <td class="price">
-                                                2019-04-24
+                                               ${message.recv_id }
                                             </td>
                                             <td class="cart_product_img">
-                                                읽음
+                                                	product_name
+                                            </td>
+                                            <td class="cart_product_desc">
+                                                ${message.mms_content }
+                                            </td>
+                                            <td class="price">
+                                                ${message.sent_date }
+                                            </td>
+                                            <td class="cart_product_img">
+                                                ${message.recv_read }
                                             </td>
                                         </tr>
                                     </tbody>
@@ -159,7 +169,7 @@
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
-                                            <th>받은 사람/보낸 사람</th>
+                                            <th>받은 사람/보낸 사람</th>                                            
                                             <th style="width: 200px">내용</th>
                                             <th>날짜</th>
                                             <th>읽음 여부</th>
@@ -210,7 +220,7 @@
    
 
    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

@@ -35,7 +35,7 @@
             <c:if test="${empty param.code }">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
-                <a href="mmsList.do">쪽지 확인용</a>
+                <a href="recvList.do">쪽지 확인용</a>
             </div>
        		</c:if>
        		<c:if test="${!empty param.code }">
