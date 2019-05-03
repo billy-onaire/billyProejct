@@ -1,5 +1,8 @@
 package org.kh.billy.socialuser.model.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SocialUser implements java.io.Serializable{
 
 	private static final long serialVersionUID = 397439662895313520L;
@@ -8,6 +11,9 @@ public class SocialUser implements java.io.Serializable{
 	private int social_type;
 	private String token;
 	private int social_code;
+	
+	public SocialUser() {}
+	
 	public SocialUser(String user_id, int social_type, String token, int social_code) {
 		super();
 		this.user_id = user_id;

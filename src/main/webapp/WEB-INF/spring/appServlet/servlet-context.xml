@@ -45,6 +45,4 @@
 		<!-- 제일 먼저 실행되도록 순서 지정해야 함  -->
 	</beans:bean>
 	<context:component-scan base-package="org.kh.billy" />
-	
-	
 </beans:beans>

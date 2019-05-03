@@ -18,5 +18,9 @@ public class MemberDao {
 	public List<Member> searchId(SqlSessionTemplate session, Member member) {
 		return session.selectList("memberMapper.selectMember", member);
 	}
+
+	public int insertMember(SqlSessionTemplate session, Member member) {
+		return session.insert("memberMapper.insertMember", member);
+	}
 	
 }
