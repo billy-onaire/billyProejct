@@ -6,6 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+#google_img{
+	width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+.mb-100{
+	margin-bottom: 50px;
+}
+</style>
 </head>
 <body>
 	<!-- Mobile Nav (max width 767px)-->
@@ -32,15 +42,14 @@
                 <a href="index.html"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
-            <c:if test="${empty param.code }">
+            <c:if test="${empty accessToken }">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
                 <a href="mmsList.do">쪽지 확인용</a>
             </div>
        		</c:if>
-       		<c:if test="${!empty param.code }">
+       		<c:if test="${!empty accessToken }">
        		<div class="cart-fav-search mb-100" id="googleLogin">
-       			
        		</div>
        		</c:if>
             <!-- Amado Nav -->
