@@ -10,7 +10,7 @@
 
 <!-- Favicon  -->
 <link rel="icon" href="img/core-img/favicon.ico">
-<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 <!-- Message List js -->
@@ -95,97 +95,39 @@
         <br>
         <br>
                     
-                    <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
-                        <div class="cart-table clearfix" style="padding-left: 40px;">
-                            <div id="tab1" class="tabcontent" style="display: block;">
-                                <table class="table table-responsive">
-                                    
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>보낸 사람</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>                                 
-                                        <tr>
-                                            <td class="cart_product_img">
-                                                user01
-                                            </td>
-                                            <td class="cart_product_desc">
-                                                네고 되나요?
-                                            </td>
-                                            <td class="price">
-                                                2019-04-24
-                                            </td>
-                                            <td class="cart_product_img">
-                                                읽음
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="message-table clearfix">
+                            <table class="table table-responsive">
+                                <tr>
+                                    <td>보낸 사람</td>
+                                    <td>user02</td>
 
-                             <div id="tab2" class="tabcontent" style="display: none;">
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>받은 사람</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="cart_product_img">
-                                                user01
-                                            </td>
-                                            <td class="cart_product_desc">
-                                                네고 되나요?
-                                            </td>
-                                            <td class="price">
-                                                2019-04-24
-                                            </td>
-                                            <td class="cart_product_img">
-                                                읽음
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> 
-                            <div id="tab3" class="tabcontent" style="display: none;">
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>받은 사람/보낸 사람</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="cart_product_img">
-                                                user01
-                                            </td>
-                                            <td class="cart_product_desc">
-                                                네고 되나요?
-                                            </td>
-                                            <td class="price">
-                                                2019-04-24
-                                            </td>
-                                            <td class="cart_product_img">
-                                                읽음
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>                             
-                        </div>                                 
-
+                                </tr>
+                                 <tr>
+                                    <td>보낸 시간</td>
+                                    <td>2019-04-24 &nbsp; 19:00</td>
+          
+                                </tr>
+                                 <tr>
+                                    <td>보낸 내용</td>
+                                    <td colspan="2" style="width: 400px">안녕하세요.</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Pagination -->
+                        <nav aria-label="navigation">
+                            <ul class="pagination justify-content-end mt-50">
+                            <!-- 받는 사람이 나라면  -->
+                            	<li class="page-item active"><a class="page-link" href="#">답장하기</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">삭제</a></li>
+                                <li class="page-item"><a class="page-link" href="#">목록</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-12">
@@ -210,7 +152,7 @@
    
 
    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

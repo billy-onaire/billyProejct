@@ -1,12 +1,12 @@
 package org.kh.billy.message.model.dao;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.message.model.vo.Message;
-import org.kh.billy.product.model.vo.ProductForList;
+
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -14,11 +14,20 @@ import org.springframework.stereotype.Repository;
 //annotation할 때 이름을 지어줄 수 있다, 괄호 안에 넣어주면 됌
 public class MessageDao {
 	
-	public List<Message> selectMessageList(SqlSessionTemplate mybatisSession) {
-		return mybatisSession.selectList("messageMapper.selectMessageList");
-	}
-
 	public int insertMessage(SqlSessionTemplate mybatisSession, Message message) {
 		return mybatisSession.insert("messageMapper.insertMessage", message);
+	}
+
+	public Message selectMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.selectOne("messageMapper.selectMessage", mms_no);
+	}
+
+
+	public ArrayList<Message> selectRecvList(SqlSessionTemplate mybatisSession) {
+		
+		List<Message> list = mybatisSession.selectList("messageMapper.selectRecvList");
+		
+		return (ArrayList<Message>) list;
 	}
 }
