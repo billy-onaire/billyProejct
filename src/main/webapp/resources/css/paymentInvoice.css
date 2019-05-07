@@ -1,7 +1,7 @@
 @charset "UTF-8";
- 	.invoice-box {
+ 	 .invoice-box {
         max-width: 800px;
-        margin: auto;
+        margin: 10%;
         padding: 30px;
         border: 1px solid #eee;
         box-shadow: 0 0 10px rgba(0, 0, 0, .15);
@@ -10,9 +10,6 @@
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         color: #555;
     }
-    /* .invoice-box .titleInvoice img {
-    	box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-    } */
     
     .invoice-box table {
         width: 100%;
@@ -29,35 +26,35 @@
         text-align: right;
     }
     
-    .invoice-box table tr.topInvoice table td {
+    .invoice-box table tr.top table td {
         padding-bottom: 20px;
     }
     
-    .invoice-box table tr.topInvoice table td.titleInvoice {
+    .invoice-box table tr.top table td.title {
         font-size: 45px;
         line-height: 45px;
         color: #333;
     }
     
-    .invoice-box table tr.informationInvoice table td {
+    .invoice-box table tr.information table td {
         padding-bottom: 40px;
     }
     
-    .invoice-box table tr.headingInvoice td {
+    .invoice-box table tr.heading td {
         background: #eee;
         border-bottom: 1px solid #ddd;
         font-weight: bold;
     }
     
-    .invoice-box table tr.detailsInvoice td {
+    .invoice-box table tr.details td {
         padding-bottom: 20px;
     }
     
-    .invoice-box table tr.itemInvoice td{
+    .invoice-box table tr.item td{
         border-bottom: 1px solid #eee;
     }
     
-    .invoice-box table tr.itemInvoice.last td {
+    .invoice-box table tr.item.last td {
         border-bottom: none;
     }
     
@@ -67,13 +64,13 @@
     }
     
     @media only screen and (max-width: 600px) {
-        .invoice-box table tr.topInvoice table td {
+        .invoice-box table tr.top table td {
             width: 100%;
             display: block;
             text-align: center;
         }
         
-        .invoice-box table tr.informationInvoice table td {
+        .invoice-box table tr.information table td {
             width: 100%;
             display: block;
             text-align: center;

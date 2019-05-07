@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Component
 public class Message implements java.io.Serializable{
 	private static final long serialVersionUID = -5651292997022584953L;
@@ -13,7 +15,7 @@ public class Message implements java.io.Serializable{
 	private String recv_id;
 	private String sent_id;
 	private String mms_content;
-	private Date sent_date;
+	private Date sent_date;	
 	private Date read_date;
 	private String recv_read;
 	private String recv_del;

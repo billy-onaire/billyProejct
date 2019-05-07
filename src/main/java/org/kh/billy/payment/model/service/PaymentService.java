@@ -6,10 +6,9 @@ import org.kh.billy.payment.model.vo.Payment;
 
 public interface PaymentService {
 	ArrayList<Payment> selectPaymentList();
-	/*Member selectLogin(Member member); 
-	int insertMember(Member member);
-	int updateMember(Member member);
-	int deleteMember(String userid);
-	Member selectMember(String userid);
-	ArrayList<String> searchId(Member member);*/
+	ArrayList<Payment> searchPayment(Payment payment);
+	Payment selectPayment(String payment_no);
+	int insertPayment(Payment payment);
+	int updatePayment(Payment payment);
+	int deletePayment(String payment_no);
 }

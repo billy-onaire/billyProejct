@@ -2,24 +2,30 @@ package org.kh.billy.product.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.kh.billy.product.model.service.ProductInsertService;
+import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.product.model.service.ProductManipulationService;
 import org.kh.billy.product.model.vo.Product;
+import org.kh.billy.product.model.vo.ProductForList;
+import org.kh.billy.product.model.vo.SettingList;
 import org.kh.billy.productcategory.model.service.ProductCategoryService;
 import org.kh.billy.productcategory.model.vo.ProductCategory;
 import org.kh.billy.productimg.model.service.ProductImgService;
 import org.kh.billy.productimg.model.vo.ProductImg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ProductInsertController {
+public class ProductManipulationController {
 	
 	@Autowired
 	private ProductCategoryService productCategoryService;
@@ -28,7 +34,7 @@ public class ProductInsertController {
 	private ProductImgService productImgService;
 	
 	@Autowired
-	private ProductInsertService productInsertService;
+	private ProductManipulationService pms;
 	
 	@RequestMapping(value="productinsertmain.do")
 	public String addProduct() {
@@ -88,7 +94,7 @@ public class ProductInsertController {
 		product.setSeller_id("user01");
 		System.out.println("이미지 키값 확인 : " + img_no);
 		System.out.println("입력 전 상품정보 확인 : "+product);
-		productInsertService.insertProduct(product);
+		pms.insertProduct(product);
 		/*if(productInsertService.insertProduct(product) > 0)
 			System.out.println("상품등록 성공");
 		else
@@ -122,5 +128,27 @@ public class ProductInsertController {
 		}
 		return "home";
 	}*/
+	
+	@RequestMapping(value="myproductlist.do",method=RequestMethod.POST)
+	public void seleteMyProductList(SettingList settingList, Member member, Model mv) {
+		String userId = member.getUser_id();
+		
+		ArrayList<Product> list = pms.selectProductList(settingList, userId);
+		mv.addAttribute("list", list);
+	}
+	
+	@RequestMapping(value="myproductupdate.do",method=RequestMethod.POST)
+	public String updateProduct(Product product) {
+		String userId = product.getSeller_id();
+		int result = pms.updateProduct(product);
+		return "redirect:myproductlist.do?userid=" + product.getSeller_id();
+	}
+	
+	@RequestMapping(value="myproductdelete.do",method=RequestMethod.POST)
+	public String deleteProduct(Product product) {
+		int productNo = product.getProduct_no();
+		int result = pms.deleteProduct(productNo);
+		return "redirect:myproductlist.do?userid=" + product.getSeller_id();
+	}
 	
 }

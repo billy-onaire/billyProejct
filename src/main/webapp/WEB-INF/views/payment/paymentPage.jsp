@@ -9,18 +9,20 @@
 <!-- CSS -->
 <link rel='stylesheet' href='${ pageContext.request.contextPath }/resources/css/paymentInvoice.css'>
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/style.css">
 </head>
 <body>
-<h1>결제페이지</h1>
 <div class="main-content-wrapper d-flex clearfix">
-	<c:import url="../common/nav.jsp" />
- <div class="invoice-box">
+<c:import url='../common/nav.jsp'/>
+<c:import url='../common/myPage.jsp'/>
+<div class="amado_product_area section-padding-100">
+	<div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
                     <table>
                         <tr>
-                            <td class="titleInvoice">
+                            <td class="title">
                                 <img src='${ pageContext.request.contextPath }/resources/img/core-img/billylogo7.jpg' style="width:100%; max-width:200px;">
                             </td>
                             
@@ -34,27 +36,27 @@
                 </td>
             </tr>
             
-            <tr class="informationInvoice">
+            <tr class="information">
                 <td colspan="2">
                     <table>
                         <tr>
                             <td>
-                                Billy, TM.<br>
+                                Sparksuite, Inc.<br>
                                 12345 Sunny Road<br>
                                 Sunnyville, CA 12345
                             </td>
                             
                             <td>
-                                Billy-onaire™.<br>
-                                	안 정 은<br>
-                                billy_onaire@or.kr
+                                Acme Corp.<br>
+                                John Doe<br>
+                                john@example.com
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             
-            <tr class="headingInvoice">
+            <tr class="heading">
                 <td>
                     Payment Method
                 </td>
@@ -64,7 +66,7 @@
                 </td>
             </tr>
             
-            <tr class="detailsInvoice">
+            <tr class="details">
                 <td>
                     Check
                 </td>
@@ -74,7 +76,7 @@
                 </td>
             </tr>
             
-            <tr class="headingInvoice">
+            <tr class="heading">
                 <td>
                     Item
                 </td>
@@ -84,33 +86,29 @@
                 </td>
             </tr>
             
-            <tr class="itemInvoice">
+            <tr class="item">
                 <td>
-                   t org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:806)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1498)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)at org.apache.tomcat.util.threads.TaskThread$Wrappi
+                    Website design
                 </td>
                 
                 <td>
-                    30.000₩
+                    $300.00
                 </td>
             </tr>
             
-            <tr class="itemInvoice">
+            <tr class="item">
                 <td>
-                    대여 (3일)
+                    Hosting (3 months)
                 </td>
                 
                 <td>
-                    7.000₩
+                    $75.00
                 </td>
             </tr>
             
-            <tr class="itemInvoice last">
+            <tr class="item last">
                 <td>
-                    Domain name (1 year)
+                    Domain name (1 year)Domain name (1 year)Domain name (1 year)
                 </td>
                 
                 <td>
@@ -118,19 +116,19 @@
                 </td>
             </tr>
             
-            <tr class="totalInvoice">
+            <tr class="total">
                 <td></td>
                 
                 <td>
                    Total: $385.00
-                   
                 </td>
             </tr>
         </table>
 </div>
-<%-- <c:url var='pri' value='resultPay.do'>
-	<c:param name='payment' value='${ payment }' />
-</c:url> --%>
+</div>
+</div>
+<!-- Product Catagories Area End -->
+	
 <%-- <table>
 <h6>
 <tr>
@@ -153,29 +151,23 @@
 </c:forEach>
 </h6>
 </table> --%>
-</div>
-      <c:import url="../common/footer.jsp" />
-      <input type='button' onclick='bb();' value='payment'"/>
 
-   
-
-   <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-	<!-- Popper js -->
-	<script src="/billy/resources/js/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script src="/billy/resources/js/bootstrap.min.js"></script>
-	<!-- Plugins js -->
-	<script src="/billy/resources/js/plugins.js"></script>
-	<!-- Active js -->
-	<script src="/billy/resources/js/active.js"></script>
-    <!-- Product List js -->
-    <script src="/billy/resources/js/productList.js"></script>
-
+<c:import url="../common/footer.jsp" />
+<input type='button' onclick='bb();' value='payment'/>
 <!-- bootPay -->    
 <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
 <script src='${ pageContext.request.contextPath }/resources/js/bootpaySource.js' type="application/javascript"></script>
-
 <script type='text/javascript' src='${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js'></script>
+
+<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+	<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
+	<!-- Popper js -->
+	<script src="${ pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="${ pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
+	<!-- Plugins js -->
+	<script src="${ pageContext.request.contextPath }/resources/js/plugins.js"></script>
+	<!-- Active js -->
+	<script src="${ pageContext.request.contextPath }/resources/js/active.js"></script>
 </body>
 </html>
