@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="productInsertMapper">
+<mapper namespace="productManipulationMapper">
 
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true">
 	insert into product values(SQ_PDNO.nextval, #{product_name}, #{price}, #{product_quantity}, #{product_content}, default, #{product_startdate}, #{product_enddate}, #{weekend_yn}, #{weekday_yn}, sysdate, sysdate, default, #{category_code}, #{seller_id}, #{img_no})

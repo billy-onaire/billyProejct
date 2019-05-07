@@ -46,5 +46,4 @@
 			default,
 			product_no)
 	</insert>
- -->
 </mapper>
