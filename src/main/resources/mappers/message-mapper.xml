@@ -79,6 +79,4 @@
 	where mms_no = #{mms_no};
 	</update>
 
-
-		
 </mapper>

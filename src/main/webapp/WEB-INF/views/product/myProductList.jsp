@@ -115,7 +115,7 @@
 </div>
 <br>
                             <div class="container"> 
-  <div class="table-responsive">
+  <div class="table-responsive" style="width:1000px">
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -143,8 +143,8 @@
   </div>
 </div>
                        		
-                            <div style="overflow-x:auto;">
-  <table>
+                            <div>
+  <table class="table" style="width:1000px">
     <tr>
       <tr>
                                                 <th width="50%">productname</th>
@@ -155,7 +155,7 @@
                                             </tr>
     </tr>
     <tr>
-      <tr><td>1번상품</td><td>1</td><td>19-04-17</td><td>2</td></tr>
+      <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>수정/삭제</td></tr>
                                             <tr><td>2상품</td><td>2</td><td>19-04-17</td><td>2</td></tr>
                                             <tr><td>3상품</td><td>3</td><td>19-04-17</td><td>2</td></tr>
                                             <tr><td>4상품</td><td>4</td><td>19-04-17</td><td>2</td></tr>
