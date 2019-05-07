@@ -24,7 +24,11 @@
 	<!-- datepicker -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	
-	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+	<!-- 페이징 관련 -->
+	<link rel="stylesheet" href="/billy/resources/css/reviewdetailpaging.css">
+	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
+	
+	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
 		$.ajax({
@@ -34,12 +38,14 @@
 			success: function(data){
 				var jsonStr = JSON.stringify(data);
 				var json = JSON.parse(jsonStr);
-				
+													
 				for(var i in json.list){
 					console.log(json.list[i].review_date);
-				} 
-				
-				
+					$("#point" + (Number(i)+1)).html(json.list[i].point);
+					$("#content" + (Number(i)+1)).html(json.list[i].review_content);
+					$("#date" + (Number(i)+1)).html(json.list[i].review_date);
+					$("#img" + (Number(i)+1)).html("<img src='" + "/billy/resources/reviewImg/" + json.list[i].review_image + "' width='150px' height='150px'>");
+				} 	
 			},
 			error: function(request, status, errorData){
 				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
@@ -214,7 +220,7 @@
 			    <tbody>
 			    <tr>
 			        <td>user01</td>
-			        <td>
+			        <td id="point1">
 			        	<!-- <div class="ratings">
                         	<i class="fa fa-star" aria-hidden="true"></i>
                         	<i class="fa fa-star" aria-hidden="true"></i>
@@ -225,40 +231,19 @@
 			        </td>
 			        <td id="content1"></td>
 			        <td id="date1"></td>
-			        <td id="img1"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-			    </tr>
-			    <tr>
-			        <td>user01</td>
-			        <td>
-			        	<div class="ratings">
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                    	</div>
-			        </td>
-			        <td id="content2"></td>
-			        <td id="date2"></td>
-			        <td id="img2"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-			    </tr>
-			    <tr>
-			        <td>user01</td>
-			        <td>
-			        	<div class="ratings">
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                    	</div>
-			        </td>
-			        <td id="content3"></td>
-			        <td id="date3"></td>
-			        <td id="img3"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
+			        <td id="img1"></td>
 			    </tr>
 			    </tbody>
 			</table>
+			<!--맨 첫페이지 이동 -->
+			<!--이전 페이지 이동 -->
+			<ul class="pagination preBtn"></ul>
+			<!--페이지번호 -->
+			<ul class="pagination index"></ul>
+			<!--다음 페이지 이동 -->
+			<!--마지막 페이지 이동 -->
+			<ul class="pagination nextBtn"></ul>
+			
         </div>
         <!-- Product Details Area End -->
     </div>

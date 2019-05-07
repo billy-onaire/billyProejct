@@ -17,6 +17,8 @@
          <typeAlias type="org.kh.billy.message.model.vo.Message" alias="Message" />
          <typeAlias type="org.kh.billy.message.model.vo.MessagePname" alias="MessagePname" />
          <typeAlias type="org.kh.billy.socialuser.model.vo.SocialUser" alias="SocialUser" />
+         <typeAlias type="org.kh.billy.review.model.vo.Review" alias="Review"/>
+         <typeAlias type="org.kh.billy.review.model.vo.ReviewPaging" alias="ReviewPaging"/>
    </typeAliases>
    <mappers>
       <mapper resource="mappers/productmanipulation-mapper.xml" />
@@ -26,5 +28,6 @@
       <mapper resource="mappers/payment-mapper.xml" />
       <mapper resource="mappers/message-mapper.xml" />
       <mapper resource="mappers/social-mapper.xml" />
+      <mapper resource="mappers/review-mapper.xml" />
    </mappers>
 </configuration>
