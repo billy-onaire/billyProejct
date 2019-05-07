@@ -1,21 +1,17 @@
 package org.kh.billy.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
-import org.kh.billy.socialuser.controller.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class MemberController {
@@ -57,6 +53,21 @@ public class MemberController {
 		}
 	}
    
+   @RequestMapping(value="mupage.do")
+   public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mupdate.do")
+   public String updateMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mdelete.do")
+   public String deleteMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberManagementPage";
+   }
+   
    @RequestMapping(value = "/oauth", produces = "application/json")
    public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
           HttpServletRequest request, HttpServletResponse response) {
@@ -78,5 +89,25 @@ public class MemberController {
        
        return "home";
    }
+
+	@RequestMapping(value="joinPost", method=RequestMethod.POST)
+	public String joinPost(@ModelAttribute("member") Member member) throws Exception {
+		logger.info("currnent join member: " + member.toString());
+		memberService.create(member);
+		
+		return "/member/joinPost";
+	}
+	
+
+	@RequestMapping(value="joinConfirm", method=RequestMethod.GET)
+	public String emailConfirm(@ModelAttribute("member") Member member, Model model) throws Exception {
+		logger.info(member.getEmail() + ": auth confirmed");
+		member.setAuthstatus(1);	// authstatus를 1로,, 권한 업데이트
+		memberService.updateAuthstatus(member);
+		
+		model.addAttribute("auth_check", 1);
+		
+		return "/user/joinPost";
+	}  
 
 }

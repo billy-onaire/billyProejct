@@ -1,9 +1,14 @@
 package org.kh.billy.message.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.kh.billy.message.model.dao.MessageDao;
 import org.kh.billy.message.model.vo.Message;
+import org.kh.billy.message.model.vo.MessagePname;
+import org.kh.billy.product.model.vo.ProductForList;
+import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,21 +25,69 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public int insertMessage(Message message) {
-
 		return messageDao.insertMessage(mybatisSession, message);
 		
 	}
 
 	@Override
 	public Message selectMessage(int mms_no) {
-
 		return messageDao.selectMessage(mybatisSession, mms_no);
 	}
 
 	@Override
-	public ArrayList<Message> selectRecvList() {
-		// TODO Auto-generated method stub
-		return messageDao.selectRecvList(mybatisSession);
+	public ArrayList<MessagePname> selectSentList() {
+		return (ArrayList<MessagePname>)messageDao.selectSentList(mybatisSession);
 	}
+
+	@Override
+	public ArrayList<MessagePname> selectRecvList() {
+		// TODO Auto-generated method stub
+		return (ArrayList<MessagePname>)messageDao.selectRecvList(mybatisSession);
+	}
+
+	@Override
+	public int updateDelMessage(int mms_no) {
+		
+		return messageDao.updateDelMessage(mybatisSession, mms_no);
+	}
+
+	@Override
+	public int deleteFinalMessage(int mms_no) {
+
+		return messageDao.deleteFinalMessage(mybatisSession, mms_no);
+		
+	}
+
+
+	@Override
+	public int insertReplyMessage(Message message, int mms_no) {
+		
+		return messageDao.insertReplyMesage(mybatisSession, message, mms_no);
+	}
+
+	@Override
+	public ArrayList<Message> selectDelList() {
+		// TODO Auto-generated method stub
+		return messageDao.selectDelList(mybatisSession);
+	}
+
+
+	@Override
+	public int selectTotalListCount(SettingList setting) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public List<Map<String, Object>> selectDetailMessage(Map param) {
+		
+		messageDao.updateReadMessage(mybatisSession, param);
+		List list = (List) messageDao.selectDetailMessage(mybatisSession, param);
+		
+		return list;
+	}
+
 
 }

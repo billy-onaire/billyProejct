@@ -13,13 +13,17 @@
 			data: { code: "${param.code}", 
 				client_id: "1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com", 
 				client_secret: "PgasrNGtVq5aRtEci9joCM8v",
-				redirect_uri: "http://localhost:8888/billy/check.do",
+				redirect_uri: "http://localhost:8888/billy/googleCheck.do",
 				grant_type: "authorization_code"},
 			type: "post",
 			dataType: "json",
 			success: function(result){
 				if(result != null){
-					location.href="googleInfo.do?access_token="+result.hashMap.access_token + "&name="+decodeURIComponent(result.hashMap.name)+"&profile="+result.hashMap.profile;
+					$("#at").val(result.hashMap.access_token);
+					$("#name").val(decodeURIComponent(result.hashMap.name));
+					$("#profile").val(result.hashMap.profile);
+					$("#gac").submit();
+					/* location.href="googleInfo.do?access_token="+result.hashMap.access_token + "&name="+decodeURIComponent(result.hashMap.name)+"&profile="+result.hashMap.profile; */
 				}
 			},error: function(request, status, errorData){
 				console.log("error code : " + request.status
@@ -31,5 +35,10 @@
 </script>
 </head>
 <body>
+<form action="googlelogin.do" method="post" id="gac">
+<input type="hidden" name="access_token" id="at">
+<input type="hidden" name="name" id="name">
+<input type="hidden" name="profile" id="profile">
+</form>
 </body>
 </html>

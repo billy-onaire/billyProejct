@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewMapper">
+
+	<resultMap id="resultReview" type="Review">
+      <id property="review_no" column="review_no" />
+      <result property="review_content" column="review_content" />
+      <result property="review_image" column="review_image" />
+      <result property="point" column="point" />
+      <result property="review_date" column="review_date" />
+      <result property="payment_no" column="payment_no" />
+   </resultMap>
+	
+	<select id="selectReview" resultMap="resultReview">
+		select * from review
+	</select>
+	<insert id="insertReview" parameterType="Review">
+		insert into review values (SQ_RVNO.nextval, #{review_content}, #{review_image}, #{point}, default, #{payment_no})
+	</insert>
+	
+	<select id="selectListReview" parameterType="ReviewPaging" resultType="Review">
+		select *
+		from (select rownum rnum, p.* 
+			from (select * from review order by review_date desc) p) 
+		where rnum between #{start} and #{last}
+	</select>
+	
+	<select id="selectTotalListReview" resultType="int">
+		select count(*) from review
+	</select>
+	
+	
+
+</mapper>

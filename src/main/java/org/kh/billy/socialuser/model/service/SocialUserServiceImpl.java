@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class SocialUserServiceImpl implements SocialUserService{
 
 	@Autowired
-	private SqlSessionTemplate mybatisSession;
+	private SqlSessionTemplate mSession;
 	
 	@Autowired
 	private SocialUserDao socialDao;
@@ -26,7 +26,7 @@ public class SocialUserServiceImpl implements SocialUserService{
 
 	@Override
 	public int insertSocial(SocialUser social) {
-		return socialDao.insertSocial(mybatisSession, social);
+		return socialDao.insertSocial(mSession, social);
 	}
 
 	@Override

@@ -33,6 +33,11 @@ public class PaymentController {
 	public String resultPay() {
 		return "payment/paymentPage";
 	}*/
+	@RequestMapping(value="")
+	public String paymentMyList(Payment payment, ArrayList<Payment> myPmList) {
+		
+		return "";
+	}
 	
 	@RequestMapping(value="resultPay.do")
 	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {

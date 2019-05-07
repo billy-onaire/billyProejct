@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,18 +41,6 @@
         <div class="search-close">
             <i class="fa fa-close" aria-hidden="true"></i>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- Search Wrapper Area End -->
 <!-- ##### Main Content Wrapper Start ##### -->
@@ -83,10 +73,10 @@
                 <div class="row">
                     <div class="col-12">
                     <!-- 쪽지 보내기 팝업창 연습 -->
-                    	<a href="#" onclick="window.open('mmsWrite.do', 'popForm', 'width=550, height=500, menubar=no, status=no, toolbar=no, left=700, top=200'); return false;">쪽지보내기</a>
+                    	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
                         <div class="view d-flex">
-                                    <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지함</button>
-                                    <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지함</button>
+                                    <button class="tablinks active" onclick="openTab(event, 'tab1'); location.href='recvList.do'">받은 쪽지함</button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab2'); location.href='sentList.do'">보낸 쪽지함</button>
                                     <button class="tablinks" onclick="openTab(event, 'tab3')">삭제한 쪽지함</button>
                         </div>
                     </div>
@@ -110,22 +100,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	<c:forEach items="${list }" var="mms">                                                                 
+                                    	<c:forEach items="${recvList }" var="mms">                                                                 
                                         <tr>
                                             <td class="cart_product_img">
                                                 ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
-                                                product_name
+                                            	${mms.product_name }
                                             </td>
-                                            <td class="cart_product_desc">
+                                            <td class="cart_product_desc" id="${mms.mms_no }">
                                                 ${mms.mms_content }
                                             </td>
                                             <td class="price">
-                                                ${mms.sent_date }
-                                            </td>h
+                                            <!-- 여기서는 날짜만 표시하고 상세보기에서 시간까지 표시 -->
+                                            <fmt:formatDate value="${mms.sent_date }" pattern="yyyy-MM-dd"/>
+                                            </td>
                                             <td class="cart_product_img">
-                                                ${mms.recv_read }
+                                            <c:if test="${mms.recv_read eq 'N'}">
+                                            	읽지 않음 
+                                            </c:if>
+                                            <c:if test="${mms.recv_read eq 'Y'}">
+                                            	읽음
+                                            </c:if>
                                             </td>
                                         </tr>
 										</c:forEach>
@@ -145,23 +141,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    	<c:forEach items="${sentList }" var="sentmms">
+                                    	<form>
+                                    	<p>
+                                    		<input type="hidden" name="mms_no" />
+                                    	</p>
+                                    	</form>
                                         <tr>
                                             <td class="cart_product_img">
-                                               ${message.recv_id }
+                                               ${sentmms.recv_id }
                                             </td>
                                             <td class="cart_product_img">
-                                                	product_name
+                                                	${sentmms.product_name }
                                             </td>
                                             <td class="cart_product_desc">
-                                                ${message.mms_content }
+                                                <a href="javascript:goView('${sentmms.mms_no }')">${sentmms.mms_content }</a>
                                             </td>
                                             <td class="price">
-                                                ${message.sent_date }
+                                            	<fmt:formatDate value="${sentmms.sent_date }" pattern="yyyy-MM-dd"/>                                                
                                             </td>
                                             <td class="cart_product_img">
-                                                ${message.recv_read }
+                                            <c:if test="${sentmms.recv_read eq 'N'}">
+                                            	읽지 않음 
+                                            </c:if>
+                                            <c:if test="${sentmms.recv_read eq 'Y'}">
+                                            	읽음
+                                            </c:if>
                                             </td>
                                         </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div> 

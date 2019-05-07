@@ -22,6 +22,11 @@
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
     <link rel="stylesheet" href="/billy/resources/css/style.css">
 
+	<!-- 페이징 관련 -->
+	<link rel="stylesheet" href="/billy/resources/css/reviewpaging.min.css">
+	<link rel="stylesheet" href="/billy/resources/css/reviewpaging-theme.min.css">
+	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
+
 	<style type="text/css">
 		table.type06 {
 		    border-collapse: collapse;
@@ -38,7 +43,7 @@
 		    vertical-align: center;
 		}
 		table.type06 td {
-		    width: 350px;
+		    width: 300px;
 		    padding: 10px;
 		    vertical-align: center;
 		}
@@ -72,7 +77,8 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
-	    <table class="type06">
+	<c:import url="../common/myPage.jsp" />
+	    <%-- <table class="type06">
 	    	<tr>
 		        <th class="even">이미지</th>
 		        <th class="even">제품명</th>
@@ -109,7 +115,65 @@
 		        <td class="even">2019.04.05-2019.04.08</td>
 		        <td class="even"><button>대여후기 쓰기</button></td>
 		    </tr>
+		</table> --%>
+		
+		<table class="type06">
+	    	<tr>
+		        <th class="even">이미지</th>
+		        <th class="even">제품명</th>
+		        <th class="even">대여기간</th>
+		        <th class="even">후기작성</th>
+		    </tr>
+		    <c:forEach var="r" items="${lists}">
+				<tr>
+					<td>${r.point}</td>
+					<td>${r.review_content}</td>
+					<td>${r.point}</td>
+					<td>${r.review_content}</td>
+				</tr>						
+			</c:forEach>
 		</table>
+		
+		<%-- <table class="table table-bordered">
+			<tr>
+				<th>별점</th>
+				<th>내용</th>
+			</tr>
+			<c:forEach var="r" items="${lists}">
+				<tr>
+					<td>${r.point}</td>
+					<td>${r.review_content}</td>
+				</tr>						
+			</c:forEach>
+		</table> --%>
+		
+		<!-- 5. paging view -->	
+		<ul class="pagination">
+			<c:if test="${p.pageStartNum ne 1}">
+				<!--맨 첫페이지 이동 -->
+				<li><a onclick='pagePre(${p.pageCnt+1},${p.pageCnt});'>&laquo;</a></li>
+				<!--이전 페이지 이동 -->
+				<li><a onclick='pagePre(${p.pageStartNum},${p.pageCnt});'>&lsaquo;</a></li>
+			</c:if>
+			
+			<!--페이지번호 -->
+			<c:forEach var='i' begin="${p.pageStartNum}" end="${p.pageLastNum}" step="1">
+				<li class='pageIndex${i}'><a onclick='pageIndex(${i});'>${i}</a></li>
+			</c:forEach>
+			
+			<c:if test="${p.lastChk}">
+				<!--다음 페이지 이동 -->
+				<li><a onclick='pageNext(${p.pageStartNum},${p.total},${p.listCnt},${p.pageCnt});'>&rsaquo;</a></li>
+				<!--마지막 페이지 이동 -->
+				<li><a onclick='pageLast(${p.pageStartNum},${p.total},${p.listCnt},${p.pageCnt});'>&raquo;</a></li>
+			</c:if>
+		</ul>
+		<form action="reviewList.do" method="post" id='frmPaging'>
+			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+			<input type='hidden' name='index' id='index' value='${p.index}'>
+			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${p.pageStartNum}'>
+			<input type='hidden' name='listCnt' id='listCnt' value='${p.listCnt}'>	
+		</form>
         
         
     </div>

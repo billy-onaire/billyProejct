@@ -462,12 +462,12 @@
               $('#coba').focus();
               return false;
             }
-            if($('#product_startdate').val() == null){
+            if($('#product_startdate').val() == null || $('#product_startdate').val() == ""){
               alert('대여가능시작일 입력하세요');
               $('#product_startdate').focus();
               return false;
             }
-            if($('#product_enddate').val() == null){
+            if($('#product_enddate').val() == null  || $('#product_enddate').val() == ""){
               alert('대여가능종료일 입력하세요');
               $('#product_enddate').focus();
               return false;

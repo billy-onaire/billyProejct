@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.kh.billy.review.model.service.ReviewService;
 import org.kh.billy.review.model.vo.Review;
+import org.kh.billy.review.model.vo.ReviewPaging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,12 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	@RequestMapping("reviewList.do")
-	public String reviewListPage() {
+	public String reviewListPage(Model model, ReviewPaging paging) {
+		List<Review> lists = reviewService.selectListReview(paging);
+        paging.setTotal(reviewService.selectTotalListReview());
+        model.addAttribute("lists", lists);
+        model.addAttribute("p", paging);
+
 		return "member/reviewList";
 	}
 	
