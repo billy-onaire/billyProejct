@@ -63,3 +63,6 @@ BootPay.request({
 	console.log(data);
 });
 }
+function bbb() {
+	location.href='bookingPage.do';
+}
