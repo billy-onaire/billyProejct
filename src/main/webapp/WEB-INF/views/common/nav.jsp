@@ -42,14 +42,19 @@
                 <a href="main.do"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
-            <c:if test="${empty accessToken }">
+            <c:set var="profile" value="${profile }" scope="session" /> 
+			<c:set var="name" value="${name }" scope="session" /> 
+            <c:if test="${empty loginMember }">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
                 <a href="recvList.do">쪽지 확인용</a>
             </div>
        		</c:if>
-       		<c:if test="${!empty accessToken }">
-       		<div class="cart-fav-search mb-100" id="googleLogin">
+       		<c:if test="${!empty loginMember }">
+       			<div class="cart-fav-search mb-100" id="googleLogin">
+       			<img id="google_img"  src="${profile }">&nbsp; <span>${name }</span>
+                <a href="recvList.do">쪽지 확인용</a>
+                <a href="logout.do">로그아웃</a>
        		</div>
        		</c:if>
             <!-- Amado Nav -->

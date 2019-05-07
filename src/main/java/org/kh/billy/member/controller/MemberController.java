@@ -57,6 +57,21 @@ public class MemberController {
 		}
 	}
    
+   @RequestMapping(value="mupage.do")
+   public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mupdate.do")
+   public String updateMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mdelete.do")
+   public String deleteMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberManagementPage";
+   }
+   
    @RequestMapping(value = "/oauth", produces = "application/json")
    public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
           HttpServletRequest request, HttpServletResponse response) {

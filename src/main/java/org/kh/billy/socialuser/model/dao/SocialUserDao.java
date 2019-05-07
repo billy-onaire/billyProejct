@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository("socialUserDao")
 public class SocialUserDao {
 
-	public int insertSocial(SqlSessionTemplate mybatisSession, SocialUser social) {		
-		return mybatisSession.insert("socialMapper.insertSocial", social);
+	public int insertSocial(SqlSessionTemplate mSession, SocialUser social) {		
+		return mSession.insert("socialMapper.insertSocial", social);
 	}
 	
+	public int selectSocialLogin(SqlSessionTemplate mSession, SocialUser social) {
+		return mSession.selectOne("socialMapper.selectSocialLogin", social);
+	}
 }

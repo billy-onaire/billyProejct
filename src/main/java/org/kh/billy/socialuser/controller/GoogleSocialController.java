@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.commons.codec.binary.Base64;
 import org.kh.billy.member.controller.MemberController;
@@ -31,6 +33,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,7 +44,7 @@ public class GoogleSocialController {
 	@Autowired
 	private SocialUserService socialService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GoogleSocialController.class);
 	
 	 @Inject
 	    private AuthInfo authInfo;
@@ -55,32 +58,24 @@ public class GoogleSocialController {
 	    @Autowired
 	    private BCryptPasswordEncoder bcryptPE;
 	    
-	    // 회원 가입 페이지
-	    @RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
-	    public String join(HttpServletResponse response, Model model) {
-	 
-	        //URL을 생성한다.
-	        String url = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-	        System.out.println("/googleLogin, url : " + url);
-	        model.addAttribute("google_url", url);
-	        
-	        return "member/login";
-	    }
-	    
 	    // 구글 체크 페이지
-	    @RequestMapping(value="check.do", method= { RequestMethod.GET, RequestMethod.POST })
+	    @RequestMapping(value="googleCheck.do", method= { RequestMethod.GET, RequestMethod.POST })
 	    public String googleCheckPage() {
 	    	return "member/googleCheck";
 	    }
 	    
 	    // 구글 사용자 정보 넘기기
-	    @RequestMapping(value="googleInfo")
-	    public String googleCheckPage(HttpServletRequest request, Model model) {
+	    @RequestMapping(value="googlelogin.do")
+	    public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status) {
 	    	String accessToken = request.getParameter("access_token");
 	    	String name = request.getParameter("name");
 	    	String profile = request.getParameter("profile");
-	    		    	
-	    	model.addAttribute("accessToken",accessToken);
+	    	if(accessToken != null) {
+		    	   gSession.setAttribute("loginMember", accessToken);
+		    	   gSession.setAttribute("name", name);
+		    	   gSession.setAttribute("profile", profile);
+		    	   status.setComplete();
+		    }
 	    	model.addAttribute("name",name);
 	    	model.addAttribute("profile",profile);
 	    	return "home";
@@ -88,7 +83,7 @@ public class GoogleSocialController {
 	    
 	    //토큰 및 사용자 정보 저장 및 불러오기
 	    @RequestMapping(value = "token.do", method=RequestMethod.POST)
-	    public ModelAndView doSessionAssignActionPage(SocialUser social, HttpServletRequest request, HttpServletResponse response,ModelAndView model) throws Exception {
+	    public ModelAndView doSessionAssignActionPage(SocialUser social, HttpServletRequest request, HttpServletResponse response, ModelAndView model) throws Exception {
 	    	String code = request.getParameter("code");
 	        System.out.println("code : " + code);
 	        
@@ -108,7 +103,7 @@ public class GoogleSocialController {
 	        Map<String, Object> responseMap = responseEntity.getBody();
 	        System.out.println("responseMap : " + responseMap);
 	        String access_token = (String)responseMap.get("access_token");
-	       
+	        
 	        // id_token 라는 키에 사용자가 정보가 존재한다.
 	        // 받아온 결과는 JWT (Json Web Token) 형식으로 받아온다. 콤마 단위로 끊어서 첫 번째는 현 토큰에 대한 메타 정보, 두 번째는 우리가 필요한 내용이 존재한다.
 	        // 세번째 부분에는 위변조를 방지하기 위한 특정 알고리즘으로 암호화되어 사이닝에 사용한다.
@@ -134,13 +129,7 @@ public class GoogleSocialController {
 	        System.out.println("name : " + name + ", profile : " + profile + "\nsub : " + uid);
 	        social.setUser_id(bcryptPE.encode(uid));
 	        social.setToken(access_token);
-	        
-	        if(socialService.insertSocial(social) > 0) {
-	        	System.out.println("성공");
-	        }else {
-	        	System.out.println("실패");
-	        }
-	        
+	        	        
 	        //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
 	       /* ObjectMapper mapper = new ObjectMapper();
 	        Map<String, String> result = mapper.readValue(body, Map.class);*/
@@ -150,10 +139,20 @@ public class GoogleSocialController {
 	       map.put("name", URLEncoder.encode(name,"utf-8"));
 	       map.put("profile", profile);
 	       
-	        model.addObject(map);
+	       model.addObject(map);
 	        model.setViewName("jsonView");
 	     
 	        return model;
+	    }
+	    
+	    //로그아웃
+	    @RequestMapping(value="logout.do")
+	    public String logoutMethod(HttpServletRequest request) {
+	    	HttpSession session = request.getSession(false);
+	    	if(session != null) {
+	    		session.invalidate();
+	    	}
+	    	return "home";
 	    }
 	   
 }

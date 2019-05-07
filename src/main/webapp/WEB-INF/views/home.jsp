@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,15 +14,7 @@
 <title>Billy - main</title>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-		$(function(){
-		<c:if test='${!empty accessToken}'>
-			var profile = "<img id='google_img' src=${profile}>&nbsp";
-			var name = "<span id='google_name'>${name}</span>";
-			console.log("profile : " + profile + ", name : "+ name);
-			$("#googleLogin").html(profile+name+"<a href='mmsList.do'>쪽지 확인용</a>");
-	 	</c:if> 
-		}); //ready
-	</script>
+</script>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 
@@ -31,7 +22,7 @@
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 </head>
 
-<body> 
+<body>
 	<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
 		<div class="search-close">
@@ -144,9 +135,6 @@
 		<!-- Product Catagories Area End -->
 	</div>
 	<c:import url="common/footer.jsp" />
-	<h4>${accessToken }</h4>
-	<h4>${name }</h4>
-	<h4>${profile }</h4>
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
