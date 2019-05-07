@@ -106,9 +106,9 @@
                                                 ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
-                                            	${mms.product_name }
+                                            	    확인중
                                             </td>
-                                            <td class="cart_product_desc" id="${mms.mms_no }">
+                                            <td class="cart_product_desc">
                                                 ${mms.mms_content }
                                             </td>
                                             <td class="price">
@@ -116,12 +116,7 @@
                                             <fmt:formatDate value="${mms.sent_date }" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td class="cart_product_img">
-                                            <c:if test="${mms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                            </c:if>
-                                            <c:if test="${mms.recv_read eq 'Y'}">
-                                            	읽음
-                                            </c:if>
+                                                ${mms.recv_read }
                                             </td>
                                         </tr>
 										</c:forEach>
@@ -142,31 +137,21 @@
                                     </thead>
                                     <tbody>
                                     	<c:forEach items="${sentList }" var="sentmms">
-                                    	<form>
-                                    	<p>
-                                    		<input type="hidden" name="mms_no" />
-                                    	</p>
-                                    	</form>
                                         <tr>
                                             <td class="cart_product_img">
                                                ${sentmms.recv_id }
                                             </td>
                                             <td class="cart_product_img">
-                                                	${sentmms.product_name }
+                                                	product_name
                                             </td>
                                             <td class="cart_product_desc">
-                                                <a href="javascript:goView('${sentmms.mms_no }')">${sentmms.mms_content }</a>
+                                                ${sentmms.mms_content }
                                             </td>
                                             <td class="price">
                                             	<fmt:formatDate value="${sentmms.sent_date }" pattern="yyyy-MM-dd"/>                                                
                                             </td>
                                             <td class="cart_product_img">
-                                            <c:if test="${sentmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                            </c:if>
-                                            <c:if test="${sentmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            </c:if>
+                                                ${sentmms.recv_read }
                                             </td>
                                         </tr>
                                         </c:forEach>

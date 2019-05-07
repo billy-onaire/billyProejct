@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
-public class Message implements java.io.Serializable{
-	private static final long serialVersionUID = -5651292997022584953L;
+public class MessagePname implements java.io.Serializable{
+	private static final long serialVersionUID = -56512929972258953L;
 	
 	//테이블의 컬럼명과 똑같이 필드명 지정함
 	private int mms_no;
@@ -21,15 +21,16 @@ public class Message implements java.io.Serializable{
 	private String recv_del;
 	private String sent_del;
 	private int product_no;
+	private String product_name;
 	
 	
-	public Message() {
+	public MessagePname() {
 		
 	}
 
 
-	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_read, String recv_del, String sent_del, int product_no) {
+	public MessagePname(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
+			String recv_read, String recv_del, String sent_del, int product_no, String product_name) {
 		super();
 		this.mms_no = mms_no;
 		this.recv_id = recv_id;
@@ -41,6 +42,7 @@ public class Message implements java.io.Serializable{
 		this.recv_del = recv_del;
 		this.sent_del = sent_del;
 		this.product_no = product_no;
+		this.product_name = product_name;
 	}
 
 
@@ -144,6 +146,16 @@ public class Message implements java.io.Serializable{
 	}
 
 
+	public String getProduct_name() {
+		return product_name;
+	}
+
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -151,11 +163,14 @@ public class Message implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Message [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
+		return "MessagePname [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
 				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
-				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + "]";
+				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + ", product_name="
+				+ product_name + "]";
 	}
 
+
+	
 
 	
 	

@@ -25,6 +25,20 @@ function checkContent(){
 		return false;
 	}
 }
+
+function popupClose(form) {
+    // form의 target을 부모 창으로 설정함            
+    form.target = opener.name;
+    
+    form.submit();
+    
+    if (opener != null) {
+        opener.insert = null;
+        
+        self.close();
+    }
+}
+
 </script>
 </head>
 
@@ -33,12 +47,12 @@ function checkContent(){
 		<div class="row">
 			<div class="col-sm-6">
 				<div id="mmsWrite" style="height:500px;">
-					<form action="insertMms.do" method="post" onsubmit="return checkContent();">
+					<form action="insertMms.do" method="post" onsubmit="return checkContent();" target="mmsList.do">
 						<div class="form-group" >
 							<label for="name">상품명 : </label> <input type="text"
 								class="form-control" name="pname" value="product_name" readonly >
 							<label for="recvid">받는 사람 : </label> <input type="text"
-								class="form-control" name="recv_id" value="seller_id" readonly style="width: 100px;">
+								class="form-control" name="recv_id" value="testmk" readonly style="width: 100px;">
 						</div>
 
 						<div class="form-group">
@@ -47,8 +61,10 @@ function checkContent(){
 								name="mms_content" required></textarea>
 						</div>
 						<br> <br> <span id="message"></span>
-						<button type="submit" class="btn btn-warning btn-block"
-							id="mmsWrite" style="color: white">보내기</button>
+						<input type="button" class="btn btn-warning btn-block"
+							id="mmsWrite" style="color: white" onclick="popupClose(form);" value="보내기" >
+							<input type="button" class="btn btn-warning btn-block"
+							id="mmsWrite" style="color: white" onclick="window.close()" value="취소">
 					</form>
 				</div>
 			</div>
