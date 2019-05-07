@@ -14,7 +14,7 @@
 }
 .mb-100{
 	margin-bottom: 50px;
-}
+}z
 </style>
 </head>
 <body>
