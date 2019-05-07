@@ -11,7 +11,7 @@ public class SocialUserDao {
 		return mSession.insert("socialMapper.insertSocial", social);
 	}
 	
-	public int selectSocialLogin(SqlSessionTemplate mSession, SocialUser social) {
-		return mSession.selectOne("socialMapper.selectSocialLogin", social);
+	public int selectSocialLogin(SqlSessionTemplate mSession, String uid) {
+		return mSession.selectOne("socialMapper.selectSocialLogin", uid);
 	}
 }

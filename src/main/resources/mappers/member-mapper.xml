@@ -28,12 +28,12 @@
    </sql>
    
    
-   <select id="selectLogin" parameterType="Member" resultMap="resultMember">
-      select * from tb_user where user_id = #{user_id} and user_pwd = #{user_pwd}
+   <select id="selectCheckId" parameterType="String" resultMap="resultMember">
+      select * from tb_user where user_id = #{user_id}
    </select>
    
-   <select id="selectCheckid" parameterType="string" resultType="_int" useCache="true" >
-      select count(user_id) from tb_user where user_id = #{user_id}
+   <select id="selectLogin" parameterType="String" resultMap="resultMember">
+      select * from tb_user where user_id = #{user_id}
    </select>
    
   <!--  <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">

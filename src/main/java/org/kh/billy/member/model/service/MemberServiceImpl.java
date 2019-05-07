@@ -23,16 +23,19 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao memberDao;
     
-	@Autowired
-	private JavaMailSender mailSender;
-	
-	
+	/*@Autowired
+	private JavaMailSender mailSender;*/
 	
 	@Override
-	public Member selectLogin(Member member) {
-		return memberDao.selectLogin(mybatisSession, member);
+	public Member selectCheckId(String userId) {
+		return memberDao.selectCheckId(mybatisSession, userId);
 	}
-
+	
+	@Override
+	public Member selectLogin(String userId) {
+		return memberDao.selectLogin(mybatisSession, userId);
+	}
+	
 	@Override
 	public int insertMember(Member member) {
 		return memberDao.insertMember(mybatisSession, member);
@@ -69,7 +72,6 @@ public class MemberServiceImpl implements MemberService{
 	
 	}
 	
-	
 	@Transactional
 	@Override
 	public void create(Member member) throws Exception {
@@ -93,10 +95,5 @@ public class MemberServiceImpl implements MemberService{
 	public void updateVerify(Member member) {
 		memberDao.updateVerify(mybatisSession, member);
 		
-	}
-
-
-	
-
-	
+	}	
 }

@@ -9,10 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository("memberDao")
 public class MemberDao {
 
-	public Member selectLogin(SqlSessionTemplate session, Member member) {
-		Member loginMember = session.selectOne("memberMapper.selectLogin", member);
-		
-		return loginMember;
+	public Member selectLogin(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectLogin", userId);
 	}
 	
 	public List<Member> searchId(SqlSessionTemplate session, Member member) {
@@ -27,12 +25,13 @@ public class MemberDao {
 		return session.update("memberMapper.updateMember", member);
 	}
 	
-	
-	
 	public int deleteMember(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.deleteMember", member);
 	}
 
+	public Member selectCheckId(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectCheckId", userId);
+	}
 
 	public int insertMember(SqlSessionTemplate session, Member member) {
 		return session.insert("memberMapper.insertMember", member);
@@ -52,6 +51,4 @@ public class MemberDao {
 		session.update("memberMapper.updateVerify", member);
 		
 	}
-
-	
 }
