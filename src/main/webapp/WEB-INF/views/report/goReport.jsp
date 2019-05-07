@@ -71,13 +71,13 @@
 
                                     <div class="col-12 mb-3">
                                         <p>신고 카테고리 / 내용</p>
-                                        <select class="w-100" id="country">
-                                            <option value="usa">[ 부적절한 이미지인 경우 ]</option>
-                                            <option value="uk">[ 욕설 및 스팸 게시물인 경우 ]</option>
-                                            <option value="ger">[ 거래 시간 미준수한 경우 ]</option>
-                                            <option value="fra">[ 사진과 상이한 물품의 품질인 경우 ]</option>
-                                            <option value="ind">[ 거래 시 욕설 또는 협박을 한 경우 ]</option>
-                                            <option value="aus">[ 기타 ]</option>
+                                        <select class="w-100" id="rcategory">
+                                            <option value="1">[ 부적절한 이미지인 경우 ]</option>
+                                            <option value="2">[ 욕설 및 스팸 게시물인 경우 ]</option>
+                                            <option value="3">[ 거래 시간 미준수한 경우 ]</option>
+                                            <option value="4">[ 사진과 상이한 물품의 품질인 경우 ]</option>
+                                            <option value="5">[ 거래 시 욕설 또는 협박을 한 경우 ]</option>
+                                            <option value="6">[ 기타 ]</option>
                                         </select>
                                     </div>
                                     <div class="col-12 mb-3">
@@ -87,19 +87,6 @@
                                     <div class="col-md-6 mb-3">
                                         <p>신고 날짜</p>
                                         <input type="date" class="form-control" id="rdate"  value="" readonly>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="custom-control custom-checkbox d-block mb-2">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">Create an
-                                                accout</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox d-block">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                            <label class="custom-control-label" for="customCheck3">Ship to a different
-                                                address</label>
-                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -111,20 +98,12 @@
                             <ul class="summary-table">
                                 <li><span>Product No:</span> <span>${prod.product_no}</span></li>
                                 <li><span>Product Name:</span> <span>${prod.product_name}</span></li>
-                                <li><span>ID:</span> <span>${prod.seller_id}</span></li>
-                                <li><span>Category:</span> <span>$140.00</span></li>
-                                
+                                <li><span>ID:</span> <span id="for_nocap">${prod.seller_id}</span></li>
+                                <li><span>Category:</span> <span>[ 부적절한 이미지인 경우 ]</span></li>
+                                <li><span>Content: </span> <span></span></li>
                             </ul>
 
-                            <div class="payment-method">
-                                <!-- Cash on delivery -->
-                                <div class="custom-control custom-checkbox mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="cod" onclick="return false;">
-                                    <label class="custom-control-label" for="cod">신고 진행 안내 메일받기</label>
-                                </div>
-                                <!-- Paypal -->
-                                
-                            </div>
+    
 
                             <div class="cart-btn mt-100">
                                 <a href="#" class="btn amado-btn w-100">REPORT</a>
