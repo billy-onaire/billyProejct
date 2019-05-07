@@ -19,6 +19,7 @@
          <typeAlias type="org.kh.billy.socialuser.model.vo.SocialUser" alias="SocialUser" />
          <typeAlias type="org.kh.billy.review.model.vo.Review" alias="Review"/>
          <typeAlias type="org.kh.billy.review.model.vo.ReviewPaging" alias="ReviewPaging"/>
+         <typeAlias type="org.kh.billy.review.model.vo.ReviewPagingFront" alias="ReviewPagingFront"/>
          <typeAlias type="org.kh.billy.member.model.vo.Member" alias="Member" />
          <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
    </typeAliases>

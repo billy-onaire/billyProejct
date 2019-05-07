@@ -26,32 +26,188 @@
 	
 	<!-- 페이징 관련 -->
 	<link rel="stylesheet" href="/billy/resources/css/reviewdetailpaging.css">
-	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
+	<script type="text/javascript">
+	//paging 객체
+	var paging = {
+	        // 기본값 셋팅
+	        p: {
+	            index : 0,
+	            pageStartNum : 1
+	        },
+	        // 페이징 생성
+	        create: function(){
+	            var htmlTag = '';
+	            for (var i = paging.p.pageStartNum; i <= paging.p.pageLastNum; i++) {
+	                htmlTag += '<li class="pageIndex"><span>'+i+'</span></li>';
+	            }
+	            $('.index').html(htmlTag);
+	            
+	            // 현재 번호 ui
+	            $('.pageIndex').each(function(){
+	                if(paging.p.index == $(this).text()-1) {
+	                    $(this).addClass('active');
+	                }else {
+	                    $(this).removeClass('active');
+	                }
+	            });
+	            
+	            // 이전 페이지 이동 버튼 생성여부
+	            if(paging.p.pageStartNum != 1) {
+	                $('.preBtn').html('<li id="pagePreFirst"><span>«</span></li><li id="pagePre"><span>‹</span></li>');
+	                // 맨 첫 페이지 index
+	                $('#pagePreFirst').click(function(){
+	                    var index = paging.p.pageCnt+1;
+	                    var pageCnt = paging.p.pageCnt;
+	                    if (0 < index - pageCnt) {
+	                        index -= pageCnt;
+	                        paging.p.pageStartNum = index;
+	                        paging.p.index = index-1;
+	                        paging.ajax();
+	                    }
+	                });
+	                
+	                // 이전 페이지 index
+	                $('#pagePre').click(function(){
+	                    var index = paging.p.pageStartNum;
+	                    var pageCnt = paging.p.pageCnt;
+	                    if (0 < index - pageCnt) {
+	                        index -= pageCnt;
+	                        paging.p.pageStartNum = index;
+	                        paging.p.index = index-1;
+	                        paging.ajax();
+	                    }
+	                });
+	            }else {
+	                $('.preBtn').children('li').remove();
+	            }
+	            
+	            // index 리스트 처리
+	            $('.pageIndex').click(function(){
+	                var index = Number($(this).find('span').text());
+	                paging.p.index = index - 1;
+	                paging.ajax();
+	            });
+	            
+	            // 다음 페이지 이동 버튼 생성여부
+	            if(paging.p.lastChk) {
+	                $('.nextBtn').html('<li id="pageNext"><span>›</span></li><li id="pageLast"><span>»</span></li>');
+	                // 다음 페이지 index
+	                $('#pageNext').click(function(){
+	                    var index = paging.p.pageStartNum;
+	                    var total = paging.p.total;
+	                    var listCnt = paging.p.listCnt;
+	                    var pageCnt = paging.p.pageCnt;
+	                    
+	                    var totalPageCnt = Math.ceil(total / listCnt);
+	                    var max = Math.ceil(totalPageCnt / pageCnt);
+	                    if (max * pageCnt > index + pageCnt) {
+	                        index += pageCnt;
+	                        paging.p.pageStartNum = index;
+	                        paging.p.index = index-1;
+	                        paging.ajax();
+	                    }
+	                });
+	                // 마지막 페이지 index
+	                $('#pageLast').click(function(){
+	                    var index = paging.p.pageStartNum;
+	                    var total = paging.p.total;
+	                    var listCnt = paging.p.listCnt;
+	                    var pageCnt = paging.p.pageCnt;
+	                    
+	                    var totalPageCnt = Math.ceil(total / listCnt);
+	                    var max = Math.ceil(totalPageCnt / pageCnt);
+	                    while (max * pageCnt > index + pageCnt) {
+	                        index += pageCnt;
+	                    }
+	                    var remainListCnt = total - listCnt * (index - 1);
+	                    var remainPageCnt = Math.floor(remainListCnt / listCnt);
+	                    if (remainListCnt % listCnt != 0) {
+	                        remainPageCnt++;
+	                    }
+	                    var pageLastNum = 0;
+	                    if (remainListCnt <= listCnt) {
+	                        pageLastNum = index;
+	                    } else if (remainPageCnt <= pageCnt) {
+	                        pageLastNum = remainPageCnt + index - 1;
+	                    } else {
+	                        pageLastNum = pageCnt + index - 1;
+	                    }
+	                    paging.p.pageStartNum = index;
+	                    paging.p.index = index-1;
+	                    paging.ajax();
+	                });
+	            }else {
+	                $('.nextBtn').children('li').remove();
+	            }
+	        },
+	        remove : function() {
+	            $('.preBtn').children('li').remove();
+	            $('.index').html('1');
+	            $('.nextBtn').children('li').remove();
+	        }
+	};
+
+	</script>
 	
 	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
+	
 	$(function(){
-		$.ajax({
-			url: "printReview.do",
-			type: "post",
-			dataType: "json",
-			success: function(data){
-				var jsonStr = JSON.stringify(data);
-				var json = JSON.parse(jsonStr);
-													
-				for(var i in json.list){
-					console.log(json.list[i].review_date);
-					$("#point" + (Number(i)+1)).html(json.list[i].point);
-					$("#content" + (Number(i)+1)).html(json.list[i].review_content);
-					$("#date" + (Number(i)+1)).html(json.list[i].review_date);
-					$("#img" + (Number(i)+1)).html("<img src='" + "/billy/resources/reviewImg/" + json.list[i].review_image + "' width='150px' height='150px'>");
-				} 	
-			},
-			error: function(request, status, errorData){
-				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
-			}
-		});
+	    // 3.페이징 처리할 ajax셋팅
+	    paging.ajax = ajaxList;
+	    ajaxList();
 	});
+	 
+	var ajaxList = function(){    
+	    var submitData = {};
+	    // 1.페이징시 필요 데이터 셋팅
+	    submitData.index = paging.p.index;
+	    submitData.pageStartNum = paging.p.pageStartNum;
+	    $.ajax({
+	        url: 'printReview.do',
+	        type: 'post',
+	        data: submitData,
+	        dataType: "json",
+	        success : function(data){
+	        	var jsonStr = JSON.stringify(data);
+				var obj = JSON.parse(jsonStr);
+				
+	            // 2.페이징정보와 화면 ui셋팅
+	            var list = "";
+	            var point = "";
+	            for(var i in obj.list){
+	            	if(obj.list[i].point == "1"){
+	                    point = "★";
+	                }else if(obj.list[i].point == "2"){
+	                	point = "★★";
+	                }else if(obj.list[i].point == "3"){
+	                	point = "★★★";
+	                }else if(obj.list[i].point == "4"){
+	                	point = "★★★★";
+	                }else if(obj.list[i].point == "5"){
+	                	point = "★★★★★";
+	                }
+
+	            	 list +="<tr>";
+	            	 list +="<td>user01</td>";
+	            	 list +="<td>"+point+"</td>";
+	            	 list +="<td>"+obj.list[i].review_content+"</td>";
+	            	 list +="<td>"+obj.list[i].review_date+"</td>";
+	            	 list +="<td><img src='/billy/resources/reviewImg/"+obj.list[i].review_image+"' width='150px' height='150px'></td>";
+	                 list += "</tr>"      
+				} 
+	            $("#list").html(list);
+	            $("#reviewCount").text("리뷰 " + obj.p.total + "건");
+	            
+	            paging.p = obj.p;
+	            paging.create();
+	        },
+	        error: function(request, status, errorData){
+				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
+	        }
+	    });    
+	}
+
 	</script>
 	
 	<style type="text/css">
@@ -82,6 +238,101 @@
 		    vertical-align: center;
 		    border-bottom: 1px solid #ccc;
 		}
+		
+		.pagination {
+		  display: inline-block;
+		  padding-left: 0px;
+		  margin: auto;
+		  border-radius: 4px;
+		}
+		.pagination > li {
+		  display: inline;
+		}
+		.pagination > li > a,
+		.pagination > li > span {
+		  position: relative;
+		  float: left;
+		  padding: 6px 12px;
+		  margin-left: -1px;
+		  line-height: 1.42857143;
+		  color: #337ab7;
+		  text-decoration: none;
+		  background-color: #fff;
+		  border: 1px solid #ddd;
+		}
+		.pagination > li:first-child > a,
+		.pagination > li:first-child > span {
+		  margin-left: 0;
+		  border-top-left-radius: 4px;
+		  border-bottom-left-radius: 4px;
+		}
+		.pagination > li:last-child > a,
+		.pagination > li:last-child > span {
+		  border-top-right-radius: 4px;
+		  border-bottom-right-radius: 4px;
+		}
+		.pagination > li > a:hover,
+		.pagination > li > span:hover,
+		.pagination > li > a:focus,
+		.pagination > li > span:focus {
+		  color: #23527c;
+		  background-color: #eee;
+		  border-color: #ddd;
+		}
+		.pagination > .active > a,
+		.pagination > .active > span,
+		.pagination > .active > a:hover,
+		.pagination > .active > span:hover,
+		.pagination > .active > a:focus,
+		.pagination > .active > span:focus {
+		  z-index: 2;
+		  color: #fff;
+		  cursor: default;
+		  background-color: #337ab7;
+		  border-color: #337ab7;
+		}
+		.pagination > .disabled > span,
+		.pagination > .disabled > span:hover,
+		.pagination > .disabled > span:focus,
+		.pagination > .disabled > a,
+		.pagination > .disabled > a:hover,
+		.pagination > .disabled > a:focus {
+		  color: #777;
+		  cursor: not-allowed;
+		  background-color: #fff;
+		  border-color: #ddd;
+		}
+		.pagination-lg > li > a,
+		.pagination-lg > li > span {
+		  padding: 10px 16px;
+		  font-size: 18px;
+		}
+		.pagination-lg > li:first-child > a,
+		.pagination-lg > li:first-child > span {
+		  border-top-left-radius: 6px;
+		  border-bottom-left-radius: 6px;
+		}
+		.pagination-lg > li:last-child > a,
+		.pagination-lg > li:last-child > span {
+		  border-top-right-radius: 6px;
+		  border-bottom-right-radius: 6px;
+		}
+		.pagination-sm > li > a,
+		.pagination-sm > li > span {
+		  padding: 5px 10px;
+		  font-size: 12px;
+		}
+		.pagination-sm > li:first-child > a,
+		.pagination-sm > li:first-child > span {
+		  border-top-left-radius: 3px;
+		  border-bottom-left-radius: 3px;
+		}
+		.pagination-sm > li:last-child > a,
+		.pagination-sm > li:last-child > span {
+		  border-top-right-radius: 3px;
+		  border-bottom-right-radius: 3px;
+		}
+		
 	</style>
 </head>
 
@@ -206,7 +457,7 @@
                 </div>
             </div><br><br>
             <hr>
-            <h3>리뷰 1건</h3> <br>
+            <h3 id="reviewCount"></h3> <br>
             <table class="type09">
 			    <thead>
 			    <tr>
@@ -217,22 +468,22 @@
 			        <th>이미지</th>
 			    </tr>
 			    </thead>
-			    <tbody>
-			    <tr>
+			    <tbody id="list">
+			    <!-- <tr>
 			        <td>user01</td>
 			        <td id="point1">
-			        	<!-- <div class="ratings">
+			        	<div class="ratings">
                         	<i class="fa fa-star" aria-hidden="true"></i>
                         	<i class="fa fa-star" aria-hidden="true"></i>
                         	<i class="fa fa-star" aria-hidden="true"></i>
                         	<i class="fa fa-star" aria-hidden="true"></i>
                         	<i class="fa fa-star" aria-hidden="true"></i>
-                    	</div> -->
+                    	</div>
 			        </td>
 			        <td id="content1"></td>
 			        <td id="date1"></td>
 			        <td id="img1"></td>
-			    </tr>
+			    </tr> -->
 			    </tbody>
 			</table>
 			<!--맨 첫페이지 이동 -->
