@@ -53,6 +53,43 @@ public class MemberController {
 		}
 	}
    
+   @RequestMapping(value="mupage.do")
+   public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mupdate.do")
+   public String updateMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberDetailPage";
+   }
+   
+   @RequestMapping(value="mdelete.do")
+   public String deleteMember(Member member, HttpServletRequest request, Model model) {
+	   return "member/memberManagementPage";
+   }
+   
+   @RequestMapping(value = "/oauth", produces = "application/json")
+   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
+          HttpServletRequest request, HttpServletResponse response) {
+       System.out.println("로그인 할때 임시 코드값");
+       //카카오 홈페이지에서 받은 결과 코드
+       System.out.println(code);
+       System.out.println("로그인 후 결과값");
+       
+       KakaoController kakaoLogin = new KakaoController();
+       //결과값을 node에 담아줌
+       JsonNode node = kakaoLogin.getAccessToken(code);
+       //결과값 출력
+       System.out.println(node);
+       //노드 안에 있는 access_token값을 꺼내 문자열로 변환
+       String token = node.get("access_token").toString();
+       //세션에 담아준다.
+       session.setAttribute("token", token);
+       System.out.println("token : " + token);
+       
+       return "home";
+   }
+
 	@RequestMapping(value="joinPost", method=RequestMethod.POST)
 	public String joinPost(@ModelAttribute("member") Member member) throws Exception {
 		logger.info("currnent join member: " + member.toString());
@@ -71,10 +108,6 @@ public class MemberController {
 		model.addAttribute("auth_check", 1);
 		
 		return "/user/joinPost";
-	}
-   
-  
-   
-
+	}  
 
 }
