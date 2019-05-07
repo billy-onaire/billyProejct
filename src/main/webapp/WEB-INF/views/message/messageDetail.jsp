@@ -32,126 +32,52 @@
 
 
 </style>
+<script type="text/javascript">
+/* update 클릭 */ 
+ $('#update').on('click',function(){ }); 
+ 
+ /* 삭제 클릭 */ 
+ $('#delete').on('click',function(){ });
+
+
+</script>
 
 <body>
-	<!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Wrapper Area End -->
-<!-- ##### Main Content Wrapper Start ##### -->
-    <div class="main-content-wrapper d-flex clearfix">
-	<c:import url="../common/nav.jsp" />
-        <div class="shop_sidebar_area">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div id="mmsWrite" style="height:500px;">
+				<c:forEach items="${list }" var="mms">
+				<!-- 보낸 편지함 기준 -->  
+						<div class="form-group" >
+							<label for="name">상품명 : </label> <input type="text"
+								class="form-control" name="pname" value="${list.product_name }" readonly >
+							<label for="sentid">보낸 사람 : </label> <input type="text"
+								class="form-control" name="recv_id" value="${list.sent_id }" readonly style="width: 100px;">
+							<label for="sentid">보낸 시간 : </label> <input type="text"
+								class="form-control" name="recv_id" value="${list.sent_date }" readonly style="width: 100px;">
+									
+								<input type="hidden" value="${list.mms_no }">
+						</div>
 
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">하위 카테고리 추가 예정</h6>
-
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-             
-            </div>
-
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">마이페이지</h6>
-            </div>
-        </div>
-
-        <div class="amado_product_area section-padding-100">
-            <div class="container-fluid" style="padding-left: 40px;">
-                <div class="row">
-                    <div class="col-12">
-                    <!-- 쪽지 보내기 팝업창 연습 -->
-                    	<a href="#" onclick="window.open('mmsWrite.do', 'popForm', 'width=550, height=500, menubar=no, status=no, toolbar=no, left=700, top=200'); return false;">쪽지보내기</a>
-                        <div class="view d-flex">
-                                    <button class="tablinks active" onclick="openTab(event, 'tab1')">받은 쪽지함</button>
-                                    <button class="tablinks" onclick="openTab(event, 'tab2')">보낸 쪽지함</button>
-                                    <button class="tablinks" onclick="openTab(event, 'tab3')">삭제한 쪽지함</button>
-                        </div>
-                    </div>
-                </div>
-        <br>
-        <br>
-        <br>
-                    
-                    <div class="message-table clearfix">
-                            <table class="table table-responsive">
-                                <tr>
-                                    <td>보낸 사람</td>
-                                    <td>user02</td>
-
-                                </tr>
-                                 <tr>
-                                    <td>보낸 시간</td>
-                                    <td>2019-04-24 &nbsp; 19:00</td>
-          
-                                </tr>
-                                 <tr>
-                                    <td>보낸 내용</td>
-                                    <td colspan="2" style="width: 400px">안녕하세요.</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                            <!-- 받는 사람이 나라면  -->
-                            	<li class="page-item active"><a class="page-link" href="#">답장하기</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">삭제</a></li>
-                                <li class="page-item"><a class="page-link" href="#">목록</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Main Content Wrapper End ##### -->
-   <c:import url="../common/footer.jsp" />
-    
-
-   
-
-   <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+						<div class="form-group">
+							<label for="content">내용 : </label> <textarea cols="70" rows="6"
+								class="form-control" id="mms_content"
+								name="mms_content" value="${list.mms_content }"></textarea>
+						</div>
+				</c:forEach>
+						<br> <br> <span id="message"></span>
+						<input type="button" class="btn btn-warning btn-block"
+							id="update" style="color: white"  value="답장하기" >
+							<input type="button" class="btn btn-warning btn-block"
+							id="delete" style="color: white"  value="삭제하기">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
@@ -161,9 +87,7 @@
 	<script src="/billy/resources/js/plugins.js"></script>
 	<!-- Active js -->
 	<script src="/billy/resources/js/active.js"></script>
-    <!-- Product List js -->
-    <script src="/billy/resources/js/productList.js"></script>
-
+	
 </body>
 
 </html>
