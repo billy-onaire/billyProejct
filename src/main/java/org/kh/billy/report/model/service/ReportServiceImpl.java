@@ -2,6 +2,7 @@ package org.kh.billy.report.model.service;
 
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.dao.ReportDao;
+import org.kh.billy.report.model.vo.Report;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,11 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public Product selectProductForReport(int pno) {
 		return rd.selectProductForReport(mybatisSession, pno);
+	}
+
+	@Override
+	public int insertReport(Report r) {
+		return rd.insertReport(mybatisSession, r);
 	}
 
 }
