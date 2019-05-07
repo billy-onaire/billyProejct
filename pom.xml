@@ -42,23 +42,25 @@
          <version>${org.springframework-version}</version>
       </dependency>
 	
-	 <!-- Mail -->
+	<!-- mail -->
 	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-context-support</artifactId>
-		<version>${org.springframework-version}</version>
+    <groupId>javax.mail</groupId>
+    	<artifactId>mail</artifactId>
+    	<version>1.4.7</version>
 	</dependency>
+	
 	<dependency>
-		<groupId>javax.mail</groupId>
-		<artifactId>mail</artifactId>
-		<version>1.4.7</version>
+    	<groupId>org.springframework</groupId>
+   	 	<artifactId>spring-context-support</artifactId>
+   		<version>5.0.4.RELEASE</version>
 	</dependency>
-    <dependency>
+		
+	<dependency>
 		<groupId>com.sun.mail</groupId>
 		<artifactId>javax.mail</artifactId>
 		<version>1.6.1</version>
 	</dependency>
-        
+       
       <!-- AspectJ RunTime -->
       <dependency>
          <groupId>org.aspectj</groupId>
