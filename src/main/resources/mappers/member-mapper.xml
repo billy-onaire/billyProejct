@@ -10,6 +10,7 @@
       <result property="user_moblie" column="user_mobile" />
       <result property="user_name" column="user_name" />
       <result property="email" column="email" />
+      <result property="authkey" column="authkey"/>
       <result property="verify" column="verify" />
       <result property="address" column="address" />
       <result property="my_introduce" column="my_introduce" />
@@ -35,9 +36,15 @@
       select count(user_id) from tb_user where user_id = #{user_id}
    </select>
    
-   <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
+  <!--  <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
       insert into tb_user values (#{user_id}, #{user_pwd}, #{user_mobile}, #{user_name}, #{email}, #{verify}, #{address}, #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
+   </insert> -->
+   
+   <insert id = "insertMember" parameterType="Member">
+	  insert into tb_user (user_id, user_pwd, user_mobile, user_name, email, authkey, verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count)
+	  values(#{user_id}, #{user_pwd}, #{user_mobile}, #{user_name}, #{email}, 0, 0, #{address}, #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
+   
    
    <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
       select * from tb_user where user_id = #{user_id}      
@@ -45,6 +52,10 @@
    
    <update id="updateMember" parameterType="Member" >
       update tb_user set user_pwd = #{user_pwd}, #{user_name}, <include refid="userInfo"/> where user_id = #{user_id}
+   </update>
+   
+   <update id="updateVerify" parameterType="Member" >
+      update tb_user set verify = #{#verify} where user_id = #{user_id}
    </update>
    
    <delete id="deleteMember" parameterType="string" >
@@ -55,6 +66,9 @@
       select * from tb_user where user_name = #{user_name} and phone = #{phone}
    </select>
    
-   
+   <update id="createAuthKey">
+	  update tb_user set authkey = #{authkey} where email = #{email}
+	</update>
+	
 
 </mapper>

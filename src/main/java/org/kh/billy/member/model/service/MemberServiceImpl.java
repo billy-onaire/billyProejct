@@ -2,11 +2,17 @@ package org.kh.billy.member.model.service;
 
 import java.util.ArrayList;
 
-import org.kh.billy.member.model.vo.Member;
+import javax.inject.Inject;
+
+import org.kh.billy.common.MailHandler;
+import org.kh.billy.common.TempKey;
 import org.kh.billy.member.model.dao.MemberDao;
+import org.kh.billy.member.model.vo.Member;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService{
@@ -62,34 +68,35 @@ public class MemberServiceImpl implements MemberService{
 		return idLists;
 	
 	}
-
+	
+	
+	@Transactional
 	@Override
-	public void create(Member member) {
-		memberDao.create(member);
-		
-		// 임의의 authkey 생성
-		String authkey = new TempKey().getKey(50, false);
+	public void create(Member member) throws Exception {
+		memberDao.insertMember(mybatisSession, member); // 회원가입 DAO
 
-		member.setAuthkey(authkey);
-		uDAO.updateAuthkey(uVO);
+		String authkey = new TempKey().getKey(50, false); // 인증키 생성
 
-		// mail 작성 관련 
-		MailUtils sendMail = new MailUtils(mailSender);
+		memberDao.createAuthKey(mybatisSession, member.getEmail(), authkey); // 인증키 DB저장
 
-		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
-		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://localhost:8080/user/joinConfirm?uid=")
-				.append(uVO.getUid())
-				.append("&email=")
-				.append(uVO.getEmail())
-				.append("&authkey=")
-				.append(authkey)
-				.append("' target='_blenk'>이메일 인증 확인</a>")
-				.toString());
-		sendMail.setFrom("관리자 ", "관리자명");
-		sendMail.setTo(uVO.getEmail());
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("billy 서비스 이메일 인증");
+		sendMail.setText(new StringBuffer().append("<h1>메일인증</h1>")
+				.append("<a href='http://localhost:8888/billy/joinConfirm?user_id=").append(member.getUser_id())
+				.append("&email=").append(member.getEmail()).append("&key=").append(authkey).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+		sendMail.setFrom("billy", "관리자");
+		sendMail.setTo(member.getEmail());
 		sendMail.send();
 	}
+
+	@Override
+	public void updateVerify(Member member) {
+		memberDao.updateVerify(mybatisSession, member);
+		
+	}
+
+
+	
+
 	
 }
