@@ -13,4 +13,5 @@ public interface MemberService {
 		int deleteMember(String userid);
 		Member selectMember(String userid);
 		ArrayList<String> searchId(Member member);
+		void create(Member member);
 }

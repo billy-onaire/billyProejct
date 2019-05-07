@@ -22,5 +22,10 @@ public class MemberDao {
 	public int insertMember(SqlSessionTemplate session, Member member) {
 		return session.insert("memberMapper.insertMember", member);
 	}
+
+	public void create(Member member) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
