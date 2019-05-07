@@ -71,7 +71,7 @@
 
                                     <div class="col-12 mb-3">
                                         <p>신고 카테고리 / 내용</p>
-                                        <select class="w-100" id="rcategoty">
+                                        <select class="w-100" id="rcategory">
                                             <option value="1">[ 부적절한 이미지인 경우 ]</option>
                                             <option value="2">[ 욕설 및 스팸 게시물인 경우 ]</option>
                                             <option value="3">[ 거래 시간 미준수한 경우 ]</option>
@@ -99,8 +99,8 @@
                                 <li><span>Product No:</span> <span>${prod.product_no}</span></li>
                                 <li><span>Product Name:</span> <span>${prod.product_name}</span></li>
                                 <li><span>ID:</span> <span id="for_nocap">${prod.seller_id}</span></li>
-                                <li><span>Category:</span> <span></span></li>
-                                
+                                <li><span>Category:</span> <span>[ 부적절한 이미지인 경우 ]</span></li>
+                                <li><span>Content: </span> <span></span></li>
                             </ul>
 
     
