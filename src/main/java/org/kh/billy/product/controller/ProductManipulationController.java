@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.product.model.service.ProductManipulationService;
+import org.kh.billy.product.model.vo.Criteria;
+import org.kh.billy.product.model.vo.PageMaker;
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.product.model.vo.ProductForList;
 import org.kh.billy.product.model.vo.SettingList;
@@ -42,7 +44,22 @@ public class ProductManipulationController {
 	} 
 	
 	@RequestMapping(value="myproductlist.do")
-	public String myProductList() {
+	public String myProductList(Criteria cri, Model mv) {
+		//https://to-dy.tistory.com/90?category=700248 참고
+		String userId = "user01";
+		int count = pms.selectProductCount(userId);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		/*System.out.println(member);*/
+		/*String userId = member.getUser_id();*/
+		
+		System.out.println("메스드는 들어가지는지?");
+		cri.setSeller_id(userId);
+		ArrayList<Product> list = pms.selectProductList(cri);
+		System.out.println("리스트 확인 : " + list);
+		mv.addAttribute("list", list);
+		mv.addAttribute("pageMaker", pageMaker);
 		return "product/myProductList";
 	}
 	
@@ -53,6 +70,8 @@ public class ProductManipulationController {
 		for(int i=0; i<args.length;i++) {
 			System.out.println(args[i]);
 		}*/
+		System.out.println("받아온 가격정보 확인 : ");
+		
 		ProductCategory productCategory = new ProductCategory();
 		ProductImg productImg = new ProductImg();
 		
@@ -72,7 +91,7 @@ public class ProductManipulationController {
 			System.out.println("사진 갯수 : " + index);
 			System.out.println(file[i].getOriginalFilename());
 			System.out.println(System.nanoTime());
-			String fileRename = String.valueOf(System.nanoTime());
+			String fileRename = String.valueOf(System.nanoTime()) + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1);
 			if(i == 0)
 				productImg.setFirst_img(fileRename);
 			if(i == 1)
@@ -82,13 +101,14 @@ public class ProductManipulationController {
 			if(i == 3)
 				productImg.setFourth_img(fileRename);
 			
-			String savePath = request.getSession().getServletContext().getRealPath("resources/files/productImg");
-			file[i].transferTo(new File(savePath + "\\" + fileRename + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1)));
+			String savePath = request.getSession().getServletContext().getRealPath("resources/files/product");
+			file[i].transferTo(new File(savePath + "\\" + fileRename));
+			/* + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1)*/
 			/*String savePath = request.getSession().getServletContext().getRealPath("/resources/files/test");
 			file[i].transferTo(new File(savePath + "\\" + file[i].getOriginalFilename()));*/
 		}
 		System.out.println(productImg);
-		productImgService.insertProductImg(productImg);
+		productImgService.insertProductImg(productImg);//result 값이 1보다 작을 때 처리 해야 함
 		int img_no = productImgService.selectProductImgNo(productImg.getFirst_img());
 		product.setImg_no(img_no);
 		product.setSeller_id("user01");
@@ -129,13 +149,6 @@ public class ProductManipulationController {
 		return "home";
 	}*/
 	
-	@RequestMapping(value="myproductlist.do",method=RequestMethod.POST)
-	public void seleteMyProductList(SettingList settingList, Member member, Model mv) {
-		String userId = member.getUser_id();
-		
-		ArrayList<Product> list = pms.selectProductList(settingList, userId);
-		mv.addAttribute("list", list);
-	}
 	
 	@RequestMapping(value="myproductupdate.do",method=RequestMethod.POST)
 	public String updateProduct(Product product) {
