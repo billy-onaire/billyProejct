@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.kh.billy.review.model.service.ReviewService;
 import org.kh.billy.review.model.vo.Review;
 import org.kh.billy.review.model.vo.ReviewPaging;
+import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,12 +76,14 @@ public class ReviewController {
 	
 	@RequestMapping(value="printReview.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String printReview(HttpServletResponse response) {
-		ArrayList<Review> list = reviewService.selectReview();
+	public String printReview(HttpServletResponse response, ReviewPagingFront paging) {
+		List<Review> list = reviewService.selectPdetailReview(paging);
+		paging.setTotal(reviewService.selectTotalPdetailReview());
 		
 		response.setContentType("application/json; charset=utf-8");
 		
 		JSONObject sendObj = new JSONObject();
+		JSONObject pagingObj = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		
 		for(Review r:list) {
@@ -94,8 +97,19 @@ public class ReviewController {
 			jarr.add(jr);
 		}
 		
+		pagingObj.put("pageCnt", paging.getPageCnt());
+		pagingObj.put("index", paging.getIndex());
+		pagingObj.put("pageStartNum", paging.getPageStartNum());
+		pagingObj.put("listCnt", paging.getListCnt());
+		pagingObj.put("total", paging.getTotal());
+		pagingObj.put("pageLastNum", paging.getPageLastNum());
+		pagingObj.put("lastChk", paging.getLastChk());
+		pagingObj.put("total", paging.getTotal());
+		
 		sendObj.put("list", jarr);
+		sendObj.put("p", pagingObj);
 		
 		return sendObj.toJSONString();
+		
 	}
 }

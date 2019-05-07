@@ -5,17 +5,12 @@ import java.util.List;
 
 import org.kh.billy.review.model.vo.Review;
 import org.kh.billy.review.model.vo.ReviewPaging;
+import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository("reviewDao")
 public class ReviewDao {
-
-	public ArrayList<Review> selectReview(SqlSessionTemplate session) {
-		List<Review> list = session.selectList("reviewMapper.selectReview");
-		ArrayList<Review> alist = (ArrayList<Review>)list;
-		return alist;
-	}
 
 	public int insertReview(SqlSessionTemplate session, Review review) {
 		return session.insert("reviewMapper.insertReview", review);
@@ -29,4 +24,11 @@ public class ReviewDao {
 		return session.selectOne("reviewMapper.selectTotalListReview");
 	}
 
+	public List<Review> selectPdetailReview(SqlSessionTemplate session, ReviewPagingFront pagingFront) {
+		return session.selectList("reviewMapper.selectPdetailReview", pagingFront);
+	}
+
+	public int selectTotalPdetailReview(SqlSessionTemplate session) {
+		return session.selectOne("reviewMapper.selectTotalListReview");
+	}
 }

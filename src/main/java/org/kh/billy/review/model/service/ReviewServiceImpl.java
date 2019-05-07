@@ -6,6 +6,7 @@ import java.util.List;
 import org.kh.billy.review.model.dao.ReviewDao;
 import org.kh.billy.review.model.vo.Review;
 import org.kh.billy.review.model.vo.ReviewPaging;
+import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,6 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<Review> selectReview() {
-		return reviewDao.selectReview(mybatisSession);
-	}
-
-	@Override
 	public List<Review> selectListReview(ReviewPaging paging) {
 		return reviewDao.selectListReview(mybatisSession, paging);
 	}
@@ -37,6 +33,16 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int selectTotalListReview() {
 		return reviewDao.selectTotalListReview(mybatisSession);
+	}
+
+	@Override
+	public List<Review> selectPdetailReview(ReviewPagingFront paging) {
+		return reviewDao.selectPdetailReview(mybatisSession, paging);
+	}
+
+	@Override
+	public int selectTotalPdetailReview() {
+		return reviewDao.selectTotalPdetailReview(mybatisSession);
 	}
 
 }
