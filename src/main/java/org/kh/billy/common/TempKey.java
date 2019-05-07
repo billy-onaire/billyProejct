@@ -1,4 +1,4 @@
-package org.kh.billy.member.model.service;
+package org.kh.billy.common;
 
 import java.util.Random;
 

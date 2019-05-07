@@ -17,14 +17,9 @@ public class MemberDao {
 		return session.selectList("memberMapper.selectMember", member);
 	}
 
-	public int insertMember(SqlSessionTemplate session, Member member) {
+	/*public int insertMember(SqlSessionTemplate session, Member member) {
 		return session.insert("memberMapper.insertMember", member);
-	}
-
-	public void create(Member member) {
-		// TODO Auto-generated method stub
-		
-	}
+	}*/
 	
 	public int updateMember(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.updateMember", member);
@@ -37,5 +32,23 @@ public class MemberDao {
 	public Member selectCheckId(SqlSessionTemplate session, String userId) {
 		return session.selectOne("memberMapper.selectCheckId", userId);
 	}
-	
+
+	public int insertMember(SqlSessionTemplate session, Member member) {
+		return session.insert("memberMapper.insertMember", member);
+		/*sqlSession.insert(namespace +".insertUser", vo);
+			System.out.println(vo.toString());*/
+	}
+
+	public int createAuthKey(SqlSessionTemplate session, String email, String authkey) throws Exception {
+		Member member = new Member();
+		member.setVerify(authkey);
+		member.setEmail(email);
+		return session.update("memberMapper.createAuthKey", member);
+		/*sqlSession.selectOne(namespace + ".createAuthKey", vo);*/
+	}
+
+	public void updateVerify(SqlSessionTemplate session, Member member) {
+		session.update("memberMapper.updateVerify", member);
+		
+	}
 }

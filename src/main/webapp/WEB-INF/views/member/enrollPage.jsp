@@ -27,7 +27,7 @@ $(function(){
    	 
     	if(id.length > 12){
     		e.preventDefault();
-    		alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
+    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
             $(this).focus();
        } 
@@ -226,7 +226,7 @@ a {
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-		<form action="minsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+		<form action="joinPost.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
 				<h1>회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
