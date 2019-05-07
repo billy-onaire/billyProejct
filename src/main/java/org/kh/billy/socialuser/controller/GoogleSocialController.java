@@ -15,7 +15,7 @@ import org.kh.billy.socialuser.model.vo.AuthInfo;
 import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,9 +36,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Controller
+@Controller*/
 public class GoogleSocialController {
-	@Autowired
+	/*@Autowired
 	private SocialUserService socialService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -142,8 +142,8 @@ public class GoogleSocialController {
 	        }
 	        
 	        //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
-	       /* ObjectMapper mapper = new ObjectMapper();
-	        Map<String, String> result = mapper.readValue(body, Map.class);*/
+	        ObjectMapper mapper = new ObjectMapper();
+	        Map<String, String> result = mapper.readValue(body, Map.class);
 	        Map<String, String> map = new HashMap<String, String>();
 	       map.put("access_token", access_token);
 	       map.put("body", body);
@@ -154,6 +154,6 @@ public class GoogleSocialController {
 	        model.setViewName("jsonView");
 	     
 	        return model;
-	    }
+	    }*/
 	   
 }
