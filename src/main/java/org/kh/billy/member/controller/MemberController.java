@@ -68,7 +68,7 @@ public class MemberController {
 	   return "member/memberManagementPage";
    }
    
-   @RequestMapping(value = "/oauth", produces = "application/json")
+   /*@RequestMapping(value = "/oauth", produces = "application/json")
    public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
           HttpServletRequest request, HttpServletResponse response) {
        System.out.println("로그인 할때 임시 코드값");
@@ -108,6 +108,6 @@ public class MemberController {
 		model.addAttribute("auth_check", 1);
 		
 		return "/user/joinPost";
-	}  
+	} */ 
 
 }

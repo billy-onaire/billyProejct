@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,18 +17,22 @@
 <!-- Message List js -->
 <script src="/billy/resources/js/messageList.js"></script>
 <style type="text/css">
-.amado_product_area .container-fluid .row .col-12 .view>.tablinks {
-	border: none;
-	outline: none;
-	padding: 10px 16px;
-	background-color: #f1f1f1;
-	cursor: pointer;
+.button {
+  background-color: #fab336; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin-left: 35px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
 }
 
-.amado_product_area .container-fluid .row .col-12 .view>.tablinks.active
-	{
-	background-color: #fab336;
-	color: white;
+.button:hover {
+  background-color: #f9a406;
 }
 
 
@@ -37,7 +42,10 @@
  $('#update').on('click',function(){ }); 
  
  /* 삭제 클릭 */ 
- $('#delete').on('click',function(){ });
+ $('#delete').on('click',function(){ 
+	 
+	 
+ });
 
 
 </script>
@@ -46,31 +54,74 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
-				<div id="mmsWrite" style="height:500px;">
-				<c:forEach items="${list }" var="mms">
+				<div id="mmsWrite">
 				<!-- 보낸 편지함 기준 -->  
-						<div class="form-group" >
-							<label for="name">상품명 : </label> <input type="text"
-								class="form-control" name="pname" value="${list.product_name }" readonly >
-							<label for="sentid">보낸 사람 : </label> <input type="text"
-								class="form-control" name="recv_id" value="${list.sent_id }" readonly style="width: 100px;">
-							<label for="sentid">보낸 시간 : </label> <input type="text"
-								class="form-control" name="recv_id" value="${list.sent_date }" readonly style="width: 100px;">
-									
-								<input type="hidden" value="${list.mms_no }">
-						</div>
+					<table class="board_view"> 
 
-						<div class="form-group">
-							<label for="content">내용 : </label> <textarea cols="70" rows="6"
-								class="form-control" id="mms_content"
-								name="mms_content" value="${list.mms_content }"></textarea>
-						</div>
-				</c:forEach>
-						<br> <br> <span id="message"></span>
-						<input type="button" class="btn btn-warning btn-block"
-							id="update" style="color: white"  value="답장하기" >
-							<input type="button" class="btn btn-warning btn-block"
-							id="delete" style="color: white"  value="삭제하기">
+					<colgroup> 
+						<col width="20%"/> 
+						<col width="20%"/> 
+						<col width="20%"/> 
+						<col width="40%"/> 
+					</colgroup> 
+
+				<br>
+				<br>
+						<tbody> 
+						<c:if test="${sent_id eq testmk }">
+				<tr> 
+					<th scope="row">상품명</th> 
+					<td>${list.product_name }</td> 
+					<th scope="row">받는사람</th> 
+					<td>${list.recv_id}</td> 
+				</tr> 
+				<tr></tr>
+				<tr> 
+				<th scope="row">작성일</th> 
+				<td ><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd"/></td> 
+				<th scope="row">읽음 여부</th> 
+				<td>
+				<c:if test="${list.recv_read eq 'Y'}">
+                       	<fmt:formatDate value="${list.read_date }" pattern="yyyy-MM-dd KK:mm:ss"/>
+                 </c:if> 
+                <c:if test="${list.recv_read eq 'N'}">
+                 	읽지 않음
+                 </c:if>
+						</td>
+				<td></td>
+				</tr>  
+				<tr>
+				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
+				</tr> 
+				
+					</c:if>
+					<c:if test="${sent ne testmk }">
+					<tr> 
+					<th scope="row">상품명</th> 
+					<td>${list.product_name }</td> 
+					<th scope="row">보낸사람</th> 
+					<td>${list.sent_id}</td> 
+				</tr> 
+				<tr></tr>
+				<tr> 
+				<th scope="row">작성일</th> 
+				<td colspan=3"><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd KK:mm:ss "/></td> 
+				<td></td>
+				</tr>  
+				<tr>
+				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
+				</tr> 
+				</c:if>
+						</tbody> 
+					</table>
+					
+					
+
+						<br> <span id="message"></span>
+						
+							<input type="button" class="button" id="update" value="답장하기" > 
+							<input type="button" class="button" id="delete" value="삭제하기">
+						
 				</div>
 			</div>
 		</div>

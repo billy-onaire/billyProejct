@@ -33,24 +33,24 @@
 
 	<select id="selectRecvList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		select m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
+		select m.mms_no, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
 		from message m
 		join product p
 		on m.product_no = p.product_no
 		where recv_id = 'testmk' 
+		order by sent_date desc
 
 		
 	</select>
 	
 	<select id="selectSentList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		<!-- SELECT * from message
-		where sent_id = 'testmk' -->
-		select m.recv_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
+		select m.mms_no, m.recv_id, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
 		from message m
 		join product p
 		on m.product_no = p.product_no
 		where sent_id = 'testmk'
+		order by sent_date desc
 	</select>
 	
 	<insert id="insertMessage" parameterType="Message" useGeneratedKeys="true">
@@ -69,14 +69,23 @@
 	
 	<select id="selectDetailMessage" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		select * from message
+		select m.mms_no, m.sent_id, m.recv_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
+		from message m
+		join product p
+		on m.product_no = p.product_no
 		where mms_no = #{mms_no}
 	</select>
 	
-	<update id="updateReadMessage" parameterType="Message" > 
+	<update id="updateReadMessage" parameterType="MessagePname" > 
 	update message
 	set read_date = sysdate, recv_read = 'Y'
-	where mms_no = #{mms_no};
+	where mms_no = #{mms_no}
+	</update>
+	
+	<update id="updateDelMessage" parameterType="MessagePname">
+	update message
+	set recv_del = 'Y'
+	where mms_no = #{mms_no}
 	</update>
 
 </mapper>

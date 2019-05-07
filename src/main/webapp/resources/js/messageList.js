@@ -1,3 +1,5 @@
+
+
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -22,14 +24,14 @@ function insertPopup() {
     		"status=no", "toolbar=no", "left=700", "top=200");
 }
 
-$(document).ready(function(){ 
-	/* 게시글 제목 클릭 상세보기 */ 
+/*$(document).ready(function(){ 
+	 게시글 제목 클릭 상세보기  
 	$('.cart_product_desc').on('click',function(){ 
-		var popUrl = "/message/messageDetail?mms_no="+$(this).attr('id');	
+		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
 		//팝업창에 출력될 페이지 URL 
 		var popOption = "width=570, height=360, resizable=no, scrollbars=no, status=no;"; 
 		//팝업창 옵션(optoin) 
 		window.open(popUrl,"",popOption); 
 		
 	});
-});
+});*/

@@ -30,12 +30,11 @@ public interface MessageService {
 
 	int deleteFinalMessage(int mms_no);
 
-
 	int insertReplyMessage(Message message, int mms_no);
 
 	ArrayList<Message> selectDelList();
 
-	List<Map<String, Object>> selectDetailMessage(Map param);
+	MessagePname selectDetailMessage(int mms_no);
 
 	
 

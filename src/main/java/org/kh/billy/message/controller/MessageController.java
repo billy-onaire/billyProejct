@@ -156,19 +156,15 @@ public class MessageController {
 		
 		return "message/messageMain";
 	}
-	
-	@RequestMapping(value="/message/messageDetail.jsp")
-	public ModelAndView selectDetailMessage(HttpServletRequest request) throws Exception{
+
+	@RequestMapping(value="messageDetail.do")
+	public ModelAndView selectDetailMessage(ModelAndView mv, @RequestParam int mms_no) throws Exception{
 		
-		ModelMap model = new ModelMap();
-		
-		Map param = new HashMap();
-		
-		param.put("mms_no", Integer.parseInt(request.getParameter("mms_no")));
-		List<Map<String, Object>> list = messageService.selectDetailMessage(param);
-		model.addAttribute("list", list);
-		
-		return new ModelAndView("/message/messageMain", model);
+		MessagePname m = messageService.selectDetailMessage(mms_no);
+		System.out.println("상세보기 메세지 출력 : " + m);
+		mv.addObject("list", m);
+		mv.setViewName("message/messageDetail");
+		return mv;
 	
 	}
 	
@@ -186,13 +182,7 @@ public class MessageController {
 		
 		return "message/messageMain";
 	}
-	/*//메세지 읽음 처리 메소드
-	public String updateReadMessage(@RequestParam int mms_no) {
-		
-		messageService.updateReadMessage(mms_no);
-		
-		return "message/messageMain";
-	}*/
+
 	//페이징처리
 	//쪽지 답장
 	public String insertReplyMessage(Message message, @RequestParam int mms_no, HttpServletRequest request) {

@@ -68,16 +68,21 @@ public class MessageDao {
 		return (ArrayList<Message>) list;
 	}
 
-	public void updateReadMessage(SqlSessionTemplate mybatisSession, Map param) {
-		mybatisSession.update("messageMapper.updateReadMessage", param);
-		
-	}
-
 	public List selectDetailMessage(SqlSessionTemplate mybatisSession, Map param) {
 		
 		List list = mybatisSession.selectList("messageMapper.selectDetailMessage", param);
 		
 		return list;
+	}
+
+	public void updateReadMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		mybatisSession.update("messageMapper.updateReadMessage", mms_no);
+		
+	}
+
+	public MessagePname selectDetailMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
 	}
 	
 
