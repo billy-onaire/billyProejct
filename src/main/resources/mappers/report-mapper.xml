@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reportMapper">
+
+	<resultMap id="reportMapper" type="Report">
+		<id property="report_no" column="report_no" />
+		<result property="rcategory_no" column="rcategory_no" />
+		<result property="report_content" column="report_content"/>
+		<result property="report_id" column="report_id"/>
+		<result property="report_date" column="report_date"/>
+		<result property="product_no" column="product_noe"/>
+	</resultMap>
+	
+	<select id="insertReport" parameterType="Report">
+		INSERT INTO TB_REPORT VALUES(SQ_RPNO.NEXTVAL, #{rcategory_no},#{report_content},#{report_id},sysdate,#{product_no})
+	</select>
+	
+	
+
+
+</mapper>
