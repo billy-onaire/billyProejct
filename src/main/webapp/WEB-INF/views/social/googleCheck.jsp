@@ -22,6 +22,7 @@
 					$("#at").val(result.hashMap.access_token);
 					$("#name").val(decodeURIComponent(result.hashMap.name));
 					$("#profile").val(result.hashMap.profile);
+					$("#uid").val(result.hashMap.uid);
 					$("#gac").submit();
 					/* location.href="googleInfo.do?access_token="+result.hashMap.access_token + "&name="+decodeURIComponent(result.hashMap.name)+"&profile="+result.hashMap.profile; */
 				}
@@ -39,6 +40,7 @@
 <input type="hidden" name="access_token" id="at">
 <input type="hidden" name="name" id="name">
 <input type="hidden" name="profile" id="profile">
+<input type="hidden" name="uid" id="uid">
 </form>
 </body>
 </html>

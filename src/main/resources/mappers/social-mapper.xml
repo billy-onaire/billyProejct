@@ -11,9 +11,14 @@
 		<result property="social_code" column="social_code" />
 	</resultMap>
 	
+	<select id="selectLogin" parameterType="String" resultType="int">
+		select count(user_id) from socialUser
+		where user_id = #{uid}
+	</select>
+	
 	<insert id="insertSocial" parameterType="SocialUser">
 		insert into socialuser
-		values (#{user_id}, 'google', #{token}, 1)
+		values (#{user_id}, 'google', #{token}, #{social_code})
 	</insert>
 
 </mapper>
