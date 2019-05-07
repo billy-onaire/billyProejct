@@ -397,7 +397,7 @@
               if(!$.isNumeric(x)) {
                 x = x.replace(/[^0-9]/g,"");
               }
-              x = addCommas(x);
+              /* x = addCommas(x); */  //3자리 단위마다 콤마 생성
               $(this).val(x);
             }
           }).on("keyup", function() {
@@ -472,6 +472,10 @@
               $('#product_enddate').focus();
               return false;
             }
+            /* alert($('#price').val()); */
+            /* $('#price').val() = $('#price').val().replace(',' , ''); */
+            /* ($('#price').val()).replace(/,/g, '');
+            alert($('#price').val()); */
           }
         </script>
 </body>
