@@ -13,6 +13,19 @@
 <!-- Favicon  -->
 <link rel="icon" href="img/core-img/favicon.ico">
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script>
+$(document).ready(function(){ 
+	/* 게시글 제목 클릭 상세보기 */ 
+	$('.cart_product_desc').on('click',function(){ 
+		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
+		//팝업창에 출력될 페이지 URL 
+		var popOption = "width=400, height=350, resizable=no, scrollbars=no, status=no;"; 
+		//팝업창 옵션(optoin) 
+		window.open(popUrl,"",popOption); 
+		
+	});
+});
+</script>
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 <!-- Message List js -->
@@ -75,8 +88,8 @@
                     <!-- 쪽지 보내기 팝업창 연습 -->
                     	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
                         <div class="view d-flex">
-                                    <button class="tablinks active" onclick="openTab(event, 'tab1'); location.href='recvList.do'">받은 쪽지함</button>
-                                    <button class="tablinks" onclick="openTab(event, 'tab2'); location.href='sentList.do'">보낸 쪽지함</button>
+                                    <button class="tablinks active" onclick="openTab(event, 'tab1'); location.href='sentList.do'">받은 쪽지함</button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab2'); "><a href="sentList.do"></a></button>
                                     <button class="tablinks" onclick="openTab(event, 'tab3')">삭제한 쪽지함</button>
                         </div>
                     </div>
@@ -95,21 +108,22 @@
                                             <th>보낸 사람</th>
                                             <th>상품명</th>
                                             <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
+                                            <th>발송일</th>
                                             <th>읽음 여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach items="${recvList }" var="mms">                                                                 
                                         <tr>
+                                    
                                             <td class="cart_product_img">
                                                 ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
                                             	${mms.product_name }
                                             </td>
-                                            <td class="cart_product_desc" id="${mms.mms_no }">
-                                                ${mms.mms_content }
+                                            <td class="cart_product_desc" id="${mms.mms_no }" >
+                                                <a href="">${mms.mms_content }</a>
                                             </td>
                                             <td class="price">
                                             <!-- 여기서는 날짜만 표시하고 상세보기에서 시간까지 표시 -->
@@ -136,17 +150,13 @@
                                             <th>받은 사람</th>
                                             <th>상품명</th>
                                             <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
+                                            <th>발송일</th>
                                             <th>읽음 여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach items="${sentList }" var="sentmms">
-                                    	<form>
-                                    	<p>
-                                    		<input type="hidden" name="mms_no" />
-                                    	</p>
-                                    	</form>
+
                                         <tr>
                                             <td class="cart_product_img">
                                                ${sentmms.recv_id }
@@ -154,8 +164,8 @@
                                             <td class="cart_product_img">
                                                 	${sentmms.product_name }
                                             </td>
-                                            <td class="cart_product_desc">
-                                                <a href="javascript:goView('${sentmms.mms_no }')">${sentmms.mms_content }</a>
+                                            <td class="cart_product_desc" id="${sentmms.mms_no }" >
+                                                ${sentmms.mms_content }
                                             </td>
                                             <td class="price">
                                             	<fmt:formatDate value="${sentmms.sent_date }" pattern="yyyy-MM-dd"/>                                                

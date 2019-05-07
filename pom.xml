@@ -42,23 +42,25 @@
          <version>${org.springframework-version}</version>
       </dependency>
 	
-	 <!-- Mail -->
+	<!-- mail -->
 	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-context-support</artifactId>
-		<version>${org.springframework-version}</version>
+    <groupId>javax.mail</groupId>
+    	<artifactId>mail</artifactId>
+    	<version>1.4.7</version>
 	</dependency>
+	
 	<dependency>
-		<groupId>javax.mail</groupId>
-		<artifactId>mail</artifactId>
-		<version>1.4.7</version>
+    	<groupId>org.springframework</groupId>
+   	 	<artifactId>spring-context-support</artifactId>
+   		<version>5.0.4.RELEASE</version>
 	</dependency>
-    <dependency>
+		
+	<dependency>
 		<groupId>com.sun.mail</groupId>
 		<artifactId>javax.mail</artifactId>
 		<version>1.6.1</version>
 	</dependency>
-        
+       
       <!-- AspectJ RunTime -->
       <dependency>
          <groupId>org.aspectj</groupId>
@@ -252,13 +254,19 @@
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-compiler-plugin</artifactId>
          <version>3.7.0</version>
-         
-   <!-- google login -->      
       </dependency>
+
+   <!-- google login -->      
            <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
+        </dependency>
+   		
+   		<dependency>
+   			<groupId>org.apache.commons</groupId>
+   			<artifactId>commons-lang3</artifactId>
+   			<version>3.4</version>
         </dependency>
    
    <!-- httpcore(카카오) -->

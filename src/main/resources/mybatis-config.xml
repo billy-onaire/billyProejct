@@ -20,6 +20,8 @@
          <typeAlias type="org.kh.billy.review.model.vo.Review" alias="Review"/>
          <typeAlias type="org.kh.billy.review.model.vo.ReviewPaging" alias="ReviewPaging"/>
          <typeAlias type="org.kh.billy.review.model.vo.ReviewPagingFront" alias="ReviewPagingFront"/>
+         <typeAlias type="org.kh.billy.member.model.vo.Member" alias="Member" />
+         <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
    </typeAliases>
    <mappers>
       <mapper resource="mappers/productmanipulation-mapper.xml" />
@@ -30,5 +32,7 @@
       <mapper resource="mappers/message-mapper.xml" />
       <mapper resource="mappers/social-mapper.xml" />
       <mapper resource="mappers/review-mapper.xml" />
+      <mapper resource="mappers/member-mapper.xml" />
+      <mapper resource="mappers/report-mapper.xml" />
    </mappers>
 </configuration>

@@ -1,6 +1,7 @@
 package org.kh.billy.socialuser.controller;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +9,12 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.apache.commons.codec.binary.Base64;
-import org.kh.billy.member.controller.MemberController;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.kh.billy.member.model.service.MemberService;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.AuthInfo;
 import org.kh.billy.socialuser.model.vo.SocialUser;
@@ -24,8 +27,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.social.google.connect.GoogleOAuth2Template;
-import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,25 +34,24 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @Controller
 public class GoogleSocialController {
-   @Autowired
-   private SocialUserService socialService;
+	   @Autowired
+	   private SocialUserService socialService;
+	   
+	   @Autowired
+	   private MemberService memberSerive;
+	   
+	   private static final Logger logger = LoggerFactory.getLogger(GoogleSocialController.class);
    
-   private static final Logger logger = LoggerFactory.getLogger(GoogleSocialController.class);
-   
-    @Inject
+       @Inject
        private AuthInfo authInfo;
-       
-       @Autowired
-       private GoogleOAuth2Template googleOAuth2Template;
-       
+             
        @Autowired
        private OAuth2Parameters googleOAuth2Parameters;
     
@@ -61,24 +61,26 @@ public class GoogleSocialController {
        // 구글 체크 페이지
        @RequestMapping(value="googleCheck.do", method= { RequestMethod.GET, RequestMethod.POST })
        public String googleCheckPage() {
-          return "member/googleCheck";
+          return "social/googleCheck";
        }
        
        // 구글 사용자 정보 넘기기
        @RequestMapping(value="googlelogin.do")
-       public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status) {
+       public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status
+    		   ,@RequestParam(name="uid") String uid, SocialUser social) {
           String accessToken = request.getParameter("access_token");
           String name = request.getParameter("name");
           String profile = request.getParameter("profile");
-          if(accessToken != null) {
-                gSession.setAttribute("loginMember", accessToken);
+          
+          if(uid != null) {
+                gSession.setAttribute("googleLogin", accessToken);
                 gSession.setAttribute("name", name);
                 gSession.setAttribute("profile", profile);
                 status.setComplete();
           }
-          model.addAttribute("name",name);
-          model.addAttribute("profile",profile);
-          return "home";
+          model.addAttribute("uid",uid);
+          System.out.println("구글로그인 성공!!");
+          return "social/socialInfo";
        }
        
        //토큰 및 사용자 정보 저장 및 불러오기
@@ -126,23 +128,64 @@ public class GoogleSocialController {
            String name = bodys[5].split(":")[1].substring(1, bodys[5].split(":")[1].length()-1);
            String profile = bodys[6].substring(10).substring(1, bodys[6].substring(10).length()-1);
            String uid = bodys[3].split(":")[1].substring(1, bodys[3].split(":")[1].length() - 1);
+           String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(10);
            System.out.println("name : " + name + ", profile : " + profile + "\nsub : " + uid);
-           social.setUser_id(bcryptPE.encode(uid));
-           social.setToken(access_token);
-                      
-           //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
-          /* ObjectMapper mapper = new ObjectMapper();
-           Map<String, String> result = mapper.readValue(body, Map.class);*/
-           Map<String, String> map = new HashMap<String, String>();
-          map.put("access_token", access_token);
-          map.put("body", body);
-          map.put("name", URLEncoder.encode(name,"utf-8"));
-          map.put("profile", profile);
-          
-          model.addObject(map);
-           model.setViewName("jsonView");
-        
+           
+           /*if(socialService.insertSocial(social) > 0) {*/
+        	 //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
+               /* ObjectMapper mapper = new ObjectMapper();
+               Map<String, String> result = mapper.readValue(body, Map.class);*/
+               Map<String, String> map = new HashMap<String, String>();
+               map.put("access_token", access_token);
+               map.put("body", body);
+               map.put("name", URLEncoder.encode(name,"utf-8"));
+               map.put("profile", profile);
+               map.put("uid", bcryptPE.encode(uid));
+               
+               model.addObject(map);
+               model.setViewName("jsonView");
+           /*}else {
+        	   model.addObject("message", "소셜등록실패!");
+        	   model.setViewName("social/socialError");
+           }*/
+                              
            return model;
+       }
+       
+       //구글로그인 후 입력정보 받고 등록하기
+       @RequestMapping(value="sinsert.do", method=RequestMethod.POST)
+       public String insertSocialUser(HttpServletRequest request, SocialUser social, Member member, Model model) {
+    	   String socialCode = "";
+    	   if(request.getParameter("uid") != null) {
+    		   socialCode = request.getParameter("uid");
+    	   }
+
+    	   String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5);
+    	   String userpwd = RandomStringUtils.randomNumeric(15);
+    	   
+    	   member.setUser_id(userId);
+    	   member.setUser_pwd(userpwd);
+    	   
+    	   social.setUser_id(userId);
+    	   social.setSocial_type("google");
+    	   social.setSocial_code(socialCode);
+    	   
+    	   System.out.println("member : " + member + "\nsocial : " + social);
+    	   
+    	   if(memberSerive.insertMember(member) > 0) {
+    		   System.out.println("회원정보등록성공!");
+    		   if(socialService.insertSocial(social) > 0) {
+    			   System.out.println("소셜회원정보등록성공!");
+    			   return "home";
+    		   }else {
+    			   model.addAttribute("message", "소셜회원등록실패!");
+    			   return "social/socialError";
+    		   }
+    	   }else {
+    		  model.addAttribute("message", "회원등록실패!");
+    		  return "social/socialError";
+    	   }
+    	   
        }
        
        //로그아웃

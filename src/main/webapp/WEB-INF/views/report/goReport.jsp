@@ -106,7 +106,7 @@
     
 
                             <div class="cart-btn mt-100">
-                                <a href="#" class="btn amado-btn w-100">REPORT</a>
+                                <a href="#" class="btn amado-btn w-100" id="reportBtn">REPORT</a>
                             </div>
                         </div>
                     </div>
