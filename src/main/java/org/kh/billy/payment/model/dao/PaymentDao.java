@@ -15,7 +15,13 @@ public class PaymentDao {
 		return (ArrayList<Payment>)pmList;
 	}
 	
+	/*public ArrayList<Payment> searchPayment(Payment payment) {}
 	
+	public Payment selectPayment(String payment_no) {}
 	
-
+	public int insertPayment(Payment payment) {}
+	
+	public int updatePayment(Payment payment) {}
+	
+	public int deletePayment(String payment_no) {}*/
 }
