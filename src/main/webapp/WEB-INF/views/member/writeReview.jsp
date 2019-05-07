@@ -80,6 +80,8 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
+	<c:import url="../common/myPage.jsp" />
+	
 	<h1>Review</h1>
 		<form class="cart clearfix" method="post" enctype="multipart/form-data" action="insertReview.do">
                    <br><br>       	
