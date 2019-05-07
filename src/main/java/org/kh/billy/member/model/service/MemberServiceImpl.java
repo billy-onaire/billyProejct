@@ -16,7 +16,12 @@ public class MemberServiceImpl implements MemberService{
 			
 	@Autowired
 	private MemberDao memberDao;
-
+    
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	
+	
 	@Override
 	public Member selectLogin(Member member) {
 		return memberDao.selectLogin(mybatisSession, member);
@@ -56,6 +61,35 @@ public class MemberServiceImpl implements MemberService{
 		
 		return idLists;
 	
+	}
+
+	@Override
+	public void create(Member member) {
+		memberDao.create(member);
+		
+		// 임의의 authkey 생성
+		String authkey = new TempKey().getKey(50, false);
+
+		member.setAuthkey(authkey);
+		uDAO.updateAuthkey(uVO);
+
+		// mail 작성 관련 
+		MailUtils sendMail = new MailUtils(mailSender);
+
+		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
+		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+				.append("<a href='http://localhost:8080/user/joinConfirm?uid=")
+				.append(uVO.getUid())
+				.append("&email=")
+				.append(uVO.getEmail())
+				.append("&authkey=")
+				.append(authkey)
+				.append("' target='_blenk'>이메일 인증 확인</a>")
+				.toString());
+		sendMail.setFrom("관리자 ", "관리자명");
+		sendMail.setTo(uVO.getEmail());
+		sendMail.send();
 	}
 	
 }

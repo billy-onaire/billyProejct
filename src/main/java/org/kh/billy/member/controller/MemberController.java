@@ -1,21 +1,17 @@
 package org.kh.billy.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
-import org.kh.billy.socialuser.controller.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class MemberController {
@@ -57,26 +53,28 @@ public class MemberController {
 		}
 	}
    
-   @RequestMapping(value = "/oauth", produces = "application/json")
-   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session,
-          HttpServletRequest request, HttpServletResponse response) {
-       System.out.println("로그인 할때 임시 코드값");
-       //카카오 홈페이지에서 받은 결과 코드
-       System.out.println(code);
-       System.out.println("로그인 후 결과값");
-       
-       KakaoController kakaoLogin = new KakaoController();
-       //결과값을 node에 담아줌
-       JsonNode node = kakaoLogin.getAccessToken(code);
-       //결과값 출력
-       System.out.println(node);
-       //노드 안에 있는 access_token값을 꺼내 문자열로 변환
-       String token = node.get("access_token").toString();
-       //세션에 담아준다.
-       session.setAttribute("token", token);
-       System.out.println("token : " + token);
-       
-       return "home";
-   }
+	@RequestMapping(value="joinPost", method=RequestMethod.POST)
+	public String joinPost(@ModelAttribute("member") Member member) throws Exception {
+		logger.info("currnent join member: " + member.toString());
+		memberService.create(member);
+		
+		return "/member/joinPost";
+	}
+	
+
+	@RequestMapping(value="joinConfirm", method=RequestMethod.GET)
+	public String emailConfirm(@ModelAttribute("member") Member member, Model model) throws Exception {
+		logger.info(member.getEmail() + ": auth confirmed");
+		member.setAuthstatus(1);	// authstatus를 1로,, 권한 업데이트
+		memberService.updateAuthstatus(member);
+		
+		model.addAttribute("auth_check", 1);
+		
+		return "/user/joinPost";
+	}
+   
+  
+   
+
 
 }
