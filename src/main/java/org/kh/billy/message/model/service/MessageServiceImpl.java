@@ -78,16 +78,14 @@ public class MessageServiceImpl implements MessageService{
 		return 0;
 	}
 
-
-
 	@Override
-	public List<Map<String, Object>> selectDetailMessage(Map param) {
+	public MessagePname selectDetailMessage(int mms_no) {
 		
-		messageDao.updateReadMessage(mybatisSession, param);
-		List list = (List) messageDao.selectDetailMessage(mybatisSession, param);
+		messageDao.updateReadMessage(mybatisSession, mms_no);
 		
-		return list;
+		return messageDao.selectDetailMessage(mybatisSession, mms_no);
 	}
+
 
 
 }

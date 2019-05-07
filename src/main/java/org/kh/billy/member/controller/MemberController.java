@@ -24,7 +24,7 @@ public class MemberController {
    
    private static final Logger logger = 
          LoggerFactory.getLogger(MemberController.class);
-    	
+       
    @Autowired
    private MemberService memberService;
    
@@ -44,55 +44,55 @@ public class MemberController {
    }
    
    @RequestMapping(value="minsert.do", method=RequestMethod.POST)
-	public String insertMember(Member member, HttpServletRequest request, Model model) {
-		logger.info("member : " + member);
-		
-		/*//패스워드 암호화처리
-		member.setUserpwd(
-			bcryptPasswordEncoder.encode(member.getUserpwd()));
-				*/
-		if(memberService.insertMember(member) > 0)
-			return "home";
-		else {
-			model.addAttribute("message", "회원 가입 실패!");
-			return "common/error";
-		}
-	}
+   public String insertMember(Member member, HttpServletRequest request, Model model) {
+      logger.info("member : " + member);
+      
+      /*//패스워드 암호화처리
+      member.setUserpwd(
+         bcryptPasswordEncoder.encode(member.getUserpwd()));
+            */
+      if(memberService.insertMember(member) > 0)
+         return "home";
+      else {
+         model.addAttribute("message", "회원 가입 실패!");
+         return "common/error";
+      }
+   }
    
    @RequestMapping(value="mupage.do")
    public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
-	   return "member/memberDetailPage";
+      return "member/memberDetailPage";
    }
    
    @RequestMapping(value="mupdate.do")
    public String updateMember(Member member, HttpServletRequest request, Model model) {
-	   return "member/memberDetailPage";
+      return "member/memberDetailPage";
    }
    
    @RequestMapping(value="mdelete.do")
    public String deleteMember(Member member, HttpServletRequest request, Model model) {
-	   return "member/memberManagementPage";
+      return "member/memberManagementPage";
    }
    
    
    @RequestMapping(value = "joinPost.do", method = RequestMethod.POST)
    public String RegisterPost(Member member, Model model, RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
-   	logger.info("회원가입...");
-   	logger.info(member.toString());
-   	memberService.create(member);
-   	rttr.addFlashAttribute("authmsg" , "가입시 기재한 이메일로 인증해주세요");
-   	return "redirect:/";
+      logger.info("회원가입...");
+      logger.info(member.toString());
+      memberService.create(member);
+      rttr.addFlashAttribute("authmsg" , "가입시 기재한 이메일로 인증해주세요");
+      return "redirect:/";
    }
    
    @RequestMapping(value="joinConfirm.do", method=RequestMethod.GET)
-	public String emailConfirm(@ModelAttribute("Member") Member member, Model model) throws Exception {
-		logger.info(member.getEmail() + ": auth confirmed");
-		member.setVerify("y");	// authstatus를 1로,, 권한 업데이트
-		memberService.updateVerify(member);
-		
-		model.addAttribute("verify", "y");
-		
-		return "joinPost.do";
-	}
+   public String emailConfirm(@ModelAttribute("Member") Member member, Model model) throws Exception {
+      logger.info(member.getEmail() + ": auth confirmed");
+      member.setVerify("y");   // authstatus를 1로,, 권한 업데이트
+      memberService.updateVerify(member);
+      
+      model.addAttribute("verify", "y");
+      
+      return "joinPost.do";
+   }
 
 }
