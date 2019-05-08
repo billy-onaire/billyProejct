@@ -23,6 +23,32 @@
 		<result property="img_no" column="img_no" />
 	</resultMap>
 	
+	<resultMap type="ProductForUpdate" id="resultUpdateProduct">
+		<id property="product_no" column="product_no" />
+		<result property="product_name" column="product_name" />
+		<result property="price" column="price" />
+		<result property="product_quantity" column="product_quantity" />
+		<result property="product_content" column="product_content" />
+		<result property="progress" column="progress" />
+		<result property="product_startdate" column="product_startdate" />
+		<result property="product_enddate" column="product_enddate" />
+		<result property="weekend_yn" column="weekend_yn" />
+		<result property="weekday_yn" column="weekday_yn" />
+		<result property="product_date" column="product_date" />
+		<result property="product_modifydate" column="product_modifydate" />
+		<result property="delete_yn" column="delete_yn" />
+		<result property="category_code" column="category_code" />
+		<result property="seller_id" column="seller_id" />
+		<result property="pcategory_name" column="pcategory_name" />
+		<result property="sub_pcategory_name" column="sub_pcategory_name" />
+		<result property="first_img" column="first_img" />
+		<result property="second_img" column="second_img" />
+		<result property="third_img" column="third_img" />
+		<result property="fourth_img" column="fourth_img" />
+		
+		
+	</resultMap>
+	
 	<insert id="insertProduct" parameterType="Product" useGeneratedKeys="true">
 	insert into product values(SQ_PDNO.nextval, #{product_name}, #{price}, #{product_quantity}, #{product_content}, default, #{product_startdate}, #{product_enddate}, #{weekend_yn}, #{weekday_yn}, sysdate, sysdate, default, #{category_code}, #{seller_id}, #{img_no})
 	
@@ -33,13 +59,40 @@
 	</select>
 	
 	<select id="seleteMyProductList" resultMap="resultMyProduct" parameterType="hashmap">
-		<![CDATA[
+		 <![CDATA[
+        select X.rnum, X.product_no, X.product_name, X.PRICE, X.PRODUCT_QUANTITY, X.PRODUCT_CONTENT, X.PROGRESS,
+        X.PRODUCT_STARTDATE, X.PRODUCT_ENDDATE, X.WEEKEND_YN, X.WEEKDAY_YN, X.PRODUCT_DATE, X.PRODUCT_MODIFYDATE, 
+        X.DELETE_YN, X.CATEGORY_CODE, X.SELLER_ID, X.IMG_NO
+from ( 
+    select rownum as rnum, A.product_no, A.product_name, A.PRICE, A.PRODUCT_QUANTITY, A.PRODUCT_CONTENT, A.PROGRESS,
+        A.PRODUCT_STARTDATE, A.PRODUCT_ENDDATE, A.WEEKEND_YN, A.WEEKDAY_YN, A.PRODUCT_DATE, A.PRODUCT_MODIFYDATE, 
+        A.DELETE_YN, A.CATEGORY_CODE, A.SELLER_ID, A.IMG_NO
+    from (
+        select product_no, product_name, PRICE, PRODUCT_QUANTITY, PRODUCT_CONTENT, PROGRESS,
+        PRODUCT_STARTDATE, PRODUCT_ENDDATE, WEEKEND_YN, WEEKDAY_YN, PRODUCT_DATE, PRODUCT_MODIFYDATE, DELETE_YN, CATEGORY_CODE, SELLER_ID, IMG_NO
+        from product
+        order by product_no desc) A
+    where rownum <= (#{perPageNum} * #{page}) and SELLER_ID = 'user01' and delete_yn = 'N') X
+where X.rnum > #{pageStart}
+]]>
+	</select>
+	
+	<select id="selectMyProduct" resultMap="resultUpdateProduct" parameterType="int">
+		<!-- select * from product where product_no = #{productNo} -->
+		select *
+			from product a
+			join product_category  on CATEGORY_CODE = PCATEGORY_NO
+			join product_img b on a.img_no = b.img_no
+			where product_no = #{productNo}
+	</select>
+	
+	
+	<!-- <![CDATA[
 		SELECT *
         FROM product
         WHERE DELETE_YN = 'N' and rownum  >= #{pageStart} and rownum <= #{perPageNum} and seller_id = #{seller_id}
         ORDER BY product_no DESC
-        ]]>
-	</select>
+        ]]> -->
 	<!-- <select id="seleteMyProductList" resultMap="resultMyProduct" parameterType="string">
 		select * from product where seller_id = #{userId}
 	</select> -->

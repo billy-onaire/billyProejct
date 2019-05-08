@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.kh.billy.product.model.dao.ProductManipulationDao;
 import org.kh.billy.product.model.vo.Criteria;
 import org.kh.billy.product.model.vo.Product;
+import org.kh.billy.product.model.vo.ProductForUpdate;
 import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class ProductManipulationServiceImpl implements ProductManipulationServic
 	@Override
 	public int selectProductCount(String userId) {
 		return pmd.selectProductCount(mybatisSession, userId);
+	}
+
+	@Override
+	public ProductForUpdate selectMyProduct(int productNo) {
+		return pmd.selectMyProduct(mybatisSession, productNo);
 	}
 	
 	

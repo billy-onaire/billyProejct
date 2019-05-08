@@ -13,7 +13,16 @@
 		<result property="status" column="status" />
 		<result property="product_no" column="product_no" />
 		<result property="customer" column="customer" />
+		<result property="booking_no" column="booking_no" />
+		<result property="seller_id" column="seller_id" />
 	</resultMap>
+	
+	<select id="selectPaymentMyList" resultMap="resultPayment">
+		select booking_no, pd.seller_id, product_name, status
+		from payment py
+		join product pd using (product_no)
+		where status in (1,2) and py.seller_id = pd.seller_id
+	</select>
 	
 	<select id="selectPaymentList" resultMap="resultPayment">
 		select * from payment
