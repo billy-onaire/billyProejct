@@ -23,6 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 		List<Payment> pmList = paymentDao.selectPaymentList(mybatisSession);
 		return (ArrayList<Payment>)pmList;
 	}
+	
 
 	@Override
 	public ArrayList<Payment> searchPayment(Payment payment) {
@@ -52,6 +53,13 @@ public class PaymentServiceImpl implements PaymentService {
 	public int deletePayment(String payment_no) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public ArrayList<Payment> selectPaymentMyList() {
+		List<Payment> pmList = paymentDao.selectPaymentMyList(mybatisSession);
+		return (ArrayList<Payment>)pmList;
 	}
 
 }

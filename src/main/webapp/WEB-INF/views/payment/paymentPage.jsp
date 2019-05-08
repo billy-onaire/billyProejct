@@ -138,6 +138,7 @@
 	<td>수량</td>
 	<td>물품</td>
 	<td>아이디</td>
+	<td>아이디</td>
 </tr>
 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
 <tr>
@@ -147,6 +148,7 @@
 	<td>${ payment.payment_quantity }</td>
 	<td>${ payment.product_no }</td>
 	<td>${ payment.customer }</td>
+	<td>${ payment.seller_id }</td>
 </tr>
 </c:forEach>
 </h6>
@@ -155,20 +157,20 @@
 <c:import url="../common/footer.jsp" />
 <input type='button' onclick='bb();' value='payment'/>
 <input type='button' onclick='bbb();' value='reservation'/>
+</body>
 <!-- bootPay -->    
 <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
 <script src='${ pageContext.request.contextPath }/resources/js/bootpaySource.js' type="application/javascript"></script>
 <script type='text/javascript' src='${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js'></script>
 
 <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
-	<!-- Popper js -->
-	<script src="${ pageContext.request.contextPath }/resources/js/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script src="${ pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
-	<!-- Plugins js -->
-	<script src="${ pageContext.request.contextPath }/resources/js/plugins.js"></script>
-	<!-- Active js -->
-	<script src="${ pageContext.request.contextPath }/resources/js/active.js"></script>
-</body>
+<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<!-- Popper js -->
+<script src="${ pageContext.request.contextPath }/resources/js/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="${ pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
+<!-- Plugins js -->
+<script src="${ pageContext.request.contextPath }/resources/js/plugins.js"></script>
+<!-- Active js -->
+<script src="${ pageContext.request.contextPath }/resources/js/active.js"></script>
 </html>
