@@ -1,9 +1,17 @@
 package org.kh.billy.payment.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.payment.model.service.BootpayApi;
@@ -29,10 +37,42 @@ public class PaymentController {
 	
 	static BootpayApi api;
 	
-	/*@RequestMapping(value="resultPay.do", method=RequestMethod.POST)
-	public String resultPay() {
-		return "payment/paymentPage";
+	@RequestMapping(value="paylist.do")
+	public ModelAndView paymentMyList(ArrayList<Payment> pmList, ModelAndView mav) {
+		pmList = payService.selectPaymentMyList();
+		
+		mav.addObject("pmList", pmList);
+		mav.setViewName("payment/paylistMypage");
+		
+		return mav;
+	}
+	/*public void payList(ArrayList<Payment> pmList, ModelAndView mav, HttpServletResponse response) throws IOException {
+		pmList = payService.selectPaymentMyList();
+		
+		JSONObject job = new JSONObject();
+		JSONArray jar = new JSONArray();
+		
+		for(Payment p : pmList) {
+			JSONObject ob = new JSONObject();
+			ob.put("booking_no", p.getBooking_no());
+			ob.put("seller_id", p.getSeller_id());
+			try {
+				ob.put("pStatus", URLEncoder.encode(p.getStatus(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			jar.add(ob);
+		}
+		job.put("pmList", jar);
+		logger.info("mav payMylist : " + jar.toJSONString());
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(jar.toJSONString());
+		out.flush();
+		out.close();
 	}*/
+	
 	@RequestMapping(value="bookingPage.do")
 	public String paymentMyList(Payment payment, ArrayList<Payment> myPmList) {
 		

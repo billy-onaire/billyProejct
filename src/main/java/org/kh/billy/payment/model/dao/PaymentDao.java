@@ -14,6 +14,10 @@ public class PaymentDao {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentList");
 		return (ArrayList<Payment>)pmList;
 	}
+	public ArrayList<Payment> selectPaymentMyList(SqlSessionTemplate mybatisSession) {
+		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentMyList");
+		return (ArrayList<Payment>)pmList;
+	}
 	
 	/*public ArrayList<Payment> searchPayment(Payment payment) {}
 	

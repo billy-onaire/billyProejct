@@ -14,11 +14,13 @@ public class Payment implements Serializable {
 	private String status;
 	private int product_no;
 	private String customer;
+	private String booking_no;
+	private String seller_id;
 	
 	public Payment() {}
 	
 	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
-			Date payment_enddate, String status, int product_no, String customer) {
+			Date payment_enddate, String status, int product_no, String customer, String booking_no, String seller_id) {
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
 		this.payment_quantity = payment_quantity;
@@ -27,6 +29,20 @@ public class Payment implements Serializable {
 		this.status = status;
 		this.product_no = product_no;
 		this.customer = customer;
+		this.booking_no = booking_no;
+		this.seller_id = seller_id;
+	}
+	public String getBooking_no() {
+		return booking_no;
+	}
+	public void setBooking_no(String booking_no) {
+		this.booking_no = booking_no;
+	}
+	public String getSeller_id() {
+		return seller_id;
+	}
+	public void setSeller_id(String seller_id) {
+		this.seller_id = seller_id;
 	}
 	public int getPayment_no() {
 		return payment_no;
