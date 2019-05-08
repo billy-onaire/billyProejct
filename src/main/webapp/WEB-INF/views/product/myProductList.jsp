@@ -35,6 +35,18 @@
     margin-bottom: 10px;
     }
     
+    .center {
+      margin: auto;
+      width: 90%;
+      
+      padding: 10px;
+    }
+    .centertwo {
+      margin: auto;
+      width: 60%;
+      
+      padding: 10px;
+    }
     </style>
 </head>
 
@@ -85,83 +97,43 @@
 	                        </div>
 	                        
 	                        <br><br><br><br>
-                       		
-                          <div>
-                            <table class="table" style="width:800px">
+                       		                         
+                          <div class="center" >
+                            <table class="table" style="width:800px; text-align: center;" id="productList">
                               <tr>
-                                <tr>
-                                  
-                              </tr>
-                              
-                                <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>19-04-17</td><td>수정/삭제</td></tr>
-                                <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>19-04-17</td><td>수정/삭제</td></tr>
-                                <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>19-04-17</td><td>수정/삭제</td></tr>
-                                <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>19-04-17</td><td>수정/삭제</td></tr>
-                              
-                              
-                            </table>
-                          </div>
-                          <hr>
-                          <div>
-                            <table class="table" style="width:800px">
-                              <tr>
-                                  <th width="40%">상품명</th>
+                                  <th width="45%">상품명</th>
                                   <th width="7.5%">수량</th>
                                   <th width="10%">가격</th>
-                                  <th width="15%">등록일자</th>
-                                  <th width="15%">수정일자</th>
-                                  <th width="12.5%">수정/삭제</th>
+                                  <th width="15%">최근수정일자</th>                                  
+                                  <th width="17.5%">수정/삭제</th>
                               </tr>
                               <c:forEach items="${list }" var="list">
-                                <tr><td>${list.product_name}</td><td>${list.product_quantity }</td><td>${list.price }</td><td>${list.product_date }</td><td>${list.product_modifydate }</td><td>수정/삭제</td></tr>
+                                <tr><td>${list.product_name}</td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
+                                <td><button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;<button type="button" class="btn btn-warning btn-sm"><a href="">삭제</a></button></td></tr>
                                 
                               
                               </c:forEach>
-                            </table>
-                          </div>
-                          <hr>
-                          <div>
-                            <table class="table" style="width:800px">
-                              <tr>
-                                  <th width="40%">상품명</th>
-                                  <th width="7.5%">수량</th>
-                                  <th width="10%">가격</th>
-                                  <th width="15%">등록일자</th>
-                                  <th width="15%">수정일자</th>
-                                  <th width="12.5%">수정/삭제</th>
-                              </tr>
-                              <c:forEach items="${list }" var="list">
-                                <tr><td>${list.product_name}</td><td>${list.product_quantity }</td><td>${list.price }</td><td>${list.product_date }</td><td>${list.product_modifydate }</td><td>수정/삭제</td></tr>
-                                
-                              
-                              </c:forEach>
-                            </table>
-                          </div>   
-                          <br>
-                             <ul class="btn-group pagination">
-							    <c:if test="${pageMaker.prev }">
-							    <li>
-							        <a href='<c:url value="/billy/myproductlist.do?page=${pageMaker.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
-							    </li>
-							    </c:if>
-							    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-							    <li>
-							        <a href='<c:url value="/billy/myproductlist.do?page=${idx }"/>'><i class="fa">${idx }</i></a>
-							    </li>
-							    </c:forEach>
-							    <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
-							    <li>
-							        <a href='<c:url value="/billy/myproductlist.do?page=${pageMaker.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
-							    </li>
-							    </c:if>
-							</ul>
-
+                            </table>                                          
+                            
+                          </div>  
+                          <div class="centertwo">
+                          <ul class="pagination">
+                                <c:if test="${pageMaker.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                            </div> 
+                          <br>                          
                     	</div> 
                 	</div>
             	</div>
         	</div>
-    	</div>
-    <!-- Product Details Area End -->
+    	</div>      
+    <!-- Product Details Area End -->      
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 

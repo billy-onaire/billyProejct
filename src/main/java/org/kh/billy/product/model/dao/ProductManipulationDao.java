@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.kh.billy.product.model.vo.Criteria;
 import org.kh.billy.product.model.vo.Product;
+import org.kh.billy.product.model.vo.ProductForUpdate;
 import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,8 @@ public class ProductManipulationDao {
 	public ArrayList<Product> seleteMyProductList(SqlSessionTemplate session, Criteria cri) {
 		
 		//List<Notice> list = session.selectList("noticeMapper.selectTop5Write");
+		System.out.println("dao에서 확인 : "+cri);
+		System.out.println("dao에서 확인2 : " + cri.getPageStart());
 		List<Product> list = session.selectList("productManipulationMapper.seleteMyProductList", cri);
 		return (ArrayList<Product>)list;
 	}
@@ -35,6 +38,10 @@ public class ProductManipulationDao {
 
 	public int selectProductCount(SqlSessionTemplate session, String userId) {
 		return session.selectOne("productManipulationMapper.selectProductCount", userId);
+	}
+
+	public ProductForUpdate selectMyProduct(SqlSessionTemplate session, int productNo) {
+		return session.selectOne("productManipulationMapper.selectMyProduct", productNo);
 	}
 	
 }

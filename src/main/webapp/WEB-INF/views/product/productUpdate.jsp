@@ -79,7 +79,7 @@
                         
                         <br><br><br>
                        
-                        <form action="productinsert.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
+                        <form action="productupdate.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
                           <div class="form-group">                              
                               <div class="row">
                                   <div class="col-sm-6">
@@ -107,13 +107,13 @@
                           <div class="col-sm-8"">
                             <div class="form-group">
                               <label for="usr">상품명(최대 20글자):</label>
-                              <input type="text" class="form-control" id="product_name" name="product_name" maxlength="20" required>
+                              <input type="text" class="form-control" id="product_name" name="product_name" maxlength="20" value="${product.product_name }" required>
                           	</div>
                      	 </div>
                       	<div class="col-sm-4"">
                        		<div class="form-group">
                           		<label for="usr">상품수량:</label>
-                          		<input type="text" class="form-control" id="product_quantity" name="product_quantity" style="width: 50%;" maxlength="2" required>
+                          		<input type="text" class="form-control" id="product_quantity" name="product_quantity" style="width: 50%;" maxlength="2" value="${product.product_quantity }"required>
                       		</div>
                   		</div>
               			</div>
@@ -121,11 +121,11 @@
                                
                               <div class="form-group">
                                   <label for="usr">상품설명:</label><br>
-                                  <textarea class="form-control" id="product_content" name="product_content" rows="10" style="resize: none; width:100%;" placeholder="최대 500글자 작성 가능합니다." required></textarea>          
+                                  <textarea class="form-control" id="product_content" name="product_content" rows="10" style="resize: none; width:100%;" placeholder="최대 500글자 작성 가능합니다." required>${product.product_content }</textarea>          
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" value="${product.price }" required style="width: 50%">
                               </div>
                               
                             <!-- <div class="container">
@@ -137,7 +137,37 @@
                                         <label class="control-label">상품사진(최대 4장 가능)</label>
                                         <div class="col-md-20">
                                             <div class="row">
-                                                <div id="coba"></div>
+                                                <div id="coba">
+													<div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
+													<div style="position: relative;">
+													<div class="spartan_item_loader" data-spartanindexloader="0" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
+													<i class="fas fa-sync fa-spin"></i>
+													</div>
+													<label class="file_upload" style="width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 3px; cursor: pointer; text-align: center; overflow: hidden; padding: 5px; margin-top: 5px; margin-bottom : 5px; position : relative; display: flex; align-items: center; margin: auto; justify-content: center; flex-direction: column;">
+													<a href="javascript:void(0)" data-spartanindexremove="0" style="right: 3px; top: 3px; background: rgb(237, 60, 32); border-radius: 3px; width: 30px; height: 30px; line-height: 30px; text-align: center; text-decoration: none; color: rgb(255, 255, 255); position: absolute !important;" class="spartan_remove_row">
+													<i class="fas fa-times"></i></a>
+													<img style="width: 100%; margin: 0px auto; vertical-align: middle; display: none;" data-spartanindexi="0" src="/billy/resources/img/productinput/placeholder.png" class="spartan_image_placeholder"> 
+													<p data-spartanlbldropfile="0" style="color : #5FAAE1; display: none; width : auto; ">Drop Here</p>
+													<img style="width: 100%; vertical-align: middle;" class="img_" data-spartanindeximage="0" src="/billy/resources/files/product/${product.first_img }">
+													<input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="0" style="display : none" name="fileUpload[]" type="file"></label> 
+													</div>
+													</div>	  
+													<div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
+													<div style="position: relative;">
+													<div class="spartan_item_loader" data-spartanindexloader="0" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
+													<i class="fas fa-sync fa-spin"></i>
+													</div>
+													<label class="file_upload" style="width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 3px; cursor: pointer; text-align: center; overflow: hidden; padding: 5px; margin-top: 5px; margin-bottom : 5px; position : relative; display: flex; align-items: center; margin: auto; justify-content: center; flex-direction: column;">
+													<a href="javascript:void(0)" data-spartanindexremove="0" style="right: 3px; top: 3px; background: rgb(237, 60, 32); border-radius: 3px; width: 30px; height: 30px; line-height: 30px; text-align: center; text-decoration: none; color: rgb(255, 255, 255); position: absolute !important;" class="spartan_remove_row">
+													<i class="fas fa-times"></i></a>
+													<img style="width: 100%; margin: 0px auto; vertical-align: middle; display: none;" data-spartanindexi="1" src="/billy/resources/img/productinput/placeholder.png" class="spartan_image_placeholder"> 
+													<p data-spartanlbldropfile="1" style="color : #5FAAE1; display: none; width : auto; ">Drop Here</p>
+													<img style="width: 100%; vertical-align: middle;" class="img_" data-spartanindeximage="1" src="/billy/resources/files/product/${product.first_img }">
+													<input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="1" style="display : none" name="fileUpload[]" type="file"></label> 
+													</div>
+													</div> 
+													  													                                          	
+                                                </div>
                                             </div>
                                         </div>
                                     </div>                     
@@ -146,42 +176,68 @@
                             </div> -->
 
                           <h3>직거래주말여부</h3>
+                          <c:forTokens items="${product.weekend_yn }" delims="," var="s">
+	                        <c:if test="${s eq 'Y' }">
+								<c:set var="checked6" value="checked"/>
+							</c:if>
+							<c:if test="${s eq 'N' }">
+								<c:set var="checked7" value="checked"/>
+							</c:if>		
+                        </c:forTokens>
                           <div class="form-check">
                               <label class="form-check-label" for="radio1">
-                                <input type="radio" class="form-check-input" id="radio1" name="weekend_yn" value="Y" checked>가능
+                                <input type="radio" class="form-check-input" id="radio1" name="weekend_yn" value="Y" ${checked6 }>가능
                             </label>
                         </div>
                         <div class="form-check">
                           <label class="form-check-label" for="radio2">
-                            <input type="radio" class="form-check-input" id="radio2" name="weekend_yn" value="N">불가능
+                          
+                            <input type="radio" class="form-check-input" id="radio2" name="weekend_yn" value="N" ${checked7 }>불가능
                         </label>
                     </div>
 					          <br>
                     <div class="form-group">
                         <label for="pwd">직거래가능요일(월,화,수,목,금):</label><br>
+                        <c:forTokens items="${product.weekday_yn }" delims="," var="s">
+	                        <c:if test="${s eq 'monday' }">
+								<c:set var="checked0" value="checked"/>
+							</c:if>
+							<c:if test="${s eq 'tuesday' }">
+								<c:set var="checked1" value="checked"/>
+							</c:if>		
+							<c:if test="${s eq 'wendsday' }">
+								<c:set var="checked2" value="checked"/>
+							</c:if>
+							<c:if test="${s eq 'thursday' }">
+								<c:set var="checked3" value="checked"/>
+							</c:if>		
+							<c:if test="${s eq 'friday' }">
+								<c:set var="checked4" value="checked"/>
+							</c:if>		
+                        </c:forTokens>
                         <div class="form-check-inline">
                           <label class="form-check-label" for="check1">
-                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="monday" checked>월
+                            <input type="checkbox" class="form-check-input" id="check1" name="weekday_yn" value="monday" ${checked0 } >월
                          </label>
                          </div>
                         <div class="form-check-inline">
                             <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday" checked>화
+                            <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday" ${checked1 }>화
                             </label>
                         </div>
 	                	    <div class="form-check-inline">
 	                  		  <label class="form-check-label" for="check3">
-	                   		    <input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday" checked>수
+	                   		    <input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday" ${checked2 }>수
 	                		    </label>
 	            		      </div>
 	            		      <div class="form-check-inline">
                           <label class="form-check-label" for="check4">
-                           <input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday" checked>목
+                           <input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday" ${checked3 }>목
                           </label>
                         </div>
                         <div class="form-check-inline">
                           <label class="form-check-label" for="check5">
-                            <input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="friday" checked>금
+                            <input type="checkbox" class="form-check-input" id="check5" name="weekday_yn" value="friday" ${checked4 }>금
                           </label>
                         </div>
                      </div>
@@ -190,11 +246,11 @@
                                   <div class="col-sm-6">
                                     <label for="sel1">대여가능시작일 </label>
                                     <BR>
-                                    <input data-toggle="datepicker" id="product_startdate" name="product_startdate" type="text" readonly>
+                                    <input data-toggle="datepicker" id="product_startdate" name="product_startdate" type="text" value="${product.product_startdate }" readonly>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="sel2">대여가능종료일</label><BR>
-                                    <input data-toggle="datepicker" id="product_enddate" name="product_enddate" type="text" readonly>
+                                    <input data-toggle="datepicker" id="product_enddate" name="product_enddate" type="text" value="${product.product_enddate }" readonly>
                                 </div>
                      </div>
                     
@@ -263,6 +319,7 @@
             opt.innerHTML = d[x];
             target.appendChild(opt);
           } 
+          
           
         }
 
@@ -475,6 +532,39 @@
               return false;
             }
           }
-        </script></body>
+        </script>
+        <script type="text/javascript">
+        	/* DB에서 가져온 카테고리 선택되게 하는 스크립트  */
+        	$('#sel1').val('${product.pcategory_name}');
+			
+        	/* 세부 카테고리가 체크 되게 하려면 먼저 sel1의 값에 맞게 세부카테고리가 출력 되게 함.  */
+        	var e = $('#sel1').val();
+        	var good_a = ["생활 용품", "주방 용품", "가구/인테리어", "키덜트/취미"];
+            var good_b = ["야구 용품", "농구 용품", "축구 용품", "트레이닝/기타 용품"];
+            var good_c = ["핸드폰", "컴퓨터", "스피커", "모니터/영상기기", "카메라/주변기기", "계절가전"];
+            var good_d = ["여성 의류", "남성 의류", "여성 신발", "남성 신발", "여성 가방/잡화", "남성 가방/잡화"];
+            var good_e = ["출산/돌 기념품", "장난감", "아동의류", "임부복/소품", "유아안전/실내용품", "수유용품"];
+            var good_f = ["기타"];
+            var target = document.getElementById("sel2");
+              if(e == "LIVING") var d = good_a;
+              else if(e == "SPORTS") var d = good_b;
+              else if(e == "ELECTRONICS") var d = good_c;
+              else if(e == "CLOTHES") var d = good_d;
+              else if(e == "KIDS") var d = good_e;
+              else if(e == "ETC") var d = good_f;
+           
+            target.options.length = 0;
+           
+            for (x in d) {
+              var opt = document.createElement("option");
+              opt.value = d[x];
+              opt.innerHTML = d[x];
+              target.appendChild(opt);
+            } 
+            /* 그 후 sel1의 값 선택  */
+        	$('#sel2').val('${product.sub_pcategory_name}');
+        	
+        </script>
+        </body>
 
 </html>

@@ -1,8 +1,15 @@
 package org.kh.billy.product.model.vo;
 
-public class Criteria {
+import org.springframework.stereotype.Component;
+
+@Component
+public class Criteria implements java.io.Serializable{
     
-    private int page;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -301846648785976478L;
+	private int page;
     private int perPageNum;
     private String seller_id;
     
@@ -36,14 +43,24 @@ public class Criteria {
     public int getPerPageNum() {
         return perPageNum;
     }
-    public void setPerPageNum(int pageCount) {
+    /*public void setPerPageNum(int pageCount) {
         int cnt = this.perPageNum;
         if(pageCount != cnt) {
             this.perPageNum = cnt;
         } else {
             this.perPageNum = pageCount;
         }
-    }
+    }*/
+
+    public void setPerPageNum(int perPageNum) {
+		
+		if(perPageNum <= 0 || perPageNum > 100) {
+			this.perPageNum = 10;
+			return;
+		}
+		
+		this.perPageNum = perPageNum;
+	}
 
 	@Override
 	public String toString() {
