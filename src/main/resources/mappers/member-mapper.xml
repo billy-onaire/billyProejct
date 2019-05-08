@@ -7,7 +7,7 @@
    <resultMap id="resultMember" type="Member">
       <id property="user_id" column="user_id" />
       <result property="user_pwd" column="user_pwd" />
-      <result property="user_moblie" column="user_mobile" />
+      <result property="user_mobile" column="user_mobile" />
       <result property="user_name" column="user_name" />
       <result property="email" column="email" />
       <result property="authkey" column="authkey"/>
@@ -29,7 +29,7 @@
    
    
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
-      select * from tb_user where user_id = #{user_id}
+      select * from tb_user where user_id = #{userId} and verify = 'y'
    </select>
    
    <select id="selectLogin" parameterType="String" resultMap="resultMember">
@@ -42,7 +42,7 @@
    
    <insert id = "insertMember" parameterType="Member">
 	  insert into tb_user (user_id, user_pwd, user_mobile, user_name, email, authkey, verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count)
-	  values(#{user_id}, #{user_pwd}, #{user_mobile}, #{user_name}, #{email}, 0, 0, #{address}, #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
+	  values(#{user_id}, #{user_pwd}, #{user_mobile}, #{user_name}, #{email}, '1234', 'n', #{address}, #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
    
    
@@ -66,9 +66,9 @@
       select * from tb_user where user_name = #{user_name} and phone = #{phone}
    </select>
    
-   <update id="createAuthKey">
+   <!-- <update id="createAuthKey">
 	  update tb_user set authkey = #{authkey} where email = #{email}
-	</update>
+	</update> -->
 	
 
 </mapper>

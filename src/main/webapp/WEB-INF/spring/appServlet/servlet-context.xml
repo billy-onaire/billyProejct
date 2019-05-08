@@ -44,5 +44,11 @@
 		<beans:property name="order" value="0"></beans:property>
 		<!-- 제일 먼저 실행되도록 순서 지정해야 함  -->
 	</beans:bean>
+	
+	<!-- NAVER -->
+	<beans:bean id="naverLoginBO"
+		class="org.kh.billy.socialuser.model.vo.NaverLoginBO">
+	</beans:bean>
+	
 	<context:component-scan base-package="org.kh.billy" />
 </beans:beans>

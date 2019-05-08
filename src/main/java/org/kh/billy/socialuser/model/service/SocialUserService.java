@@ -7,10 +7,11 @@ import org.kh.billy.socialuser.model.vo.SocialUser;
 
 public interface SocialUserService {
 
-	int selectLogin(String uid); 
+	int selectLogin(String uid);
     int insertSocial(SocialUser social);
     int updateSocial(SocialUser social);
     int deleteSocial(String userid);
     SocialUser selectSocial(String userid);
     ArrayList<String> searchId(Member member);
+	int selectCheckId(String uid);
 }

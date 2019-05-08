@@ -50,25 +50,29 @@ public class MemberController {
    
    //로그인 아이디 체크
    @RequestMapping(value="loginCheck.do", method=RequestMethod.POST)
-   public String selectCheckId(Model model, HttpSession session, SessionStatus status, Member member/*@RequestParam(name="user_pwd") String userPwd, @RequestParam(name="user_id") String userId*/) {
-	   System.out.println("전송온 암호 : " + member.getUser_pwd());
+   public String selectCheckId(Model model,HttpServletRequest request, HttpSession session, SessionStatus status, Member member) {
+	   System.out.println("구글세션 : " + session.getAttribute("googleLogin"));
+	   if(session.getAttribute("googleLogin") != null) {
+		   session.invalidate();
+		   System.out.println("구글세션 날라감");
+	   }
 	   Member user = memberService.selectCheckId(member.getUser_id());
-	   System.out.println("디비갔다온 값 : " + user);
+
 	   if(user != null) {
-		   System.out.println("비교결과 : " + bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd()));
 		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
-			   System.out.println("첫번째?");
-		   session.setAttribute("loginMember", user.getUser_id());
+		   session.setAttribute("loginMember", user);
 		   status.isComplete();
-		   
+		   if(member.getVerify().equals('n')) {
+			   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
+			   return "member/memberError";
+		   }
+		   System.out.println(user.getUser_id() + "님 로그인 성공!!");			   
 		   return "home";
 		   }else {
-			   System.out.println("두번째?");
 			   model.addAttribute("message", "로그인 실패!");
 			   return "member/memberError";
 		   }
 	   }else {
-		   System.out.println("세번째?");
 		   model.addAttribute("message", "로그인 실패!");
 		   return "member/memberError";
 	   }

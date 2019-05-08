@@ -13,7 +13,12 @@
 	
 	<select id="selectLogin" parameterType="String" resultType="int">
 		select count(user_id) from socialUser
-		where user_id = #{uid}
+		where user_id = #{uid} 
+	</select>
+	
+	<select id="selectCheckId" parameterType="String" resultType="int">
+		select count(social_code) from socialuser
+		where social_code = #{uid}
 	</select>
 	
 	<insert id="insertSocial" parameterType="SocialUser">

@@ -44,7 +44,7 @@ public class MemberDao {
 		member.setVerify(authkey);
 		member.setEmail(email);
 		return session.update("memberMapper.createAuthKey", member);
-		/*sqlSession.selectOne(namespace + ".createAuthKey", vo);*/
+		sqlSession.selectOne(namespace + ".createAuthKey", vo);
 	}
 
 	public void updateVerify(SqlSessionTemplate session, Member member) {

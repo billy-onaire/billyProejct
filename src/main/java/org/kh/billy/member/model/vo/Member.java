@@ -2,6 +2,9 @@ package org.kh.billy.member.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Member implements java.io.Serializable{
 
 	private static final long serialVersionUID = 791489045932352347L;

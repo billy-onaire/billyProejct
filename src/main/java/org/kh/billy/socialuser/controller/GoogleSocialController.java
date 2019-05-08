@@ -68,26 +68,33 @@ public class GoogleSocialController {
        @RequestMapping(value="googlelogin.do")
        public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status
     		   ,@RequestParam(name="uid") String uid, SocialUser social) {
+    	   if(gSession.getAttribute("loginMember") != null) {
+    		   gSession.invalidate();
+    		   System.out.println("사용자세션 날라감");
+    	   }
           String accessToken = request.getParameter("access_token");
           String name = request.getParameter("name");
           String profile = request.getParameter("profile");
           
           if(uid != null) {
-                gSession.setAttribute("googleLogin", accessToken);
-                gSession.setAttribute("name", name);
-                gSession.setAttribute("profile", profile);
-                status.setComplete();
-          }
-          model.addAttribute("uid",uid);
-          System.out.println("구글로그인 성공!!");
-          return "social/socialInfo";
-       }
-       
+              gSession.setAttribute("googleLogin", uid);
+              gSession.setAttribute("name", name);
+              gSession.setAttribute("profile", profile);
+              status.setComplete();
+        	}
+        	model.addAttribute("uid",uid);
+          
+		if (socialService.selectCheckId(uid) > 0) {
+			return "home";
+		} else {
+			System.out.println("구글로그인 성공!!");
+			return "social/socialInfo";
+		}
+     }
        //토큰 및 사용자 정보 저장 및 불러오기
        @RequestMapping(value = "token.do", method=RequestMethod.POST)
        public ModelAndView doSessionAssignActionPage(SocialUser social, HttpServletRequest request, HttpServletResponse response, ModelAndView model) throws Exception {
           String code = request.getParameter("code");
-           System.out.println("code : " + code);
            
            //RestTemplate을 사용하여 Access Token 및 profile을 요청한다.
            RestTemplate restTemplate = new RestTemplate();
@@ -103,7 +110,6 @@ public class GoogleSocialController {
            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
            ResponseEntity<Map> responseEntity = restTemplate.exchange("https://www.googleapis.com/oauth2/v4/token", HttpMethod.POST, requestEntity, Map.class);
            Map<String, Object> responseMap = responseEntity.getBody();
-           System.out.println("responseMap : " + responseMap);
            String access_token = (String)responseMap.get("access_token");
            
            // id_token 라는 키에 사용자가 정보가 존재한다.
@@ -129,12 +135,8 @@ public class GoogleSocialController {
            String profile = bodys[6].substring(10).substring(1, bodys[6].substring(10).length()-1);
            String uid = bodys[3].split(":")[1].substring(1, bodys[3].split(":")[1].length() - 1);
            String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(10);
-           System.out.println("name : " + name + ", profile : " + profile + "\nsub : " + uid);
            
-           /*if(socialService.insertSocial(social) > 0) {*/
         	 //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
-               /* ObjectMapper mapper = new ObjectMapper();
-               Map<String, String> result = mapper.readValue(body, Map.class);*/
                Map<String, String> map = new HashMap<String, String>();
                map.put("access_token", access_token);
                map.put("body", body);
@@ -144,10 +146,6 @@ public class GoogleSocialController {
                
                model.addObject(map);
                model.setViewName("jsonView");
-           /*}else {
-        	   model.addObject("message", "소셜등록실패!");
-        	   model.setViewName("social/socialError");
-           }*/
                               
            return model;
        }
