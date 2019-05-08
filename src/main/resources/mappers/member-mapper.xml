@@ -7,7 +7,7 @@
    <resultMap id="resultMember" type="Member">
       <id property="user_id" column="user_id" />
       <result property="user_pwd" column="user_pwd" />
-      <result property="user_moblie" column="user_mobile" />
+      <result property="user_mobile" column="user_mobile" />
       <result property="user_name" column="user_name" />
       <result property="email" column="email" />
       <result property="authkey" column="authkey"/>
@@ -29,7 +29,7 @@
    
    
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
-      select * from tb_user where user_id = #{user_id}
+      select * from tb_user where user_id = #{userId} and verify = 'y'
    </select>
    
    <select id="selectLogin" parameterType="String" resultMap="resultMember">
@@ -65,6 +65,5 @@
    <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
       select user_id from tb_user where user_id = #{user_id}
    </select>
-   
 
 </mapper>

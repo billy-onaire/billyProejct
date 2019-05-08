@@ -297,9 +297,6 @@ a {
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
 
-<!-- 				<label for="verify"><b>인증 번호</b></label> 
-					<input type="text" placeholder="Enter verification number" id="verift" name="verify" required>
- -->
 				<label for="address"><b>주소</b></label> 
 				<input type="text" placeholder="Enter address" id="address" name="address" required> 
 				<label for="location_area"><b>주거래가능 지역</b></label> 

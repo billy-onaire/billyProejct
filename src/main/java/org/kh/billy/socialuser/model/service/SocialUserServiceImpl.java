@@ -19,8 +19,8 @@ public class SocialUserServiceImpl implements SocialUserService{
 	private SocialUserDao socialDao;
 	
 	@Override
-	public int selectLogin(String uid) {
-		return socialDao.selectSocialLogin(mSession, uid);
+	public int selectCheckId(String uid) {
+		return socialDao.selectCheckId(mSession, uid);
 	}
 
 	@Override
@@ -51,6 +51,13 @@ public class SocialUserServiceImpl implements SocialUserService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int selectLogin(String uid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	
 }

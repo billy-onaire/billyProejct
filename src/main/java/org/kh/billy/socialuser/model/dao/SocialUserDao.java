@@ -14,4 +14,8 @@ public class SocialUserDao {
 	public int selectSocialLogin(SqlSessionTemplate mSession, String uid) {
 		return mSession.selectOne("socialMapper.selectSocialLogin", uid);
 	}
+
+	public int selectCheckId(SqlSessionTemplate mSession, String uid) {
+		return mSession.selectOne("socialMapper.selectCheckId", uid);
+	}
 }

@@ -24,7 +24,6 @@
 					$("#profile").val(result.hashMap.profile);
 					$("#uid").val(result.hashMap.uid);
 					$("#gac").submit();
-					/* location.href="googleInfo.do?access_token="+result.hashMap.access_token + "&name="+decodeURIComponent(result.hashMap.name)+"&profile="+result.hashMap.profile; */
 				}
 			},error: function(request, status, errorData){
 				console.log("error code : " + request.status

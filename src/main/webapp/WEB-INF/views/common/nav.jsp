@@ -7,10 +7,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+@font-face {
+	font-family: 'DXSeNB-KSCpc-EUC-H';
+	src: url(/billy/resources/fonts/DXSeNB-KSCpc-EUC-H.ttf) format('truetype');
+}
+
 #google_img{
-	width: 30px;
-    height: 30px;
-    border-radius: 30px;
+	width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+#pname {
+	font-family: 'DXSeNB-KSCpc-EUC-H';
+	font-size: 30pt;
 }
 
 .mb-100{
@@ -46,15 +56,20 @@
             <!-- Cart Menu -->
             <c:set var="profile" value="${profile }" scope="session" /> 
 			<c:set var="name" value="${name }" scope="session" /> 
-            <c:if test="${empty googleLogin }">
+            <c:if test="${empty googleLogin and empty loginMember and empty naverLogin}">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class="search-nav"><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
                 <a href="recvList.do">쪽지 확인용</a>
             </div>
        		</c:if>
-       		<c:if test="${!empty googleLogin }">
+       		<c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin}">
        			<div class="cart-fav-search mb-100" id="googleLogin">
-       			<img id="google_img"  src="${profile }">&nbsp; <span>${name }</span>
+       			<c:if test="${!empty googleLogin  or !empty naverLogin}">
+       			<img id="google_img"  src="${profile }">&nbsp; <span id="pname">${name }</span>
+       			</c:if>
+       			<c:if test="${!empty loginMember  }">
+       			<span id="pname">${loginMember.user_name }님</span>
+       			</c:if>
                 <a href="recvList.do">쪽지 확인용</a>
                 <a href="logout.do">로그아웃</a>
        		</div>
