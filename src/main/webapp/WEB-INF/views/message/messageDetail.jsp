@@ -22,7 +22,7 @@
   border: none;
   color: white;
   padding: 15px 32px;
-  margin-left: 35px;
+  margin-left: 55px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -35,45 +35,42 @@
   background-color: #f9a406;
 }
 
+#mmswrite{
+	margin-left: 10px;
+}
+
+
 
 </style>
-<script type="text/javascript">
-/* update 클릭 */ 
- $('#update').on('click',function(){ }); 
- 
- /* 삭제 클릭 */ 
- $('#delete').on('click',function(){ 
-	 
-	 
- });
-
-
-</script>
 
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
 				<div id="mmsWrite">
+					<form role="form" method="get" autocomplete="off">
+						<input type="hidden" id="mms_no" name="mms_no" value="${list.mms_no }">
+					</form>
 				<!-- 보낸 편지함 기준 -->  
 					<table class="board_view"> 
 
-					<colgroup> 
+				 	<colgroup> 
 						<col width="20%"/> 
 						<col width="20%"/> 
 						<col width="20%"/> 
-						<col width="40%"/> 
+						<col width="50%"/> 
 					</colgroup> 
+				<br>
+				<br>
 
-				<br>
-				<br>
 						<tbody> 
-						<c:if test="${sent_id eq testmk }">
+						<c:if test="${list.sent_id eq 'testmk' }">
 				<tr> 
-					<th scope="row">상품명</th> 
-					<td>${list.product_name }</td> 
 					<th scope="row">받는사람</th> 
 					<td>${list.recv_id}</td> 
+					<th scope="row">상품명</th> 
+					<td>${list.product_name }</td> 
+					
 				</tr> 
 				<tr></tr>
 				<tr> 
@@ -95,7 +92,8 @@
 				</tr> 
 				
 					</c:if>
-					<c:if test="${sent ne testmk }">
+					
+					<c:if test="${list.sent_id ne 'testmk' }">
 					<tr> 
 					<th scope="row">상품명</th> 
 					<td>${list.product_name }</td> 
@@ -117,11 +115,12 @@
 					
 					
 
-						<br> <span id="message"></span>
-						
-							<input type="button" class="button" id="update" value="답장하기" > 
-							<input type="button" class="button" id="delete" value="삭제하기">
-						
+						<br> 					
+							<input type="button" class="button" id="reply" value="답장하기" > 
+							<input type="button" class="button" id="delete" value="삭제하기" >
+						<br>					
+							<input type="button" class="button" id="update" value="메세지복구" > 
+							<input type="button" class="button" id="final" value="완전삭제" >
 				</div>
 			</div>
 		</div>

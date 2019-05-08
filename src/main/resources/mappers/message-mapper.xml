@@ -33,11 +33,11 @@
 
 	<select id="selectRecvList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		select m.mms_no, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
+		select m.recv_del, m.mms_no, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
 		from message m
 		join product p
 		on m.product_no = p.product_no
-		where recv_id = 'testmk' 
+		where recv_id = 'testmk2' and recv_del = 'N'
 		order by sent_date desc
 
 		
@@ -45,11 +45,21 @@
 	
 	<select id="selectSentList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		select m.mms_no, m.recv_id, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
+		select m.recv_del, m.mms_no, m.recv_id, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
 		from message m
 		join product p
 		on m.product_no = p.product_no
-		where sent_id = 'testmk'
+		where recv_id = 'testmk' and recv_del = 'N'
+		order by sent_date desc
+	</select>
+	
+	<select id="selectDelList" parameterType="MessagePname" 
+	 resultMap="resultMessagePname" useCache="true">
+		select m.recv_del, m.mms_no, m.recv_id, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
+		from message m
+		join product p
+		on m.product_no = p.product_no
+		where <!-- sent_id = 'testmk2' and  -->recv_del = 'Y'<!-- and recv_del = 'N' -->
 		order by sent_date desc
 	</select>
 	

@@ -45,9 +45,10 @@ public class MessageDao {
 		return mybatisSession.selectOne("messageMapper.selectTotalListCount", setting);
 	}
 
-	public int updateDelMessage(SqlSessionTemplate mybatisSession, int mms_no) {
-		// TODO Auto-generated method stub
-		return mybatisSession.update("messageMapper.updateDelMessage", mms_no);
+	public MessagePname updateDelMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		System.out.println("삭제 업데이트 확인");
+		
+		return mybatisSession.update("messageMapper.updateDelMessage", mms_no);/*mybatisSession.update("messageMapper.updateDelMessage", mms_no);*/
 	}
 
 	public int deleteFinalMessage(SqlSessionTemplate mybatisSession, int mms_no) {
@@ -66,13 +67,6 @@ public class MessageDao {
 		List<Message> list = mybatisSession.selectList("messageMapper.selectDelList");
 		
 		return (ArrayList<Message>) list;
-	}
-
-	public List selectDetailMessage(SqlSessionTemplate mybatisSession, Map param) {
-		
-		List list = mybatisSession.selectList("messageMapper.selectDetailMessage", param);
-		
-		return list;
 	}
 
 	public void updateReadMessage(SqlSessionTemplate mybatisSession, int mms_no) {

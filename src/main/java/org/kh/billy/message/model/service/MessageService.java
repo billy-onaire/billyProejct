@@ -26,7 +26,7 @@ public interface MessageService {
 
 	int selectTotalListCount(SettingList setting);
 
-	int updateDelMessage(int mms_no);
+	MessagePname updateDelMessage(int mms_no);
 
 	int deleteFinalMessage(int mms_no);
 
