@@ -9,24 +9,17 @@ import org.springframework.stereotype.Repository;
 @Repository("memberDao")
 public class MemberDao {
 
-	public Member selectLogin(SqlSessionTemplate session, Member member) {
-		Member loginMember = session.selectOne("memberMapper.selectLogin", member);
-		
-		return loginMember;
+	public Member selectLogin(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectLogin", userId);
 	}
 	
 	public List<Member> searchId(SqlSessionTemplate session, Member member) {
 		return session.selectList("memberMapper.selectMember", member);
 	}
 
-	public int insertMember(SqlSessionTemplate session, Member member) {
+	/*public int insertMember(SqlSessionTemplate session, Member member) {
 		return session.insert("memberMapper.insertMember", member);
-	}
-
-	public void create(Member member) {
-		// TODO Auto-generated method stub
-		
-	}
+	}*/
 	
 	public int updateMember(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.updateMember", member);
@@ -34,6 +27,23 @@ public class MemberDao {
 	
 	public int deleteMember(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.deleteMember", member);
+	}
+
+	public Member selectCheckId(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectCheckId", userId);
+	}
+
+	public int insertMember(SqlSessionTemplate session, Member member) {
+		return session.insert("memberMapper.insertMember", member);
+	}
+
+	public void updateVerify(SqlSessionTemplate session, Member member) {
+		session.update("memberMapper.updateVerify", member);
+		
+	}
+
+	public Member selectIdCheck(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectIdCheck", userId);
 	}
 	
 }

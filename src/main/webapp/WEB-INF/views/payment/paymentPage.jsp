@@ -41,7 +41,7 @@
                     <table>
                         <tr>
                             <td>
-                                Sparksuite, Inc.<br>
+                                Billy™<br>
                                 12345 Sunny Road<br>
                                 Sunnyville, CA 12345
                             </td>
@@ -154,6 +154,7 @@
 
 <c:import url="../common/footer.jsp" />
 <input type='button' onclick='bb();' value='payment'/>
+<input type='button' onclick='bbb();' value='reservation'/>
 <!-- bootPay -->    
 <script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
 <script src='${ pageContext.request.contextPath }/resources/js/bootpaySource.js' type="application/javascript"></script>

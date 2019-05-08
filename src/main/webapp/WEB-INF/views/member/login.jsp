@@ -106,15 +106,15 @@
 </head>
 <body>
 <div class="login-form">
-    <form action="/examples/actions/confirmation.php" method="post">		
+    <form action="loginCheck.do" method="post">		
         <div class="form-group">
-        	<input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
+        	<input type="text" class="form-control input-lg" name="user_id" placeholder="Username" required="required">
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
+            <input type="password" class="form-control input-lg" name="user_pwd" placeholder="Password" required="required">
         </div>        
         <div class="form-group">
-            <button type="button" class="btn btn-success btn-lg btn-block login-btn">로그인</button>
+            <input type="submit" class="btn btn-success btn-lg btn-block login-btn" value="로그인">
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-success btn-lg btn-block login-btn"

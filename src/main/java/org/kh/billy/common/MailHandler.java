@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -23,8 +24,8 @@ public class MailHandler {
     public void setSubject(String subject) throws MessagingException {
         messageHelper.setSubject(subject);
     }
-    public void setText(String htmlContent) throws MessagingException {
-        messageHelper.setText(htmlContent, true);
+    public void setText(String stringBuffer) throws MessagingException {
+        messageHelper.setText(stringBuffer, true);
     }
     public void setFrom(String email, String name) throws UnsupportedEncodingException, MessagingException {
         messageHelper.setFrom(email, name);

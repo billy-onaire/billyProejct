@@ -2,6 +2,9 @@ package org.kh.billy.member.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Member implements java.io.Serializable{
 
 	private static final long serialVersionUID = 791489045932352347L;
@@ -12,6 +15,7 @@ public class Member implements java.io.Serializable{
 	   private String user_mobile;
 	   private String user_name;
 	   private String email;
+	   private String authkey;
 	   private String verify;
 	   private String address;
 	   private String my_introduce;
@@ -24,7 +28,7 @@ public class Member implements java.io.Serializable{
 	   
 	   public Member() {}
 	   
-	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String verify,
+	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String authkey, String verify,
 			String address, String my_introduce, String location_area, Date user_enroll, Date user_update,
 			int report_count, String delete_yn, int total_count) {
 
@@ -34,6 +38,7 @@ public class Member implements java.io.Serializable{
 		this.user_mobile = user_mobile;
 		this.user_name = user_name;
 		this.email = email;
+		this.authkey = authkey;
 		this.verify = verify;
 		this.address = address;
 		this.my_introduce = my_introduce;
@@ -44,6 +49,16 @@ public class Member implements java.io.Serializable{
 		this.delete_yn = delete_yn;
 		this.total_count = total_count;
 	}
+	
+	
+	public String getAuthkey() {
+		return authkey;
+	}
+
+	public void setAuthkey(String authkey) {
+		this.authkey = authkey;
+	}
+
 	public String getUser_id() {
 		return user_id;
 	}
@@ -131,12 +146,15 @@ public class Member implements java.io.Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public String toString() {
 		return "Member [user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_mobile=" + user_mobile + ", user_name="
-				+ user_name + ", email=" + email + ", verify=" + verify + ", address=" + address + ", my_introduce="
-				+ my_introduce + ", location_area=" + location_area + ", user_enroll=" + user_enroll + ", user_update="
-				+ user_update + ", report_count=" + report_count + ", delete_yn=" + delete_yn + ", total_count="
-				+ total_count + "]";
+				+ user_name + ", email=" + email + ", authkey=" + authkey + ", verify=" + verify + ", address="
+				+ address + ", my_introduce=" + my_introduce + ", location_area=" + location_area + ", user_enroll="
+				+ user_enroll + ", user_update=" + user_update + ", report_count=" + report_count + ", delete_yn="
+				+ delete_yn + ", total_count=" + total_count + "]";
 	}
+	
+	
 }

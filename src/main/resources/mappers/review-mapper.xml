@@ -31,6 +31,15 @@
 		select count(*) from review
 	</select>
 	
+	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">
+		select *
+		from (select rownum rnum, p.* 
+			from (select * from review order by review_date desc) p) 
+		where rnum between #{start} and #{last}
+	</select>
 	
+	<select id="selectTotalPdetailReview" resultType="int">
+		select count(*) from review
+	</select>
 
 </mapper>

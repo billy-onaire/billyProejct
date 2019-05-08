@@ -35,6 +35,18 @@
     margin-bottom: 10px;
     }
     
+    .center {
+      margin: auto;
+      width: 90%;
+      
+      padding: 10px;
+    }
+    .centertwo {
+      margin: auto;
+      width: 60%;
+      
+      padding: 10px;
+    }
     </style>
 </head>
 
@@ -84,217 +96,44 @@
 			
 	                        </div>
 	                        
-	                        <br><br><br>
-	                        <div class="container"> 
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>FirstnameFirstnameFirstnameFirstnameFirstname</th>
-          <th>Lastname</th>
-          <th>Age</th>
-          <th>City</th>
-          
-         
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Anna</td>
-          <td>Pitt</td>
-          <td>35</td>
-          <td>New York</td>
-          <td>USA</td>
-          
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<br>
-                            <div class="container"> 
-  <div class="table-responsive" style="width:1000px">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>d</th>
-          <th>FirstnameFirstnameFirstnameFirstnameFirstname</th>
-          <th>Lastname</th>
-          <th>Age</th>
-          <th>City</th>
-          
-         
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Anna</td>
-          <td>Pitt</td>
-          <td>19-04-05</td>
-          <td>New York</td>
-          <td>USA</td>
-          
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-                       		
-                            <div>
-  <table class="table" style="width:1000px">
-    <tr>
-      <tr>
-                                                <th width="50%">productname</th>
-                                                <th width="10%">quantity</th>
-                                                <th width="10%">price</th>
-                                                <th width="15%">enroll</th>
-                                                <th width="15%">update/delete</th>
-                                            </tr>
-    </tr>
-    <tr>
-      <tr><td>1번상품</td><td>1</td><td>10000</td><td>19-04-17</td><td>수정/삭제</td></tr>
-                                            <tr><td>2상품</td><td>2</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>3상품</td><td>3</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>4상품</td><td>4</td><td>19-04-17</td><td>2</td></tr>
-    </tr>
-    <tr>
-      <tr><td>1번상품</td><td>1</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>2상품</td><td>2</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>3상품</td><td>3</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>4상품</td><td>4</td><td>19-04-17</td><td>2</td></tr>
-    </tr>
-    <tr>
-     <tr><td>1번상품</td><td>1</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>2상품</td><td>2</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>3상품</td><td>3</td><td>19-04-17</td><td>2</td></tr>
-                                            <tr><td>4상품</td><td>4</td><td>19-04-17</td><td>2</td></tr>
-    </tr>
-  </table>
-</div>
-<div class="container">
-
- 
-
-  <div class="board">
-
-    <div class="board-heading row">
-
-      <div class="col-sm-1 hidden-xs text-center">번호</div>
-
-      <div class="col-sm-5 col-sx-12 text-center">제목</div>
-
-      <div class="col-sm-2 hidden-xs text-center">이름</div>
-
-      <div class="col-sm-2 hidden-xs text-center">날짜</div>
-
-      <div class="col-sm-2 hidden-xs text-center">조회</div>
-
-    </div>
-
- 
-
-    <ul class="list-unstyled">
-
- 
-
-      <li class="row board-row">
-
-        <div class="col-sm-1 hidden-xs text-center">0001</div>
-
-        <div class="col-sm-5 col-xs-12">부트스트랩 테마</div>
-
-        <span class="visible-xs">
-
-          <span>아무개</span><span>2017.09.27</span><span class="pull-right">300</span>
-
-        </span>
-
-        <div class="col-sm-2 hidden-xs text-center">아무개</div>
-
-        <div class="col-sm-2 hidden-xs text-center">2017.09.20</div>
-
-        <div class="col-sm-2 hidden-xs text-center">300</div>
-
-      </li>
-
-  <hr class="half-rule">
-
-      <li class="row board-row">
-
-        <div class="col-sm-1 hidden-xs text-center">0002</div>
-
-        <div class="col-sm-5">부트스트랩 테마</div>
-
-        <span class="visible-xs">
-
-          <span>아무개</span><span>2017.09.27</span><span class="pull-right">300</span>
-
-        </span>
-
-        <div class="col-sm-2 hidden-xs text-center">아무개</div>
-
-        <div class="col-sm-2 hidden-xs text-center">2017.09.20</div>
-
-        <div class="col-sm-2 hidden-xs text-center">500</div>
-
-      </li>
-
-  <hr class="half-rule">
-
-    </ul>
-
-  </div>
-
-</div>
-				            <div class="container">
-				                <!-- <div class="row">
-				                    <div class="col-12 col-lg-20"> -->
-                                    <!-- 영어나 숫자만 있을 땐 반응형이 잘 적용되는데  -->
-                                    <div class="table-responsive">
-                                    <table class="table">
-				                        <thead>
-				                            <!-- <tr>
-				                                <th width="300px">상품명</th>
-				                                <th width="100px">수량</th>
-				                                <th width="100px">가격</th>
-				                                <th width="100px">상품등록일</th>
-				                                <th width="150px">수정/삭제</th>
-				                            </tr> -->
-                                            <!-- <tr>
-                                                <th width="50%">productname</th>
-                                                <th width="10%">quantity</th>
-                                                <th width="10%">price</th>
-                                                <th width="15%">enroll</th>
-                                                <th width="15%">update/delete</th>
-                                            </tr> -->
-                                            <!-- <tr>
-                                                <th>상품명상품명상품명</th>
-                                                <th>수량</th>
-                                                <th>가격</th>
-                                                <th>상품등록일</th>
-                                                <th>수정/삭제</th>
-                                            </tr> -->
-				                        </thead>
-				                        <tbody>
-				                            <tr><td>1번상품</td><td>1</td><td>19-04-17</td><td>2</td></tr>
-				                            <tr><td>2상품</td><td>2</td><td>19-04-17</td><td>2</td></tr>
-				                            <tr><td>3상품</td><td>3</td><td>19-04-17</td><td>2</td></tr>
-				                            <tr><td>4상품</td><td>4</td><td>19-04-17</td><td>2</td></tr>
-				                        </tbody>
-				                    </table>
-				                    </div>     
-                                    <!-- </div>                           
-				                 </div> -->
-				            </div>
+	                        <br><br><br><br>
+                       		                         
+                          <div class="center" >
+                            <table class="table" style="width:800px; text-align: center;" id="productList">
+                              <tr>
+                                  <th width="45%">상품명</th>
+                                  <th width="7.5%">수량</th>
+                                  <th width="10%">가격</th>
+                                  <th width="15%">최근수정일자</th>                                  
+                                  <th width="17.5%">수정/삭제</th>
+                              </tr>
+                              <c:forEach items="${list }" var="list">
+                                <tr><td>${list.product_name}</td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
+                                <td><button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;<button type="button" class="btn btn-warning btn-sm"><a href="">삭제</a></button></td></tr>
+                                
+                              
+                              </c:forEach>
+                            </table>                                          
+                            
+                          </div>  
+                          <div class="centertwo">
+                          <ul class="pagination">
+                                <c:if test="${pageMaker.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                            </div> 
+                          <br>                          
                     	</div> 
                 	</div>
             	</div>
         	</div>
-    	</div>
-    <!-- Product Details Area End -->
+    	</div>      
+    <!-- Product Details Area End -->      
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 

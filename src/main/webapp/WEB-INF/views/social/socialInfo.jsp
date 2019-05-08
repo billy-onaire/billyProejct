@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,73 +18,17 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-    var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+	<c:if test="${!empty uid}">
+		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
+	</c:if>
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-    	
-    $("#user_id").on('keydown', function(e){
-   		var id = $('#user_id').val();
-   	 
-    	if(id.length > 12){
-    		e.preventDefault();
-    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();
-       } 
-    	
-   	}).on('blur', function(){
-   		if($(this).val() == '') return;
-   		var id = $('#user_id').val();
-   		if(id.length < 6){
-   			alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();	
-   		}
-   	});
-   	
-    
-   	 $("#user_pwd").on('keydown', function(e){
-   		var pwd = $('#user_pwd').val();
-   	 
-    	if(pwd.length > 20){
-    		e.preventDefault();
-    		alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();
-       } 
-    	
-   	}).on('blur', function(){
-   		if($(this).val() == '') return;
-   		var pwd = $('#user_pwd').val();
-   		if(pwd.length < 4){
-   			alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();	
-   		}
-   	});
-   	 
-   	
-   	$("#user_pwd2").on('blur', function(){
-   		if($(this).val() == '') return;
-   		var pwd = $('#user_pwd').val();
-   		var pwd2 = $('#user_pwd2').val();
-   		
-   		if(pwd != pwd2){
-   			alert("입력하신 비밀번호와 다릅니다. ");
-            $(this).val("");
-            $(this).focus();	   		
-   		}
- 
-   		
-   	});
-
-   	 
+ 	 
    	  $("#email").on('blur', function(e){
    		 if($(this).val() == '') return;
   		 	if(!getMail.test($("#email").val())){
 	        alert("이메일형식에 맞게 입력해주세요")
 	        $('#email').val("");
             $('#email').focus();
-	   		
   		 	}  
  	  	});
     
@@ -139,51 +82,6 @@ $(function(){
       }
   });  
 });
-
-$(function() {
-    //idck 버튼을 클릭했을 때 
-    $("#idck").click(function() {
-        
-        $.ajax({
-        	url : "idCheck.do",
-            type : "post",
-            dataType: "json",
-            data : {userId : $("#user_id").val()},
-            success : function(data) {
-            	console.log("ajax success 확인 : " + data.hashMap.cnt);
-            	
-                if (data.hashMap.cnt > 0) {
-                	
-                	$(".result").text("존재하는 아이디입니다.");
-                    $(".result").attr("style", "color:#f00"); 
-                    $("#user_id").val('');
-                    $("#user_id").focus();
- 
-                	
-                } else {
-                	
-                	$(".result").text("사용가능한 아이디입니다.");
-                    $(".result").attr("style", "color:#00f");
-
-                }
-            },
-            error : function(error) {
-                
-                alert("error : " + error);
-            }
-        });
-    });
-    
-    $("#register").click(function() {
-    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");
-    	
-    });
-    
-});
-
-
-
-
 </script>
 
 <!-- Favicon  -->
@@ -271,35 +169,24 @@ a {
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-		<form action="joinPost.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="token" value="${googleLogin }">
+				<input type="hidden" name="uid" value="${uid }">
+				
 				<h1>회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
-					<label for="user_id"><b>아이디</b></label> 
-					<div class="input-group mb-3">					
-					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
-						<div class="input-group-append">
-						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
-						</div>
-					</div>
-					<p class="result">
-					</p>
-
 					<label for="user_name"><b>이름</b></label> 
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required> 
-					<label for="user_pwd"><b>비밀번호</b></label> 
-					<input type="password" placeholder="Enter Password" id="user_pwd" name="user_pwd" required> 
-					<label for="user_pwd2"><b>비밀번호 재입력</b></label> 
-					<input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
+					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required>
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-					<label for="email"><b>이메일</b></label> 
+					<label for="email"><b>이메일 인증</b></label> 
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
 
-<!-- 				<label for="verify"><b>인증 번호</b></label> 
-					<input type="text" placeholder="Enter verification number" id="verift" name="verify" required>
- -->
+				<label for="verify"><b>인증 번호</b></label> <input type="text"
+					placeholder="Enter verification number" id="verift" name="verify" required>
+
 				<label for="address"><b>주소</b></label> 
 				<input type="text" placeholder="Enter address" id="address" name="address" required> 
 				<label for="location_area"><b>주거래가능 지역</b></label> 
@@ -307,20 +194,17 @@ a {
 				<label for="my_introduce"><b>본인소개</b></label>
 				<textarea style="background-color: #f1f1f1" class="form-control"
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
-
 				<hr>
 				<p>
 					By creating an account you agree to our <a href="#">Terms &
 						Privacy</a>.
 				</p>
-
-				<button id="register" type="submit" class="registerbtn"
+				<button type="submit" class="registerbtn"
 					style="background-color: orange">등록하기</button>
 		</form>
 		</div>
 		</div>
 	</div>
-
 	<c:import url="../common/footer.jsp" />
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->

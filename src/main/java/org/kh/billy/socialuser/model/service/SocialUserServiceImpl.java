@@ -19,9 +19,8 @@ public class SocialUserServiceImpl implements SocialUserService{
 	private SocialUserDao socialDao;
 	
 	@Override
-	public SocialUser selectLogin(SocialUser social) {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectLogin(String uid) {
+		return socialDao.selectSocialLogin(mSession, uid);
 	}
 
 	@Override
