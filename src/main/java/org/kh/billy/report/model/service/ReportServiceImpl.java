@@ -26,4 +26,9 @@ public class ReportServiceImpl implements ReportService{
 		return rd.insertReport(mybatisSession, r);
 	}
 
+	@Override
+	public int selectCheckReport(String id) {
+		return rd.selectCheckReport(mybatisSession, id);
+	}
+
 }

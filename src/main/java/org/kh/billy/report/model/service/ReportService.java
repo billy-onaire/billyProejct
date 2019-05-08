@@ -7,6 +7,8 @@ public interface ReportService {
 
 	Product selectProductForReport(int pno);
 
-	int insertReport(Report r); 
+	int insertReport(Report r);
+
+	int selectCheckReport(String id); 
 	
 }

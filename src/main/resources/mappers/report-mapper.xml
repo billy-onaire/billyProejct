@@ -4,20 +4,25 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reportMapper">
 
-	<resultMap id="reportMapper" type="Report">
+	<resultMap id="resultReport" type="Report">
 		<id property="report_no" column="report_no" />
 		<result property="rcategory_no" column="rcategory_no" />
 		<result property="report_content" column="report_content"/>
 		<result property="report_id" column="report_id"/>
 		<result property="report_date" column="report_date"/>
-		<result property="product_no" column="product_noe"/>
+		<result property="product_no" column="product_no"/>
+		<result property="request_id" column="request_id"/>
 	</resultMap>
 	
 	<select id="insertReport" parameterType="Report">
-		INSERT INTO TB_REPORT VALUES(SQ_RPNO.NEXTVAL, #{rcategory_no},#{report_content},#{report_id},sysdate,#{product_no})
+		INSERT INTO TB_REPORT VALUES(SQ_RPNO.NEXTVAL, #{rcategory_no},#{report_content},#{report_id},sysdate,#{product_no},#{request_id})
 	</select>
 	
-	
+	<select id="selectCheckReport" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_REPORT
+		WHERE REQUEST_ID = #{id}
+	</select>	
 
 
 </mapper>

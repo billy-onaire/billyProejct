@@ -13,7 +13,11 @@ public class ReportDao {
 	}
 
 	public int insertReport(SqlSessionTemplate mybatisSession, Report r) {
-		return mybatisSession.insert("reportMapper.insertReport", r);
+			return mybatisSession.insert("reportMapper.insertReport", r);
+	}
+
+	public int selectCheckReport(SqlSessionTemplate mybatisSession, String id) {
+		return mybatisSession.selectOne("reportMapper.selectCheckReport", id);
 	}
 
 }
