@@ -88,9 +88,9 @@ $(document).ready(function(){
                     <!-- 쪽지 보내기 팝업창 연습 -->
                     	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
                         <div class="view d-flex">
-                                    <button class="tablinks active" onclick="location.href='recvList.do'">받은쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='delList.do'">삭제쪽지함</button>
+                             <button class="tablinks" onclick="location.href='recvList.do'">받은쪽지함</button>
+                             <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
+                             <button class="tablinks active" onclick="location.href='delList.do'">삭제쪽지함</button>
                         </div>
                     </div>
                 </div>
@@ -99,98 +99,15 @@ $(document).ready(function(){
         <br>
                     
                     <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
-                        <div class="cart-table clearfix" style="padding-left: 40px;">
-                            <div id="tab1" class="tabcontent" style="display: block;">
-                                <table class="table table-responsive">
-                              
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>보낸 사람</th>
-                                            <th>상품명</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>발송일</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${recvList }" var="mms">                                                                 
-                                        <tr>
-                                    
-                                            <td class="cart_product_img">
-                                                ${mms.recv_del }, ${mms.sent_id }
-                                            </td>
-                                            <td class="cart_product_img">
-                                            	${mms.product_name }
-                                            </td>
-                                            <td class="cart_product_desc" id="${mms.mms_no }" >
-                                                <a href="">${mms.mms_content }</a>
-                                            </td>
-                                            <td class="price">
-                                            <!-- 여기서는 날짜만 표시하고 상세보기에서 시간까지 표시 -->
-                                            <fmt:formatDate value="${mms.sent_date }" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td class="cart_product_img">
-                                            <c:if test="${mms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                            </c:if>
-                                            <c:if test="${mms.recv_read eq 'Y'}">
-                                            	읽음
-                                            </c:if>
-                                            </td>
-                                        </tr>
-										</c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                             <div id="tab2" class="tabcontent" style="display: none;">
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>받은 사람</th>
-                                            <th>상품명</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>발송일</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${sentList }" var="sentmms">
-
-                                        <tr>
-                                            <td class="cart_product_img">
-                                               ${sentmms.recv_del }, ${sentmms.recv_id }
-                                            </td>
-                                            <td class="cart_product_img">
-                                                	${sentmms.product_name }
-                                            </td>
-                                            <td class="cart_product_desc" id="${sentmms.mms_no }" >
-                                                ${sentmms.mms_content }
-                                            </td>
-                                            <td class="price">
-                                            	<fmt:formatDate value="${sentmms.sent_date }" pattern="yyyy-MM-dd"/>                                                
-                                            </td>
-                                            <td class="cart_product_img">
-                                            <c:if test="${sentmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                            </c:if>
-                                            <c:if test="${sentmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            </c:if>
-                                            </td>
-                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div> 
-                            <div id="tab3" class="tabcontent" style="display: none;">
+                        <div class="cart-table clearfix" style="padding-left: 40px;">                         
+                            <div id="tab3" class="tabcontent" >
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
                                             <th>받은 사람/보낸 사람</th>                                            
                                             <th style="width: 200px">내용</th>
                                             <th>날짜</th>
-                                            <th>읽음 여부</th>
+                                            <th>읽음 여부</th>         
                                         </tr>
                                     </thead>
                                     <tbody>
