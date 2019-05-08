@@ -12,6 +12,7 @@ import org.kh.billy.product.model.vo.Criteria;
 import org.kh.billy.product.model.vo.PageMaker;
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.product.model.vo.ProductForList;
+import org.kh.billy.product.model.vo.ProductForUpdate;
 import org.kh.billy.product.model.vo.SettingList;
 import org.kh.billy.productcategory.model.service.ProductCategoryService;
 import org.kh.billy.productcategory.model.vo.ProductCategory;
@@ -51,11 +52,14 @@ public class ProductManipulationController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
+		cri.setSeller_id(userId);
+		System.out.println(cri);
+		System.out.println(pageMaker);
 		/*System.out.println(member);*/
 		/*String userId = member.getUser_id();*/
 		
 		System.out.println("메스드는 들어가지는지?");
-		cri.setSeller_id(userId);
+		
 		ArrayList<Product> list = pms.selectProductList(cri);
 		System.out.println("리스트 확인 : " + list);
 		mv.addAttribute("list", list);
@@ -149,6 +153,15 @@ public class ProductManipulationController {
 		return "home";
 	}*/
 	
+	@RequestMapping("myproductupdateview.do")
+	public ModelAndView selectMyUpdateView(ModelAndView mv, @RequestParam(name="product_no") int productNo) {
+		ProductForUpdate product = pms.selectMyProduct(productNo);
+		product.setPcategory_name(product.getPcategory_name().toUpperCase());
+		System.out.println("업데이트할 상품 확인 : " + product);
+		mv.addObject("product",product);
+		mv.setViewName("product/productUpdate");
+		return mv;
+	}
 	
 	@RequestMapping(value="myproductupdate.do",method=RequestMethod.POST)
 	public String updateProduct(Product product) {

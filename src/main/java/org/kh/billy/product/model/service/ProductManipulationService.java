@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.kh.billy.product.model.vo.Criteria;
 import org.kh.billy.product.model.vo.Product;
+import org.kh.billy.product.model.vo.ProductForUpdate;
 
 public interface ProductManipulationService {
 	
@@ -16,5 +17,7 @@ public interface ProductManipulationService {
 	int deleteProduct(int productNo);
 
 	int selectProductCount(String userId);
+
+	ProductForUpdate selectMyProduct(int productNo);
 	
 }

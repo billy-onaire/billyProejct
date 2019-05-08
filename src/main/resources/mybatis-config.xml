@@ -11,6 +11,7 @@
       <typeAlias type="org.kh.billy.productcategory.model.vo.ProductCategory" alias="ProductCategory" />
       <typeAlias type="org.kh.billy.productimg.model.vo.ProductImg" alias="ProductImg" />
       <typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product"/>
+         <typeAlias type="org.kh.billy.product.model.vo.ProductForUpdate" alias="ProductForUpdate"/>
          <typeAlias type="org.kh.billy.product.model.vo.ProductForList" alias="ProductForList"/>
          <typeAlias type="org.kh.billy.product.model.vo.SettingList" alias="SettingList"/>
          <typeAlias type="org.kh.billy.payment.model.vo.Payment" alias="Payment" />
