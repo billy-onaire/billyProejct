@@ -15,13 +15,14 @@ public class Report implements Serializable{
 	private String report_id;
 	private Date report_date;
 	private int product_no;
+	private String request_id;
 	
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Report(int report_no, int rcategory_no, String report_content, String report_id, Date report_date,
-			int product_no) {
+			int product_no, String request_id) {
 		super();
 		this.report_no = report_no;
 		this.rcategory_no = rcategory_no;
@@ -29,6 +30,7 @@ public class Report implements Serializable{
 		this.report_id = report_id;
 		this.report_date = report_date;
 		this.product_no = product_no;
+		this.request_id = request_id;
 	}
 
 	public int getReport_no() {
@@ -79,6 +81,14 @@ public class Report implements Serializable{
 		this.product_no = product_no;
 	}
 
+	public String getRequest_id() {
+		return request_id;
+	}
+
+	public void setRequest_id(String request_id) {
+		this.request_id = request_id;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -87,10 +97,7 @@ public class Report implements Serializable{
 	public String toString() {
 		return "Report [report_no=" + report_no + ", rcategory_no=" + rcategory_no + ", report_content="
 				+ report_content + ", report_id=" + report_id + ", report_date=" + report_date + ", product_no="
-				+ product_no + "]";
+				+ product_no + ", request_id=" + request_id + "]";
 	}
-	
-	
-	
 	
 }

@@ -23,8 +23,8 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao memberDao;
     
-	/*@Autowired
-	private JavaMailSender mailSender;*/
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	@Override
 	public Member selectCheckId(String userId) {

@@ -66,7 +66,7 @@
 
                                     <div class="col-12 mb-3">
                                         <p>신고자 아이디</p>
-                                        <input type="text" class="form-control mb-3" id="street_address" value="${prod.seller_id}">
+                                        <input type="text" class="form-control mb-3" id="rid" value="${prod.seller_id}">
                                     </div>
 
                                     <div class="col-12 mb-3">
@@ -115,7 +115,15 @@
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
+    <div class="modal-content animate">
+        <span class="m-close xBtn" title="Close Modal">&times;</span>
+        <div class="modal-container">
+            <img src="/billy/resources/img/core-img/modal.gif" id="modal-img">
+            <h4 id="modal-text"></h4>
+            <button type="button" class="m-close cancelbtn">확인</button>
+        </div>
     </div>
+    <button id="invisible-init"></button>
     <!-- ##### Main Content Wrapper End ##### -->
     <c:import url="../common/footer.jsp" />
 
