@@ -1,5 +1,8 @@
 package org.kh.billy.review.model.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ReviewPaging implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1313623760600357207L;

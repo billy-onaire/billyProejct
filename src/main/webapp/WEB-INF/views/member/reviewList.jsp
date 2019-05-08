@@ -78,45 +78,8 @@
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
-	    <%-- <table class="type06">
-	    	<tr>
-		        <th class="even">이미지</th>
-		        <th class="even">제품명</th>
-		        <th class="even">대여기간</th>
-		        <th class="even">후기작성</th>
-		    </tr>
-		    <tr>
-		        <td><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-		        <td>더러운신발</td>
-		        <td>2019.04.05-2019.04.08</td>
-		        <td><div class="cart-btn mt-100">
-		        	<c:url var="insertReview" value="writeReview.do">
-		        		<c:param name="payNo" value="hi" />
-		        	</c:url>
-	                <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
-	             	</div>
-             	</td>
-		    </tr>
-		    <tr>
-		        <td class="even"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-		        <td class="even">더러운신발</td>
-		        <td class="even">2019.04.05-2019.04.08</td>
-		        <td class="even"><button>대여후기 쓰기</button></td>
-		    </tr>
-		    <tr>
-		        <td><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-		        <td>더러운신발</td>
-		        <td>2019.04.05-2019.04.08</td>
-		        <td><button>대여후기 쓰기</button></td>
-		    </tr>
-		    <tr>
-		        <td class="even"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="150px" height="150px"></td>
-		        <td class="even">더러운신발</td>
-		        <td class="even">2019.04.05-2019.04.08</td>
-		        <td class="even"><button>대여후기 쓰기</button></td>
-		    </tr>
-		</table> --%>
-		
+	  
+		<div>
 		<table class="type06">
 	    	<tr>
 		        <th class="even">이미지</th>
@@ -133,19 +96,6 @@
 				</tr>						
 			</c:forEach>
 		</table>
-		
-		<%-- <table class="table table-bordered">
-			<tr>
-				<th>별점</th>
-				<th>내용</th>
-			</tr>
-			<c:forEach var="r" items="${lists}">
-				<tr>
-					<td>${r.point}</td>
-					<td>${r.review_content}</td>
-				</tr>						
-			</c:forEach>
-		</table> --%>
 		
 		<!-- 5. paging view -->	
 		<ul class="pagination">
@@ -174,7 +124,7 @@
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${p.pageStartNum}'>
 			<input type='hidden' name='listCnt' id='listCnt' value='${p.listCnt}'>	
 		</form>
-        
+        </div>
         
     </div>
  
