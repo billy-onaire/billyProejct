@@ -1,5 +1,8 @@
 package org.kh.billy.review.model.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ReviewPagingFront implements java.io.Serializable{
 
 	private static final long serialVersionUID = 7297607587111547029L;
@@ -20,7 +23,7 @@ public class ReviewPagingFront implements java.io.Serializable{
     }
     public ReviewPagingFront() {}
     public int getStart() {
-        return index * listCnt;
+        return index * listCnt + 1;
     }
     public int getLast() {
         return (index * listCnt) + listCnt;

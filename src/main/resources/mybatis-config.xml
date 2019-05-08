@@ -7,6 +7,7 @@
       <setting name="jdbcTypeForNull" value="NULL" /><!-- null값 insert할 때 필요  -->
    </settings>
    <typeAliases>
+   	  <typeAlias type="org.kh.billy.product.model.vo.ProductDetail" alias="ProductDetail" />
       <typeAlias type="org.kh.billy.product.model.vo.Product" alias="Product" />
       <typeAlias type="org.kh.billy.productcategory.model.vo.ProductCategory" alias="ProductCategory" />
       <typeAlias type="org.kh.billy.productimg.model.vo.ProductImg" alias="ProductImg" />
@@ -25,6 +26,7 @@
          <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
    </typeAliases>
    <mappers>
+	  <mapper resource="mappers/productDetail-mapper.xml" />
       <mapper resource="mappers/productmanipulation-mapper.xml" />
       <mapper resource="mappers/productCategory-mapper.xml" />
       <mapper resource="mappers/productImg-mapper.xml" />

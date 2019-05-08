@@ -26,132 +26,10 @@
 	
 	<!-- 페이징 관련 -->
 	<link rel="stylesheet" href="/billy/resources/css/reviewdetailpaging.css">
-	<script type="text/javascript">
-	//paging 객체
-	var paging = {
-	        // 기본값 셋팅
-	        p: {
-	            index : 0,
-	            pageStartNum : 1
-	        },
-	        // 페이징 생성
-	        create: function(){
-	            var htmlTag = '';
-	            for (var i = paging.p.pageStartNum; i <= paging.p.pageLastNum; i++) {
-	                htmlTag += '<li class="pageIndex"><span>'+i+'</span></li>';
-	            }
-	            $('.index').html(htmlTag);
-	            
-	            // 현재 번호 ui
-	            $('.pageIndex').each(function(){
-	                if(paging.p.index == $(this).text()-1) {
-	                    $(this).addClass('active');
-	                }else {
-	                    $(this).removeClass('active');
-	                }
-	            });
-	            
-	            // 이전 페이지 이동 버튼 생성여부
-	            if(paging.p.pageStartNum != 1) {
-	                $('.preBtn').html('<li id="pagePreFirst"><span>«</span></li><li id="pagePre"><span>‹</span></li>');
-	                // 맨 첫 페이지 index
-	                $('#pagePreFirst').click(function(){
-	                    var index = paging.p.pageCnt+1;
-	                    var pageCnt = paging.p.pageCnt;
-	                    if (0 < index - pageCnt) {
-	                        index -= pageCnt;
-	                        paging.p.pageStartNum = index;
-	                        paging.p.index = index-1;
-	                        paging.ajax();
-	                    }
-	                });
-	                
-	                // 이전 페이지 index
-	                $('#pagePre').click(function(){
-	                    var index = paging.p.pageStartNum;
-	                    var pageCnt = paging.p.pageCnt;
-	                    if (0 < index - pageCnt) {
-	                        index -= pageCnt;
-	                        paging.p.pageStartNum = index;
-	                        paging.p.index = index-1;
-	                        paging.ajax();
-	                    }
-	                });
-	            }else {
-	                $('.preBtn').children('li').remove();
-	            }
-	            
-	            // index 리스트 처리
-	            $('.pageIndex').click(function(){
-	                var index = Number($(this).find('span').text());
-	                paging.p.index = index - 1;
-	                paging.ajax();
-	            });
-	            
-	            // 다음 페이지 이동 버튼 생성여부
-	            if(paging.p.lastChk) {
-	                $('.nextBtn').html('<li id="pageNext"><span>›</span></li><li id="pageLast"><span>»</span></li>');
-	                // 다음 페이지 index
-	                $('#pageNext').click(function(){
-	                    var index = paging.p.pageStartNum;
-	                    var total = paging.p.total;
-	                    var listCnt = paging.p.listCnt;
-	                    var pageCnt = paging.p.pageCnt;
-	                    
-	                    var totalPageCnt = Math.ceil(total / listCnt);
-	                    var max = Math.ceil(totalPageCnt / pageCnt);
-	                    if (max * pageCnt > index + pageCnt) {
-	                        index += pageCnt;
-	                        paging.p.pageStartNum = index;
-	                        paging.p.index = index-1;
-	                        paging.ajax();
-	                    }
-	                });
-	                // 마지막 페이지 index
-	                $('#pageLast').click(function(){
-	                    var index = paging.p.pageStartNum;
-	                    var total = paging.p.total;
-	                    var listCnt = paging.p.listCnt;
-	                    var pageCnt = paging.p.pageCnt;
-	                    
-	                    var totalPageCnt = Math.ceil(total / listCnt);
-	                    var max = Math.ceil(totalPageCnt / pageCnt);
-	                    while (max * pageCnt > index + pageCnt) {
-	                        index += pageCnt;
-	                    }
-	                    var remainListCnt = total - listCnt * (index - 1);
-	                    var remainPageCnt = Math.floor(remainListCnt / listCnt);
-	                    if (remainListCnt % listCnt != 0) {
-	                        remainPageCnt++;
-	                    }
-	                    var pageLastNum = 0;
-	                    if (remainListCnt <= listCnt) {
-	                        pageLastNum = index;
-	                    } else if (remainPageCnt <= pageCnt) {
-	                        pageLastNum = remainPageCnt + index - 1;
-	                    } else {
-	                        pageLastNum = pageCnt + index - 1;
-	                    }
-	                    paging.p.pageStartNum = index;
-	                    paging.p.index = index-1;
-	                    paging.ajax();
-	                });
-	            }else {
-	                $('.nextBtn').children('li').remove();
-	            }
-	        },
-	        remove : function() {
-	            $('.preBtn').children('li').remove();
-	            $('.index').html('1');
-	            $('.nextBtn').children('li').remove();
-	        }
-	};
-
-	</script>
+	<script type="text/javascript" src="/billy/resources/js/pdetail-review-paging.js"></script>
 	
 	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
-	
 	$(function(){
 	    // 3.페이징 처리할 ajax셋팅
 	    paging.ajax = ajaxList;
@@ -175,17 +53,38 @@
 	            // 2.페이징정보와 화면 ui셋팅
 	            var list = "";
 	            var point = "";
+
 	            for(var i in obj.list){
 	            	if(obj.list[i].point == "1"){
-	                    point = "★";
+	            		point = '<span class="starR on">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR"></span>';
 	                }else if(obj.list[i].point == "2"){
-	                	point = "★★";
+	                	point = '<span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR"></span>';
 	                }else if(obj.list[i].point == "3"){
-	                	point = "★★★";
+	                	point = '<span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR">'+
+	                	'</span><span class="starR"></span>';
 	                }else if(obj.list[i].point == "4"){
-	                	point = "★★★★";
+	                	point = '<span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR"></span>';
 	                }else if(obj.list[i].point == "5"){
-	                	point = "★★★★★";
+	                	point = '<span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on">'+
+	                	'</span><span class="starR on"></span>';
 	                }
 
 	            	 list +="<tr>";
@@ -207,7 +106,27 @@
 	        }
 	    });    
 	}
-
+	
+	
+	//리뷰 이미지 크게보기
+	//레이어 팝업 열기
+	var cnt = 0;
+	function openLayer(IdName, tpos, lpos){
+	  if(cnt==0){
+		cnt++;
+		var pop = document.getElementById(IdName);
+		pop.style.display = "block";
+		pop.style.top = tpos + "px";
+		pop.style.left = lpos + "px";
+	  }
+	}
+	//레이어 팝업 닫기
+	function closeLayer(IdName){
+		var pop = document.getElementById(IdName);
+		pop.style.display = "none";
+		cnt=0;
+	}	
+	
 	</script>
 	
 	<style type="text/css">
@@ -239,100 +158,15 @@
 		    border-bottom: 1px solid #ccc;
 		}
 		
-		.pagination {
+		.starR{
+		  background: url('/billy/resources/img/review-point/point_star.png') no-repeat right 0;
+		  background-size: auto 100%;
+		  width: 20px;
+		  height: 20px;
 		  display: inline-block;
-		  padding-left: 0px;
-		  margin: auto;
-		  border-radius: 4px;
+		  text-indent: -9999px;
 		}
-		.pagination > li {
-		  display: inline;
-		}
-		.pagination > li > a,
-		.pagination > li > span {
-		  position: relative;
-		  float: left;
-		  padding: 6px 12px;
-		  margin-left: -1px;
-		  line-height: 1.42857143;
-		  color: #337ab7;
-		  text-decoration: none;
-		  background-color: #fff;
-		  border: 1px solid #ddd;
-		}
-		.pagination > li:first-child > a,
-		.pagination > li:first-child > span {
-		  margin-left: 0;
-		  border-top-left-radius: 4px;
-		  border-bottom-left-radius: 4px;
-		}
-		.pagination > li:last-child > a,
-		.pagination > li:last-child > span {
-		  border-top-right-radius: 4px;
-		  border-bottom-right-radius: 4px;
-		}
-		.pagination > li > a:hover,
-		.pagination > li > span:hover,
-		.pagination > li > a:focus,
-		.pagination > li > span:focus {
-		  color: #23527c;
-		  background-color: #eee;
-		  border-color: #ddd;
-		}
-		.pagination > .active > a,
-		.pagination > .active > span,
-		.pagination > .active > a:hover,
-		.pagination > .active > span:hover,
-		.pagination > .active > a:focus,
-		.pagination > .active > span:focus {
-		  z-index: 2;
-		  color: #fff;
-		  cursor: default;
-		  background-color: #337ab7;
-		  border-color: #337ab7;
-		}
-		.pagination > .disabled > span,
-		.pagination > .disabled > span:hover,
-		.pagination > .disabled > span:focus,
-		.pagination > .disabled > a,
-		.pagination > .disabled > a:hover,
-		.pagination > .disabled > a:focus {
-		  color: #777;
-		  cursor: not-allowed;
-		  background-color: #fff;
-		  border-color: #ddd;
-		}
-		.pagination-lg > li > a,
-		.pagination-lg > li > span {
-		  padding: 10px 16px;
-		  font-size: 18px;
-		}
-		.pagination-lg > li:first-child > a,
-		.pagination-lg > li:first-child > span {
-		  border-top-left-radius: 6px;
-		  border-bottom-left-radius: 6px;
-		}
-		.pagination-lg > li:last-child > a,
-		.pagination-lg > li:last-child > span {
-		  border-top-right-radius: 6px;
-		  border-bottom-right-radius: 6px;
-		}
-		.pagination-sm > li > a,
-		.pagination-sm > li > span {
-		  padding: 5px 10px;
-		  font-size: 12px;
-		}
-		.pagination-sm > li:first-child > a,
-		.pagination-sm > li:first-child > span {
-		  border-top-left-radius: 3px;
-		  border-bottom-left-radius: 3px;
-		}
-		.pagination-sm > li:last-child > a,
-		.pagination-sm > li:last-child > span {
-		  border-top-right-radius: 3px;
-		  border-bottom-right-radius: 3px;
-		}
-		
+		.starR.on{background-position:0 0;}
 	</style>
 </head>
 
@@ -350,7 +184,8 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mt-50">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">전자기기</a></li>
+                                <li class="breadcrumb-item"><a href="#">${p.pcategory_name }</a></li>
+                                <li class="breadcrumb-item"><a href="#">${p.sub_pcategory_name }</a></li>
                             </ol>
                         </nav>
                     </div>
@@ -361,34 +196,34 @@
                         <div class="single_product_thumb">
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/billy/resources/img/product-img/pro-big-1.jpg);">
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/billy/resources/files/product/${p.first_img });">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/billy/resources/img/product-img/pro-big-2.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/billy/resources/files/product/${p.second_img });">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/billy/resources/img/product-img/pro-big-3.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/billy/resources/files/product/${p.third_img });">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/billy/resources/img/product-img/pro-big-4.jpg);">
+                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/billy/resources/files/product/${p.fourth_img });">
                                     </li>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-1.jpg">
-                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-1.jpg" alt="First slide">
+                                        <a class="gallery_img" href="/billy/resources/files/product/${p.first_img }">
+                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.first_img }" alt="First slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-2.jpg">
-                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-2.jpg" alt="Second slide">
+                                        <a class="gallery_img" href="/billy/resources/files/product/${p.second_img }">
+                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.second_img }" alt="Second slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-3.jpg">
-                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-3.jpg" alt="Third slide">
+                                        <a class="gallery_img" href="/billy/resources/files/product/${p.third_img }">
+                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.third_img }" alt="Third slide">
                                         </a>
                                     </div>
                                     <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/img/product-img/pro-big-4.jpg">
-                                            <img class="d-block w-100" src="/billy/resources/img/product-img/pro-big-4.jpg" alt="Fourth slide">
+                                        <a class="gallery_img" href="/billy/resources/files/product/${p.fourth_img }">
+                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.fourth_img }" alt="Fourth slide">
                                         </a>
                                     </div>
                                 </div>
@@ -400,33 +235,38 @@
                             <!-- Product Meta Data -->
                             <div class="product-meta-data">
                                 <div class="line"></div>
-                                <p class="product-price">18000 원</p>
+                                <p class="product-price">${ p.price} 원</p>
                                 <a href="product-details.html">
-                                    <h6>더러운 신발</h6>
+                                    <h6>${p.product_name }</h6>
                                 </a>
                                 <!-- Ratings & Review -->
-                                <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                    <div class="ratings">
+                                <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">                          
+                                    <!-- <div class="ratings">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                    </div>
+                                    </div> -->
+                                    <p class="avaibility"><i class="fa fa-circle"></i> 판매자 ID : ${p.seller_id }</p>
+                                    <p class="avaibility"><i class="fa fa-circle"></i> 남은수량 : ${p.product_quantity }</p>
+                                    <p class="avaibility"><i class="fa fa-circle"></i> 주말거래가능여부 : ${p.weekend_yn }</p>
+                                    <p class="avaibility"><i class="fa fa-circle"></i> 가능요일 : ${p.weekday_yn }</p>
                                     <div class="review">
                                         <a href="#" style="color:red">신고하기</a>
                                     </div>
                                 </div>
+                                
                                 <!-- Avaiable -->
                                 
                             </div>
 
                             <div class="short_overview my-5">
-                                <p>나의 더러운 신발을 빌려줍니다. 물론 공짜는 아닙니다............ㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹ</p>
+                                <p>${p.product_content }</p>
                             </div>
 							<div id="map" style="width:300px;height:300px; float:left;"></div>
 							<br><br><br><br><h3>거래지역주소</h3>
-							<div id="mapAddress">서울특별시 강남구 테헤란로14길 6</div>
+							<div id="mapAddress">${p.location_area }</div>
 							
 						
                             <!-- Add to Cart Form -->
@@ -436,7 +276,7 @@
                                     <p>갯수</p>
                                     <div class="quantity">
                                         <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
                                         <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                     </div>
                                 </div>
@@ -457,6 +297,17 @@
                 </div>
             </div><br><br>
             <hr>
+     <span>
+<a href="#" onclick="openLayer('layerPop',1000,300)"> <!--openLayer('확대이미가 있는 레이어 id명', x축의위치 , y축의위치)-->
+    	<img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="100px" height="100px" /> <!--기본작은 썸네일 이미지-->
+</a>
+<div id="layerPop" style="position:absolute; display:none; border:3px solid #ccc; z-index:10;"><!-- 오픈레이어 테두리 -->
+      <a href="#" onclick="closeLayer('layerPop')" class="close">
+    	 <p><img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="500px" height="500px"/><!--큰 이미지 오픈--></p>
+      </a>
+  </div>
+</span>
+     
             <h3 id="reviewCount"></h3> <br>
             <table class="type09">
 			    <thead>
@@ -469,23 +320,10 @@
 			    </tr>
 			    </thead>
 			    <tbody id="list">
-			    <!-- <tr>
-			        <td>user01</td>
-			        <td id="point1">
-			        	<div class="ratings">
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                        	<i class="fa fa-star" aria-hidden="true"></i>
-                    	</div>
-			        </td>
-			        <td id="content1"></td>
-			        <td id="date1"></td>
-			        <td id="img1"></td>
-			    </tr> -->
+ 
 			    </tbody>
 			</table>
+			<center>
 			<!--맨 첫페이지 이동 -->
 			<!--이전 페이지 이동 -->
 			<ul class="pagination preBtn"></ul>
@@ -494,14 +332,13 @@
 			<!--다음 페이지 이동 -->
 			<!--마지막 페이지 이동 -->
 			<ul class="pagination nextBtn"></ul>
-			
+			</center>
         </div>
         <!-- Product Details Area End -->
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 	<c:import url="../common/footer.jsp" />
     
-
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 
@@ -552,7 +389,17 @@
     <script>
 		flatpickr(".datepicker", {
 			enableTime: true,
-			dateFormat: "Y-m-d H:i"
+			dateFormat: "Y-m-d H:i",
+				
+				"disable": [
+			        function(date) {
+			            // return true to disable
+			            return (date.getDay() === 0 || date.getDay() === 6);
+			        }
+			    ],
+			    "locale": {
+			        "firstDayOfWeek": 1 // start week on Monday
+			    }
 		});
 	</script>
     <!-- Popper js -->

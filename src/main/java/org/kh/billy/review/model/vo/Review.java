@@ -2,6 +2,8 @@ package org.kh.billy.review.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+@Component
 public class Review implements java.io.Serializable{
 
 	private static final long serialVersionUID = 6163637876178239179L;

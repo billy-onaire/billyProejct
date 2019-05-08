@@ -2,6 +2,7 @@ package org.kh.billy.product.model.service;
 
 import org.kh.billy.product.model.dao.ProductDetailDao;
 import org.kh.billy.product.model.vo.Product;
+import org.kh.billy.product.model.vo.ProductDetail;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,13 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 	private ProductDetailDao pdetailDao;
 	
 	@Override
-	public Product selectProductDetail(int pNum) {
-		return pdetailDao.selectProductDetail(mybatisSession, pNum);
+	public ProductDetail selectProductDetail(int pNo) {
+		return pdetailDao.selectProductDetail(mybatisSession, pNo);
+	}
+
+	@Override
+	public String selectAddress(String sellerId) {
+		return pdetailDao.selectAddress(mybatisSession, sellerId);
 	}
 
 }
