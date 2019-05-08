@@ -1,13 +1,13 @@
 package org.kh.billy.member.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
-import org.kh.billy.socialuser.controller.KakaoSocialController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MemberController {
@@ -75,21 +77,31 @@ public class MemberController {
 	   
    }
    
-   @RequestMapping(value="minsert.do", method=RequestMethod.POST)
+   @RequestMapping(value="idCheck.do", method=RequestMethod.POST)
+	public ModelAndView IdCheck(@RequestParam("userId") String userId, ModelAndView mv) throws Exception {
+	   int result = 0;
+	   System.out.println("ajax체크 보내기 : " + userId);
+             
+       Member idCheck = memberService.selectIdCheck(userId);
+       Map<String, Integer> map = new HashMap<>();
+       
+       
+       if(idCheck != null) {
+    	   result = 1;
+    	   map.put("cnt", result);
+    	   mv.addObject(map);
+    	   mv.setViewName("jsonView");
+       }
+       	   mv.addObject(map);
+	       mv.setViewName("jsonView");
+    	   map.put("cnt", result);   
+    	   
+    	   
+       System.out.println("ajax체크 받기" + map);     
+       return mv;
+   }
+   
 
-	public String insertMember(Member member, HttpServletRequest request, Model model) {
-		logger.info("member : " + member);
-		
-		//패스워드 암호화처리
-		member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
-				
-		if(memberService.insertMember(member) > 0)
-			return "home";
-		else {
-			model.addAttribute("message", "회원 가입 실패!");
-			return "common/error";
-		}
-	}
    
    @RequestMapping(value="mupage.do")
    public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
@@ -107,22 +119,30 @@ public class MemberController {
    }
    
    @RequestMapping(value = "joinPost.do", method = RequestMethod.POST)
-   public String RegisterPost(Member member, Model model, RedirectAttributes rttr, HttpServletRequest request, HttpSession session) throws Exception {
-      logger.info("회원가입...");
-      logger.info(member.toString());
-      memberService.create(member);
-      rttr.addFlashAttribute("authmsg" , "가입시 기재한 이메일로 인증해주세요");
-      return "redirect:/";
+   public String RegisterPost(Member member, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+	 //패스워드 암호화처리
+	  member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
+       
+      int result = memberService.create(member);
+      /*"redirect:/"*/
+      
+      if(result > 0)
+			return "home";
+		else {
+			model.addAttribute("message", "회원 가입 실패!");
+			return "common/error";
+		}
    }
    
    @RequestMapping(value="joinConfirm.do", method=RequestMethod.GET)
    public String emailConfirm(@ModelAttribute("Member") Member member, Model model) throws Exception {
       logger.info(member.getEmail() + ": auth confirmed");
+      
       member.setVerify("y");   // authstatus를 1로,, 권한 업데이트
       memberService.updateVerify(member);
       
       model.addAttribute("verify", "y");
       
-      return "joinPost.do";
+      return "member/login";
    }
 }

@@ -139,6 +139,51 @@ $(function(){
       }
   });  
 });
+
+$(function() {
+    //idck 버튼을 클릭했을 때 
+    $("#idck").click(function() {
+        
+        $.ajax({
+        	url : "idCheck.do",
+            type : "post",
+            dataType: "json",
+            data : {userId : $("#user_id").val()},
+            success : function(data) {
+            	console.log("ajax success 확인 : " + data.hashMap.cnt);
+            	
+                if (data.hashMap.cnt > 0) {
+                	
+                	$(".result").text("존재하는 아이디입니다.");
+                    $(".result").attr("style", "color:#f00"); 
+                    $("#user_id").val('');
+                    $("#user_id").focus();
+ 
+                	
+                } else {
+                	
+                	$(".result").text("사용가능한 아이디입니다.");
+                    $(".result").attr("style", "color:#00f");
+
+                }
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });
+    });
+    
+    $("#register").click(function() {
+    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");
+    	
+    });
+    
+});
+
+
+
+
 </script>
 
 <!-- Favicon  -->
@@ -230,9 +275,16 @@ a {
 				<h1>회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
-
 					<label for="user_id"><b>아이디</b></label> 
-					<input type="text"placeholder="Enter ID" id="user_id" name="user_id" required> 
+					<div class="input-group mb-3">					
+					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
+						<div class="input-group-append">
+						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
+						</div>
+					</div>
+					<p class="result">
+					</p>
+
 					<label for="user_name"><b>이름</b></label> 
 					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required> 
 					<label for="user_pwd"><b>비밀번호</b></label> 
@@ -241,13 +293,13 @@ a {
 					<input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-					<label for="email"><b>이메일 인증</b></label> 
+					<label for="email"><b>이메일</b></label> 
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
 
-				<label for="verify"><b>인증 번호</b></label> <input type="text"
-					placeholder="Enter verification number" id="verift" name="verify" required>
-
+<!-- 				<label for="verify"><b>인증 번호</b></label> 
+					<input type="text" placeholder="Enter verification number" id="verift" name="verify" required>
+ -->
 				<label for="address"><b>주소</b></label> 
 				<input type="text" placeholder="Enter address" id="address" name="address" required> 
 				<label for="location_area"><b>주거래가능 지역</b></label> 
@@ -262,7 +314,7 @@ a {
 						Privacy</a>.
 				</p>
 
-				<button type="submit" class="registerbtn"
+				<button id="register" type="submit" class="registerbtn"
 					style="background-color: orange">등록하기</button>
 		</form>
 		</div>
