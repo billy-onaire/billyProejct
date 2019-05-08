@@ -46,6 +46,12 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
+	public int updateDelMessage(int mms_no) {
+		
+		return messageDao.updateDelMessage(mybatisSession, mms_no);
+	}
+
+	@Override
 	public int deleteFinalMessage(int mms_no) {
 
 		return messageDao.deleteFinalMessage(mybatisSession, mms_no);
@@ -78,12 +84,6 @@ public class MessageServiceImpl implements MessageService{
 		messageDao.updateReadMessage(mybatisSession, mms_no);
 		
 		return messageDao.selectDetailMessage(mybatisSession, mms_no);
-	}
-
-	@Override
-	public MessagePname updateDelMessage(int mms_no) {
-		System.out.println("삭제 업데이트 확인");
-		return messageDao.updateDelMessage(mybatisSession, mms_no);
 	}
 
 

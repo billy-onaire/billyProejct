@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -130,20 +129,18 @@ public class MessageController {
 		ArrayList<MessagePname> list = messageService.selectSentList();
 			
 		mav.addObject("sentList",list);
-		mav.setViewName("message/sentMessage");	
+		mav.setViewName("message/messageMain");	
 		System.out.println("보낸 메세지" + list.toString());		
 		return mav; 
 		
 	}	
 	
-	@RequestMapping(value="delList.do"/*, method=RequestMethod.POST*/)
 	public ModelAndView selectDelList(ModelAndView mav) {
 		
 		ArrayList<Message> list = messageService.selectDelList();
 		
 		mav.addObject("delList", list);
-		mav.setViewName("message/delMessage");
-		System.out.println("삭제한 메세지" + list.toString());
+		mav.setViewName("message/messageMain");
 		
 		return mav;
 	}
@@ -172,36 +169,20 @@ public class MessageController {
 	}
 	
 	//message 삭제 메소드
-	@RequestMapping("messageToDel.do")
-	public ModelAndView updateDelMessage(@RequestParam int mms_no, ModelAndView mv) {
-		System.out.println("메세지 삭제 되나요?");
+	public String updateDelMessage(@RequestParam int mms_no) {
 		
-		MessagePname m = messageService.updateDelMessage(mms_no);
-		mv.addObject("list", m);
-		mv.setViewName("message/messageMain");
-		System.out.println("메세지 삭제 여부 확인 : " + mms_no);
+		messageService.updateDelMessage(mms_no);
 		
-		return mv;
-		
+		return "message/messageMain";
 	}
 	//message 아예 삭제 메소드
-	@RequestMapping("deleteMessage.do")
-	public void deleteFinalMessage(@RequestParam int mms_no) {
+	public String deleteFinalMessage(@RequestParam int mms_no) {
 		
 		messageService.deleteFinalMessage(mms_no);
 		
-		
+		return "message/messageMain";
 	}
-	
-	//메세지 복구
-	@RequestMapping("messageToOrigin.do")
-	public void updateOriginMessage(@RequestParam int mms_no) {
-		System.out.println("메세지 복구되나요?");
-		messageService.updateDelMessage(mms_no);
-		System.out.println("메세지 복구 여부 확인 : " + mms_no);
 
-		
-	}
 	//페이징처리
 	//쪽지 답장
 	public String insertReplyMessage(Message message, @RequestParam int mms_no, HttpServletRequest request) {

@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$('.cart_product_desc').on('click',function(){ 
 		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
 		//팝업창에 출력될 페이지 URL 
-		var popOption = "width=450, height=350, resizable=no, scrollbars=no, status=no;"; 
+		var popOption = "width=400, height=350, resizable=no, scrollbars=no, status=no;"; 
 		//팝업창 옵션(optoin) 
 		window.open(popUrl,"",popOption); 
 		
@@ -88,9 +88,9 @@ $(document).ready(function(){
                     <!-- 쪽지 보내기 팝업창 연습 -->
                     	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
                         <div class="view d-flex">
-                                    <button class="tablinks active" onclick="location.href='recvList.do'">받은쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='delList.do'">삭제쪽지함</button>
+                                    <button class="tablinks active" onclick="openTab(event, 'tab1'); location.href='sentList.do'">받은 쪽지함</button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab2'); "><a href="sentList.do"></a></button>
+                                    <button class="tablinks" onclick="openTab(event, 'tab3')">삭제한 쪽지함</button>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ $(document).ready(function(){
                                         <tr>
                                     
                                             <td class="cart_product_img">
-                                                ${mms.recv_del }, ${mms.sent_id }
+                                                ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
                                             	${mms.product_name }
@@ -159,7 +159,7 @@ $(document).ready(function(){
 
                                         <tr>
                                             <td class="cart_product_img">
-                                               ${sentmms.recv_del }, ${sentmms.recv_id }
+                                               ${sentmms.recv_id }
                                             </td>
                                             <td class="cart_product_img">
                                                 	${sentmms.product_name }
@@ -194,27 +194,20 @@ $(document).ready(function(){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	<c:forEach items="${delList }" var="delmms">
                                         <tr>
                                             <td class="cart_product_img">
-                                                ${delmms.sent_id }, ${delmms.recv_id }
+                                                user01
                                             </td>
-                                            <td class="cart_product_desc" id="${delmms.mms_no }" >
-                                                ${delmms.mms_content }
+                                            <td class="cart_product_desc">
+                                                네고 되나요?
                                             </td>
                                             <td class="price">
-                                                <fmt:formatDate value="${delmms.sent_date }" pattern="yyyy-MM-dd"/> 
+                                                2019-04-24
                                             </td>
                                             <td class="cart_product_img">
-                                              	<c:if test="${delmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                           	    </c:if>
-                                            	<c:if test="${delmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            	</c:if>
+                                                읽음
                                             </td>
                                         </tr>
-                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>                             
