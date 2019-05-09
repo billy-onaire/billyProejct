@@ -16,4 +16,16 @@ public class ProductDetailDao {
 		return session.selectOne("productDetailMapper.selectAddress", sellerId);
 	}
 
+	public int selectTotalReview(SqlSessionTemplate session, int pNo) {
+		return session.selectOne("productDetailMapper.selectTotalReview", pNo);
+	}
+
+	public int selectSumReview(SqlSessionTemplate session, int pNo) {
+		return session.selectOne("productDetailMapper.selectSumReview", pNo);
+	}
+
+	public Double selectAvgReview(SqlSessionTemplate session, int pNo) {
+		return session.selectOne("productDetailMapper.selectAvgReview", pNo);
+	}
+
 }
