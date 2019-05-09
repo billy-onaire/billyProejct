@@ -82,9 +82,9 @@ public class MemberServiceImpl implements MemberService{
 
 		MailHandler sendMail = new MailHandler(mailSender);
 		sendMail.setSubject("billy 서비스 이메일 인증");
-		sendMail.setText(new StringBuffer().append("<h2>billy 서비스 메일인증</h2><br><br>")
+		sendMail.setText(new StringBuffer().append("<h3>billy 서비스 메일인증</h3><br>").append("<p>아래 링크를 클릭하여 인증을 완료해주세요</p>")
 				.append("<a href='http://localhost:8888/billy/joinConfirm.do?user_id=").append(member.getUser_id())
-				.append("&email=").append(member.getEmail()).append("&key=").append(member.getAuthkey()).append("' target='_blenk'><h2>서비스 이용을 위해 링크를 눌러 이메일 인증을 완료해주세요.<h2></a>").toString());
+				.append("&email=").append(member.getEmail()).append("&key=").append(member.getAuthkey()).append("' target='_blenk'><h3>링크 클릭시 인증이 완료되고 로그인 페이지로 이동합니다.<h3></a>").toString());
 		sendMail.setFrom("billy", "billy");
 		sendMail.setTo(member.getEmail());
 		sendMail.send();
