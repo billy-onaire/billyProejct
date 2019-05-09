@@ -201,6 +201,8 @@
                               <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품등록하기</button>
 
                       </form>
+                      
+                      
                     </div>
                 </div>
 

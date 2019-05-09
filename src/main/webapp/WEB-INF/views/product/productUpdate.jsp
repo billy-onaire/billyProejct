@@ -32,6 +32,8 @@
         width: 8%;
       }
     </style>
+    
+    
 </head>
 
 <body>
@@ -79,7 +81,7 @@
                         
                         <br><br><br>
                        
-                        <form action="productupdate.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
+                        <form action="myproductupdate.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
                           <div class="form-group">                              
                               <div class="row">
                                   <div class="col-sm-6">
@@ -104,18 +106,18 @@
                               </div> 
                           </div>
                         <div class="row">
-                          <div class="col-sm-8"">
+                          	<div class="col-sm-8"">
                             <div class="form-group">
                               <label for="usr">상품명(최대 20글자):</label>
                               <input type="text" class="form-control" id="product_name" name="product_name" maxlength="20" value="${product.product_name }" required>
                           	</div>
-                     	 </div>
-                      	<div class="col-sm-4"">
+                     		</div>
+                      		<div class="col-sm-4"">
                        		<div class="form-group">
                           		<label for="usr">상품수량:</label>
                           		<input type="text" class="form-control" id="product_quantity" name="product_quantity" style="width: 50%;" maxlength="2" value="${product.product_quantity }"required>
                       		</div>
-                  		</div>
+                  			</div>
               			</div>
              			 <br>
                                
@@ -132,6 +134,24 @@
                                 <br>
                                 <br>
                                 <div class="form-horizontal"> -->
+                                  <div class="container">
+                                  	<h3>이미 올린 사진</h3>
+                                    <img class="img-fluid" src="/billy/resources/files/product/${product.first_img }" alt="Chania" width="230" height="170">
+                                    
+                                    <c:if test="${!product.second_img eq null }">
+                                    <img class="img-fluid" src="/billy/resources/files/product/${product.second_img }" alt="Chania" width="230" height="170"> 
+                                    </c:if>
+                                    <c:if test="${!product.third_img eq null }">
+                                    <img class="img-fluid" src="/billy/resources/files/product/${product.third_img }" alt="Chania" width="230" height="170"> 
+                                    </c:if>
+                                    <c:if test="${!product.fourth_img eq null }">
+                                    <img class="img-fluid" src="/billy/resources/files/product/${product.fourth_img }" alt="Chania" width="230" height="170"> 
+                                  	</c:if>
+                                  </div>
+                                  <input type='file' id="imgInp" /><br/>
+                                  <img id="blah" src="#" alt="your image" />
+
+                                  
                                   <div class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label">상품사진(최대 4장 가능)</label>
@@ -225,12 +245,12 @@
                             <input type="checkbox" class="form-check-input" id="check2" name="weekday_yn" value="tuesday" ${checked1 }>화
                             </label>
                         </div>
-	                	    <div class="form-check-inline">
+	                	 <div class="form-check-inline">
 	                  		  <label class="form-check-label" for="check3">
 	                   		    <input type="checkbox" class="form-check-input" id="check3" name="weekday_yn" value="wendsday" ${checked2 }>수
 	                		    </label>
-	            		      </div>
-	            		      <div class="form-check-inline">
+	            		  </div>
+	            		 <div class="form-check-inline">
                           <label class="form-check-label" for="check4">
                            <input type="checkbox" class="form-check-input" id="check4" name="weekday_yn" value="thursday" ${checked3 }>목
                           </label>
@@ -257,7 +277,6 @@
                               <!-- <input data-toggle="datepicker" type="text"> -->
                               <br><br>
                               <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품등록하기</button>
-
                       </form>
                     </div>
                 </div>
@@ -565,6 +584,7 @@
         	$('#sel2').val('${product.sub_pcategory_name}');
         	
         </script>
+        
         </body>
 
 </html>

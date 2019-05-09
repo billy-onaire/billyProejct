@@ -12,12 +12,12 @@ public interface ProductManipulationService {
 
 	ArrayList<Product> selectProductList(Criteria cri);
 
-	int updateProduct(Product product);
-
 	int deleteProduct(int productNo);
 
 	int selectProductCount(String userId);
 
 	ProductForUpdate selectMyProduct(int productNo);
+
+	int updateMyProduct(ProductForUpdate product);
 	
 }

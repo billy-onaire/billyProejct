@@ -20,15 +20,8 @@ public class ProductManipulationDao {
 	public ArrayList<Product> seleteMyProductList(SqlSessionTemplate session, Criteria cri) {
 		
 		//List<Notice> list = session.selectList("noticeMapper.selectTop5Write");
-		System.out.println("dao에서 확인 : "+cri);
-		System.out.println("dao에서 확인2 : " + cri.getPageStart());
 		List<Product> list = session.selectList("productManipulationMapper.seleteMyProductList", cri);
 		return (ArrayList<Product>)list;
-	}
-
-	public int productUpdate(SqlSessionTemplate session, Product product) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	public int productDelete(SqlSessionTemplate session, int productNo) {
@@ -42,6 +35,10 @@ public class ProductManipulationDao {
 
 	public ProductForUpdate selectMyProduct(SqlSessionTemplate session, int productNo) {
 		return session.selectOne("productManipulationMapper.selectMyProduct", productNo);
+	}
+
+	public int updateMyProduct(SqlSessionTemplate session, ProductForUpdate product) {
+		return 0;
 	}
 	
 }
