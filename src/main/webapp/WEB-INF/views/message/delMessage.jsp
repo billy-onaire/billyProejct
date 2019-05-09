@@ -106,8 +106,8 @@ $(document).ready(function(){
                                         <tr>
                                             <th>받은 사람/보낸 사람</th>                                            
                                             <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
-                                            <th>읽음 여부</th>         
+                                            <th>받은날짜</th>
+                                            <th>복구/삭제</th>         
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,12 +123,10 @@ $(document).ready(function(){
                                                 <fmt:formatDate value="${delmms.sent_date }" pattern="yyyy-MM-dd"/> 
                                             </td>
                                             <td class="cart_product_img">
-                                              	<c:if test="${delmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                           	    </c:if>
-                                            	<c:if test="${delmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            	</c:if>
+                                              	<button type="button" class="btn btn-warning btn-sm" onclick="location.href='messageToOrigin.do?mms_no=${delmms.mms_no}'">복구</button>
+                                              	&nbsp;
+                                              	<button type="button" class="btn btn-warning btn-sm" onclick="location.href='deleteMessage.do?mms_no=${delmms.mms_no}'">삭제</button>
+
                                             </td>
                                         </tr>
                                         </c:forEach>

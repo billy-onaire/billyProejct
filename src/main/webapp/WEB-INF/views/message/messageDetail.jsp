@@ -66,7 +66,7 @@
 						<tbody> 
 						<c:if test="${list.sent_id eq 'testmk' }">
 				<tr> 
-					<th scope="row">받는사람</th> 
+					<th scope="row">보낸사람</th> 
 					<td>${list.recv_id}</td> 
 					<th scope="row">상품명</th> 
 					<td>${list.product_name }</td> 
@@ -89,16 +89,16 @@
 				</tr>  
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
-				</tr> 
-				
+				</tr>
+					
 					</c:if>
 					
 					<c:if test="${list.sent_id ne 'testmk' }">
 					<tr> 
+					<th scope="row">받는사람</th> 
+					<td>${list.sent_id}</td> 
 					<th scope="row">상품명</th> 
 					<td>${list.product_name }</td> 
-					<th scope="row">보낸사람</th> 
-					<td>${list.sent_id}</td> 
 				</tr> 
 				<tr></tr>
 				<tr> 
@@ -109,18 +109,32 @@
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
 				</tr> 
-				</c:if>
+				
+					
+				
+				</c:if>					
 						</tbody> 
 					</table>
 					
-					
-
-						<br> 					
+					<br> 					
 							<input type="button" class="button" id="reply" value="답장하기" > 
 							<input type="button" class="button" id="delete" value="삭제하기" >
-						<br>					
-							<input type="button" class="button" id="update" value="메세지복구" > 
-							<input type="button" class="button" id="final" value="완전삭제" >
+					<br>
+<script>
+$(function(){
+	 $('#delete').on('click',function(){ 
+		
+		 var num = "${list.mms_no}"
+		 if(confirm("삭제하시겠습니까?")){
+			 location.href="messageToDel.do?mms_no=" + num; 
+			
+		 window.opener.document.location.href = window.opener.document.URL;
+		 }
+		 
+	 });
+});
+											
+</script>
 				</div>
 			</div>
 		</div>

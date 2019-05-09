@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository("messageDao")
-//annotation할 때 이름을 지어줄 수 있다, 괄호 안에 넣어주면 됌
+
 public class MessageDao {
 	
 	public int insertMessage(SqlSessionTemplate mybatisSession, Message message) {
@@ -45,15 +45,15 @@ public class MessageDao {
 		return mybatisSession.selectOne("messageMapper.selectTotalListCount", setting);
 	}
 
-	public MessagePname updateDelMessage(SqlSessionTemplate mybatisSession, int mms_no) {
-		System.out.println("삭제 업데이트 확인");
+	public int updateDelMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		System.out.println("출력확인");
 		
 		return mybatisSession.update("messageMapper.updateDelMessage", mms_no);/*mybatisSession.update("messageMapper.updateDelMessage", mms_no);*/
 	}
 
 	public int deleteFinalMessage(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
-		return mybatisSession.delete("messageMapper.deleteFinalMessage", mms_no);
+		return mybatisSession.update("messageMapper.deleteFinalMessage", mms_no);
 	}
 
 
@@ -77,6 +77,16 @@ public class MessageDao {
 	public MessagePname selectDetailMessage(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
 		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
+	}
+
+	public int updateOriginMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.update("messageMapper.updateOriginMessage", mms_no);
+	}
+
+	public int selectMessageCount(SqlSessionTemplate mybatisSession, String userId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 

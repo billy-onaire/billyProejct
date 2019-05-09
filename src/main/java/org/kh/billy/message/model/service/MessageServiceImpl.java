@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 
 @Service("messageService")
 public class MessageServiceImpl implements MessageService{
-	//마이바티스 연동 객체 선언
+
 	@Autowired
 	private SqlSessionTemplate mybatisSession;
 	
-	//dao 연동, 자동 연결
+
 	@Autowired
 	private MessageDao messageDao;
 
@@ -65,13 +65,6 @@ public class MessageServiceImpl implements MessageService{
 		return messageDao.selectDelList(mybatisSession);
 	}
 
-
-	@Override
-	public int selectTotalListCount(SettingList setting) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	@Override
 	public MessagePname selectDetailMessage(int mms_no) {
 		
@@ -81,11 +74,23 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public MessagePname updateDelMessage(int mms_no) {
-		System.out.println("삭제 업데이트 확인");
+	public int updateDelMessage(int mms_no) {
+		System.out.println("출력확인");
 		return messageDao.updateDelMessage(mybatisSession, mms_no);
 	}
 
+	@Override
+	public int updateOriginMessage(int mms_no) {
+		
+		return messageDao.updateOriginMessage(mybatisSession, mms_no);
+		
+	}
+
+	@Override
+	public int selectMessageCount(String userId) {
+		// TODO Auto-generated method stub
+		return messageDao.selectMessageCount(mybatisSession, userId);
+	}
 
 
 }
