@@ -142,102 +142,27 @@ $(document).ready(function(){
                                     </tbody>
                                 </table>
                             </div>
-
-                             <div id="tab2" class="tabcontent" style="display: none;">
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>받은 사람</th>
-                                            <th>상품명</th>
-                                            <th style="width: 200px">내용</th>
-                                            <th>발송일</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${sentList }" var="sentmms">
-
-                                        <tr>
-                                            <td class="cart_product_img">
-                                               ${sentmms.recv_del }, ${sentmms.recv_id }
-                                            </td>
-                                            <td class="cart_product_img">
-                                                	${sentmms.product_name }
-                                            </td>
-                                            <td class="cart_product_desc" id="${sentmms.mms_no }" >
-                                                ${sentmms.mms_content }
-                                            </td>
-                                            <td class="price">
-                                            	<fmt:formatDate value="${sentmms.sent_date }" pattern="yyyy-MM-dd"/>                                                
-                                            </td>
-                                            <td class="cart_product_img">
-                                            <c:if test="${sentmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                            </c:if>
-                                            <c:if test="${sentmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            </c:if>
-                                            </td>
-                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div> 
-                            <div id="tab3" class="tabcontent" style="display: none;">
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
-                                        <tr>
-                                            <th>받은 사람/보낸 사람</th>                                            
-                                            <th style="width: 200px">내용</th>
-                                            <th>날짜</th>
-                                            <th>읽음 여부</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${delList }" var="delmms">
-                                        <tr>
-                                            <td class="cart_product_img">
-                                                ${delmms.sent_id }, ${delmms.recv_id }
-                                            </td>
-                                            <td class="cart_product_desc" id="${delmms.mms_no }" >
-                                                ${delmms.mms_content }
-                                            </td>
-                                            <td class="price">
-                                                <fmt:formatDate value="${delmms.sent_date }" pattern="yyyy-MM-dd"/> 
-                                            </td>
-                                            <td class="cart_product_img">
-                                              	<c:if test="${delmms.recv_read eq 'N'}">
-                                            	읽지 않음 
-                                           	    </c:if>
-                                            	<c:if test="${delmms.recv_read eq 'Y'}">
-                                            	읽음
-                                            	</c:if>
-                                            </td>
-                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
                             </div>                             
                         </div>                                 
 
                     </div>
 
-                <div class="row">
+                
                     <div class="col-12">
                         <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                            </ul>
-                        </nav>
-                    </div>
+                       <ul class="pagination">
+                                <c:if test="${pageMaker.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                         </ul>                   
                 </div>
             </div>
         </div>
-    </div>
+    
     <!-- ##### Main Content Wrapper End ##### -->
    <c:import url="../common/footer.jsp" />
     
