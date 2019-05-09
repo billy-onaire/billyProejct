@@ -25,6 +25,13 @@ $(document).ready(function(){
 <link href='${ pageContext.request.contextPath }/resources/css/style.css' rel='stylesheet'/>
 <!-- the end of the CSS -->
 <script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#sellList').click(function(){
+		location.href='bookingPage.do';	
+	});//click
+});//ready
+</script>
     <!--  <script type="text/javascript">
     $(function() {
     		$.ajax({
@@ -53,10 +60,10 @@ $(document).ready(function(){
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2><b>구매</b> 내역</h2>
+						<h2><b>구매</b> 내역</h2>bookingPage.do
 					</div>
 					<div class="col-sm-8">						
-						<a href="#" class="btn btn-primary"><i class='material-icons'>payment</i><span>판매 내역</span></a>
+						<a id='sellList' class="btn btn-primary"><iclass='material-icons'>payment</i><span>판매 내역</span></a>
 						<!-- <i class="material-icons">&#xE863;</i>  -->
 						<!-- <a href="#" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a> -->
 					</div>
@@ -108,11 +115,28 @@ $(document).ready(function(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <c:forEach items='${ pmList }' var='payment' varStatus='status'>
+                	<tr>
+                		<td>${ payment.booking_no }</td>
+                		<td>${ payment.seller_id }</td>
+                		<td>${ payment.product_name }</td>
+                		<c:if test='${ payment.status eq 1 }'>
+                			<td><span class="status text-success">&bull;</span> 구매완료</td>
+                			<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+                		</c:if>
+                		<c:if test='${ payment.status eq 2 }'>
+                			<td><span class="status text-danger">&bull;</span> 취소</td>
+                			<td> </td>
+                		</c:if>
+                	</tr>
+                </c:forEach>
+                </tbody>
+                <tbody>
+                    <!-- <tr>
                         <td>1</td>
                         <td><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</td>
 						<td><a href="#">더러운 신발 팝니다~</a></td>                   
-						<td><span class="status text-success">&bull;</span> 거래완료</td>
+						<td><span class="status text-success">&bull;</span> 구매완료</td>
 						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
                     </tr>
 					<tr>
@@ -121,7 +145,7 @@ $(document).ready(function(){
                         <td><a href="#">fdfdfdfdfdfdfdf</a></td>                       
 						<td><span class="status text-info">&bull;</span> 거래중</td>
 						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
+                    </tr> -->
 					<!-- <tr>
                         <td>3</td>
                         <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
@@ -183,7 +207,6 @@ $(document).ready(function(){
 <c:import url="../common/footer.jsp" />
 </body>                  		             
 <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <!-- Popper js -->
 <script src="${ pageContext.request.contextPath }/resources/js/popper.min.js"></script>
 <!-- Bootstrap js -->

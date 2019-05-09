@@ -16,11 +16,12 @@ public class Payment implements Serializable {
 	private String customer;
 	private String booking_no;
 	private String seller_id;
+	private String product_name;
 	
 	public Payment() {}
 	
-	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
-			Date payment_enddate, String status, int product_no, String customer, String booking_no, String seller_id) {
+	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate, Date payment_enddate, 
+			String status, int product_no, String customer, String booking_no, String seller_id, String product_name) {
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
 		this.payment_quantity = payment_quantity;
@@ -31,6 +32,13 @@ public class Payment implements Serializable {
 		this.customer = customer;
 		this.booking_no = booking_no;
 		this.seller_id = seller_id;
+		this.product_name = product_name;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 	public String getBooking_no() {
 		return booking_no;
