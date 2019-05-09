@@ -17,4 +17,8 @@
 	<select id="selectAddress" parameterType="String" resultType="String">
 		SELECT LOCATION_AREA FROM TB_USER WHERE USER_ID = #{ID}
 	</select>
+	
+	<select id="selectAvgReview" parameterType="int" resultType="Double">
+		SELECT ROUND(AVG(POINT),1) FROM REVIEW WHERE PRODUCT_NO = #{PNO}
+	</select>
 </mapper>

@@ -13,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.kh.billy.review.model.service.ReviewService;
 import org.kh.billy.review.model.vo.Review;
+import org.kh.billy.review.model.vo.ReviewList;
 import org.kh.billy.review.model.vo.ReviewPaging;
 import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,11 @@ public class ReviewController {
 	
 	@RequestMapping("reviewList.do")
 	public String reviewListPage(Model model, ReviewPaging paging) {
-		List<Review> lists = reviewService.selectListReview(paging);
+		List<ReviewList> lists = reviewService.selectListReview(paging);
         paging.setTotal(reviewService.selectTotalListReview());
+        for(ReviewList r:lists) {
+        	System.out.println("r : " + r.toString());
+        }
         model.addAttribute("lists", lists);
         model.addAttribute("p", paging);
 
@@ -41,10 +45,14 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("writeReview.do")
-	public String writeReviewPage(@RequestParam(name="payNo") String payNo, Model model) {
-		System.out.println("payNo : " + payNo);
-		
-		model.addAttribute("payNo", payNo);
+	public String writeReviewPage(@RequestParam(name="name") String name, @RequestParam(name="img") String img,
+			@RequestParam(name="begin") String begin, @RequestParam(name="end") String end, @RequestParam(name="pno") int pNo, Model model) {
+
+		model.addAttribute("img", img);
+		model.addAttribute("name", name);
+		model.addAttribute("begin", begin);
+		model.addAttribute("end", end);
+		model.addAttribute("pNo", pNo);
 		return "member/writeReview";
 	}
 	
