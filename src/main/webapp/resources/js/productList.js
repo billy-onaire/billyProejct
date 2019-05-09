@@ -146,7 +146,8 @@ function requestProductListAjax() {
             metaDataSection.appendChild(productName);
             const ratingSection = descSection.appendChild(ratingDiv).appendChild(ratingBox);
 
-            const ratingIndex = products.list[i].rating/2;
+            const ratingIndex = products.list[i].rating;
+            const restRating = ratingIndex - Math.floor(ratingIndex);
 
             for(let i = 0; i < ratingIndex; i++){
                 const starIcon = document.createElement('i');
@@ -154,7 +155,7 @@ function requestProductListAjax() {
                 starIcon.setAttribute('aria-hidden','true');
                 ratingSection.appendChild(starIcon);
             }
-            if(ratingIndex%2 === 0.5){
+            if(restRating >= 0.5){
                 ratingSection.removeChild(ratingSection.firstChild)
                 const starIcon = document.createElement('i');
                 starIcon.classList = "fa fa-star-half-o";
