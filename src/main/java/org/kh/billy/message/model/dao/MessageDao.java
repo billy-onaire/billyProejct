@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.product.model.vo.SettingList;
@@ -26,16 +27,16 @@ public class MessageDao {
 	}
 
 
-	public ArrayList<MessagePname> selectRecvList(SqlSessionTemplate mybatisSession) {
+	public ArrayList<MessagePname> selectRecvList(SqlSessionTemplate mybatisSession, CriteriaMms cri) {
 		
-		List<MessagePname> list = mybatisSession.selectList("messageMapper.selectRecvList");
+		List<MessagePname> list = mybatisSession.selectList("messageMapper.selectRecvList", cri);
 		
 		return (ArrayList<MessagePname>) list;
 	}
 
-	public ArrayList<MessagePname> selectSentList(SqlSessionTemplate mybatisSession) {
+	public ArrayList<MessagePname> selectSentList(SqlSessionTemplate mybatisSession, CriteriaMms cri) {
 		
-		List<MessagePname> list = mybatisSession.selectList("messageMapper.selectSentList");
+		List<MessagePname> list = mybatisSession.selectList("messageMapper.selectSentList", cri);
 		
 		return (ArrayList<MessagePname>) list;
 	}
@@ -43,12 +44,6 @@ public class MessageDao {
 	public int selectTotalListCount(SqlSessionTemplate mybatisSession, SettingList setting) {
 		// TODO Auto-generated method stub
 		return mybatisSession.selectOne("messageMapper.selectTotalListCount", setting);
-	}
-
-	public int updateDelMessage(SqlSessionTemplate mybatisSession, int mms_no) {
-		System.out.println("출력확인");
-		
-		return mybatisSession.update("messageMapper.updateDelMessage", mms_no);/*mybatisSession.update("messageMapper.updateDelMessage", mms_no);*/
 	}
 
 	public int deleteFinalMessage(SqlSessionTemplate mybatisSession, int mms_no) {
@@ -86,7 +81,28 @@ public class MessageDao {
 
 	public int selectMessageCount(SqlSessionTemplate mybatisSession, String userId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return mybatisSession.selectOne("messageMapper.selectMessageCount", userId);
+		
+	}
+
+	public int selectMessageCount2(SqlSessionTemplate mybatisSession, String userId) {
+		// TODO Auto-generated method stub
+		return mybatisSession.selectOne("messageMapper.selectMessageCount2", userId);
+	}
+
+	public int selectMessageCount3(SqlSessionTemplate mybatisSession, String userId) {
+		// TODO Auto-generated method stub
+		return mybatisSession.selectOne("messageMapper.selectMessageCount3", userId);
+	}
+
+	public int updateDelRecvMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.update("messageMapper.updateDelRecvMessage", mms_no);
+	}
+
+	public int updateDelSentMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.update("messageMapper.updateDelSentMessage", mms_no);
 	}
 	
 

@@ -21,26 +21,12 @@ public class Message implements java.io.Serializable{
 	private String recv_del;
 	private String sent_del;
 	private int product_no;
+	private String recv_show;
+	private String sent_show;
 	
 	
 	public Message() {
 		
-	}
-
-
-	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_read, String recv_del, String sent_del, int product_no) {
-		super();
-		this.mms_no = mms_no;
-		this.recv_id = recv_id;
-		this.sent_id = sent_id;
-		this.mms_content = mms_content;
-		this.sent_date = sent_date;
-		this.read_date = read_date;
-		this.recv_read = recv_read;
-		this.recv_del = recv_del;
-		this.sent_del = sent_del;
-		this.product_no = product_no;
 	}
 
 
@@ -144,8 +130,46 @@ public class Message implements java.io.Serializable{
 	}
 
 
+	public String getRecv_show() {
+		return recv_show;
+	}
+
+
+	public void setRecv_show(String recv_show) {
+		this.recv_show = recv_show;
+	}
+
+
+	public String getSent_show() {
+		return sent_show;
+	}
+
+
+	public void setSent_show(String sent_show) {
+		this.sent_show = sent_show;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
+			String recv_read, String recv_del, String sent_del, int product_no, String recv_show, String sent_show) {
+		super();
+		this.mms_no = mms_no;
+		this.recv_id = recv_id;
+		this.sent_id = sent_id;
+		this.mms_content = mms_content;
+		this.sent_date = sent_date;
+		this.read_date = read_date;
+		this.recv_read = recv_read;
+		this.recv_del = recv_del;
+		this.sent_del = sent_del;
+		this.product_no = product_no;
+		this.recv_show = recv_show;
+		this.sent_show = sent_show;
 	}
 
 
@@ -153,7 +177,8 @@ public class Message implements java.io.Serializable{
 	public String toString() {
 		return "Message [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
 				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
-				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + "]";
+				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + ", recv_show="
+				+ recv_show + ", sent_show=" + sent_show + "]";
 	}
 
 

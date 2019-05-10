@@ -45,6 +45,12 @@ $(document).ready(function(){
 	color: white;
 }
 
+    .centertwo {
+      margin: auto;
+      width: 60%;
+      
+      padding: 10px;
+    }
 
 </style>
 
@@ -86,7 +92,8 @@ $(document).ready(function(){
                 <div class="row">
                     <div class="col-12">
                     <!-- 쪽지 보내기 팝업창 연습 -->
-                    	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
+                    	<a href="#" onclick="insertPopup();">쪽지보내기</a>
+
                         <div class="view d-flex">
                                     <button class="tablinks active" onclick="location.href='recvList.do'">받은쪽지함</button>
                                     <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
@@ -148,18 +155,20 @@ $(document).ready(function(){
                     </div>
 
                 
-                    <div class="col-12">
-                        <!-- Pagination -->
-                       <ul class="pagination">
-                                <c:if test="${pageMaker.prev }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                      <div class="centertwo">
+                          <ul class="pagination">
+                                <c:if test="${pageMakerMms.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${pageMakerMms.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
                                 </c:if>
-                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
+                                <c:forEach begin="${pageMakerMms.startPage }" end="${pageMakerMms.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${idx }"/>">${idx }</a></li>
                                 </c:forEach>
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
-                         </ul>                   
-                </div>
+                                <c:if test="${pageMakerMms.next }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${pageMakerMms.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            	</c:if>
+                            </ul>
+                      </div> 
+                          <br> 
             </div>
         </div>
     

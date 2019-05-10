@@ -1,15 +1,10 @@
 package org.kh.billy.message.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.activation.CommandMap;
-
-import org.kh.billy.message.model.dao.MessageDao;
+import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
-import org.kh.billy.product.model.vo.SettingList;
+
 
 public interface MessageService {
 
@@ -18,9 +13,9 @@ public interface MessageService {
 
 	Message selectMessage(int mms_no);
 
-	ArrayList<MessagePname> selectRecvList();
+	ArrayList<MessagePname> selectRecvList(CriteriaMms cri);
 
-	ArrayList<MessagePname> selectSentList();
+	ArrayList<MessagePname> selectSentList(CriteriaMms cri);
 
 	int deleteFinalMessage(int mms_no);
 
@@ -30,11 +25,19 @@ public interface MessageService {
 
 	MessagePname selectDetailMessage(int mms_no);
 
-	int updateDelMessage(int mms_no);
+	//int updateDelMessage(int mms_no);
 
 	int updateOriginMessage(int mms_no);
 
 	int selectMessageCount(String userId);
+	
+	int selectMessageCount2(String userId);
+
+	int selectMessageCount3(String userId);
+
+	int updateDelRecvMessage(int mms_no);
+
+	int updateDelSentMessage(int mms_no);
 
 	
 
