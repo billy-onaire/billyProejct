@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,13 +18,18 @@ import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.payment.model.service.BootpayApi;
 import org.kh.billy.payment.model.service.PaymentService;
 import org.kh.billy.payment.model.vo.Payment;
+import org.kh.billy.payment.model.vo.PaymentPaging;
+import org.kh.billy.product.model.vo.ProductForList;
+import org.kh.billy.product.model.vo.SettingList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -37,14 +43,64 @@ public class PaymentController {
 	
 	static BootpayApi api;
 	
-	@RequestMapping(value="paylist.do")
-	public ModelAndView paymentMyList(ArrayList<Payment> pmList, ModelAndView mav) {
-		pmList = payService.selectPaymentMyList();
+	@RequestMapping(value="paylist.do", method=RequestMethod.POST)
+	public void paymentMyList(@RequestParam(name="pageCount") String pageCount, 
+			@RequestBody SettingList setting, ArrayList<PaymentPaging> plist,HttpServletResponse response) throws IOException {
+		int currentPage = setting.getPage();
+		int listCount = setting.getListCount();
+		int totalCount = 0; 
+				/*payService.selectTotalListCount(setting);*/
+		int totalPage = totalCount/listCount;
+		int countPage = Integer.parseInt(pageCount); //페이징 개수
 		
-		mav.addObject("pmList", pmList);
-		mav.setViewName("payment/paylistMypage");
+		if(totalCount % listCount > 0)
+			totalPage++;
+		if(currentPage > totalPage)
+			setting.setPage(totalPage);
 		
-		return mav;
+		int startPage = ((currentPage - 1)/10) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+		
+		if(endPage > totalPage)
+			endPage = totalPage;
+		
+		int startList = (currentPage - 1)*listCount + 1;
+		int endList = currentPage * listCount;
+		
+		setting.setTotalCount(totalCount);
+		setting.setTotalPage(totalPage);
+		setting.setStartPage(startPage);
+		setting.setEndPage(endPage);
+		setting.setStartList(startList);
+		setting.setEndPage(endPage);
+		logger.info("setting : " + setting);
+		
+		plist = null;/*payService.selectPaymentList(setting);*/
+		JSONObject job = new JSONObject();
+		JSONArray jar = new JSONArray();
+		for(PaymentPaging p : plist) {
+			JSONObject ob = new JSONObject();
+			ob.put("booking_no", p.getBooking_no());
+			ob.put("product_name", p.getProduct_name());
+			ob.put("seller_id", p.getSeller_id());
+			ob.put("status", p.getStatus());
+			
+			jar.add(ob);
+		}
+		JSONObject pagingJson = new JSONObject();
+		pagingJson.put("start", startPage);
+		pagingJson.put("end", endPage);
+		pagingJson.put("currentPage", currentPage);
+		pagingJson.put("totalPage", totalPage);
+		
+		job.put("plist", jar);
+		job.put("page", pagingJson);
+		
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(job.toString());
+		out.flush();
+		out.close();
 	}
 	/*public void payList(ArrayList<Payment> pmList, ModelAndView mav, HttpServletResponse response) throws IOException {
 		pmList = payService.selectPaymentMyList();

@@ -130,6 +130,7 @@
 	</script>
 	
 	<style type="text/css">
+		/* 리뷰 테이블 */
 		table.type09 {
 		    border-collapse: collapse;
 		    text-align: left;
@@ -158,6 +159,7 @@
 		    border-bottom: 1px solid #ccc;
 		}
 		
+		/* 별점 CSS */
 		.starR{
 		  background: url('/billy/resources/img/review-point/point_star.png') no-repeat right 0;
 		  background-size: auto 100%;
@@ -167,6 +169,34 @@
 		  text-indent: -9999px;
 		}
 		.starR.on{background-position:0 0;}
+		
+		/* 제품정보 CSS */
+		table.type03 {
+		    border-collapse: collapse;
+		    text-align: left;
+		    line-height: 1.5;
+		    /* border-top: 1px solid #ccc; */
+		    border-left: 3px solid #FF9F00;
+		    border-right: 3px solid #FF9F00;
+		  margin : 20px 10px;
+		}
+		table.type03 th {
+		    width: 147px;
+		    padding: 10px;
+		    font-weight: bold;
+		    vertical-align: top;
+		    color: #153d73;
+		    /* border-right: 1px solid #ccc; */
+		    /* border-bottom: 1px solid #ccc; */
+		
+		}
+		table.type03 td {
+		    width: 349px;
+		    padding: 10px;
+		    vertical-align: top;
+		    /* border-right: 1px solid #ccc; */
+		    /* border-bottom: 1px solid #ccc; */
+		}
 	</style>
 </head>
 
@@ -185,7 +215,7 @@
                             <ol class="breadcrumb mt-50">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">${p.pcategory_name }</a></li>
-                                <li class="breadcrumb-item"><a href="#">${p.sub_pcategory_name }</a></li>
+                                <li class="breadcrumb-item"><a href="#">${p.sub_pcategory_name }</a></li>     
                             </ol>
                         </nav>
                     </div>
@@ -198,12 +228,18 @@
                                 <ol class="carousel-indicators">
                                     <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/billy/resources/files/product/${p.first_img });">
                                     </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/billy/resources/files/product/${p.second_img });">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/billy/resources/files/product/${p.third_img });">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/billy/resources/files/product/${p.fourth_img });">
-                                    </li>
+                                    <c:if test="${not empty p.second_img }">
+	                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/billy/resources/files/product/${p.second_img });">
+	                                    </li>
+                                    </c:if>
+                                    <c:if test="${not empty p.third_img }">
+                                    	<li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/billy/resources/files/product/${p.third_img });">
+                                    	</li>
+                                    </c:if>
+                                    <c:if test="${not empty p.fourth_img }">
+	                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/billy/resources/files/product/${p.fourth_img });">
+	                                    </li>
+                                    </c:if>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
@@ -211,24 +247,34 @@
                                             <img class="d-block w-100" src="/billy/resources/files/product/${p.first_img }" alt="First slide">
                                         </a>
                                     </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/files/product/${p.second_img }">
-                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.second_img }" alt="Second slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/files/product/${p.third_img }">
-                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.third_img }" alt="Third slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="/billy/resources/files/product/${p.fourth_img }">
-                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.fourth_img }" alt="Fourth slide">
-                                        </a>
-                                    </div>
+                                    <c:if test="${not empty p.second_img }">
+	                                    <div class="carousel-item">
+	                                        <a class="gallery_img" href="/billy/resources/files/product/${p.second_img }">
+	                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.second_img }" alt="Second slide">
+	                                        </a>
+	                                    </div>
+                                    </c:if>
+                                    <c:if test="${not empty p.third_img }">
+	                                    <div class="carousel-item">
+	                                        <a class="gallery_img" href="/billy/resources/files/product/${p.third_img }">
+	                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.third_img }" alt="Third slide">
+	                                        </a>
+	                                    </div>
+	                                </c:if>
+	                                <c:if test="${not empty p.fourth_img }">
+	                                    <div class="carousel-item">
+	                                        <a class="gallery_img" href="/billy/resources/files/product/${p.fourth_img }">
+	                                            <img class="d-block w-100" src="/billy/resources/files/product/${p.fourth_img }" alt="Fourth slide">
+	                                        </a>
+	                                    </div>
+	                                </c:if>
                                 </div>
                             </div>
                         </div>
+                        <h2>거래지역</h2>
+                        <div id="mapAddress">${p.location_area }</div>
+                        <div id="map" style="width:800px;height:300px; float:left;"></div>				
+						
                     </div>
                     <div class="col-12 col-lg-5">
                         <div class="single_product_desc">
@@ -236,39 +282,130 @@
                             <div class="product-meta-data">
                                 <div class="line"></div>
                                 <p class="product-price">${ p.price} 원</p>
-                                <a href="product-details.html">
+                                <a href="#">
                                     <h6>${p.product_name }</h6>
                                 </a>
                                 <!-- Ratings & Review -->
-                                <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">                          
-                                    <!-- <div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                    </div> -->
-                                    <p class="avaibility"><i class="fa fa-circle"></i> 판매자 ID : ${p.seller_id }</p>
-                                    <p class="avaibility"><i class="fa fa-circle"></i> 남은수량 : ${p.product_quantity }</p>
-                                    <p class="avaibility"><i class="fa fa-circle"></i> 주말거래가능여부 : ${p.weekend_yn }</p>
-                                    <p class="avaibility"><i class="fa fa-circle"></i> 가능요일 : ${p.weekday_yn }</p>
+                                <br><div class="ratings-review mb-15 d-flex align-items-center justify-content-between">                          
+                                    <p class="avaibility"><i class="fa fa-circle"></i> 대여자 : ${p.seller_id }</p>                                
                                     <div class="review">
                                         <a href="#" style="color:red">신고하기</a>
                                     </div>
-                                </div>
+                                </div><br><br>
                                 
                                 <!-- Avaiable -->
-                                
+                                <table class="type03">
+							    <tr>
+							        <th scope="row">평점</th>
+							        <td>
+							        <c:if test="${point > 0 and point < 1.5}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+							        	<div class="ratings">
+                                        <i class="fa fa-star" aria-hidden="true"></i>                                        
+                                    	</div>
+                                    	</div>	
+									</c:if>
+									<c:if test="${point >= 1.5 and point < 2.0}">
+										<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+							        	<div class="ratings">
+                                        <i class="fa fa-star" aria-hidden="true"></i>                                            
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    	</div>	
+                                    	</div>
+									</c:if>
+									<c:if test="${point >= 2.0 and point < 2.5}">
+										<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+							        	<div class="ratings">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>                                            
+                                    	</div>	
+                                    	</div>
+									</c:if>
+									<c:if test="${point >= 2.5 and point < 3.0}">	
+										<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+	                                    </div>	${point }
+	                                    </div> 
+									</c:if>
+									<c:if test="${point >= 3.0 and point < 3.5}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                    </div>	${point }
+	                                    </div> 
+									</c:if>
+									<c:if test="${point >= 3.5 and point < 4.0}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>	                                        
+	                                    </div>	${point }
+	                                    </div>	
+									</c:if>
+									<c:if test="${point >= 4.0 and point < 4.5}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>	                                     	                                       
+	                                    </div>	${point }
+	                                    </div>	
+									</c:if>
+									<c:if test="${point >= 4.5 and point < 5.0}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>	                                     	                                       
+	                                    </div>	${point }
+	                                    </div>	
+									</c:if>
+									<c:if test="${point eq 5.0}">
+							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">	
+								        <div class="ratings">
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>    
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                        <i class="fa fa-star" aria-hidden="true"></i>	                                     	                                       
+	                                        <i class="fa fa-star" aria-hidden="true"></i>
+	                                    </div>	${point }
+	                                    </div>
+									</c:if>
+									</td>
+							    </tr>
+							    <tr>
+							        <th scope="row">대여기간</th>
+							        <td>${p.product_startdate } ~ ${p.product_enddate }</td>
+							    </tr>
+							    <tr>
+							        <th scope="row">주말대여여부</th>
+							        <td>${p.weekend_yn }</td>
+							    </tr>
+							    <tr>
+							        <th scope="row">평일대여요일</th>
+							        <td>${p.weekday_yn }</td>
+							    </tr>
+							    <tr>
+							        <th scope="row">남은수량</th>
+							        <td>${p.product_quantity }</td>
+							    </tr>
+							</table>
                             </div>
-
+							
                             <div class="short_overview my-5">
                                 <p>${p.product_content }</p>
                             </div>
-							<div id="map" style="width:300px;height:300px; float:left;"></div>
-							<br><br><br><br><h3>거래지역주소</h3>
-							<div id="mapAddress">${p.location_area }</div>
 							
-						
                             <!-- Add to Cart Form -->
                             <form class="cart clearfix" method="post" style="clear:both;">
                             	<br><br>
@@ -292,21 +429,23 @@
                                 <button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
                             </form>
 
-                        </div>
+                        </div>                  
                     </div>
                 </div>
+                
             </div><br><br>
+            
             <hr>
-     <span>
-<a href="#" onclick="openLayer('layerPop',1000,300)"> <!--openLayer('확대이미가 있는 레이어 id명', x축의위치 , y축의위치)-->
-    	<img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="100px" height="100px" /> <!--기본작은 썸네일 이미지-->
+     <!-- <span>
+<a href="#" onclick="openLayer('layerPop',1000,300)"> openLayer('확대이미가 있는 레이어 id명', x축의위치 , y축의위치)
+    	<img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="100px" height="100px" /> 기본작은 썸네일 이미지
 </a>
-<div id="layerPop" style="position:absolute; display:none; border:3px solid #ccc; z-index:10;"><!-- 오픈레이어 테두리 -->
+<div id="layerPop" style="position:absolute; display:none; border:3px solid #ccc; z-index:10;">오픈레이어 테두리
       <a href="#" onclick="closeLayer('layerPop')" class="close">
-    	 <p><img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="500px" height="500px"/><!--큰 이미지 오픈--></p>
+    	 <p><img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="500px" height="500px"/>큰 이미지 오픈</p>
       </a>
   </div>
-</span>
+</span> -->
      
             <h3 id="reviewCount"></h3> <br>
             <table class="type09">
@@ -390,16 +529,26 @@
 		flatpickr(".datepicker", {
 			enableTime: true,
 			dateFormat: "Y-m-d H:i",
-				
-				"disable": [
-			        function(date) {
-			            // return true to disable
-			            return (date.getDay() === 0 || date.getDay() === 6);
-			        }
-			    ],
-			    "locale": {
-			        "firstDayOfWeek": 1 // start week on Monday
-			    }
+			
+			minDate: "${p.product_startdate}",
+			maxDate: "${p.product_enddate}",
+			
+			"disable": [
+		        function(date) {
+		            // return true to disable
+		            if("${p.weekend_yn}" != "Y"){
+		            	return (date.getDay() === 0 || date.getDay() === 6);
+		            }else{
+		            	return
+		            }
+		            
+		        }
+		    ],
+		    "locale": {
+		        "firstDayOfWeek": 1 // start week on Monday
+		    }
+
+			
 		});
 	</script>
     <!-- Popper js -->

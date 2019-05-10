@@ -53,12 +53,12 @@ public class ProductManipulationController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
 		cri.setSeller_id(userId);
-		System.out.println(cri);
-		System.out.println(pageMaker);
+		//System.out.println(cri);
+		//System.out.println(pageMaker);
 		/*System.out.println(member);*/
 		/*String userId = member.getUser_id();*/
 		
-		System.out.println("메스드는 들어가지는지?");
+		//System.out.println("메스드는 들어가지는지?");
 		
 		ArrayList<Product> list = pms.selectProductList(cri);
 		System.out.println("리스트 확인 : " + list);
@@ -74,7 +74,7 @@ public class ProductManipulationController {
 		for(int i=0; i<args.length;i++) {
 			System.out.println(args[i]);
 		}*/
-		System.out.println("받아온 가격정보 확인 : ");
+		//System.out.println("받아온 가격정보 확인 : ");
 		
 		ProductCategory productCategory = new ProductCategory();
 		ProductImg productImg = new ProductImg();
@@ -83,7 +83,7 @@ public class ProductManipulationController {
 		productCategory.setPcategory_name(pcategory_name);
 		productCategory.setSub_pcategory_name(sub_pcategory_name);
 		int pcategory_no = productCategoryService.selectProductCategory(productCategory);
-		System.out.println("카테고리 번호 확인 : " + pcategory_no);
+		//System.out.println("카테고리 번호 확인 : " + pcategory_no);
 		product.setCategory_code(pcategory_no);
 		int index = file.length;
 		/*productInput.jsp 에 사진업로드하는 네모칸만큼 갯수를 잡아주기 때문에 
@@ -92,9 +92,9 @@ public class ProductManipulationController {
 		if(file.length < 4)	
 			index = file.length - 1;
 		for(int i=0; i<index; i++) {
-			System.out.println("사진 갯수 : " + index);
-			System.out.println(file[i].getOriginalFilename());
-			System.out.println(System.nanoTime());
+			//System.out.println("사진 갯수 : " + index);
+			//System.out.println(file[i].getOriginalFilename());
+			//System.out.println(System.nanoTime());
 			String fileRename = String.valueOf(System.nanoTime()) + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1);
 			if(i == 0)
 				productImg.setFirst_img(fileRename);
@@ -111,13 +111,13 @@ public class ProductManipulationController {
 			/*String savePath = request.getSession().getServletContext().getRealPath("/resources/files/test");
 			file[i].transferTo(new File(savePath + "\\" + file[i].getOriginalFilename()));*/
 		}
-		System.out.println(productImg);
+		//System.out.println(productImg);
 		productImgService.insertProductImg(productImg);//result 값이 1보다 작을 때 처리 해야 함
 		int img_no = productImgService.selectProductImgNo(productImg.getFirst_img());
 		product.setImg_no(img_no);
 		product.setSeller_id("user01");
-		System.out.println("이미지 키값 확인 : " + img_no);
-		System.out.println("입력 전 상품정보 확인 : "+product);
+		//System.out.println("이미지 키값 확인 : " + img_no);
+		//System.out.println("입력 전 상품정보 확인 : "+product);
 		pms.insertProduct(product);
 		/*if(productInsertService.insertProduct(product) > 0)
 			System.out.println("상품등록 성공");
@@ -157,17 +157,17 @@ public class ProductManipulationController {
 	public ModelAndView selectMyUpdateView(ModelAndView mv, @RequestParam(name="product_no") int productNo) {
 		ProductForUpdate product = pms.selectMyProduct(productNo);
 		product.setPcategory_name(product.getPcategory_name().toUpperCase());
-		System.out.println("업데이트할 상품 확인 : " + product);
 		mv.addObject("product",product);
 		mv.setViewName("product/productUpdate");
 		return mv;
 	}
 	
 	@RequestMapping(value="myproductupdate.do",method=RequestMethod.POST)
-	public String updateProduct(Product product) {
-		String userId = product.getSeller_id();
-		int result = pms.updateProduct(product);
-		return "redirect:myproductlist.do?userid=" + product.getSeller_id();
+	public String updateMyProduct(ProductForUpdate product) {
+		System.out.println("수정할 상품 : " + product);
+		int result = pms.updateMyProduct(product);
+		//return "redirect:myproductlist.do?userid=" + product.getSeller_id();
+		return "redirect:myproductlist.do";
 	}
 	
 	@RequestMapping(value="myproductdelete.do",method=RequestMethod.POST)

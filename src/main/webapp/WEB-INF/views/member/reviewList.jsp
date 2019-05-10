@@ -89,10 +89,20 @@
 		    </tr>
 		    <c:forEach var="r" items="${lists}">
 				<tr>
-					<td>${r.point}</td>
-					<td>${r.review_content}</td>
-					<td>${r.point}</td>
-					<td>${r.review_content}</td>
+					<td><img src="/billy/resources/files/product/${r.first_img}"></td>
+					<td style="font-size:15pt; font-weight:bold">${r.product_name}</td>
+					<td>${r.payment_begindate} ~ ${r.payment_enddate }</td>
+					<td><div class="cart-btn mt-100">
+						<c:url var="insertReview" value="writeReview.do">
+		        		<c:param name="name" value="${r.product_name }" />
+		        		<c:param name="img" value="${r.first_img }" />
+		        		<c:param name="begin" value="${r.payment_begindate }" />
+		        		<c:param name="end" value="${r.payment_enddate }" />
+		        		<c:param name="pno" value="${r.product_no }" />
+			        	</c:url>
+		                <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
+		             	</div>
+		            </td>
 				</tr>						
 			</c:forEach>
 		</table>

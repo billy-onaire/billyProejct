@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.review.model.vo.Review;
+import org.kh.billy.review.model.vo.ReviewList;
 import org.kh.billy.review.model.vo.ReviewPaging;
 import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,7 +17,7 @@ public class ReviewDao {
 		return session.insert("reviewMapper.insertReview", review);
 	}
 
-	public List<Review> selectListReview(SqlSessionTemplate session, ReviewPaging paging) {
+	public List<ReviewList> selectListReview(SqlSessionTemplate session, ReviewPaging paging) {
 		return session.selectList("reviewMapper.selectListReview", paging);
 	}
 

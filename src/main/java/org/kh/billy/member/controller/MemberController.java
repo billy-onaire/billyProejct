@@ -81,6 +81,7 @@ public class MemberController {
 	   
    }
    
+   //아이디 중복검사 체크
    @RequestMapping(value="idCheck.do", method=RequestMethod.POST)
 	public ModelAndView IdCheck(@RequestParam("userId") String userId, ModelAndView mv) throws Exception {
 	   int result = 0;

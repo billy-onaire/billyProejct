@@ -12,8 +12,6 @@ import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.product.model.vo.SettingList;
 
 public interface MessageService {
-	//추상메소드만 멤버로 가짐
-	//[public abstract] 반환형 메소드명(자료형 매개변수);
 
 
 	int insertMessage(Message message);
@@ -24,10 +22,6 @@ public interface MessageService {
 
 	ArrayList<MessagePname> selectSentList();
 
-	int selectTotalListCount(SettingList setting);
-
-	MessagePname updateDelMessage(int mms_no);
-
 	int deleteFinalMessage(int mms_no);
 
 	int insertReplyMessage(Message message, int mms_no);
@@ -35,6 +29,12 @@ public interface MessageService {
 	ArrayList<Message> selectDelList();
 
 	MessagePname selectDetailMessage(int mms_no);
+
+	int updateDelMessage(int mms_no);
+
+	int updateOriginMessage(int mms_no);
+
+	int selectMessageCount(String userId);
 
 	
 

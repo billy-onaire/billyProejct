@@ -30,11 +30,6 @@ public class ProductManipulationServiceImpl implements ProductManipulationServic
 	}
 
 	@Override
-	public int updateProduct(Product product) {
-		return pmd.productUpdate(mybatisSession, product);
-	}
-
-	@Override
 	public int deleteProduct(int productNo) {
 		return pmd.productDelete(mybatisSession, productNo);
 		
@@ -48,6 +43,11 @@ public class ProductManipulationServiceImpl implements ProductManipulationServic
 	@Override
 	public ProductForUpdate selectMyProduct(int productNo) {
 		return pmd.selectMyProduct(mybatisSession, productNo);
+	}
+
+	@Override
+	public int updateMyProduct(ProductForUpdate product) {
+		return pmd.updateMyProduct(mybatisSession, product);
 	}
 	
 	

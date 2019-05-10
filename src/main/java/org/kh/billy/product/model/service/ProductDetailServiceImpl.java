@@ -26,4 +26,9 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 		return pdetailDao.selectAddress(mybatisSession, sellerId);
 	}
 
+	@Override
+	public Double selectAvgReview(int pNo) {
+		return pdetailDao.selectAvgReview(mybatisSession, pNo);
+	}
+
 }

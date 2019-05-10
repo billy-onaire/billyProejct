@@ -19,10 +19,10 @@ public class ProductDetailController{
 	public String productDetailPage(Model model, ProductDetail pDetail, @RequestParam(name="pno") int pNo) {
 		
 		pDetail = pdetailService.selectProductDetail(pNo);
-		System.out.println("product : " + pDetail);
 
+		Double point = pdetailService.selectAvgReview(pNo);
 		model.addAttribute("p", pDetail);		
-	
+		model.addAttribute("point", point);
 		return "product/product-details";
 	}
 }

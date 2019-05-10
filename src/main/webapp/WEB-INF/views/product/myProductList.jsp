@@ -124,7 +124,9 @@
                                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
                                 <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
                                 </c:forEach>
+                                <c:if test="${pageMaker.next }">
                                 <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            	</c:if>
                             </ul>
                             </div> 
                           <br>                          

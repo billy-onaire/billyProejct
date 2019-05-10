@@ -20,15 +20,16 @@
 		insert into review values (SQ_RVNO.nextval, #{review_content}, #{review_image}, #{point}, default, #{payment_no})
 	</insert>
 	
-	<select id="selectListReview" parameterType="ReviewPaging" resultType="Review">
+	<select id="selectListReview" parameterType="ReviewPaging" resultType="ReviewList">
 		select *
 		from (select rownum rnum, p.* 
-			from (select * from review order by review_date desc) p) 
+			from (select * from payment 
+				join product using (product_no) join product_img using (img_no) order by payment_no desc) p) 
 		where rnum between #{start} and #{last}
 	</select>
 	
 	<select id="selectTotalListReview" resultType="int">
-		select count(*) from review
+		select count(*) from payment
 	</select>
 	
 	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">

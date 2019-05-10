@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.kh.billy.review.model.dao.ReviewDao;
 import org.kh.billy.review.model.vo.Review;
+import org.kh.billy.review.model.vo.ReviewList;
 import org.kh.billy.review.model.vo.ReviewPaging;
 import org.kh.billy.review.model.vo.ReviewPagingFront;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,7 +27,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<Review> selectListReview(ReviewPaging paging) {
+	public List<ReviewList> selectListReview(ReviewPaging paging) {
 		return reviewDao.selectListReview(mybatisSession, paging);
 	}
 

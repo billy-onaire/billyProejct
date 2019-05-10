@@ -45,7 +45,7 @@
 		    border-bottom: 1px solid #ccc;
 		}
 		.starR{
-		  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+		  background: url('/billy/resources/img/review-point/point_star.png') no-repeat right 0;
 		  background-size: auto 100%;
 		  width: 30px;
 		  height: 30px;
@@ -87,11 +87,11 @@
                    <br><br>       	
             <table class="type04">
 			    <tr>
-			        <th rowspan="2"><img src="/billy/resources/img/product-img/pro-big-1.jpg" width="300px" height="300px"></th>
-			        <td>더러운 신발</td>
+			        <th rowspan="2"><img src="/billy/resources/files/product/${img}" width="300px" height="300px"></th>
+			        <td>${name }</td>
 			    </tr>
 			    <tr>
-			        <td>2019.04.19~2019.04.28</td>
+			        <td>${begin }  ~  ${end }</td>
 			    </tr>
 			    <tr>
 			        <th>사진첨부</th>

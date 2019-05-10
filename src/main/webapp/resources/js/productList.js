@@ -164,8 +164,8 @@ function requestProductListAjax() {
             }
             // 상세보기 처리
             singleProductWrapper.addEventListener('click',()=>{
-                // location.href = "pdetail.do?product_no="+products.list[i].pno;
-                location.href = "goReport.do?pno="+products.list[i].pno;
+                location.href = "pdetail.do?pno="+products.list[i].pno;
+                //location.href = "goReport.do?pno="+products.list[i].pno;
             });
 
         }

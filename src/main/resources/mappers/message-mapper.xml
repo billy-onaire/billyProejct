@@ -37,7 +37,7 @@
 		from message m
 		join product p
 		on m.product_no = p.product_no
-		where recv_id = 'testmk2' and recv_del = 'N'
+		where recv_id = 'testmk' and recv_del = 'N'
 		order by sent_date desc
 
 		
@@ -59,7 +59,7 @@
 		from message m
 		join product p
 		on m.product_no = p.product_no
-		where <!-- sent_id = 'testmk2' and  -->recv_del = 'Y'<!-- and recv_del = 'N' -->
+		where <!-- sent_id = 'testmk2' and  -->recv_del = 'Y' and sent_del = 'N'<!-- and recv_del = 'N' -->
 		order by sent_date desc
 	</select>
 	
@@ -74,7 +74,8 @@
 			default, 
 			default, 
 			default,
-			3)
+			3,
+			default)
 	</insert>
 	
 	<select id="selectDetailMessage" parameterType="MessagePname" 
@@ -97,5 +98,21 @@
 	set recv_del = 'Y'
 	where mms_no = #{mms_no}
 	</update>
+	
+	<update id="deleteFinalMessage" parameterType="MessagePname">
+	update message
+	set sent_del = 'Y'
+	where mms_no = #{mms_no}
+	</update>
+	
+	<update id="updateOriginMessage" parameterType="MessagePname">
+	update message
+	set recv_del = 'N'
+	where mms_no = #{mms_no}
+	</update>
+	
+	<select id="selectMessageCount" resultType="int" parameterType="string">
+		select count(*) from message where recv_id = 'testmk'  and recv_del = 'N'
+	</select>
 
 </mapper>
