@@ -31,6 +31,35 @@
         cursor:pointer;
         width: 8%;
       }
+      .upreview{
+        width: 160px;
+      	height: 180px;
+        border:  1px dashed #bcbcbc;
+        float: left; 
+
+      }
+      .upreview .realimg{
+        /*margin-top: 10px;*/
+        height: 130px;
+        width: 160px;
+        cursor: pointer;
+      }
+      .imgbackground{
+        height: 130px;
+        width: 160px;
+        cursor: pointer;
+      }
+
+      
+      /* .upreview img{
+		position: absolute;
+		width: 320;
+		height: 160;
+      } */
+      .file-input{
+        display: none;
+
+      }
     </style>
     
     
@@ -148,9 +177,147 @@
                                     <img class="img-fluid" src="/billy/resources/files/product/${product.fourth_img }" alt="Chania" width="230" height="170"> 
                                   	</c:if>
                                   </div>
-                                  <input type='file' id="imgInp" /><br/>
-                                  <img id="blah" src="#" alt="your image" />
 
+
+
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h3>대표 이미지</h3>
+                                  <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
+                                 <div id="preview" class="upreview">
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground1">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview'></span>
+                                  </div>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <h3>상세 페이지에 보여질 이미지</h3>
+                                    <div id="preview2" class="upreview"><!-- SECOND_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground2">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview2'></span>
+                                  </div><!-- second_img div end -->
+
+                                  <div id="preview3" class="upreview"><!-- THIRD_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground3">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview3'></span>
+                                  </div><!-- third_img div end -->
+
+                                  <div id="preview4" class="upreview"><!-- FOURTH_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground4">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview4'></span>
+                                  </div><!-- fourth_img div end -->
+                                </div>
+                                  </div>
+                                </div> 
+
+
+                                  <div><!--  이미지 불러오는 큰 div 태그 열기 -->
+									<h3>대표 이미지 상세 페이지에 보여질 이미지</h3>
+                                  <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
+                					       <div id="preview" class="upreview">
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground1">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
+                                  <span id='preview2'></span>
+                                  </div>
+                                  <!-- <button onclick="checkval()">사진여부확인</button> -->
+									
+									
+									<div id="preview2" class="upreview">
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground1">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
+                                  <span id='preview2'></span>
+                                  </div>
+
+                                </div><!-- 이미지 불러오는 큰 div 태그 닫기 --> 
+									
+									<br><br>
+									<script type="text/javascript">
+									function previewImage(f){
+
+										var file = f.files;
+
+										// 확장자 체크
+										if(!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)){
+											alert('gif, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+
+											// 선택한 파일 초기화
+											f.outerHTML = f.outerHTML;
+
+											document.getElementById('preview2').innerHTML = '';
+
+										}
+										else {
+
+											// FileReader 객체 사용
+											var reader = new FileReader();
+
+											// 파일 읽기가 완료되었을때 실행
+											reader.onload = function(rst){
+												document.getElementById('preview2').innerHTML = '<img class="realimg" src="' + rst.target.result + '">';
+											}
+
+											// 파일을 읽는다
+											reader.readAsDataURL(file[0]);
+                      						document.getElementById('imgbackground2').innerHTML = '';  
+                      checkval(reader);
+										}
+									}
+                  function closeImage(){
+                    document.getElementById('preview2').innerHTML = '';
+                    document.getElementById('imgbackground2').innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
+                    
+                  }
+                  function checkval(reader){
+                   console.log($('.realimg').attr('src'));
+                    console.log($('#file-input').val());
+                  }
+									</script>
+									
                                   
                                   <div class="form-horizontal">
                                     <div class="form-group">
@@ -158,7 +325,7 @@
                                         <div class="col-md-20">
                                             <div class="row">
                                                 <div id="coba">
-													<div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
+													<%-- <div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
 													<div style="position: relative;">
 													<div class="spartan_item_loader" data-spartanindexloader="0" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
 													<i class="fas fa-sync fa-spin"></i>
@@ -185,7 +352,7 @@
 													<img style="width: 100%; vertical-align: middle;" class="img_" data-spartanindeximage="1" src="/billy/resources/files/product/${product.first_img }">
 													<input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="1" style="display : none" name="fileUpload[]" type="file"></label> 
 													</div>
-													</div> 
+													</div>  --%>
 													  													                                          	
                                                 </div>
                                             </div>
