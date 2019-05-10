@@ -118,20 +118,34 @@
 				<div id="findPwd">
 					<form>
 						<div class="form-group">
-							<label for="uname">User111111111:</label> <input type="text"
+							<label for="uname">Username:</label> <input type="text"
 								class="form-control" id="finame" placeholder="Enter username"
 								name="finame" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
-
 						<div class="form-group">
-							<label for="email">E111111:</label> <input type="email"
+							<label for="email">email:</label> <input type="email"
 								class="form-control" id="fiemail"
+								placeholder="Enter email" name="fiphone" required>
+							<div class="valid-feedback">Valid.</div>
+							<div class="invalid-feedback">Please fill out this field.</div>
+						</div>
+						<div class="form-group">
+							<label for="phone">phone:</label> <input type="email"
+								class="form-control" id="fiephone"
 								placeholder="Enter phone number" name="fiphone" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
+						<div class="form-group">
+							<label for="phoneAuth">인증번호:</label> <input type="text"
+								class="form-control" id="phoneAuth"
+								name="phoneAuth" required>
+							<div class="valid-feedback">Valid.</div>
+							<div class="invalid-feedback">Please fill out this field.</div>
+						</div>
+						
 						<br> <br> <span id="idList"></span>
 						<button type="submit" class="btn btn-warning btn-block"
 							id="findId" style="color: white">확인</button>

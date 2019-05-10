@@ -18,7 +18,7 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty uid or !empty naverLogin}">
+	<c:if test="${!empty googleLogin or !empty naverLogin}">
 		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
 	</c:if>
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);

@@ -31,14 +31,9 @@ public class MemberController {
        
    @Autowired
    private MemberService memberService;
-   
+
    @Autowired
    private BCryptPasswordEncoder bcryptPE;
-   
-   @RequestMapping(value="login.do")
-   public String loginPage() {
-      return "member/login";
-   }
    
    @RequestMapping("mfind.do")
    public String findPage() {
@@ -48,6 +43,16 @@ public class MemberController {
    @RequestMapping("enroll.do")
    public String enrollPage() {
       return "member/enrollPage";
+   }
+   
+   //로그아웃
+   @RequestMapping(value="logout.do")
+   public String logoutMethod(HttpServletRequest request) {
+      HttpSession session = request.getSession(false);
+      if(session != null) {
+         session.invalidate();
+      }
+      return "home";
    }
    
    //로그인 아이디 체크
@@ -64,18 +69,16 @@ public class MemberController {
 		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
 		   session.setAttribute("loginMember", user);
 		   status.isComplete();
-		   if(member.getVerify().equals('n')) {
-			   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
-			   return "member/memberError";
-		   }
-		   System.out.println(user.getUser_id() + "님 로그인 성공!!");			   
+		   System.out.println(user.getUser_id() + "님 로그인 성공!!");
+		   
 		   return "home";
+		   
 		   }else {
-			   model.addAttribute("message", "로그인 실패!");
+			   model.addAttribute("message", "로그인 실패");
 			   return "member/memberError";
 		   }
 	   }else {
-		   model.addAttribute("message", "로그인 실패!");
+		   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
 		   return "member/memberError";
 	   }
 	   

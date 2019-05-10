@@ -68,11 +68,8 @@ public class GoogleSocialController {
        @RequestMapping(value="googlelogin.do")
        public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status
     		   ,@RequestParam(name="uid") String uid, SocialUser social) {
-    	   if(gSession.getAttribute("loginMember") != null) {
-    		   gSession.invalidate();
-    		   System.out.println("사용자세션 날라감");
-    	   }
-          String accessToken = request.getParameter("access_token");
+
+    	  String accessToken = request.getParameter("access_token");
           String name = request.getParameter("name");
           String profile = request.getParameter("profile");
           
@@ -82,7 +79,7 @@ public class GoogleSocialController {
               gSession.setAttribute("profile", profile);
               status.setComplete();
         	}
-        	model.addAttribute("uid",uid);
+          	
           
 		if (socialService.selectCheckId(uid) > 0) {
 			return "home";
@@ -194,16 +191,6 @@ public class GoogleSocialController {
     		  return "social/socialError";
     	   }
     	   
-       }
-       
-       //로그아웃
-       @RequestMapping(value="logout.do")
-       public String logoutMethod(HttpServletRequest request) {
-          HttpSession session = request.getSession(false);
-          if(session != null) {
-             session.invalidate();
-          }
-          return "home";
        }
       
 }
