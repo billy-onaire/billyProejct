@@ -18,7 +18,7 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty uid or !empty naverLogin}">
+	<c:if test="${!empty googleLogin or !empty naverLogin}">
 		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
 	</c:if>
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
@@ -170,9 +170,12 @@ a {
 		<div class="login-enroll-form clearfix">
 		<div class="container">
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="token" value="${googleLogin }">
-				<input type="hidden" name="uid" value="${uid }">
-				
+				<c:if test="${!empty googleLogin }">
+					<input type="hidden" name="gid" value="${googleLogin }">
+				</c:if>
+				<c:if test="${!empty naverLogin }">
+					<input type="hidden" name="nid" value="${naverLogin }">
+				</c:if>
 				<h1>회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
@@ -185,14 +188,13 @@ a {
 					</c:if>
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-					<label for="email"><b>이메일 인증</b></label>
 					 <c:if test="${!empty naverLogin }"> 
 						<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
 					</c:if>
 					<c:if test="${!empty googleLogin }">
+					<label for="email"><b>이메일</b></label>
 						<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					</c:if>
-					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
 				<label for="address"><b>주소</b></label> 
 				<input type="text" placeholder="Enter address" id="address" name="address" required> 
 				<label for="location_area"><b>주거래가능 지역</b></label> 
