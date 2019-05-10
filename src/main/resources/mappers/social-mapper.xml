@@ -23,7 +23,7 @@
 	
 	<insert id="insertSocial" parameterType="SocialUser">
 		insert into socialuser
-		values (#{user_id}, 'google', #{token}, #{social_code})
+		values (#{user_id}, #{social_type}, #{social_code})
 	</insert>
 
 </mapper>

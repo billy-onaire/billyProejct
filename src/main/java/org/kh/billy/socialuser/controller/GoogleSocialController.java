@@ -150,27 +150,37 @@ public class GoogleSocialController {
            return model;
        }
        
-       //구글로그인 후 입력정보 받고 등록하기
+       //소셜로그인 후 입력정보 받고 등록하기
        @RequestMapping(value="sinsert.do", method=RequestMethod.POST)
        public String insertSocialUser(HttpServletRequest request, SocialUser social, Member member, Model model) {
-    	   String socialCode = "";
-    	   if(request.getParameter("uid") != null) {
-    		   socialCode = request.getParameter("uid");
-    	   }
-
+    	  
     	   String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5);
     	   String userpwd = RandomStringUtils.randomNumeric(15);
+    	   String socialCode = "";
+    	   
+    	   if(request.getParameter("gid") != null) {
+    		   socialCode = request.getParameter("gid");
+    		   social.setSocial_type("google");
+    	   }else if(request.getParameter("nid") != null) {
+    		   socialCode = request.getParameter("nid"); 
+    		   social.setSocial_type("naver");
+    	   }else if(request.getParameter("kid") != null) {
+    		   socialCode = request.getParameter("kid");
+    		   social.setSocial_type("kakao");
+    	   }else if(request.getParameter("fid") != null) {
+    		   socialCode = request.getParameter("fid");
+    		   social.setSocial_type("facebook");
+    	   }
     	   
     	   member.setUser_id(userId);
     	   member.setUser_pwd(userpwd);
     	   
     	   social.setUser_id(userId);
-    	   social.setSocial_type("google");
     	   social.setSocial_code(socialCode);
     	   
     	   System.out.println("member : " + member + "\nsocial : " + social);
-    	   
-    	   if(memberSerive.insertMember(member) > 0) {
+    	   	   
+    	   if(memberSerive.insertSmember(member) > 0) {
     		   System.out.println("회원정보등록성공!");
     		   if(socialService.insertSocial(social) > 0) {
     			   System.out.println("소셜회원정보등록성공!");

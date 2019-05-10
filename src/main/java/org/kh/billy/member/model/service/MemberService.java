@@ -17,4 +17,5 @@ public interface MemberService {
 		int create(Member member) throws Exception;
 		void updateVerify(Member member);
 		Member selectIdCheck(String userId);
+		int insertSmember(Member member);
 }

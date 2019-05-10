@@ -102,5 +102,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member selectIdCheck(String userId) {	
 		return memberDao.selectIdCheck(mybatisSession, userId);
+	}
+
+	@Override
+	public int insertSmember(Member member) {
+		return memberDao.insertSmember(mybatisSession, member);
 	}	
 }
