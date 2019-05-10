@@ -35,6 +35,8 @@
         width: 160px;
       	height: 180px;
         border:  1px dashed #bcbcbc;
+        float: left; 
+
       }
       .upreview .realimg{
         /*margin-top: 10px;*/
@@ -54,7 +56,7 @@
 		width: 320;
 		height: 160;
       } */
-      #file-input{
+      .file-input{
         display: none;
 
       }
@@ -177,8 +179,73 @@
                                   </div>
 
 
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" />
-                					<div id="preview" class="upreview">
+
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h3>대표 이미지</h3>
+                                  <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
+                                 <div id="preview" class="upreview">
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground1">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview'></span>
+                                  </div>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <h3>상세 페이지에 보여질 이미지</h3>
+                                    <div id="preview2" class="upreview"><!-- SECOND_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground2">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview2'></span>
+                                  </div><!-- second_img div end -->
+
+                                  <div id="preview3" class="upreview"><!-- THIRD_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground3">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview3'></span>
+                                  </div><!-- third_img div end -->
+
+                                  <div id="preview4" class="upreview"><!-- FOURTH_IMG -->
+                                    <button type="button" class="close" aria-label="Close">
+                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                  </button>
+                                  <label for="file-input">
+                                    <p  id="imgbackground4">
+                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </p>
+                                  </label>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <span id='preview4'></span>
+                                  </div><!-- fourth_img div end -->
+                                </div>
+                                  </div>
+                                </div> 
+
+
+                                  <div><!--  이미지 불러오는 큰 div 태그 열기 -->
+									<h3>대표 이미지 상세 페이지에 보여질 이미지</h3>
+                                  <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
+                					       <div id="preview" class="upreview">
                                     <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true" onclick="closeImage()">&times;</span>
                                   </button>
@@ -190,10 +257,10 @@
                                   <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
                                   <span id='preview2'></span>
                                   </div>
-                                  <button onclick="checkval()">사진여부확인</button>
+                                  <!-- <button onclick="checkval()">사진여부확인</button> -->
 									
 									
-									<div id="preview" class="upreview">
+									<div id="preview2" class="upreview">
                                     <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true" onclick="closeImage()">&times;</span>
                                   </button>
@@ -205,6 +272,8 @@
                                   <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
                                   <span id='preview2'></span>
                                   </div>
+
+                                </div><!-- 이미지 불러오는 큰 div 태그 닫기 --> 
 									
 									<br><br>
 									<script type="text/javascript">
@@ -234,13 +303,13 @@
 
 											// 파일을 읽는다
 											reader.readAsDataURL(file[0]);
-                      						document.getElementById('imgbackground1').innerHTML = '';  
+                      						document.getElementById('imgbackground2').innerHTML = '';  
                       checkval(reader);
 										}
 									}
                   function closeImage(){
                     document.getElementById('preview2').innerHTML = '';
-                    document.getElementById('imgbackground1').innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
+                    document.getElementById('imgbackground2').innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
                     
                   }
                   function checkval(reader){
