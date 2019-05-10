@@ -21,6 +21,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kh.billy.member.controller.MemberController;
 import org.kh.billy.socialuser.model.service.SocialUserService;
+import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,52 +45,60 @@ public class KakaoSocialController {
 	   
 	
 	
-	 @RequestMapping(value = "Enroll.do", produces = "application/json")
+	 @RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession kSession,
-	          HttpServletRequest request, HttpServletResponse response, SessionStatus status) {
-	       System.out.println("카카오 로그인 할때 임시 코드값: " + code);
+	          HttpServletRequest request, HttpServletResponse response, SessionStatus status, SocialUser social) {
+	       
+		 if(kSession.getAttribute("loginMember") != null) {
+  		   kSession.invalidate();
+  		   System.out.println("사용자세션 날라감");
+		 }
+		 
+		 System.out.println("카카오 로그인 할때 임시 코드값: " + code);
 	       
 	       JsonNode userInfo = getKakaoUserInfo(code);	       
 	       System.out.println("카카오 유저 정보: " + userInfo);
 	          
 	        String name = null;
 	        String email = null;
-	 
+	        String thumbnailImage = null;
+	 		String profile = null;
+	        
 	        // 유저정보 카카오에서 가져오기 Get properties
-	        String id = userInfo.get("id").toString();
+	        String kid = userInfo.path("id").asText();
 	        JsonNode properties = userInfo.path("properties");
 	        JsonNode kakao_account = userInfo.path("kakao_account");
 	 
 	        name = properties.path("nickname").asText();
+	        thumbnailImage = properties.path("thumbnail_image").asText();
+	        profile = properties.path("profile_image").asText();
 	        email = kakao_account.path("email").asText();
 	 
-	        System.out.println("카카오 id: " + id);
+	        System.out.println("카카오 계정 고유번호: " + kid);
 	        System.out.println("카카오 name: " + name);
 	        System.out.println("카카오 email: " + email);
-	        	
+	        System.out.println("thumbnailImage : " + thumbnailImage);
+			System.out.println("profile : " + profile);
+        	
 	        
-	        if(id != null) {
-	              kSession.setAttribute("kakaoLogin", userInfo);
+	        if(kid != null) {
+	              kSession.setAttribute("kakaoLogin", kid);
 	              kSession.setAttribute("name", name);
 	              kSession.setAttribute("email", email);
+	              kSession.setAttribute("thumbnailImage ", thumbnailImage );
+	              kSession.setAttribute("profile", profile);
 	              status.setComplete();
-	        	}
-	        	model.addAttribute("userInfo", userInfo);
-	          
+	        }
+	        	model.addAttribute("kid", kid);
 	        
-	       return "home";
+	        if (socialService.selectCheckId(kid) > 0) {
+	    			return "home";
+	    	} else {
+	    			System.out.println("카카오 로그인 성공! 소셜 회원가입 페이지로!");
+	    			return "social/socialInfo";
+	    	}
+	        	
 	   }
-	 
-	 
-	 @RequestMapping(value = "logout.do", produces = "application/json")
-	    public String Logout(HttpSession session) {
-	        //kakao restapi 객체 선언
-	        //노드에 로그아웃한 결과값음 담아줌 매개변수는 세션에 잇는 token을 가져와 문자열로 변환
-	        JsonNode node = Logout(session.getAttribute("token").toString());
-	        //결과 값 출력
-	        System.out.println("로그인 후 반환되는 아이디 : " + node.get("id"));
-	        return "redirect:/";
-	    }   
 	 
 	 
 	 
@@ -104,7 +113,7 @@ public class KakaoSocialController {
 
       postParams.add(new BasicNameValuePair("client_id", "8820ef6337a09d8f33573af30f80442c"));
 
-      postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8888/billy/Enroll.do")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
+      postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8888/billy/kakaoLogin.do")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
 
       postParams.add(new BasicNameValuePair("code", autorize_code));
       //기타 설명은 생략 자세히 알고 싶으면 구글링하세요.
@@ -185,44 +194,6 @@ public class KakaoSocialController {
 	    }
 	 
 	 
-	 public JsonNode Logout(String autorize_code) {
-	        final String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
-	 
-	        final HttpClient client = HttpClientBuilder.create().build();
-	 
-	        final HttpPost post = new HttpPost(RequestUrl);
-	 
-	        post.addHeader("Authorization", "Bearer " + autorize_code);
-	 
-	        JsonNode returnNode = null;
-	 
-	        try {
-	 
-	            final HttpResponse response = client.execute(post);
-	 
-	            ObjectMapper mapper = new ObjectMapper();
-	 
-	            returnNode = mapper.readTree(response.getEntity().getContent());
-	 
-	        } catch (UnsupportedEncodingException e) {
-	 
-	            e.printStackTrace();
-	 
-	        } catch (ClientProtocolException e) {
-	 
-	            e.printStackTrace();
-	 
-	        } catch (IOException e) {
-	 
-	            e.printStackTrace();
-	 
-	        } finally {
-	 
-	        }
-	 
-	        return returnNode;
-	 
-	    }
 
 
 }

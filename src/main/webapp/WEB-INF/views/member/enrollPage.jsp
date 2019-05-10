@@ -160,8 +160,13 @@ $(function() {
                     $("#user_id").focus();
  
                 	
-                } else {
+                } else if($("#user_id").val() == null) {
                 	
+                	$(".result").text("아이디를 입력해주세요.");
+                    $(".result").attr("style", "color:#00f"); 
+                	       	
+                } else {
+                	 
                 	$(".result").text("사용가능한 아이디입니다.");
                     $(".result").attr("style", "color:#00f");
 
