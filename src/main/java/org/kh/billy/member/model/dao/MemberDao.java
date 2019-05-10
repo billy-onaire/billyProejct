@@ -45,5 +45,9 @@ public class MemberDao {
 	public Member selectIdCheck(SqlSessionTemplate session, String userId) {
 		return session.selectOne("memberMapper.selectIdCheck", userId);
 	}
+
+	public int insertSmember(SqlSessionTemplate session, Member member) {
+		return session.insert("memberMapper.insertSmember", member);
+	}
 	
 }

@@ -41,6 +41,12 @@
 	  #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'n', #{address}, 
 	  #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
+   
+   <insert id = "insertSmember" parameterType="Member">
+	  insert into tb_user values(#{user_id}, #{user_pwd}, 
+	  #{user_mobile}, #{user_name}, #{email}, 'socialMember', 'y', #{address}, 
+	  #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
+   </insert>
      
    <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
       select * from tb_user where user_id = #{user_id}      

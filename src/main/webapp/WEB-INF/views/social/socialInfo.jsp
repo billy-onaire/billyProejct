@@ -13,7 +13,7 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title  -->
-<title>회원가입</title>
+<title>Social 회원가입</title>
 
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
@@ -170,38 +170,67 @@ a {
 		<div class="login-enroll-form clearfix">
 		<div class="container">
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+				<c:if test="${!empty kakaoLogin }">
+				  <input type="hidden" id="kid" name="kid" value="${kakaoLogin }">
+				</c:if>
 				<c:if test="${!empty googleLogin }">
-					<input type="hidden" name="gid" value="${googleLogin }">
+				  <input type="hidden" id="gid" name="gid" value="${googleLogin }">
 				</c:if>
 				<c:if test="${!empty naverLogin }">
-					<input type="hidden" name="nid" value="${naverLogin }">
+				  <input type="hidden" id="nid" name="nid" value="${naverLogin }">
 				</c:if>
-				<h1>회원가입</h1>
+				<c:if test="${!empty facebookLogin }">
+				  <input type="hidden" id="fid" name="fid" value="${facebookLogin }">
+				</c:if>
+
+				<h1>Social 회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
+					
+									
+					<!-- 이름받기 -->
+					<c:if test="${!empty kakaoLogin }">
+					<label for="user_name"><b>이름</b></label>
+					<input type="text" placeholder="Enter Name" id="user_name" name="user_name" required>
+					</c:if>				
 					<c:if test="${!empty naverLogin }"> 
-						<input type="hidden" placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
-					</c:if>
+					<input type="hidden" placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
+					</c:if> 
 					<c:if test="${!empty googleLogin }">
 					<label for="user_name"><b>이름</b></label>
 					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required>
+					</c:if>				
+					<c:if test="${!empty facebookLogin }">
+					<label for="user_name"><b>이름</b></label>
+					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
 					</c:if>
+					
+					<!-- 핸드폰 -->
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-					 <c:if test="${!empty naverLogin }"> 
-						<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
+					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required>
+					
+					<!-- 이메일 -->
+					<c:if test="${!empty naverLogin }">
+					<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
 					</c:if>
 					<c:if test="${!empty googleLogin }">
-					<label for="email"><b>이메일</b></label>
-						<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					</c:if>
-				<label for="address"><b>주소</b></label> 
-				<input type="text" placeholder="Enter address" id="address" name="address" required> 
-				<label for="location_area"><b>주거래가능 지역</b></label> 
-				<input type="text" placeholder="Enter Possible Transaction Area" id="location_area" name="location_area" required> 
-				<label for="my_introduce"><b>본인소개</b></label>
-				<textarea style="background-color: #f1f1f1" class="form-control"
-					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
+					<c:if test="${!empty kakaoLogin }">
+					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					</c:if>
+					<c:if test="${!empty facebookLogin }">
+					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					</c:if>
+		
+					<!-- 나머지 -->
+					<label for="address"><b>주소</b></label> 
+					<input type="text" placeholder="Enter address" id="address" name="address" required> 
+					<label for="location_area"><b>주거래가능 지역</b></label> 
+					<input type="text" placeholder="Enter Possible Transaction Area" id="location_area" name="location_area" required> 
+					<label for="my_introduce"><b>본인소개</b></label>
+					<textarea style="background-color: #f1f1f1" class="form-control"
+						rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 				<hr>
 				<p>
 					By creating an account you agree to our <a href="#">Terms &
