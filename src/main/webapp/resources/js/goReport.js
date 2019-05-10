@@ -26,7 +26,7 @@ comment.addEventListener('keyup', () => {
 
 const reportBtn = document.querySelector('#reportBtn');
 
-reportBtn.addEventListener('click', () => {
+function goAddReport(){
     const requestData = {
         report_no: 0,
         rcategory_no: cno,
@@ -47,7 +47,8 @@ reportBtn.addEventListener('click', () => {
         const mCloses = document.querySelectorAll('.m-close');
         for (let i = 0; i < mCloses.length; i++) {
             mCloses[i].addEventListener('click', () => {
-                popup.style.display = "none"; // 팝업 내리기             
+                popup.style.display = "none"; // 팝업 내리기 
+                location.href = 'main.do';            
             });
         }
         const modalText = document.getElementById('modal-text');
@@ -62,14 +63,18 @@ reportBtn.addEventListener('click', () => {
     xhr.open('POST', "addReport.do");
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(requestData));
+}
 
-})
+reportBtn.addEventListener('click', goAddReport,true);
 
 
 document.addEventListener('DOMContentLoaded',()=>{
     const xhr = new XMLHttpRequest();
     xhr.onload = () =>{
-
+        if(responseText == 'ok'){
+            reportBtn.removeEventListener('click',goAddReport,false);
+            reportBtn.textContent = "신청완료";
+        }
     }
     xhr.open('GET', "checkReport.do?request_id=tjrgh0216");// 신청인 아이디 업데이트 필요
     xhr.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
