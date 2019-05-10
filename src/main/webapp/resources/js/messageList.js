@@ -14,12 +14,11 @@ function openTab(evt, tabName) {
 
 function insertPopup() {
     // window.name = "부모창 이름";            
-    window.name = "mmsList.do";
+    window.name = "recvList.do";
     
     // window.open("자식창 이름", "불러올 자식 창의 닉네임", "팝업창 옵션");
     window.open("mmsWrite.do", "insert",
-    		"width=450", "height=500", "menubar=no", 
-    		"status=no", "toolbar=no", "left=700", "top=200");
+    		"width=450, height=500, menubar=no, status=no, toolbar=no, left=700, top=200");
 }
 
 

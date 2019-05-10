@@ -62,6 +62,7 @@ public class MessageController {
 		//https://to-dy.tistory.com/90?category=700248 참고
 		String userId = "testmk";
 		int count = messageService.selectMessageCount(userId);
+		
 		PageMakerMms pageMaker = new PageMakerMms();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
@@ -71,10 +72,10 @@ public class MessageController {
 			
 		System.out.println("받은 메세지 글 수 : " + count);
 		
-		ArrayList<MessagePname> list = messageService.selectRecvList();
+		ArrayList<MessagePname> list = messageService.selectRecvList(cri);
 		
 		mav.addObject("recvList",list);
-		mav.addObject("pageMaker", pageMaker);
+		mav.addObject("pageMakerMms", pageMaker);
 		mav.setViewName("message/messageMain");	
 		System.out.println("받은 메세지" + list.toString());
 		
@@ -83,23 +84,50 @@ public class MessageController {
 		
 	
 	@RequestMapping(value="sentList.do"/*, method=RequestMethod.POST*/)
-	public ModelAndView selectSentList(ModelAndView mav/*, HttpServletResponse response*//*, @RequestParam(name="user_id") String user_id*/) throws IOException {
+	public ModelAndView selectSentList(ModelAndView mav, CriteriaMms cri) {
+		String userId = "testmk2";
+		int count = messageService.selectMessageCount2(userId);
 		
-		ArrayList<MessagePname> list = messageService.selectSentList();
+		PageMakerMms pageMaker = new PageMakerMms();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		cri.setSent_id(userId);
+		System.out.println(cri);
+		System.out.println(pageMaker);
 			
+		System.out.println("보낸 메세지 글 수 : " + count);
+		
+		ArrayList<MessagePname> list = messageService.selectSentList(cri);
+		System.out.println("보낸 메세지" + list.toString());	
+		
 		mav.addObject("sentList",list);
+		mav.addObject("pageMakerMms", pageMaker);
 		mav.setViewName("message/sentMessage");	
-		System.out.println("보낸 메세지" + list.toString());		
+		
+		
 		return mav; 
 		
 	}	
 	
-	@RequestMapping(value="delList.do"/*, method=RequestMethod.POST*/)
-	public ModelAndView selectDelList(ModelAndView mav) {
+	@RequestMapping(value="delList.do")
+	public ModelAndView selectDelList(ModelAndView mav, CriteriaMms cri) {
+		String userId = "testmk2";
+		int count = messageService.selectMessageCount3(userId);
+		
+		PageMakerMms pageMaker = new PageMakerMms();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		cri.setSent_id(userId);
+		cri.setRecv_id(userId);
+		System.out.println(cri);
+		System.out.println(pageMaker);
+			
+		System.out.println("삭제된 메세지 글 수 : " + count);
 		
 		ArrayList<Message> list = messageService.selectDelList();
 		
 		mav.addObject("delList", list);
+		mav.addObject("pageMakerMms", pageMaker);
 		mav.setViewName("message/delMessage");
 		System.out.println("삭제한 메세지" + list.toString());
 		
@@ -107,14 +135,16 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
-	public String insertMessage(Message message, HttpServletRequest request) {
+	public ModelAndView insertMessage(Message message, HttpServletRequest request) {
 		
 		
 		messageService.insertMessage(message);
 		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
 		System.out.println("작성한 메세지 : " + message);
 		
-		return "message/messageMain";
+		ModelAndView mv = new ModelAndView("redirect:/recvList.do");
+		
+		return mv;
 	}
 
 	@RequestMapping(value="messageDetail.do")
@@ -128,26 +158,38 @@ public class MessageController {
 	
 	}
 	
-	//message 삭제 메소드
-	@RequestMapping("messageToDel.do")
-	public ModelAndView updateDelMessage(@RequestParam int mms_no) {
+	//받은 메세지 삭제함으로
+	@RequestMapping("messageToDelRecv.do")
+	public ModelAndView updateDelRecvMessage(@RequestParam int mms_no) {
 		System.out.println("메세지 삭제 되나요?");
 		
-		messageService.updateDelMessage(mms_no);
+		messageService.updateDelRecvMessage(mms_no);
 		
-//		ModelAndView mv = new ModelAndView("redirect:/mclose.do");
 		ModelAndView mv = new ModelAndView("redirect:/mclose.do");
 		
 		return mv;
 	}
 	
+	//보낸 메세지 삭제함으로
+	@RequestMapping("messageToDelSent.do")
+	public ModelAndView updateDelSentMessage(@RequestParam int mms_no) {
+		System.out.println("메세지 삭제 되나요?");
+		
+		messageService.updateDelSentMessage(mms_no);
+		
+		ModelAndView mv = new ModelAndView("redirect:/mclose.do");
+		
+		return mv;
+	}
+	
+	//가짜 페이지
 	@RequestMapping("mclose.do")
 	public String close() {
 		
 		return "message/close";
 	}
 	
-	//message 삭제함에서 삭제
+	//받은 삭제 메세지 삭제함에서 삭제
 	@RequestMapping("deleteMessage.do")
 	public ModelAndView deleteFinalMessage(@RequestParam int mms_no) {
 		

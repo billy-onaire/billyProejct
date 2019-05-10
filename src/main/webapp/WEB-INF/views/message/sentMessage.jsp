@@ -105,7 +105,7 @@ $(document).ready(function(){
                                     <thead style="text-align: center;">
                                         <tr>
                                         
-                                            <th>받은 사람</th>
+                                            <th>받는 사람</th>
                                             <th>상품명</th>
                                             <th style="width: 200px">내용</th>
                                             <th>발송일</th>
@@ -116,7 +116,7 @@ $(document).ready(function(){
 										<c:forEach items="${sentList }" var="sentmms">
                                         <tr>
                                             <td class="cart_product_img">
-                                               ${sentmms.recv_del }, ${sentmms.recv_id }
+                                               ${sentmms.recv_id }
                                             </td>
                                             <td class="cart_product_img">
                                                 	${sentmms.product_name }
@@ -144,19 +144,19 @@ $(document).ready(function(){
 
                     </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
+                <div class="centertwo">
+                          <ul class="pagination">
+                                <c:if test="${pageMakerMms.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="sentList.do?page=${pageMakerMms.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMakerMms.startPage }" end="${pageMakerMms.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="sentList.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <c:if test="${pageMakerMms.next }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="sentList.do?page=${pageMakerMms.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            	</c:if>
                             </ul>
-                        </nav>
-                    </div>
-                </div>
+                      </div> 
             </div>
         </div>
     </div>

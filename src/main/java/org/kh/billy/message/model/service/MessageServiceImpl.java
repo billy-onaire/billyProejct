@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.kh.billy.message.model.dao.MessageDao;
+import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.product.model.vo.ProductForList;
@@ -35,14 +36,14 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public ArrayList<MessagePname> selectSentList() {
-		return (ArrayList<MessagePname>)messageDao.selectSentList(mybatisSession);
+	public ArrayList<MessagePname> selectSentList(CriteriaMms cri) {
+		return (ArrayList<MessagePname>)messageDao.selectSentList(mybatisSession, cri);
 	}
 
 	@Override
-	public ArrayList<MessagePname> selectRecvList() {
+	public ArrayList<MessagePname> selectRecvList(CriteriaMms cri) {
 		// TODO Auto-generated method stub
-		return (ArrayList<MessagePname>)messageDao.selectRecvList(mybatisSession);
+		return (ArrayList<MessagePname>)messageDao.selectRecvList(mybatisSession, cri);
 	}
 
 	@Override
@@ -74,9 +75,15 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int updateDelMessage(int mms_no) {
+	public int updateDelRecvMessage(int mms_no) {
 		System.out.println("출력확인");
-		return messageDao.updateDelMessage(mybatisSession, mms_no);
+		return messageDao.updateDelRecvMessage(mybatisSession, mms_no);
+	}
+	
+	@Override
+	public int updateDelSentMessage(int mms_no) {
+		System.out.println("출력확인");
+		return messageDao.updateDelSentMessage(mybatisSession, mms_no);
 	}
 
 	@Override
@@ -90,6 +97,18 @@ public class MessageServiceImpl implements MessageService{
 	public int selectMessageCount(String userId) {
 		// TODO Auto-generated method stub
 		return messageDao.selectMessageCount(mybatisSession, userId);
+	}
+
+	@Override
+	public int selectMessageCount2(String userId) {
+		// TODO Auto-generated method stub
+		return messageDao.selectMessageCount2(mybatisSession, userId);
+	}
+
+	@Override
+	public int selectMessageCount3(String userId) {
+		// TODO Auto-generated method stub
+		return messageDao.selectMessageCount3(mybatisSession, userId);
 	}
 
 

@@ -123,12 +123,22 @@
 <script>
 $(function(){
 	 $('#delete').on('click',function(){ 
-		
+		var session = "testmk2" //로그인한 사람
+		var sid = "${list.sent_id}";
+		var rid = "${list.recv_id}";
 		 var num = "${list.mms_no}"
 		 if(confirm("삭제하시겠습니까?")){
-			 location.href="messageToDel.do?mms_no=" + num; 
-			
-		 window.opener.document.location.href = window.opener.document.URL;
+			 if(sid == session){
+				 location.href="messageToDelSent.do?mms_no=" + num; 
+					
+				 window.opener.document.location.href = window.opener.document.URL;
+			 }
+			 else if(rid == session){
+				 location.href="messageToDelRecv.do?mms_no=" + num; 
+					
+				 window.opener.document.location.href = window.opener.document.URL;
+			 }
+
 		 }
 		 
 	 });
