@@ -44,7 +44,11 @@ $(document).ready(function(){
 	background-color: #fab336;
 	color: white;
 }
-
+.centertwo {
+      margin: auto;
+      width: 60%;     
+      padding: 10px;
+    }
 
 </style>
 
@@ -59,27 +63,8 @@ $(document).ready(function(){
 <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
-        <div class="shop_sidebar_area">
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">하위 카테고리 추가 예정</h6>
-
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-             
-            </div>
-
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">마이페이지</h6>
-            </div>
-        </div>
+	<c:import url='../common/myPage.jsp'/>
+       
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
