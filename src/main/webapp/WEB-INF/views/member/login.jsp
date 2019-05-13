@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Login Form with Rounded Social Buttons</title>
+<title>billy login</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -127,7 +127,8 @@
             <a href="${url }" class="btn btn-info btn-lg btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Naver</b></a>
             <a href="https://kauth.kakao.com/oauth/authorize?client_id=8820ef6337a09d8f33573af30f80442c&redirect_uri=http://localhost:8888/billy/kakaoLogin.do&response_type=code" class="btn btn-four btn-lg btn-block"><i class="fa fa-kakao"></i> Sign in with <b>Kakao</b></a>
             <a href="https://accounts.google.com/o/oauth2/auth?client_id=1095803907906-ngbfa3hauqa9d6v4t9um7n4u0gkof7g9.apps.googleusercontent.com&response_type=code&scope=profile&redirect_uri=http%3A%2F%2Flocalhost%3A8888%2Fbilly%2FgoogleCheck.do" class="btn btn-danger btn-lg btn-block" ><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
-            <a href="#" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+            <a href="${facebook_url}" class="btn btn-primary btn-lg btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+            
         </div>
     </form>
 </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,25 +14,60 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title  -->
-<title>Social 회원가입</title>
+<title>회원정보 수정</title>
 
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty googleLogin or !empty naverLogin}">
-		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
-	</c:if>
+    var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
- 	 
+    
+   	 $("#user_pwd").on('keydown', function(e){
+   		var pwd = $('#user_pwd').val();
+   	 
+    	if(pwd.length > 20){
+    		e.preventDefault();
+    		alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
+            $(this).val("");
+            $(this).focus();
+       } 
+    	
+   	}).on('blur', function(){
+   		if($(this).val() == '') return;
+   		var pwd = $('#user_pwd').val();
+   		if(pwd.length < 4){
+   			alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
+            $(this).val("");
+            $(this).focus();	
+   		}
+   	});
+   	 
+   	
+   	$("#user_pwd2").on('blur', function(){
+   		if($(this).val() == '') return;
+   		var pwd = $('#user_pwd').val();
+   		var pwd2 = $('#user_pwd2').val();
+   		
+   		if(pwd != pwd2){
+   			alert("입력하신 비밀번호와 다릅니다. ");
+            $(this).val("");
+            $(this).focus();	   		
+   		}
+ 
+   		
+   	});
+
+   	 
    	  $("#email").on('blur', function(e){
    		 if($(this).val() == '') return;
   		 	if(!getMail.test($("#email").val())){
 	        alert("이메일형식에 맞게 입력해주세요")
 	        $('#email').val("");
             $('#email').focus();
+	   		
   		 	}  
  	  	});
-   	  
+    
 });
  
 
@@ -82,7 +118,10 @@ $(function(){
       }
   });  
 });
+
+
 </script>
+
 
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
@@ -164,70 +203,65 @@ a {
 <body>
 
 	<!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
+	<c:import url="../common/nav.jsp" />
+	<c:import url="../common/myPage.jsp" />
+	
+	
+	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
-		<c:import url="../common/nav.jsp" />
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
-				<c:if test="${!empty kakaoLogin }">
-				  <input type="hidden" id="kid" name="kid" value="${kakaoLogin }">
-				</c:if>
-				<c:if test="${!empty googleLogin }">
-				  <input type="hidden" id="gid" name="gid" value="${googleLogin }">
-				</c:if>
-				<c:if test="${!empty naverLogin }">
-				  <input type="hidden" id="nid" name="nid" value="${naverLogin }">
-				</c:if>
-				<c:if test="${!empty facebookLogin }">
-				  <input type="hidden" id="fid" name="fid" value="${facebookLogin }">
-				</c:if>
-
-				<h1>소셜 회원가입</h1>
+		<form action="mupdate.do" method="post" enctype="multipart/form-data">
+				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
-									
-					<!-- 이름받기 -->
-					<c:if test="${!empty kakaoLogin }">
-					<label for="user_name"><b>이름</b></label>
-					<input type="text" placeholder="Enter Name" id="user_name" name="user_name" required>
-					</c:if>				
-					<c:if test="${!empty naverLogin }"> 
-					<input type="hidden" placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
-					</c:if> 
-					<c:if test="${!empty googleLogin }">
-					<label for="user_name"><b>이름</b></label>
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required>
-					</c:if>				
-					<c:if test="${!empty facebookLogin }">
-					<label for="user_name"><b>이름</b></label>
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
+					<c:if test="${!empty loginMember }">
+					<input type="hidden" id="user_id" name="user_id" value="${loginMember.user_id }">
 					</c:if>
-					
-					<!-- 핸드폰 -->
-					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required>
-					
-					<!-- 이메일 -->
+					<c:if test="${!empty kakaoLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${kakaoLogin }">
+					</c:if>
+					<c:if test="${!empty googleLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${googleLogin }">
+					</c:if>
 					<c:if test="${!empty naverLogin }">
-					<label for="email"><b>Email</b></label>
-					<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
+					<input type="hidden" id="user_id" name="user_id" value="${naverLogin }">
 					</c:if>
-					<c:if test="${!empty googleLogin }">
-					<label for="email"><b>Email</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					<c:if test="${!empty facebookLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${facebookLogin }">
+					</c:if>
+
+					<label for="user_name"><b>이름</b></label> 
+					<input type="text" id="user_name" name="user_name" value="${loginMember.user_name }" required> 
+							
+					<c:if test="${!empty loginMember }">
+					<label for="user_pwd"><b>비밀번호</b></label> 
+					<input type="password" placeholder="Enter Password" id="user_pwd" name="user_pwd" required>
+					<label for="user_pwd2"><b>비밀번호 재입력</b></label> 
 					</c:if>
 					<c:if test="${!empty kakaoLogin }">
-					<label for="email"><b>Email</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-					</c:if>				
-					<c:if test="${!empty facebookLogin }">
-					<label for="email"><b>Email</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${kakaoLogin.user_pwd }">
 					</c:if>
-		
-					<!-- 나머지 -->
-					<label for="address"><b>주소</b></label> 
+					<c:if test="${!empty googleLogin }">
+					<input type="hidden" id="uuser_pwd" name="user_pwd" value="${googleLogin.user_pwd }">
+					</c:if>
+					<c:if test="${!empty naverLogin }">
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${naverLogin.user_pwd }">
+					</c:if>
+					<c:if test="${!empty facebookLogin }">
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${facebookLogin.user_pwd }">
+					</c:if>
+					
+					
+					<input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
+					<label for="user_mobile"><b>핸드폰 번호</b></label> 
+					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
+					<label for="email"><b>이메일</b></label> 
+					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+
+				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
 				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
 					<div class="input-group-append">
@@ -308,19 +342,22 @@ a {
 			    }
 				</script>
 				
-					<label for="my_introduce"><b>본인소개</b></label>
-					<textarea style="background-color: #f1f1f1" class="form-control"
-						rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
+				<label for="my_introduce"><b>본인소개</b></label>
+				<textarea style="background-color: #f1f1f1" class="form-control"
+					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
+
 				<hr>
 				<p>
 					By creating an account you agree to our <a href="#">Terms &
 						Privacy</a>.
 				</p>
-				<button type="submit" class="registerbtn"
-					style="background-color: orange">등록하기</button>
+
+				<button id="register" type="submit" class="registerbtn"
+					style="background-color: orange">수정하기</button>
 		</form>
 		</div>
 		</div>
+	</div>
 	</div>
 	<c:import url="../common/footer.jsp" />
 	
