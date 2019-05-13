@@ -25,6 +25,8 @@ $(document).ready(function(){
 		
 	});
 });
+
+
 </script>
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -47,8 +49,7 @@ $(document).ready(function(){
 
     .centertwo {
       margin: auto;
-      width: 60%;
-      
+      width: 60%;     
       padding: 10px;
     }
 
@@ -65,39 +66,20 @@ $(document).ready(function(){
 <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
-        <div class="shop_sidebar_area">
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">하위 카테고리 추가 예정</h6>
-
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-             
-            </div>
-
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">마이페이지</h6>
-            </div>
-        </div>
+	<c:import url='../common/myPage.jsp'/>
+          
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
                     <div class="col-12">
                     <!-- 쪽지 보내기 팝업창 연습 -->
-                    	<a href="#" onclick="insertPopup();">쪽지보내기</a>
+                    	<a href="#" onclick="insertPopup();" id="sentM">쪽지보내기</a>
 
                         <div class="view d-flex">
-                                    <button class="tablinks active" onclick="location.href='recvList.do'">받은쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
-                                    <button class="tablinks" onclick="location.href='delList.do'">삭제쪽지함</button>
+                                    <button class="tablinks active" onclick="location.href='recvList.do'" id="recv">받은쪽지함</button>
+                                    <button class="tablinks" onclick="location.href='sentList.do'" id="sent">보낸쪽지함</button>
+                                    <button class="tablinks" onclick="location.href='delList.do'" id="del">삭제쪽지함</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +106,7 @@ $(document).ready(function(){
                                         <tr>
                                     
                                             <td class="cart_product_img">
-                                                ${mms.recv_del }, ${mms.sent_id }
+                                               ${mms.sent_id }
                                             </td>
                                             <td class="cart_product_img">
                                             	${mms.product_name }

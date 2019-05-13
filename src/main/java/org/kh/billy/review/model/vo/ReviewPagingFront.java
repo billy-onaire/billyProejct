@@ -14,6 +14,9 @@ public class ReviewPagingFront implements java.io.Serializable{
     private int total; // 리스트 총 갯수
     private int pageLastNum;
     private boolean lastChk;
+    
+    private int productNo; // 대여제품 번호
+    
     {
         pageCnt = 5;
         index = 0;
@@ -22,7 +25,16 @@ public class ReviewPagingFront implements java.io.Serializable{
         pageLastNum = 0;
     }
     public ReviewPagingFront() {}
-    public int getStart() {
+    
+    public int getProductNo() {
+		return productNo;
+	}
+
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
+
+	public int getStart() {
         return index * listCnt + 1;
     }
     public int getLast() {

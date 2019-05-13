@@ -44,6 +44,11 @@ $(document).ready(function(){
 	background-color: #fab336;
 	color: white;
 }
+.centertwo {
+      margin: auto;
+      width: 60%;     
+      padding: 10px;
+    }
 
 
 </style>
@@ -59,28 +64,7 @@ $(document).ready(function(){
 <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
-        <div class="shop_sidebar_area">
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">하위 카테고리 추가 예정</h6>
-
-            </div>
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget brands mb-50">
-             
-            </div>
-
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget price mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">마이페이지</h6>
-            </div>
-        </div>
-
+	<c:import url='../common/myPage.jsp'/>       
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
@@ -104,17 +88,26 @@ $(document).ready(function(){
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
-                                            <th>받은 사람/보낸 사람</th>                                            
+                                            <th>받은 사람/보낸 사람</th>
+                                            <th>상품명</th>                                            
                                             <th style="width: 200px">내용</th>
                                             <th>받은날짜</th>
-                                            <th>복구/삭제</th>         
+                                            <th>복구/<br>삭제</th>         
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach items="${delList }" var="delmms">
                                         <tr>
                                             <td class="cart_product_img">
-                                                ${delmms.sent_id }, ${delmms.recv_id }
+                                            <c:if test="${loginMember.user_id eq delmms.sent_id }" >
+                                            ${delmms.recv_id }
+                                            </c:if>
+                                            <c:if test="${loginMember.user_id eq delmms.recv_id }" >
+                                            ${delmms.sent_id }
+                                            </c:if>
+                                            </td>
+                                             <td class="cart_product_img">
+                                            	${delmms.product_name }
                                             </td>
                                             <td class="cart_product_desc" id="${delmms.mms_no }" >
                                                 ${delmms.mms_content }
@@ -137,19 +130,19 @@ $(document).ready(function(){
 
                     </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Pagination -->
-                        <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
+           			<div class="centertwo">
+                          <ul class="pagination">
+                                <c:if test="${pageMakerMms.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="delList.do?page=${pageMakerMms.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMakerMms.startPage }" end="${pageMakerMms.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="delList.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <c:if test="${pageMakerMms.next }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="delList.do?page=${pageMakerMms.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            	</c:if>
                             </ul>
-                        </nav>
-                    </div>
-                </div>
+                      </div> 
             </div>
         </div>
     </div>

@@ -17,17 +17,15 @@ public interface MessageService {
 
 	ArrayList<MessagePname> selectSentList(CriteriaMms cri);
 
-	int deleteFinalMessage(int mms_no);
+	int deleteFinalMessage(int mms_no, String userid);
 
 	int insertReplyMessage(Message message, int mms_no);
 
-	ArrayList<Message> selectDelList();
+	ArrayList<Message> selectDelList(CriteriaMms cri);
 
-	MessagePname selectDetailMessage(int mms_no);
+	MessagePname selectDetailMessage(int mms_no, String userid);
 
-	//int updateDelMessage(int mms_no);
-
-	int updateOriginMessage(int mms_no);
+	int updateOriginMessage(int mms_no, String userid);
 
 	int selectMessageCount(String userId);
 	
@@ -39,6 +37,5 @@ public interface MessageService {
 
 	int updateDelSentMessage(int mms_no);
 
-	
 
 }

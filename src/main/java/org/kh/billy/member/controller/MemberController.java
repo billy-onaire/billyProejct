@@ -127,14 +127,22 @@ public class MemberController {
    
    @RequestMapping(value="mupage.do")
    public String memberUpdatePage(Member member, HttpServletRequest request, Model model) {
-      return "member/memberDetailPage";
+      return "member/updatePage";
    }
    
-   @RequestMapping(value="mupdate.do")
-   public String updateMember(Member member, HttpServletRequest request, Model model) {
-      return "member/memberDetailPage";
-   }
-   
+   @RequestMapping(value="mupdate.do", method=RequestMethod.POST)
+	public String updateMember(Member member, Model model) {
+	   	member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
+  
+		int result = memberService.updateMember(member);
+		if(result > 0) {
+			return "home";
+		}else {
+			model.addAttribute("message", "회원정보 수정 실패!");
+			return "member/login";
+		}
+	}
+	
    @RequestMapping(value="mdelete.do")
    public String deleteMember(Member member, HttpServletRequest request, Model model) {
       return "member/memberManagementPage";

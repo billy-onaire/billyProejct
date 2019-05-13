@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.payment.model.vo.Payment;
+import org.kh.billy.payment.model.vo.PaymentPaging;
+import org.kh.billy.product.model.vo.Criteria;
+import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +21,13 @@ public class PaymentDao {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentMyList");
 		return (ArrayList<Payment>)pmList;
 	}
+	public ArrayList<Payment> selectPaymentPList(SqlSessionTemplate mybatisSession, Criteria cri) {
+		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentPList", cri);
+		return (ArrayList<Payment>)pmList;
+	}
+	public int selectPaymentCount(SqlSessionTemplate mybatisSession, String userId) {
+		return mybatisSession.selectOne("paymentMapper.selectPaymentCount", userId);
+	} 
 	
 	/*public ArrayList<Payment> searchPayment(Payment payment) {}
 	

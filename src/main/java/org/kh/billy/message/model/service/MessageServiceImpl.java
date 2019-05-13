@@ -47,9 +47,20 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int deleteFinalMessage(int mms_no) {
-
-		return messageDao.deleteFinalMessage(mybatisSession, mms_no);
+	public int deleteFinalMessage(int mms_no, String userid) {
+		MessagePname m = messageDao.selectDetailMessage(mybatisSession, mms_no);
+		
+		int result = 0;
+		if(m.getRecv_id().equals(userid)) {
+			System.out.println("받은 사람 : " + m.getRecv_id());
+			System.out.println("로그인 유저 : " + userid);
+			result = messageDao.deleteFinalRecv(mybatisSession, mms_no);
+		}else if(m.getSent_id().equals(userid)) {
+			System.out.println("보낸 사람 : " + m.getSent_id());
+			System.out.println("로그인 유저 : " + userid);
+			result = messageDao.deleteFinalSent(mybatisSession, mms_no);
+		}
+		return result;
 		
 	}
 
@@ -61,17 +72,9 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public ArrayList<Message> selectDelList() {
+	public ArrayList<Message> selectDelList(CriteriaMms cri) {
 		// TODO Auto-generated method stub
-		return messageDao.selectDelList(mybatisSession);
-	}
-
-	@Override
-	public MessagePname selectDetailMessage(int mms_no) {
-		
-		messageDao.updateReadMessage(mybatisSession, mms_no);
-		
-		return messageDao.selectDetailMessage(mybatisSession, mms_no);
+		return messageDao.selectDelList(mybatisSession, cri);
 	}
 
 	@Override
@@ -87,10 +90,19 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public int updateOriginMessage(int mms_no) {
-		
-		return messageDao.updateOriginMessage(mybatisSession, mms_no);
-		
+	public int updateOriginMessage(int mms_no, String userid) {
+		MessagePname m = messageDao.selectDetailMessage(mybatisSession, mms_no);
+		int result = 0;
+		if(m.getRecv_id().equals(userid)) {
+			System.out.println("받은 사람 : " + m.getRecv_id());
+			System.out.println("로그인 유저 : " + userid);
+			result = messageDao.updateOriginRecv(mybatisSession, mms_no);
+		}else if(m.getSent_id().equals(userid)) {
+			System.out.println("보낸 사람 : " + m.getSent_id());
+			System.out.println("로그인 유저 : " + userid);
+			result = messageDao.updateOriginSent(mybatisSession, mms_no);
+		}
+		return result;
 	}
 
 	@Override
@@ -109,6 +121,19 @@ public class MessageServiceImpl implements MessageService{
 	public int selectMessageCount3(String userId) {
 		// TODO Auto-generated method stub
 		return messageDao.selectMessageCount3(mybatisSession, userId);
+	}
+
+	@Override
+	public MessagePname selectDetailMessage(int mms_no, String userid) {
+		MessagePname m = messageDao.selectDetailMessage(mybatisSession, mms_no);
+		
+		if(m.getRecv_id().equals(userid)) {
+			System.out.println("받은 사람 : " + m.getRecv_id());
+			System.out.println("로그인 유저 : " + userid);
+			messageDao.updateReadRecv(mybatisSession, mms_no);
+		}
+		
+		return messageDao.selectDetailMessage(mybatisSession, mms_no);
 	}
 
 

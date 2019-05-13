@@ -2,6 +2,7 @@ package org.kh.billy.socialuser.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -10,6 +11,10 @@ import org.kh.billy.socialuser.model.vo.NaverLoginBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,21 +36,32 @@ public class NaverSocialController {
 		this.naverLoginBO = naverLoginBO;
 	}
 	
-	@Autowired
+	// 페이스북 oAuth 관련
+    @Autowired
+    private FacebookConnectionFactory connectionFactory;
+    @Autowired
+    private OAuth2Parameters oAuth2Parameters;
+    @Autowired
 	private SocialUserService socialService;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(NaverSocialController.class);
 	@RequestMapping(value="login.do", method= { RequestMethod.GET, RequestMethod.POST })
-	public String facebookNaverLogin(Model model, HttpSession session) {
+	public String facebookNaverLogin(HttpServletResponse response, Model model, HttpSession session) {
 		// 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		
+		OAuth2Operations oauthOperations = connectionFactory.getOAuthOperations();
+        String facebook_url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, oAuth2Parameters);
 		
 		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
 		//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
-		
+		System.out.println("facebook url" + facebook_url);
 		//네이버 
 		model.addAttribute("url", naverAuthUrl);
+		//페이스북
+		model.addAttribute("facebook_url", facebook_url);
 		
 		//생성한 인증 URL을 View로 전달 
 		return "member/login";

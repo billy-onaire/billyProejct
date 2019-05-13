@@ -176,8 +176,11 @@ public class GoogleSocialController {
     		   social.setSocial_type("facebook");
     	   }
     	   
+    	 //패스워드 암호화처리
+
     	   member.setUser_id(userId);
-    	   member.setUser_pwd(userpwd);
+    	   member.setUser_pwd(bcryptPE.encode(userpwd));
+    	   member.setAuthkey(socialCode);
     	   
     	   social.setUser_id(userId);
     	   social.setSocial_code(socialCode);

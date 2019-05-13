@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.maven.model.Model;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.message.model.service.MessageService;
 import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
@@ -49,7 +50,7 @@ public class MessageController {
 
 	@RequestMapping("mmsList.do")
 	public String mmsListPage() throws IOException {
-		return "message/messageMain";
+		return "recvList.do";
 	}
 	
 	@RequestMapping("mmsWrite.do")
@@ -58,15 +59,18 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="recvList.do"/*, method=RequestMethod.POST*/)
-	public ModelAndView selectRecvList(ModelAndView mav, CriteriaMms cri) {
+	public ModelAndView selectRecvList(ModelAndView mav, CriteriaMms cri, HttpSession session/*, @RequestParam(name="userid") String userid*/) {
 		//https://to-dy.tistory.com/90?category=700248 참고
-		String userId = "testmk";
-		int count = messageService.selectMessageCount(userId);
-		
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+
+		int count = messageService.selectMessageCount(userid);
+		System.out.println("로그인 아이디 : " + userid);
 		PageMakerMms pageMaker = new PageMakerMms();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
-		cri.setRecv_id(userId);
+		cri.setRecv_id(userid);
 		System.out.println(cri);
 		System.out.println(pageMaker);
 			
@@ -84,14 +88,18 @@ public class MessageController {
 		
 	
 	@RequestMapping(value="sentList.do"/*, method=RequestMethod.POST*/)
-	public ModelAndView selectSentList(ModelAndView mav, CriteriaMms cri) {
-		String userId = "testmk2";
-		int count = messageService.selectMessageCount2(userId);
+	public ModelAndView selectSentList(ModelAndView mav, CriteriaMms cri, HttpSession session) {
+		
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+		
+		int count = messageService.selectMessageCount2(userid);
 		
 		PageMakerMms pageMaker = new PageMakerMms();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
-		cri.setSent_id(userId);
+		cri.setSent_id(userid);
 		System.out.println(cri);
 		System.out.println(pageMaker);
 			
@@ -110,21 +118,27 @@ public class MessageController {
 	}	
 	
 	@RequestMapping(value="delList.do")
-	public ModelAndView selectDelList(ModelAndView mav, CriteriaMms cri) {
-		String userId = "testmk2";
-		int count = messageService.selectMessageCount3(userId);
+	public ModelAndView selectDelList(ModelAndView mav, CriteriaMms cri, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+		
+		int count = messageService.selectMessageCount3(userid);
+		
 		
 		PageMakerMms pageMaker = new PageMakerMms();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
-		cri.setSent_id(userId);
-		cri.setRecv_id(userId);
+		
+		cri.setSent_id(userid);
+		cri.setRecv_id(userid);
+		
 		System.out.println(cri);
 		System.out.println(pageMaker);
 			
 		System.out.println("삭제된 메세지 글 수 : " + count);
 		
-		ArrayList<Message> list = messageService.selectDelList();
+		ArrayList<Message> list = messageService.selectDelList(cri);
 		
 		mav.addObject("delList", list);
 		mav.addObject("pageMakerMms", pageMaker);
@@ -135,22 +149,38 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
-	public ModelAndView insertMessage(Message message, HttpServletRequest request) {
+	public ModelAndView insertMessage(Message message, HttpSession session) {
 		
 		
+		//session에서 userid 받아오기
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+		System.out.println("userid");
+		message.setSent_id(userid);
 		messageService.insertMessage(message);
 		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
 		System.out.println("작성한 메세지 : " + message);
-		
 		ModelAndView mv = new ModelAndView("redirect:/recvList.do");
 		
 		return mv;
 	}
 
 	@RequestMapping(value="messageDetail.do")
-	public ModelAndView selectDetailMessage(ModelAndView mv, @RequestParam int mms_no) throws Exception{
+	public ModelAndView selectDetailMessage(ModelAndView mv, @RequestParam int mms_no, HttpSession session) throws Exception{
 		
-		MessagePname m = messageService.selectDetailMessage(mms_no);
+		Member mem = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + mem);
+		String userid = mem.getUser_id();
+		System.out.println("id : " + userid);
+		
+		MessagePname m = null;
+		
+		m = messageService.selectDetailMessage(mms_no, userid);
+		System.out.println("no : " +  mms_no);
+		System.out.println("아이디 : " + m.getRecv_id());
+
+
 		System.out.println("상세보기 메세지 출력 : " + m);
 		mv.addObject("list", m);
 		mv.setViewName("message/messageDetail");
@@ -191,9 +221,15 @@ public class MessageController {
 	
 	//받은 삭제 메세지 삭제함에서 삭제
 	@RequestMapping("deleteMessage.do")
-	public ModelAndView deleteFinalMessage(@RequestParam int mms_no) {
+	public ModelAndView deleteFinalMessage(@RequestParam int mms_no, HttpSession session) {
+		Member mem = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + mem);
+		String userid = mem.getUser_id();
+		System.out.println("id : " + userid);
 		
-		messageService.deleteFinalMessage(mms_no);
+		MessagePname m = null;
+		
+		messageService.deleteFinalMessage(mms_no, userid);
 		
 		ModelAndView mv = new ModelAndView("redirect:/delList.do");
 		
@@ -202,9 +238,14 @@ public class MessageController {
 	
 	//메세지 복구
 	@RequestMapping("messageToOrigin.do")
-	public ModelAndView updateOriginMessage(@RequestParam int mms_no) {
+	public ModelAndView updateOriginMessage(@RequestParam int mms_no, HttpSession session) {
+		Member mem = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + mem);
+		String userid = mem.getUser_id();
+		System.out.println("id : " + userid);
 		
-		messageService.updateOriginMessage(mms_no);
+		MessagePname m = null;
+		messageService.updateOriginMessage(mms_no, userid);
 		
 		ModelAndView mv = new ModelAndView("redirect:/delList.do");
 		
@@ -220,5 +261,7 @@ public class MessageController {
 		
 		return "message/messageMain";
 	}
+	
+
 	
 }

@@ -30,6 +30,22 @@
         <constructor-arg value="PgasrNGtVq5aRtEci9joCM8v" />
     </bean>
    
+   
+   	<!-- 페이스북 로그인 설정 -->
+    <bean id="connectionFactory"
+        class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+        <constructor-arg value="312325269707775" />
+        <constructor-arg value="ac47b7aea8ddbdb37b9c49f6d26fe4ad" />
+    </bean>
+ 
+    <bean id="oAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="email" />
+        <property name="redirectUri" value="http://localhost:8888/billy/facebookLogin.do" />
+    </bean>
+
+
+  
    <!-- 메일 보내기 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />

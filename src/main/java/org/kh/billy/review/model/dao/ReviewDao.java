@@ -29,7 +29,8 @@ public class ReviewDao {
 		return session.selectList("reviewMapper.selectPdetailReview", pagingFront);
 	}
 
-	public int selectTotalPdetailReview(SqlSessionTemplate session) {
-		return session.selectOne("reviewMapper.selectTotalListReview");
+	public int selectTotalPdetailReview(SqlSessionTemplate session, int productNo) {
+		return session.selectOne("reviewMapper.selectTotalPdetailReview", productNo);
+		
 	}
 }

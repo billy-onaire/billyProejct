@@ -32,13 +32,16 @@
                 <!--  Catagories  -->
                 <div class="catagories-menu">
                     <ul>
-                        <li><a href="#"><span class="catagories-menu-radios">내 정보 수정</span></a></li>
+                    	<c:if test="${!empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty googleLogin
+                    	or !empty facebookLogin }">
+                        <li><a href="mupage.do"><span class="catagories-menu-radios">내 정보 수정</span></a></li>
+                        </c:if>
                         <li><a href="#"><span class="catagories-menu-radios">내 상품 </span></a></li>
                         <li><a href="reviewList.do"><span class="catagories-menu-radios">내가 작성한 후기 </span></a></li>
                         <li><a href="paylist.do"><span class="catagories-menu-radios">거래/결제 내역 </span></a></li>
                         <li><a href="#"><span class="catagories-menu-radios">결제대기 내역 </span></a></li>
                         <li><a href="#"><span class="catagories-menu-radios">신고내역 </span></a></li>
-                        <li><a href="#"><span class="catagories-menu-radios">쪽지 </span></a></li>
+                        <li><a href="recvList.do"><span class="catagories-menu-radios">쪽지 </span></a></li>
                     </ul>
                 </div>
             </div>            

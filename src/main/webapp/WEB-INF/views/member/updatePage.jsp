@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,34 +14,13 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title  -->
-<title>회원가입</title>
+<title>회원정보 수정</title>
 
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
     var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-    	
-    $("#user_id").on('keydown', function(e){
-   		var id = $('#user_id').val();
-   	 
-    	if(id.length > 12){
-    		e.preventDefault();
-    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();
-       } 
-    	
-   	}).on('blur', function(){
-   		if($(this).val() == '') return;
-   		var id = $('#user_id').val();
-   		if(id.length < 6){
-   			alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();	
-   		}
-   	});
-   	
     
    	 $("#user_pwd").on('keydown', function(e){
    		var pwd = $('#user_pwd').val();
@@ -74,6 +53,7 @@ $(function(){
             $(this).val("");
             $(this).focus();	   		
    		}
+ 
    		
    	});
 
@@ -139,51 +119,7 @@ $(function(){
   });  
 });
 
-$(function() {
-    //idck 버튼을 클릭했을 때 
-    $("#idck").click(function() {
-        
-        $.ajax({
-        	url : "idCheck.do",
-            type : "post",
-            dataType: "json",
-            data : {userId : $("#user_id").val()},
-            success : function(data) {
-            	console.log("ajax success 확인 : " + data.hashMap.cnt);
-            	
-                if (data.hashMap.cnt > 0) {
-                	
-                	$(".result").text("존재하는 아이디입니다.");
-                    $(".result").attr("style", "color:#f00"); 
-                    $("#user_id").val('');
-                    $("#user_id").focus();
- 
-                	
-                } else if($("#user_id").val() == null) {
-                	
-                	$(".result").text("아이디를 입력해주세요.");
-                    $(".result").attr("style", "color:#00f"); 
-                	       	
-                } else {
-                	 
-                	$(".result").text("사용가능한 아이디입니다.");
-                    $(".result").attr("style", "color:#00f");
 
-                }
-            },
-            error : function(error) {
-                
-                alert("error : " + error);
-            }
-        });
-    });
-    
-    $("#register").click(function() {
-    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");
-    	
-    });
-    
-});
 </script>
 
 
@@ -267,36 +203,64 @@ a {
 <body>
 
 	<!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
+	<c:import url="../common/nav.jsp" />
+	<c:import url="../common/myPage.jsp" />
+	
+	
+	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
-		<c:import url="../common/nav.jsp" />
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-		<form action="joinPost.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
-				<h1>회원가입</h1>
+		<form action="mupdate.do" method="post" enctype="multipart/form-data">
+				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
-					<label for="user_id"><b>아이디</b></label> 
-					<div class="input-group mb-3">					
-					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
-						<div class="input-group-append">
-						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
-						</div>
-					</div>
-					<p class="result"></p>
+					<c:if test="${!empty loginMember }">
+					<input type="hidden" id="user_id" name="user_id" value="${loginMember.user_id }">
+					</c:if>
+					<c:if test="${!empty kakaoLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${kakaoLogin }">
+					</c:if>
+					<c:if test="${!empty googleLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${googleLogin }">
+					</c:if>
+					<c:if test="${!empty naverLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${naverLogin }">
+					</c:if>
+					<c:if test="${!empty facebookLogin }">
+					<input type="hidden" id="user_id" name="user_id" value="${facebookLogin }">
+					</c:if>
 
 					<label for="user_name"><b>이름</b></label> 
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required> 
+					<input type="text" id="user_name" name="user_name" value="${loginMember.user_name }" required> 
+							
+					<c:if test="${!empty loginMember }">
 					<label for="user_pwd"><b>비밀번호</b></label> 
-					<input type="password" placeholder="Enter Password" id="user_pwd" name="user_pwd" required> 
+					<input type="password" placeholder="Enter Password" id="user_pwd" name="user_pwd" required>
 					<label for="user_pwd2"><b>비밀번호 재입력</b></label> 
+					</c:if>
+					<c:if test="${!empty kakaoLogin }">
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${kakaoLogin.user_pwd }">
+					</c:if>
+					<c:if test="${!empty googleLogin }">
+					<input type="hidden" id="uuser_pwd" name="user_pwd" value="${googleLogin.user_pwd }">
+					</c:if>
+					<c:if test="${!empty naverLogin }">
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${naverLogin.user_pwd }">
+					</c:if>
+					<c:if test="${!empty facebookLogin }">
+					<input type="hidden" id="user_pwd" name="user_pwd" value="${facebookLogin.user_pwd }">
+					</c:if>
+					
+					
 					<input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
 					<label for="email"><b>이메일</b></label> 
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
-			
+
 				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
 				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
@@ -389,12 +353,12 @@ a {
 				</p>
 
 				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange">등록하기</button>
+					style="background-color: orange">수정하기</button>
 		</form>
 		</div>
 		</div>
 	</div>
-
+	</div>
 	<c:import url="../common/footer.jsp" />
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
