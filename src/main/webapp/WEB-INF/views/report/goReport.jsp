@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-8">
                         <div class="checkout_details_area mt-50 clearfix">
-
+                            <input type="text" id="request__id" value="${loginMember.user_id}" hidden>
                             <div class="cart-title">
                                 <h2>신고 내용 작성</h2>
                             </div>

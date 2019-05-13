@@ -35,7 +35,6 @@ public class ReportController {
 		int result = rs.selectCheckReport(request_id);
 		System.out.println(result);
 		if(result == 0) {
-			System.out.println("통과");
 			PrintWriter out = response.getWriter();
 			out.append("ok");
 			out.flush();
