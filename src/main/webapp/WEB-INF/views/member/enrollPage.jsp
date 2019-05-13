@@ -120,7 +120,7 @@ $(function(){
                 if(regExp_ctn.test(trans_num))
                 {
                     // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿔줍니다.
-                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");                  
+                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})?([0-9]{3,4})?([0-9]{4})$/, "$1$2$3");                  
                     $(this).val(trans_num);
                 }
                 else
@@ -185,11 +185,8 @@ $(function() {
     });
     
 });
-
-
-
-
 </script>
+
 
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
@@ -287,8 +284,7 @@ a {
 						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
 						</div>
 					</div>
-					<p class="result">
-					</p>
+					<p class="result"></p>
 
 					<label for="user_name"><b>이름</b></label> 
 					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required> 
@@ -301,11 +297,88 @@ a {
 					<label for="email"><b>이메일</b></label> 
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					<p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
-
+			
 				<label for="address"><b>주소</b></label> 
-				<input type="text" placeholder="Enter address" id="address" name="address" required> 
+				<div class="input-group mb-5">	
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
+					<div class="input-group-append">
+					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>
+					</div>
+				</div>
+				<!-- <div id="map1" style="width:300px;height:300px;margin-top:10px;display:none"></div> -->
+				<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
+				<script>
+			    function searchAddress1() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			                var addr = data.address; // 최종 주소 변수
+
+			                // 주소 정보를 해당 필드에 넣는다.
+			                document.getElementById("address").value = addr;
+			            }
+			        }).open();
+			    }
+				</script>
+				
+				
 				<label for="location_area"><b>주거래가능 지역</b></label> 
-				<input type="text" placeholder="Enter Possible Transaction Area" id="location_area" name="location_area" required> 
+				<div class="input-group mb-4">	
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" required readonly>
+					<div class="input-group-append">
+					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
+					</div>
+				</div>			
+			    <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+				<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
+				<script>
+				 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+			        mapOption = {
+			            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+			            level: 5 // 지도의 확대 레벨
+			        };
+
+			    //지도를 미리 생성
+			    var map = new daum.maps.Map(mapContainer, mapOption);
+			    //주소-좌표 변환 객체를 생성
+			    var geocoder = new daum.maps.services.Geocoder();
+			    //마커를 미리 생성
+			    var marker = new daum.maps.Marker({
+			        position: new daum.maps.LatLng(37.537187, 127.005476),
+			        map: map
+			    });
+
+			    function searchAddress() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			                var addr = data.address; // 최종 주소 변수
+
+			                // 주소 정보를 해당 필드에 넣는다.
+			                document.getElementById("location_area").value = addr;
+			                // 주소로 상세 정보를 검색
+			                geocoder.addressSearch(data.address, function(results, status) {
+			                    // 정상적으로 검색이 완료됐으면
+			                    if (status === daum.maps.services.Status.OK) {
+
+			                        var result = results[0]; //첫번째 결과의 값을 활용
+
+			                        // 해당 주소에 대한 좌표를 받아서
+			                        var coords = new daum.maps.LatLng(result.y, result.x);
+			                        // 지도를 보여준다.
+			                        mapContainer.style.display = "block";
+			                        map.relayout();
+			                        // 지도 중심을 변경한다.
+			                        map.setCenter(coords);
+			                        // 마커를 결과값으로 받은 위치로 옮긴다.
+			                        marker.setPosition(coords)
+			                    }
+			                });
+			            }
+			        }).open();
+			    }
+				</script>
+				
 				<label for="my_introduce"><b>본인소개</b></label>
 				<textarea style="background-color: #f1f1f1" class="form-control"
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>

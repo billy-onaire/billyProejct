@@ -43,7 +43,7 @@ public class KakaoSocialController {
 	 @Autowired
 	 private SocialUserService socialService;
 	   
-	
+	 
 	
 	 @RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession kSession,
@@ -70,14 +70,11 @@ public class KakaoSocialController {
 	        JsonNode kakao_account = userInfo.path("kakao_account");
 	 
 	        name = properties.path("nickname").asText();
-	        thumbnailImage = properties.path("thumbnail_image").asText();
 	        profile = properties.path("profile_image").asText();
 	        email = kakao_account.path("email").asText();
 	 
 	        System.out.println("카카오 계정 고유번호: " + kid);
 	        System.out.println("카카오 name: " + name);
-	        System.out.println("카카오 email: " + email);
-	        System.out.println("thumbnailImage : " + thumbnailImage);
 			System.out.println("profile : " + profile);
         	
 	        

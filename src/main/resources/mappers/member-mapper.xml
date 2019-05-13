@@ -23,8 +23,9 @@
    </resultMap>
    
    <sql id="userInfo">
-      #{email}, #{address}, sysdate, #{verify}
-      , sysdate, default, default, #{my_introduce}, #{location_area}, default
+      #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'y', #{address}, #{my_introduce}, #{location_area},
+      #{user_enroll}, sysdate, default, default, default 
+     
    </sql>
    
    
@@ -44,7 +45,7 @@
    
    <insert id = "insertSmember" parameterType="Member">
 	  insert into tb_user values(#{user_id}, #{user_pwd}, 
-	  #{user_mobile}, #{user_name}, #{email}, 'socialMember', 'y', #{address}, 
+	  #{user_mobile}, #{user_name}, #{email}, ${authkey}, 'y', #{address}, 
 	  #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
      
@@ -53,7 +54,11 @@
    </select>
    
    <update id="updateMember" parameterType="Member" >
-      update tb_user set user_pwd = #{user_pwd}, #{user_name}, <include refid="userInfo"/> where user_id = #{user_id}
+      update tb_user 
+      set user_pwd = #{user_pwd}, 
+      user_mobile = #{user_mobile}, user_name = #{user_name}, 
+      email = #{email}, address = #{address}, my_introduce = #{my_introduce}, 
+      location_area = #{location_area}, user_update = sysdate where user_id = #{user_id}
    </update>
    
    <update id="updateVerify" parameterType="Member" >
