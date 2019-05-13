@@ -74,7 +74,6 @@ $(function(){
             $(this).val("");
             $(this).focus();	   		
    		}
- 
    		
    	});
 

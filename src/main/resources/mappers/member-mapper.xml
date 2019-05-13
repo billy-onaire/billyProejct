@@ -3,7 +3,7 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-
+	
    <resultMap id="resultMember" type="Member">
       <id property="user_id" column="user_id" />
       <result property="user_pwd" column="user_pwd" />
@@ -22,12 +22,17 @@
       <result property="total_count" column="total_count" />
    </resultMap>
    
+   <!-- sms용 -->
+   <resultMap id="resultSms" type="Sms">
+   		<result property="user_id" column="user_id"/>
+   		<result property="authno" column="authno"/>
+   </resultMap>
+   
    <sql id="userInfo">
       #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'y', #{address}, #{my_introduce}, #{location_area},
       #{user_enroll}, sysdate, default, default, default 
      
    </sql>
-   
    
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
       select * from tb_user where user_id = #{userId} and verify = 'y'
@@ -35,6 +40,23 @@
    
    <select id="selectLogin" parameterType="String" resultMap="resultMember">
       select * from tb_user where user_id = #{user_id}
+   </select>
+
+   <select id="selectList" resultMap="resultMember">
+      select * from tb_user where user_name = #{user_name} and phone = #{phone}
+   </select>	
+   
+   <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
+      select user_id from tb_user where user_id = #{user_id}
+   </select>
+   
+   <select id="selectCheckANo" parameterType="String" resultType="String">
+   		select authno from tb_sms where user_id = #{userId}
+   		
+   </select>
+   
+   <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
+      select * from tb_user where user_id = #{user_id}      
    </select>
    
    <insert id = "insertMember" parameterType="Member">
@@ -48,11 +70,11 @@
 	  #{user_mobile}, #{user_name}, #{email}, ${authkey}, 'y', #{address}, 
 	  #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
+  
+   <insert id="insertSms" parameterType="Sms">
+		insert into tb_sms values (#{user_id}, #{authno})   
+   </insert>
      
-   <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
-      select * from tb_user where user_id = #{user_id}      
-   </select>
-   
    <update id="updateMember" parameterType="Member" >
       update tb_user 
       set user_pwd = #{user_pwd}, 
@@ -65,16 +87,19 @@
       update tb_user set verify = #{verify} where user_id = #{user_id}
    </update>
    
+   <update id="updateMemberPwd" parameterType="Member">
+   		update tb_user set user_pwd = #{user_pwd} where user_id = #{user_id}
+   </update>
+   
    <delete id="deleteMember" parameterType="string" >
       delete from tb_user where user_id = #{user_id}
    </delete>
    
-   <select id="selectList" resultMap="resultMember">
-      select * from tb_user where user_name = #{user_name} and phone = #{phone}
-   </select>	
+   <delete id="deleteAutoNo" parameterType="String">
+     delete from tb_sms where user_id = #{userId}
+   </delete>
    
-   <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
-      select user_id from tb_user where user_id = #{user_id}
-   </select>
+   
+   
 
 </mapper>

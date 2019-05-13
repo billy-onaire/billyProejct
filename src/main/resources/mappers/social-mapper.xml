@@ -21,6 +21,12 @@
 		where social_code = #{uid}
 	</select>
 	
+	<select id="selectSocialCheck" parameterType="String" resultType="int">
+		select count(user_id) from socialuser
+		join tb_user using(user_id)
+		where social_code = #{sid} and verify = 'y'
+	</select>
+	
 	<insert id="insertSocial" parameterType="SocialUser">
 		insert into socialuser
 		values (#{user_id}, #{social_type}, #{social_code})

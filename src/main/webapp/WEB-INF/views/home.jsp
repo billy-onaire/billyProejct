@@ -14,6 +14,38 @@
 <title>Billy - main</title>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	<c:if test="${!empty googleLogin or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
+	$.ajax({
+		url: "socialCheck.do",
+		data: {
+		<c:if test="${!empty googleLogin}">
+			 gid : ${googleLogin}
+		</c:if>
+		<c:if test="${!empty naverLogin}">
+			 nid : ${naverLogin}
+		</c:if>
+		<c:if test="${!empty kakaoLogin}">
+			kid : ${kakaoLogin}
+		</c:if>
+		<c:if test="${!empty facebookLogin}">
+			fid : ${facebookLogin}
+		</c:if>
+		},
+		type: "post",
+		dataType: "json",
+		success: function(result){
+			if(result.hashMap.ok == "fail"){
+				location.href="socialEnroll.do?sid="+result.hashMap.sid;	
+			}
+		},error: function(request, status, errorData){
+			console.log("error code : " + request.status
+					+ "\nmessage : " + request.responseText
+					+ "\nerror : " + errorData);
+		}
+	});//ajax
+	</c:if>
+});//ready
 </script>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">

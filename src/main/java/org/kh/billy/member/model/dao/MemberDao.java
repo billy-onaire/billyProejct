@@ -3,6 +3,7 @@ package org.kh.billy.member.model.dao;
 import java.util.List;
 
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.sms.model.vo.Sms;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,5 +46,26 @@ public class MemberDao {
 	public int insertSmember(SqlSessionTemplate session, Member member) {
 		return session.insert("memberMapper.insertSmember", member);
 	}
+
+	public int insertAuthCode(SqlSessionTemplate mybatisSession, Sms sms) {
+		return 0;
+	}
+
+	public int insertSms(SqlSessionTemplate session, Sms sms) {
+		return session.insert("memberMapper.insertSms", sms);
+	}
+	
+	public String selectCheckANo(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectCheckANo", userId);
+	}
+
+	public void deleteAutoNo(SqlSessionTemplate session, String userId) {
+		session.delete("memberMapper.deleteAutoNo", userId);
+	}
+
+	public int updateMemberPwd(SqlSessionTemplate session, Member member) {
+		return session.update("memberMapper.updateMemberPwd", member);
+	}
+	
 	
 }

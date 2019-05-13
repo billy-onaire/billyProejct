@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-<title>Bootstrap Example</title>
+<title>Billy - 아이디/비밀번호 찾기</title>
 
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
@@ -15,7 +15,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     
   $(function () {
@@ -63,6 +63,69 @@
         }
       });
     });
+    
+    function sendSms(){
+    	var userId = $("#puserId").val();
+    	var phone = $("#pphone").val();
+    	
+    	if(userId == null || userId == ""){
+    		alert("아이디를 입력해주세요.");
+    		$("#puserId").focus();
+    		return false;
+    	}else if(phone == null || phone == ""){
+    		alert("전화번호를 입력해주세요.");
+    		$("#pphone").focus();
+    		return false;
+    	}
+    	
+    	$.ajax({
+    		url: "sendSms.do",
+    		data: {user_mobile : phone,
+    			user_id : userId},
+    		type: "post",
+    		success: function(result){
+    			alert(decodeURIComponent(result.hashMap.message).replace(/\+/g, " "));
+    			if(decodeURIComponent(result.hashMap.message).replace(/\+/g, " ") == "인증번호 발송 성공하였습니다."){
+    				console.log(result.hashMap.authno + ", " + result.hashMap.userId);
+    				$("#findpwd").on("click",function(){
+    				if($("#phoneAuth").val() == null || $("#phoneAuth").val() == ""){
+    					alert("인증번호를 입력해주세요.");
+    					$("#phoneAuth").focus();
+    					return false;
+    				}	
+    				$("#userId").val(result.hashMap.userId);
+    				var authno = $("#phoneAuth").val();
+    				var userId = $("#userId").val();
+    				$.ajax({
+    					url: "checkAuthNo.do",
+    					data: {
+    						authno: authno,
+    						userId: userId
+    					},
+    					type: "post",
+    					success: function(result){
+    						alert(decodeURIComponent(result.hashMap.message).replace(/\+/g, " "));
+    						if(decodeURIComponent(result.hashMap.message).replace(/\+/g, " ") == "인증 성공"){
+    							location.href="changePwdPage.do?userId="+result.hashMap.userId;
+    						}else{
+    							$("#phoneAuth").focus();
+    						}
+    					},error: function(request, status, errorData){
+    						console.log("error code : " + request.status
+    								+ "\nmessage : " + request.responseText
+    								+ "\nerror : " + errorData);
+    						}
+    					});//a-ajax
+    				}); //click
+    			}
+    		},error: function(request, status, errorData){
+				console.log("error code : " + request.status
+						+ "\nmessage : " + request.responseText
+						+ "\nerror : " + errorData);
+			}
+    		
+    	});
+    }
   </script>
 
 <style>
@@ -116,40 +179,32 @@
 				</div>
 				<!-- 비밀번호 찾기  -->
 				<div id="findPwd">
-					<form>
 						<div class="form-group">
-							<label for="uname">Username:</label> <input type="text"
-								class="form-control" id="finame" placeholder="Enter username"
-								name="finame" required>
+							<label for="puserId">UserId :</label> <input type="text"
+								class="form-control" id="puserId" placeholder="Enter username"
+								name="user_id" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
 						<div class="form-group">
-							<label for="email">email:</label> <input type="email"
-								class="form-control" id="fiemail"
-								placeholder="Enter email" name="fiphone" required>
+							<label for="pphone">phone : </label> <input type="text"
+								class="form-control" id="pphone"
+								placeholder="Enter phone number" name="user_moblie" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
-						<div class="form-group">
-							<label for="phone">phone:</label> <input type="email"
-								class="form-control" id="fiephone"
-								placeholder="Enter phone number" name="fiphone" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
+							<button type="button" class="btn btn-dark" onclick="sendSms();">인증요청</button>
 						<div class="form-group">
 							<label for="phoneAuth">인증번호:</label> <input type="text"
 								class="form-control" id="phoneAuth"
-								name="phoneAuth" required>
+								name="authno" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
-						
-						<br> <br> <span id="idList"></span>
+						<input type="hidden" id="userId" name="user_id" >
+						<br> <br> <span id="pwdList"></span>
 						<button type="submit" class="btn btn-warning btn-block"
-							id="findId" style="color: white">확인</button>
-					</form>
+							id="findpwd" style="color: white">확인</button>
 				</div>
 
 			</div>
@@ -158,7 +213,7 @@
 	
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

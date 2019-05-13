@@ -18,7 +18,7 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty googleLogin or !empty naverLogin}">
+	<c:if test="${!empty googleLogin or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
 		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
 	</c:if>
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
@@ -165,7 +165,7 @@ a {
 
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
-		<c:import url="../common/nav.jsp" />
+		<%-- <c:import url="../common/nav.jsp" /> --%>
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
@@ -214,15 +214,15 @@ a {
 					<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
 					</c:if>
 					<c:if test="${!empty googleLogin }">
-					<label for="email"><b>Email</b></label>
+					<label for="email"><b>이메일</b></label>
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					</c:if>
 					<c:if test="${!empty kakaoLogin }">
-					<label for="email"><b>Email</b></label>
+					<label for="email"><b>이메일</b></label>
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					</c:if>				
 					<c:if test="${!empty facebookLogin }">
-					<label for="email"><b>Email</b></label>
+					<label for="email"><b>이메일</b></label>
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
 					</c:if>
 		

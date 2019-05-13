@@ -18,6 +18,7 @@ import org.kh.billy.productcategory.model.service.ProductCategoryService;
 import org.kh.billy.productcategory.model.vo.ProductCategory;
 import org.kh.billy.productimg.model.service.ProductImgService;
 import org.kh.billy.productimg.model.vo.ProductImg;
+import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,11 +38,14 @@ public class ProductManipulationController {
 	private ProductImgService productImgService;
 	
 	@Autowired
+	private SocialUserService socialService;
+	
+	@Autowired
 	private ProductManipulationService pms;
 	
 	@RequestMapping(value="productinsertmain.do")
-	public String addProduct() {
-		return "product/productInsert";
+	public String addProduct(HttpServletRequest request) {
+			return "product/productInsert";
 	} 
 	
 	@RequestMapping(value="myproductlist.do")

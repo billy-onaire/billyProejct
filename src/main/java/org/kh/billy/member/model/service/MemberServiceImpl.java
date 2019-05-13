@@ -8,6 +8,7 @@ import org.kh.billy.common.MailHandler;
 import org.kh.billy.common.TempKey;
 import org.kh.billy.member.model.dao.MemberDao;
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.sms.model.vo.Sms;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,6 +35,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member selectLogin(String userId) {
 		return memberDao.selectLogin(mybatisSession, userId);
+	}
+	
+	@Override
+	public String selectCheckANo(String userId) {
+		return memberDao.selectCheckANo(mybatisSession, userId);
 	}
 	
 	@Override
@@ -91,11 +97,25 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 		
 	}
-
+	
+	@Override
+	public void deleteAutoNo(String userId) {
+		memberDao.deleteAutoNo(mybatisSession, userId);
+	}
+	
+	@Override
+	public int insertAuthCode(Sms sms) {
+		return memberDao.insertAuthCode(mybatisSession, sms);
+	}
+	
+	@Override
+	public int insertSms(Sms sms) {
+		return memberDao.insertSms(mybatisSession, sms);
+	}
+	
 	@Override
 	public void updateVerify(Member member) {
 		memberDao.updateVerify(mybatisSession, member);
-		
 	}
 
 	@Override
@@ -106,5 +126,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int insertSmember(Member member) {
 		return memberDao.insertSmember(mybatisSession, member);
-	}	
+	}
+	
+	@Override
+	public int updateMemberPwd(Member member) {
+		return memberDao.updateMemberPwd(mybatisSession, member);
+	}
 }
