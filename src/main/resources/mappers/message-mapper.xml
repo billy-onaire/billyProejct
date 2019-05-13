@@ -44,7 +44,7 @@
 		        join product p
 				on m.product_no = p.product_no
 		        order by sent_date desc) A
-		    where rownum <= (#{perPageNum} * #{page}) and recv_id = 'testmk' and recv_del = 'N' ) x
+		    where rownum <= (#{perPageNum} * #{page}) and recv_id = #{recv_id} and recv_del = 'N' ) x
 		where X.rnum > #{pageStart}
 	
 ]]>
@@ -64,7 +64,7 @@
 		        join product p
 				on m.product_no = p.product_no
 		        order by sent_date desc) A
-		    where rownum <= (#{perPageNum} * #{page}) and sent_id = 'testmk2' and sent_del = 'N') x
+		    where rownum <= (#{perPageNum} * #{page}) and sent_id = #{sent_id} and sent_del = 'N') x
 		where X.rnum > #{pageStart}
 	
 ]]>
@@ -74,32 +74,28 @@
 	 resultMap="resultMessagePname" useCache="true">
 	 
 	 			<![CDATA[
-        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.MMS_SHOW, X.recv_show, X.sent_show, X.product_name
+        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.recv_show, X.sent_show, X.product_name
+		from (    
 		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.recv_show, A.sent_show, A.product_name
+		     from (     
 		        select m.MMS_NO, m.RECV_ID, m.SENT_ID, m.MMS_CONTENT, m.SENT_DATE, m.READ_DATE, 
 		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name			    	
 		        from MESSAGE m
 		        join product p
 				on m.product_no = p.product_no
 		        order by sent_date desc) A
-		    where rownum <= (#{perPageNum} * #{page}) and sent_id = 'testmk2' and sent_del = 'N') x
+		    where rownum <= (#{perPageNum} * #{page}) and (sent_id = #{sent_id} and sent_del = 'Y' and sent_show = 'N') or (recv_id = #{recv_id} and recv_del = 'Y' and recv_show = 'N')) x
 		where X.rnum > #{pageStart}
 	
 ]]>
 	 
-		<!-- select m.recv_del, m.mms_no, m.recv_id, m.sent_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read 
-		from message m
-		join product p
-		on m.product_no = p.product_no
-		where sent_id = 'testmk2' and recv_del = 'Y' and sent_del = 'N'and recv_del = 'N'
-		order by sent_date desc -->
 	</select>
 	
 	<insert id="insertMessage" parameterType="Message" useGeneratedKeys="true">
 		insert into message values(
 			sq_mno.nextval,
 			#{recv_id}, 
-			'testmk2',  
+			#{sent_id},  
 			#{mms_content}, 
 			sysdate, 
 			default,
@@ -120,7 +116,7 @@
 		where mms_no = #{mms_no}
 	</select>
 	
-	<update id="updateReadMessage" parameterType="MessagePname" > 
+	<update id="updateReadRecv" parameterType="MessagePname"> 
 	update message
 	set read_date = sysdate, recv_read = 'Y'
 	where mms_no = #{mms_no}
@@ -138,35 +134,40 @@
 	where mms_no = #{mms_no}
 	</update>
 	
-	<update id="deleteFinalMessage" parameterType="MessagePname">
+	<update id="deleteFinalRecv" parameterType="MessagePname">
 	update message
 	set recv_show = 'Y'
 	where mms_no = #{mms_no}
 	</update>
 	
-	<update id="updateOriginMessage" parameterType="MessagePname">
+	<update id="deleteFinalSent" parameterType="MessagePname">
 	update message
-	<choose>
-	<when test="recv_id.equals('testmk')">
-	set recv_del = 'Y'
-	</when>
-	<when test="sent_id.equals('testmk')">
-	set sent_del = Y'
-	</when>
-	</choose>
+	set sent_show = 'Y'
+	where mms_no = #{mms_no}
+	</update>
+	
+	<update id="updateOriginRecv" parameterType="MessagePname">
+	update message
+	set recv_del = 'N'
+	where mms_no = #{mms_no}
+	</update>
+	
+	<update id="updateOriginSent" parameterType="MessagePname">
+	update message
+	set sent_del = 'N'
 	where mms_no = #{mms_no}
 	</update>
 	
 	<select id="selectMessageCount" resultType="int" parameterType="string">
-		select count(*) from message where recv_id = 'testmk'  and recv_del = 'N'
+		select count(*) from message where recv_id = #{recv_id}  and recv_del = 'N'
 	</select>
 	
 	<select id="selectMessageCount2" resultType="int" parameterType="string">
-		select count(*) from message where sent_id = 'testmk2'  and sent_del = 'N'
+		select count(*) from message where sent_id = #{sent_id}  and sent_del = 'N'
 	</select>
 	
 	<select id="selectMessageCount3" resultType="int" parameterType="string">
-		select count(*) from message where recv_show = 'N' and ((sent_id = 'testmk2' and recv_del = 'Y') or (recv_id = 'testmk2' and recv_del = 'Y'))
+		select count(*) from message where recv_show = 'N' and sent_show = 'N' and ((sent_id = #{sent_id} and sent_del = 'Y') or (recv_id = #{recv_id} and recv_del = 'Y'))
 	</select>
 
 </mapper>

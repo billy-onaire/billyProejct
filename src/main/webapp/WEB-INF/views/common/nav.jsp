@@ -70,7 +70,6 @@
        			<c:if test="${!empty loginMember  }">
        			<span id="pname">${loginMember.user_name }님</span>
        			</c:if>
-                <a href="recvList.do">쪽지 확인용</a>
                 <a href="logout.do">로그아웃</a>
        		</div>
        		</c:if>

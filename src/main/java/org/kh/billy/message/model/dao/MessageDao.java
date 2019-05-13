@@ -46,9 +46,14 @@ public class MessageDao {
 		return mybatisSession.selectOne("messageMapper.selectTotalListCount", setting);
 	}
 
-	public int deleteFinalMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+	public int deleteFinalRecv(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
-		return mybatisSession.update("messageMapper.deleteFinalMessage", mms_no);
+		return mybatisSession.update("messageMapper.deleteFinalRecv", mms_no);
+	}
+	
+	public int deleteFinalSent(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.update("messageMapper.deleteFinalSent", mms_no);
 	}
 
 
@@ -57,26 +62,27 @@ public class MessageDao {
 		return mybatisSession.insert("messageMapper.insertReplyMessage", message);
 	}
 
-	public ArrayList<Message> selectDelList(SqlSessionTemplate mybatisSession) {
+	public ArrayList<Message> selectDelList(SqlSessionTemplate mybatisSession, CriteriaMms cri) {
 		
-		List<Message> list = mybatisSession.selectList("messageMapper.selectDelList");
+		List<Message> list = mybatisSession.selectList("messageMapper.selectDelList", cri);
 		
 		return (ArrayList<Message>) list;
 	}
 
-	public void updateReadMessage(SqlSessionTemplate mybatisSession, int mms_no) {
-		mybatisSession.update("messageMapper.updateReadMessage", mms_no);
-		
-	}
 
 	public MessagePname selectDetailMessage(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
 		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
 	}
 
-	public int updateOriginMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+	public int updateOriginRecv(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
-		return mybatisSession.update("messageMapper.updateOriginMessage", mms_no);
+		return mybatisSession.update("messageMapper.updateOriginRecv", mms_no);
+	}
+	
+	public int updateOriginSent(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.update("messageMapper.updateOriginSent", mms_no);
 	}
 
 	public int selectMessageCount(SqlSessionTemplate mybatisSession, String userId) {
@@ -103,6 +109,16 @@ public class MessageDao {
 	public int updateDelSentMessage(SqlSessionTemplate mybatisSession, int mms_no) {
 		// TODO Auto-generated method stub
 		return mybatisSession.update("messageMapper.updateDelSentMessage", mms_no);
+	}
+
+	public void updateReadRecv(SqlSessionTemplate mybatisSession, int mms_no) {
+		mybatisSession.update("messageMapper.updateReadRecv", mms_no);
+		
+	}
+
+	public MessagePname selectOneMessage(SqlSessionTemplate mybatisSession, int mms_no) {
+		// TODO Auto-generated method stub
+		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
 	}
 	
 

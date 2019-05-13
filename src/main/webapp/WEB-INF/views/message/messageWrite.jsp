@@ -16,7 +16,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="/billy/resources/js/messageList.js"></script>
 <script type="text/javascript">
+
 function checkContent(){
 	var mms_content = $("#mms_content").val();
 	if(!(mms_content.length >= 1)){
@@ -38,7 +40,6 @@ function popupClose(form) {
         self.close();
     }
 }
-
 </script>
 </head>
 
@@ -52,7 +53,8 @@ function popupClose(form) {
 							<label for="name">상품명 : </label> <input type="text"
 								class="form-control" name="pname" value="product_name" readonly >
 							<label for="recvid">받는 사람 : </label> <input type="text"
-								class="form-control" name="recv_id" value="testmk" readonly style="width: 100px;">
+								class="form-control" name="recv_id" value="user02" readonly style="width: 100px;">
+							<input type="text" id="user_id" name="sent_id" value="${loginMember.user_id }">
 						</div>
 
 						<div class="form-group">
