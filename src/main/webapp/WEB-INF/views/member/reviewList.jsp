@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,24 +90,36 @@
 		    <c:forEach var="r" items="${lists}">
 				<tr>
 					<td><img src="/billy/resources/files/product/${r.first_img}"></td>
-					<td style="font-size:15pt; font-weight:bold">${r.product_name}</td>
-					<td>${r.payment_begindate} ~ ${r.payment_enddate }</td>
-					<td><div class="cart-btn mt-100">
-						<c:url var="insertReview" value="writeReview.do">
-		        		<c:param name="name" value="${r.product_name }" />
-		        		<c:param name="img" value="${r.first_img }" />
-		        		<c:param name="begin" value="${r.payment_begindate }" />
-		        		<c:param name="end" value="${r.payment_enddate }" />
-		        		<c:param name="pno" value="${r.product_no }" />
-			        	</c:url>
-		                <a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>
-		             	</div>
+					<td><a href="pdetail.do?pno=${r.product_no }" style="font-size:15pt; font-weight:bold">${r.product_name}</a></td>
+					<td>						
+						<c:set var="begindate" value="${fn:replace(r.payment_begindate, '-', '.')}"/>
+						<c:set var="enddate" value="${fn:replace(r.payment_enddate, '-', '.')}"/>
+						${begindate } ~ ${enddate }
+					</td>
+					<td>
+						<c:if test="${r.review_status eq 'N'}">
+							<div class="cart-btn mt-100">
+							<c:url var="insertReview" value="writeReview.do">
+			        		<c:param name="name" value="${r.product_name }" />
+			        		<c:param name="img" value="${r.first_img }" />
+			        		<c:param name="begin" value="${begindate }" />
+			        		<c:param name="end" value="${enddate }" />
+			        		<c:param name="pno" value="${r.product_no }" />
+			        		<c:param name="payno" value="${r.payment_no }" />
+				        	</c:url>			       
+			                	<a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>		                		               
+			             	</div>
+		             	</c:if>
+		             	<c:if test="${r.review_status eq 'Y' }">
+		                	작성완료
+		                </c:if>
 		            </td>
 				</tr>						
 			</c:forEach>
 		</table>
 		
-		<!-- 5. paging view -->	
+		<!-- 5. paging view -->
+		<center>	
 		<ul class="pagination">
 			<c:if test="${p.pageStartNum ne 1}">
 				<!--맨 첫페이지 이동 -->
@@ -128,6 +140,7 @@
 				<li><a onclick='pageLast(${p.pageStartNum},${p.total},${p.listCnt},${p.pageCnt});'>&raquo;</a></li>
 			</c:if>
 		</ul>
+		</center>
 		<form action="reviewList.do" method="post" id='frmPaging'>
 			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
 			<input type='hidden' name='index' id='index' value='${p.index}'>

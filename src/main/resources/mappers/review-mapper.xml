@@ -17,14 +17,14 @@
 		select * from review
 	</select>
 	<insert id="insertReview" parameterType="Review">
-		insert into review values (SQ_RVNO.nextval, #{review_content}, #{review_image}, #{point}, default, #{payment_no})
+		insert into review values (SQ_RVNO.nextval, #{review_content}, #{review_image}, #{point}, default, #{payment_no}, #{product_no})
 	</insert>
 	
 	<select id="selectListReview" parameterType="ReviewPaging" resultType="ReviewList">
 		select *
 		from (select rownum rnum, p.* 
 			from (select * from payment 
-				join product using (product_no) join product_img using (img_no) order by payment_no desc) p) 
+				join product using (product_no) join product_img using (img_no) order by review_status asc, payment_no desc) p) 
 		where rnum between #{start} and #{last}
 	</select>
 	
@@ -35,12 +35,12 @@
 	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">
 		select *
 		from (select rownum rnum, p.* 
-			from (select * from review order by review_date desc) p) 
+			from (select * from review where product_no = #{productNo} order by review_date desc) p) 
 		where rnum between #{start} and #{last}
 	</select>
 	
-	<select id="selectTotalPdetailReview" resultType="int">
-		select count(*) from review
+	<select id="selectTotalPdetailReview" parameterType="int" resultType="int">
+		select count(*) from review where product_no = #{pno}
 	</select>
 
 </mapper>

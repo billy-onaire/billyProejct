@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +43,8 @@
 	    // 1.페이징시 필요 데이터 셋팅
 	    submitData.index = paging.p.index;
 	    submitData.pageStartNum = paging.p.pageStartNum;
+	    submitData.productNo = ${p.product_no}; 
+	    
 	    $.ajax({
 	        url: 'printReview.do',
 	        type: 'post',
@@ -86,14 +90,19 @@
 	                	'</span><span class="starR on">'+
 	                	'</span><span class="starR on"></span>';
 	                }
-
+	
 	            	 list +="<tr>";
 	            	 list +="<td>user01</td>";
 	            	 list +="<td>"+point+"</td>";
-	            	 list +="<td>"+obj.list[i].review_content+"</td>";
+	            	 list +="<td>"+decodeURIComponent(obj.list[i].review_content).replace(/\+/gi, " ") + "</td>";
 	            	 list +="<td>"+obj.list[i].review_date+"</td>";
-	            	 list +="<td><img src='/billy/resources/reviewImg/"+obj.list[i].review_image+"' width='150px' height='150px'></td>";
-	                 list += "</tr>"      
+	            	 if(obj.list[i].review_image != null){
+	            	 	list +="<td><img src='/billy/resources/reviewImg/"+obj.list[i].review_image+"'></td>";	            	
+	            	 }else{
+	            		list +="<td></td>";
+	            	 }
+	                 list += "</tr>"
+	                 
 				} 
 	            $("#list").html(list);
 	            $("#reviewCount").text("리뷰 " + obj.p.total + "건");
@@ -105,28 +114,8 @@
 				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
 	        }
 	    });    
+	    	  	
 	}
-	
-	
-	//리뷰 이미지 크게보기
-	//레이어 팝업 열기
-	var cnt = 0;
-	function openLayer(IdName, tpos, lpos){
-	  if(cnt==0){
-		cnt++;
-		var pop = document.getElementById(IdName);
-		pop.style.display = "block";
-		pop.style.top = tpos + "px";
-		pop.style.left = lpos + "px";
-	  }
-	}
-	//레이어 팝업 닫기
-	function closeLayer(IdName){
-		var pop = document.getElementById(IdName);
-		pop.style.display = "none";
-		cnt=0;
-	}	
-	
 	</script>
 	
 	<style type="text/css">
@@ -153,7 +142,7 @@
 		    background: #f3f6f7;
 		}
 		table.type09 td {
-		    width: 350px;
+		    /* width: 350px; */
 		    padding: 10px;
 		    vertical-align: center;
 		    border-bottom: 1px solid #ccc;
@@ -196,6 +185,12 @@
 		    vertical-align: top;
 		    /* border-right: 1px solid #ccc; */
 		    /* border-bottom: 1px solid #ccc; */
+		}
+		
+		#form {
+			position: fixed;	
+			bottom: 0px;
+			right: 200px;
 		}
 	</style>
 </head>
@@ -270,11 +265,12 @@
 	                                </c:if>
                                 </div>
                             </div>
-                        </div>
+                        </div><br>
                         <h2>거래지역</h2>
+                        <hr>
                         <div id="mapAddress">${p.location_area }</div>
                         <div id="map" style="width:800px;height:300px; float:left;"></div>				
-						
+												
                     </div>
                     <div class="col-12 col-lg-5">
                         <div class="single_product_desc">
@@ -302,7 +298,7 @@
 							        	<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
 							        	<div class="ratings">
                                         <i class="fa fa-star" aria-hidden="true"></i>                                        
-                                    	</div>
+                                    	</div>	${point }
                                     	</div>	
 									</c:if>
 									<c:if test="${point >= 1.5 and point < 2.0}">
@@ -310,7 +306,7 @@
 							        	<div class="ratings">
                                         <i class="fa fa-star" aria-hidden="true"></i>                                            
                                         <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                                    	</div>	
+                                    	</div>	${point }
                                     	</div>
 									</c:if>
 									<c:if test="${point >= 2.0 and point < 2.5}">
@@ -318,7 +314,7 @@
 							        	<div class="ratings">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>                                            
-                                    	</div>	
+                                    	</div>	${point }
                                     	</div>
 									</c:if>
 									<c:if test="${point >= 2.5 and point < 3.0}">	
@@ -381,19 +377,35 @@
 	                                    </div>	${point }
 	                                    </div>
 									</c:if>
+									<c:if test="${empty point }">
+										평가없음
+									</c:if>
 									</td>
 							    </tr>
 							    <tr>
 							        <th scope="row">대여기간</th>
-							        <td>${p.product_startdate } ~ ${p.product_enddate }</td>
+							        <td>
+							        	<c:set var="startdate" value="${fn:replace(p.product_startdate, '-', '.')}"/>
+							        	<c:set var="enddate" value="${fn:replace(p.product_enddate, '-', '.')}"/>
+							        	${startdate } ~ ${enddate }
+							        </td>
 							    </tr>
 							    <tr>
 							        <th scope="row">주말대여여부</th>
-							        <td>${p.weekend_yn }</td>
+							        <td>
+							        	<c:if test="${p.weekend_yn eq 'Y' }">
+							        		가능
+							        	</c:if>
+							        	<c:if test="${p.weekend_yn eq 'N' }">
+							        		불가능
+							        	</c:if>			      
+							        </td>
 							    </tr>
 							    <tr>
 							        <th scope="row">평일대여요일</th>
-							        <td>${p.weekday_yn }</td>
+							        <td>
+							        	${p.weekday_yn }
+							        </td>
 							    </tr>
 							    <tr>
 							        <th scope="row">남은수량</th>
@@ -407,8 +419,8 @@
                             </div>
 							
                             <!-- Add to Cart Form -->
-                            <form class="cart clearfix" method="post" style="clear:both;">
-                            	<br><br>
+                            <div id="form">
+                            <%-- <form class="cart clearfix" method="post" style="clear:both;">
                                 <div class="cart-btn d-flex mb-50">
                                     <p>갯수</p>
                                     <div class="quantity">
@@ -417,7 +429,6 @@
                                         <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                     </div>
                                 </div>
-                                <br>
                                 <div style="float:left;">
                                 	희망대여시작일 <br>
                                     <input type="text" class="datepicker"> &nbsp;&nbsp;&nbsp;
@@ -427,35 +438,59 @@
                                     <input type="text" class="datepicker">
                                 </div><br><br>
                                 <button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
+                            </form> --%>
+                            <form class="cart clearfix" method="post" style="clear:both;">
+                            <table style="text-align:center">
+                            <tr>
+                            	<td colspan="2">
+                            		<div class="cart-btn d-flex mb-50">
+                                    <p>갯수</p>
+                                    <div class="quantity">
+                                        <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
+                                        <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                            	</td>
+                            </tr>
+                            <tr>
+                            	<td>
+                            		<div style="float:left;">
+                                	희망대여시작일 <br>
+                                    <input type="text" class="datepicker" placeholder="Select Date.."> &nbsp;&nbsp;&nbsp;
+                                </div>
+                            	</td>
+                            	<td>
+                            		<div>
+                                   	 희망대여반납일 <br>
+                                    <input type="text" class="datepicker" placeholder="Select Date..">
+                                </div>
+                            	</td>
+                            </tr>
+                            <tr>
+                            	<td colspan="2" style="padding:30px">
+                            		<button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
+                            	</td>
+                            </tr>
+                            </table>
                             </form>
-
+							</div>
                         </div>                  
                     </div>
                 </div>
                 
-            </div><br><br>
-            
+            </div><br><br>         
             <hr>
-     <!-- <span>
-<a href="#" onclick="openLayer('layerPop',1000,300)"> openLayer('확대이미가 있는 레이어 id명', x축의위치 , y축의위치)
-    	<img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="100px" height="100px" /> 기본작은 썸네일 이미지
-</a>
-<div id="layerPop" style="position:absolute; display:none; border:3px solid #ccc; z-index:10;">오픈레이어 테두리
-      <a href="#" onclick="closeLayer('layerPop')" class="close">
-    	 <p><img style="border:none;" src="/billy/resources/reviewImg/billy.png" width="500px" height="500px"/>큰 이미지 오픈</p>
-      </a>
-  </div>
-</span> -->
-     
+
             <h3 id="reviewCount"></h3> <br>
             <table class="type09">
 			    <thead>
 			    <tr>
-			        <th>ID</th>
+			        <th width="150">ID</th>
 			        <th>별점</th>
-			        <th>내용</th>
+			        <th width="350">내용</th>
 			        <th>작성일</th>
-			        <th>이미지</th>
+			        <th width="350">이미지</th>
 			    </tr>
 			    </thead>
 			    <tbody id="list">
