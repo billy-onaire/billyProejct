@@ -16,19 +16,37 @@
 		<result property="booking_no" column="booking_no" />
 		<result property="seller_id" column="seller_id" />
 		<result property="product_name" column="product_name" />
+		<result property="review_status" column="review_status" />
 	</resultMap>
-	
-	<select id="selectPaymentMyList" resultMap="resultPayment">
-		select booking_no, pd.seller_id, py.product_name, status
+	<!-- select booking_no, pd.seller_id, py.product_title, status
 		from payment py
 		join product pd using (product_no)
-		where status in (1,2) and py.seller_id = pd.seller_id
+		where status in (1,2) and py.seller_id = pd.seller_id and seller_id = #{ userId } -->
+	
+	<select id="selectPaymentCount" resultType="_int" parameterType="string">
+		select count(*) from payment where seller_id = #{ userId } and status in (1,2)
+	</select>
+	
+	<select id="selectPaymentPList" resultMap="resultPayment" parameterType="hashmap">
+	<![CDATA[
+		select o.rm, o.booking_no, o.payment_price, o.status, o.product_name, o.seller_id, o.customer
+		from
+		(
+			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_name, i.seller_id, i.customer
+			from
+			(
+				select booking_no, payment_price, status, product_name, seller_id, customer
+				from payment order by booking_no desc
+			) i
+			where rownum <= (#{ perPageNum} * #{ page }) and seller_id = 'tjrghekt'
+		) o
+		where o.rm > #{ pageStart }
+	]]>
 	</select>
 	
 	<select id="selectPaymentList" resultMap="resultPayment">
 		select * from payment
 	</select>
-	
 	<!-- <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
 		insert into member values (#{userid},#{userpwd},#{username},#{gender},#{age},
 								   #{phone},#{email},#{hobby},#{etc},sysdate,sysdate)
