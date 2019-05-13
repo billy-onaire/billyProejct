@@ -18,13 +18,49 @@ var ajaxPagingList = function() {
 		success: function(result) {
 			var jsonStr = JSON.stringigy(result);
 			var obj = JSON.parse(jsonStr);
-		}
+		
 			//2. 페이징정보와 화면 ui셋팅
-			//var plist ='';
-		/*	for(var i in obj.plist) {
-				if(obj.plist[i].)
+			var plist ='';
+			for(var i in obj.plist) {
+				if(obj.plist[i].status == '1') 
+					st = '<td>거래중</td>';
+				else if(obj.plist[i].status == '2')
+					st = '<td>거래완료</td>';
+				else if(obj.plist[i].status == '3')
+					st = '<td>판매중</td>';
+				else if(obj.plist[i].status == '4')
+					st = '<td>판매완료</td>';
+				
+				if(obj.plist[i].status == 2|| obj.plist[i].stauts == 4){
+					invoice = 
+						    '<td><a href="#" class="view" title="View Details" data-toggle="tooltip">' +
+							'<i class="material-icons">&#xE5C8;</i></a></td>';
+				} else {
+					invoice = '<td> </td>';
+				}
+				/*<td><a href="#" class="view" title="View Details" data-toggle="tooltip">
+				<i class="material-icons">&#xE5C8;</i></a></td>
+				<td><span class="status text-success">&bull;</span> 구매완료</td>
+				*/
+				/*	<tr>
+                    <th>no</th>
+                    <th>판매자</th>
+					<th>제목</th>				
+                    <th>거래상태</th>						
+					<th>영수증</th>
+                </tr>*/
+				plist += '<tr>';
+				plist += '<td>' + obj.plist[i].booking_no + '</td>';
+				plist += '<td>' + obj.plist[i].seller_id + '</td>';
+				plist += '<td>' + obj.plist[i].product_title + '</td>';
+				plist += '<td>' + st + + '</td>';
+				plist += '<td>' + invoice + '</td>';
 			}
-		}*/
+			$('#pList').html(plist);
+			
+			paging.p = obj.p;
+			paging.create();
+		}//success
 		
 	});//ajax
 }//ajaxPagingList function

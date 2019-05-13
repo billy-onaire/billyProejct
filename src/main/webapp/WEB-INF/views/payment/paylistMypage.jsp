@@ -114,17 +114,17 @@ $(function(){
 						<th>영수증</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ payment.booking_no }</td>
-                		<td>${ payment.seller_id }</td>
-                		<td>${ payment.product_name }</td>
-                		<c:if test='${ payment.status eq 1 }'>
+                		<td>${ pmList.booking_no }</td>
+                		<td>${ pmList.seller_id }</td>
+                		<td>${ pmList.product_name }</td>
+                		<c:if test='${ pmList.status eq 1 }'>
                 			<td><span class="status text-success">&bull;</span> 구매완료</td>
                 			<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
                 		</c:if>
-                		<c:if test='${ payment.status eq 2 }'>
+                		<c:if test='${ pmList.status eq 2 }'>
                 			<td><span class="status text-danger">&bull;</span> 취소</td>
                 			<td> </td>
                 		</c:if>
@@ -174,13 +174,21 @@ $(function(){
             </table>
              <div class="row">
                     <div class="col-12">
-                        <!-- Pagination -->
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
+                            	<c:if test='${ pageMaker.prev }'>
+                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ pageMaker.startPage-1 }"/>'></a></li>
+                            	</c:if>
+                            	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
+                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ idx }"/>'>${ idx }.</a></li>
+                            	</c:forEach>
+                            	<c:if test='${ pageMaker.next }'>
+                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ pageMaker.endPage+1 }"/>'></a></li>
+                            	</c:if>
+                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
                                 <li class="page-item"><a class="page-link" href="#">02.</a></li>
                                 <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
+                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
                         </nav>
                     </div>

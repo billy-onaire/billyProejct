@@ -19,8 +19,8 @@ import org.kh.billy.payment.model.service.BootpayApi;
 import org.kh.billy.payment.model.service.PaymentService;
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentPaging;
-import org.kh.billy.product.model.vo.ProductForList;
-import org.kh.billy.product.model.vo.SettingList;
+import org.kh.billy.product.model.vo.Criteria;
+import org.kh.billy.product.model.vo.PageMaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +43,29 @@ public class PaymentController {
 	
 	static BootpayApi api;
 	
-	@RequestMapping(value="paylist.do", method=RequestMethod.POST)
-	public void paymentMyList(@RequestParam(name="pageCount") String pageCount, 
-			@RequestBody SettingList setting, ArrayList<PaymentPaging> plist,HttpServletResponse response) throws IOException {
+	@RequestMapping(value="paylist.do")
+	public ModelAndView paymentMyList(Criteria cri, ModelAndView model) {
+		String userId = "superje";
+		int count = payService.selectPaymentCount(userId);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		cri.setSeller_id(userId);
+		
+		ArrayList<Payment> plist = payService.selectPaymentPList(cri);
+		model.addObject("pmList", plist);
+		model.addObject("pageMaker", pageMaker);
+		model.setViewName("payment/paylistMypage");
+		
+		return model;
+		
+	}
+	/*(@RequestParam(name="pageCount") String pageCount, 
+			@RequestBody PaymentPaging setting, ArrayList<Payment> plist, HttpServletResponse response) throws IOException {
 		int currentPage = setting.getPage();
 		int listCount = setting.getListCount();
-		int totalCount = 0; 
-				/*payService.selectTotalListCount(setting);*/
+		int totalCount = payService.selectTotalListCount(setting);
+		
 		int totalPage = totalCount/listCount;
 		int countPage = Integer.parseInt(pageCount); //페이징 개수
 		
@@ -75,10 +91,10 @@ public class PaymentController {
 		setting.setEndPage(endPage);
 		logger.info("setting : " + setting);
 		
-		plist = null;/*payService.selectPaymentList(setting);*/
+		plist = payService.selectPaymentList(setting);
 		JSONObject job = new JSONObject();
 		JSONArray jar = new JSONArray();
-		for(PaymentPaging p : plist) {
+		for(Payment p : plist) {
 			JSONObject ob = new JSONObject();
 			ob.put("booking_no", p.getBooking_no());
 			ob.put("product_name", p.getProduct_name());
@@ -101,7 +117,7 @@ public class PaymentController {
 		out.print(job.toString());
 		out.flush();
 		out.close();
-	}
+	}*/
 	/*public void payList(ArrayList<Payment> pmList, ModelAndView mav, HttpServletResponse response) throws IOException {
 		pmList = payService.selectPaymentMyList();
 		
