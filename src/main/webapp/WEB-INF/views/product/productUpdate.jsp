@@ -111,6 +111,12 @@
                         <br><br><br>
                        
                         <form action="myproductupdate.do" method="post"  enctype="multipart/form-data" onsubmit="return validate();">
+                          <input type="hidden" id="product_no" name="product_no" value="${product.product_no}">
+                          <input type="hidden" id="img_no" name="img_no" value="${product.img_no}">
+                          <input type="hidden" id="first_img" name="first_img" value="${product.first_img}">
+                          <input type="hidden" id="product_no" name="second_img" value="${product.second_img}">
+                          <input type="hidden" id="third_img" name="third_img" value="${product.third_img}">
+                          <input type="hidden" id="fourth_img" name="fourth_img" value="${product.fourth_img}">
                           <div class="form-group">                              
                               <div class="row">
                                   <div class="col-sm-6">
@@ -184,67 +190,95 @@
                                   <div class="col-sm-4">
                                     <h3>대표 이미지</h3>
                                   <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
-                                 <div id="preview" class="upreview">
+                                    <div id="" class="upreview">
                                     <button type="button" class="close" aria-label="Close">
-                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                    <span aria-hidden="true" onclick="closeImage(this)" class="closeImage">&times;</span>
                                   </button>
-                                  <label for="file-input">
-                                    <p  id="imgbackground1">
-                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
-                                    </p>
+                                  <label for="file-input1">
+                                    <p  id="imgbackground1"><img src="/billy/resources/files/product/${product.first_img }" class="imgbackground"></p>
+                                    <input type="hidden" value="${product.first_img }" name="imgfile[]" id="imgfile1">
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
-                                  <span id='preview'></span>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input1" class="file-input"/>
+                                  <span id='preview1'></span>
+                                  
                                   </div>
-                                  </div>
+                                  </div><!-- 대표이미지 태그 닫기  -->
                                   <div class="col-sm-8">
-                                    <h3>상세 페이지에 보여질 이미지</h3>
-                                    <div id="preview2" class="upreview"><!-- SECOND_IMG -->
+                                    <h3>나머지 이미지</h3>
+                                    <div id="" class="upreview"><!-- SECOND_IMG -->
                                     <button type="button" class="close" aria-label="Close">
-                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                    <span aria-hidden="true" onclick="closeImage(this)" class="closeImage">&times;</span>
                                   </button>
-                                  <label for="file-input">
-                                    <p  id="imgbackground2">
-                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                  <label for="file-input2">
+                                    <p  id="imgbackground2">                                    
+                                    <c:if test="${empty product.second_img }">
+                                    	<img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">                                      
+                                    </c:if>
                                     </p>
+                                    <c:if test="${not empty product.second_img }">
+                                    <input type="hidden" value="${product.second_img }" name="imgfile[]" id="imgfile2">
+                                    </c:if>
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
-                                  <span id='preview2'></span>
+                                  <input type="file" name="files2" accept="image/*" onchange="previewImage(this)" id="file-input2" class="file-input" />
+                                  <span id='preview2'>
+                                  <c:if test="${not empty product.second_img }">
+                                      <img src="/billy/resources/files/product/${product.second_img }" class="imgbackground">                                      
+                                  </c:if>
+                                    
+                                  </span>
                                   </div><!-- second_img div end -->
 
-                                  <div id="preview3" class="upreview"><!-- THIRD_IMG -->
+                                  <div id="" class="upreview"><!-- THIRD_IMG -->
                                     <button type="button" class="close" aria-label="Close">
-                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                    <span aria-hidden="true" onclick="closeImage(this)" class="closeImage">&times;</span>
                                   </button>
-                                  <label for="file-input">
+                                  <label for="file-input3">
                                     <p  id="imgbackground3">
+                                    <c:if test="${not empty product.third_img }">
+                                    	<img src="/billy/resources/files/product/${product.third_img }" class="imgbackground">
+                                      
+                                    </c:if>
+									<c:if test="${empty product.third_img }">
                                     <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </c:if>
                                     </p>
+                                    <c:if test="${not empty product.third_img }">
+                                    <input type="hidden" value="${product.third_img }" name="imgfile[]" id="imgfile3">
+                                    </c:if>
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <input type="file" name="files3" accept="image/*" onchange="previewImage(this)" id="file-input3" class="file-input"/>
                                   <span id='preview3'></span>
                                   </div><!-- third_img div end -->
 
-                                  <div id="preview4" class="upreview"><!-- FOURTH_IMG -->
+                                  <div id="" class="upreview"><!-- FOURTH_IMG -->
                                     <button type="button" class="close" aria-label="Close">
-                                    <span aria-hidden="true" onclick="closeImage()">&times;</span>
+                                    <span aria-hidden="true" onclick="closeImage(this)" class="closeImage">&times;</span>
                                   </button>
-                                  <label for="file-input">
+                                  <label for="file-input4">
                                     <p  id="imgbackground4">
-                                    <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    <c:if test="${not empty product.fourth_img }">
+                                    	<img src="/billy/resources/files/product/${product.fourth_img }" class="imgbackground">
+                                      <!-- <input type="hidden" value="${product.fourth_img }" name="imgfile[]"> -->
+                                    </c:if>
+                                    <c:if test="${empty product.fourth_img }">
+                                    	<img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
+                                    </c:if>
                                     </p>
+                                    <c:if test="${not empty product.fourth_img }">
+                                    <input type="hidden" value="${product.fourth_img }" name="imgfile[]" id="imgfile4">
+                                    </c:if>
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
+                                  <input type="file" name="files4" accept="image/*" onchange="previewImage(this)" id="file-input4" class="file-input"/>
                                   <span id='preview4'></span>
                                   </div><!-- fourth_img div end -->
-                                </div>
-                                  </div>
-                                </div> 
+                                </div><!-- 그 외 이미지 3장 태그 end  -->
+                                  </div><!-- 사진등록 태그 닫기  -->
+                                <!-- </div>  -->
 
 
-                                  <div><!--  이미지 불러오는 큰 div 태그 열기 -->
+                                  <!-- <div>
 									<h3>대표 이미지 상세 페이지에 보여질 이미지</h3>
-                                  <!-- <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" /> -->
+                                  
                 					       <div id="preview" class="upreview">
                                     <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true" onclick="closeImage()">&times;</span>
@@ -254,10 +288,10 @@
                                     <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
                                     </p>
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
                                   <span id='preview2'></span>
                                   </div>
-                                  <!-- <button onclick="checkval()">사진여부확인</button> -->
+                                  
 									
 									
 									<div id="preview2" class="upreview">
@@ -269,16 +303,23 @@
                                     <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
                                     </p>
                                   </label>
-                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input"/>
+                                  <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" class="file-input"/>
                                   <span id='preview2'></span>
                                   </div>
 
-                                </div><!-- 이미지 불러오는 큰 div 태그 닫기 --> 
+                                </div> -->
 									
 									<br><br>
 									<script type="text/javascript">
 									function previewImage(f){
+                    /*console.log('황니용1 : ' + f);
+                    console.log('황니용2 : ' + f.files);
+                    console.log('황니용3 : ' + f.name);
+                    console.log('황니용4 : ' + f.id);
 
+                    console.log('확인용 5 : ' + $('#preview2').attr('id'));
+                    console.log('확인용 6 : ' + $('.file-input').index(this));
+                    console.log('황니용7 : ' + f.name.split('s')[1]);*/
 										var file = f.files;
 
 										// 확장자 체크
@@ -288,7 +329,7 @@
 											// 선택한 파일 초기화
 											f.outerHTML = f.outerHTML;
 
-											document.getElementById('preview2').innerHTML = '';
+											document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '';
 
 										}
 										else {
@@ -298,69 +339,40 @@
 
 											// 파일 읽기가 완료되었을때 실행
 											reader.onload = function(rst){
-												document.getElementById('preview2').innerHTML = '<img class="realimg" src="' + rst.target.result + '">';
+												document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="realimg" src="' + rst.target.result + '">';
 											}
 
 											// 파일을 읽는다
 											reader.readAsDataURL(file[0]);
-                      						document.getElementById('imgbackground2').innerHTML = '';  
-                      checkval(reader);
+                      						document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '';  
+                      /*checkval(reader);*/
+                      /*console.log('파일 확인 용 :' + f.value);*/
+                      /*f.value(file[0].name);*/
+
+                      /*console.log('파일 확인 용2 :' + $(f).val());*/
+                      
+
 										}
 									}
-                  function closeImage(){
-                    document.getElementById('preview2').innerHTML = '';
-                    document.getElementById('imgbackground2').innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
-                    
+                  function closeImage(a){   
+                    var realIndex =  Array.prototype.slice.call( document.getElementsByClassName('closeImage'), 0 );
+                     var index = realIndex.indexOf(event.currentTarget)+1;
+                    console.log(index);
+                    document.getElementById('preview'+index).innerHTML = '';
+                    document.getElementById('imgbackground'+index).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
+                    //close 클릭시 db에서 불러온 imgfile value 지움
+                    $('#imgfile'+index).val('');
                   }
                   function checkval(reader){
                    console.log($('.realimg').attr('src'));
                     console.log($('#file-input').val());
                   }
-									</script>
+
+                 
+                  
+
+									</script>	
 									
-                                  
-                                  <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label">상품사진(최대 4장 가능)</label>
-                                        <div class="col-md-20">
-                                            <div class="row">
-                                                <div id="coba">
-													<%-- <div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
-													<div style="position: relative;">
-													<div class="spartan_item_loader" data-spartanindexloader="0" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
-													<i class="fas fa-sync fa-spin"></i>
-													</div>
-													<label class="file_upload" style="width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 3px; cursor: pointer; text-align: center; overflow: hidden; padding: 5px; margin-top: 5px; margin-bottom : 5px; position : relative; display: flex; align-items: center; margin: auto; justify-content: center; flex-direction: column;">
-													<a href="javascript:void(0)" data-spartanindexremove="0" style="right: 3px; top: 3px; background: rgb(237, 60, 32); border-radius: 3px; width: 30px; height: 30px; line-height: 30px; text-align: center; text-decoration: none; color: rgb(255, 255, 255); position: absolute !important;" class="spartan_remove_row">
-													<i class="fas fa-times"></i></a>
-													<img style="width: 100%; margin: 0px auto; vertical-align: middle; display: none;" data-spartanindexi="0" src="/billy/resources/img/productinput/placeholder.png" class="spartan_image_placeholder"> 
-													<p data-spartanlbldropfile="0" style="color : #5FAAE1; display: none; width : auto; ">Drop Here</p>
-													<img style="width: 100%; vertical-align: middle;" class="img_" data-spartanindeximage="0" src="/billy/resources/files/product/${product.first_img }">
-													<input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="0" style="display : none" name="fileUpload[]" type="file"></label> 
-													</div>
-													</div>	  
-													<div class="col-md-4 col-sm-4 col-xs-6 spartan_item_wrapper" data-spartanindexrow="0" style="margin-bottom : 20px; ">
-													<div style="position: relative;">
-													<div class="spartan_item_loader" data-spartanindexloader="0" style=" position: absolute; width: 100%; height: 200px; background: rgba(255,255,255, 0.7); z-index: 22; text-align: center; align-items: center; margin: auto; justify-content: center; flex-direction: column; display : none; font-size : 1.7em; color: #CECECE">
-													<i class="fas fa-sync fa-spin"></i>
-													</div>
-													<label class="file_upload" style="width: 100%; height: 200px; border: 2px dashed #ddd; border-radius: 3px; cursor: pointer; text-align: center; overflow: hidden; padding: 5px; margin-top: 5px; margin-bottom : 5px; position : relative; display: flex; align-items: center; margin: auto; justify-content: center; flex-direction: column;">
-													<a href="javascript:void(0)" data-spartanindexremove="0" style="right: 3px; top: 3px; background: rgb(237, 60, 32); border-radius: 3px; width: 30px; height: 30px; line-height: 30px; text-align: center; text-decoration: none; color: rgb(255, 255, 255); position: absolute !important;" class="spartan_remove_row">
-													<i class="fas fa-times"></i></a>
-													<img style="width: 100%; margin: 0px auto; vertical-align: middle; display: none;" data-spartanindexi="1" src="/billy/resources/img/productinput/placeholder.png" class="spartan_image_placeholder"> 
-													<p data-spartanlbldropfile="1" style="color : #5FAAE1; display: none; width : auto; ">Drop Here</p>
-													<img style="width: 100%; vertical-align: middle;" class="img_" data-spartanindeximage="1" src="/billy/resources/files/product/${product.first_img }">
-													<input class="form-control spartan_image_input" accept="image/*" data-spartanindexinput="1" style="display : none" name="fileUpload[]" type="file"></label> 
-													</div>
-													</div>  --%>
-													  													                                          	
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                     
-                                    </div>              
-                                <!-- </div>  
-                            </div> -->
 
                           <h3>직거래주말여부</h3>
                           <c:forTokens items="${product.weekend_yn }" delims="," var="s">
@@ -702,11 +714,11 @@
             }*/
             
             /*if($('._img').attr('src') == null){*/
-            if($('.img_').attr('src') == undefined){
+            /*if($('.img_').attr('src') == undefined){
               alert('사진을 등록해주세요.');
               $('#coba').focus();
               return false;
-            }
+            }*/
             if($('#product_startdate').val() == null){
               alert('대여가능시작일 입력하세요');
               $('#product_startdate').focus();
@@ -717,6 +729,8 @@
               $('#product_enddate').focus();
               return false;
             }
+            /*console.log($('#file-input1').val());
+            return false;*/
           }
         </script>
         <script type="text/javascript">
@@ -751,6 +765,16 @@
         	$('#sel2').val('${product.sub_pcategory_name}');
         	
         </script>
+        <script type="text/javascript">
+									 $(document).ready(function(){
+						                    if(${not empty product.second_img }){
+						                    	console.log('두번째 사진 있음');
+						                    	$('#file-input4').val()= '/billy/resources/files/product/${product.second_img }';
+						                    	
+						                    }
+
+						                  });
+									</script>		
         
         </body>
 
