@@ -1,13 +1,20 @@
 package org.kh.billy.member.controller;
 
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthScrollBarUI;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.json.simple.JSONObject;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.sms.model.vo.Sms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +30,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.nurigo.java_sdk.api.Message;
+
 @Controller
 public class MemberController {
    
    private static final Logger logger = 
          LoggerFactory.getLogger(MemberController.class);
-       
+   
    @Autowired
    private MemberService memberService;
 
@@ -38,6 +47,12 @@ public class MemberController {
    @RequestMapping("mfind.do")
    public String findPage() {
       return "member/findPage";
+   }
+   
+   @RequestMapping("changePwdPage.do")
+   public String changePwdPage(Model model, @RequestParam String userId) {
+	   model.addAttribute("userId", userId);
+      return "member/changePwdPage";
    }
    
    @RequestMapping("enroll.do")
@@ -104,7 +119,6 @@ public class MemberController {
 	       mv.setViewName("jsonView");
     	   map.put("cnt", result);   
     	   
-    	   
        System.out.println("ajax체크 받기" + map);     
        return mv;
    }
@@ -153,4 +167,91 @@ public class MemberController {
       
       return "member/login";
    }
+   
+   @RequestMapping(value="sendSms.do", method=RequestMethod.POST)
+   public ModelAndView sendSMS(ModelAndView mv, Sms sms, Member member, HttpServletResponse response) throws Exception { // 휴대폰 문자보내기
+	   System.out.println("번호 : " + member.getUser_mobile() +"아이디 : " + member.getUser_id());
+	   String api_key = "NCSKN2UDLUWTX5XZ";
+	   String api_secret = "8RYWTQRUBQINOZ1L9QOS4B2HMLJJOIJI";
+	   Message coolsms = new Message(api_key, api_secret); // 메시지보내기 객체 생성
+	   String key = RandomStringUtils.randomNumeric(4); // 인증키 생성
+	   System.out.println("인증키 : " + key);
+	   HashMap<String, String> map = new HashMap<String, String>();
+	   if(member.getUser_id() != null) {
+		   sms.setUser_id(member.getUser_id());
+		   sms.setAuthno(key);
+		   
+		   memberService.deleteAutoNo(member.getUser_id());
+		   
+		   if(memberService.insertSms(sms) > 0) {
+			   map.put("to", member.getUser_mobile());
+			   map.put("from", "01025306563");
+			   map.put("text", "Billy에서 보내는 인증번호는 ["+key+"] 입니다.");
+			   map.put("type", "SMS");
+			   
+			   JSONObject result = (JSONObject)coolsms.send(map); // 보내기&전송결과받기
+				if ((Long)result.get("success_count") > 0) {
+					// 메시지 보내기 성공 및 전송결과 출력
+					System.out.println("성공");
+					System.out.println(result.get("group_id")); // 그룹아이디
+					System.out.println(result.get("success_count")); // 성공 메세지 수
+					System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
+					map.put("message", URLEncoder.encode("인증번호 발송 성공하였습니다.","UTF-8"));
+					map.put("authno", key);
+					map.put("userId", member.getUser_id());
+				} else {
+					// 메시지 보내기 실패
+					System.out.println("실패");
+					System.out.println(result.get("code")); // REST API 에러코드
+					System.out.println(result.get("message")); // 에러메시지
+				}
+		   }else {
+			   map.put("message", URLEncoder.encode("인증번호 발송 실패하였습니다.","UTF-8"));
+		   }
+	   }else {
+		   map.put("message", URLEncoder.encode("유저정보가 틀렸습니다.", "UTF-8"));
+	   }
+	   
+	   mv.addObject(map);
+	   mv.setViewName("jsonView");
+	   
+	   return mv;
+   }
+   
+   @RequestMapping(value="checkAuthNo.do", method=RequestMethod.POST)
+   public ModelAndView checkAuthNo(ModelAndView mv, @RequestParam String userId, @RequestParam String authno) throws Exception{
+
+	   String authNo = memberService.selectCheckANo(userId);
+	   Map<String, String> map = new HashMap<String, String>();
+	   
+	   if(authno.equals(authNo)) {
+		   map.put("message", URLEncoder.encode("인증 성공","UTF-8"));
+		   map.put("userId", userId);
+	   }else {
+		   map.put("message", URLEncoder.encode("인증번호가 틀렸습니다.","UTF-8"));
+	   }
+	   
+	  mv.addObject(map);
+	  mv.setViewName("jsonView");
+	   
+	   return mv;
+   }
+   
+   @RequestMapping(value="changePwd.do", method=RequestMethod.POST)
+   public ModelAndView updateMemberPwd(Member member,ModelAndView mv) throws Exception{
+	   Map<String, String> map = new HashMap<String, String>();
+	   
+	   member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
+
+	   if(memberService.updateMemberPwd(member) > 0) {
+		   map.put("message", URLEncoder.encode("비밀번호 변경성공", "UTF-8"));
+	   }else {
+		   map.put("message", URLEncoder.encode("비밀번호 변경실패", "UTF-8"));
+	   }
+	   mv.addObject(map);
+	   mv.setViewName("jsonView");
+	   
+	   return mv;
+   }
+   
 }

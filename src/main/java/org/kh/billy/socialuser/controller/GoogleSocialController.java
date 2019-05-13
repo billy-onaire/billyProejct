@@ -35,6 +35,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -58,6 +59,12 @@ public class GoogleSocialController {
        @Autowired
        private BCryptPasswordEncoder bcryptPE;
        
+       //소셜로그인시 회원가입 안하면 넘어가게 하는 페이지
+       @RequestMapping(value="socialEnroll.do")
+       public String socialEnrollPage() {
+    	   return "home";
+       }
+       
        // 구글 체크 페이지
        @RequestMapping(value="googleCheck.do", method= { RequestMethod.GET, RequestMethod.POST })
        public String googleCheckPage() {
@@ -65,8 +72,8 @@ public class GoogleSocialController {
        }
        
        // 구글 사용자 정보 넘기기
-       @RequestMapping(value="googlelogin.do")
-       public String googleCheckPage(HttpServletRequest request, ModelAndView mv,Model model,HttpSession gSession,SessionStatus status
+       @RequestMapping(value="googleLogin.do")
+       public String googleCheckPage(HttpServletRequest request, HttpSession gSession,SessionStatus status
     		   ,@RequestParam(name="uid") String uid, SocialUser social) {
 
     	  String accessToken = request.getParameter("access_token");
@@ -79,7 +86,7 @@ public class GoogleSocialController {
               gSession.setAttribute("profile", profile);
               status.setComplete();
         	}
-          	
+          	System.out.println(gSession.getAttribute("googleLogin") + "\n 고유번호 : " +  uid);
           
 		if (socialService.selectCheckId(uid) > 0) {
 			return "home";
@@ -139,7 +146,7 @@ public class GoogleSocialController {
                map.put("body", body);
                map.put("name", URLEncoder.encode(name,"utf-8"));
                map.put("profile", profile);
-               map.put("uid", bcryptPE.encode(uid));
+               map.put("uid", uid);
                
                model.addObject(map);
                model.setViewName("jsonView");
@@ -191,6 +198,53 @@ public class GoogleSocialController {
     		  return "social/socialError";
     	   }
     	   
+       }
+       
+       @RequestMapping(value="socialCheck.do", method=RequestMethod.POST)
+       public ModelAndView socialCheckInfo(ModelAndView mv, HttpServletRequest request, @RequestParam String sid) {
+    	   Map<String, String> map = new HashMap<String, String>();
+    	   /*String gid = "";
+    	   String nid = "";
+    	   String kid = "";
+    	   String fid = "";
+    	   String sid = "";
+    	   if(request.getParameter("gid") != null) {
+    		   gid = request.getParameter("gid");
+    		   sid = gid;
+    	   }
+    	   if(request.getParameter("nid") != null) {
+    		   nid = request.getParameter("nid");
+    		   sid = nid;
+    	   }
+    	   if(request.getParameter("kid") != null) {
+    		   kid = request.getParameter("kid");
+    		   sid = kid;
+    	   }
+    	   if(request.getParameter("fid") != null) {
+    		   fid = request.getParameter("fid");
+    		   sid = fid;
+    	   }*/
+    	   
+    	   
+    	   if(socialService.selectSocialCheck(sid) >  0) {
+    		   /*if(gid != null) {
+    			   map.put("googleLogin", sid);
+    		   }else if(nid != null) {
+    			   map.put("naverLogin", sid);
+    		   }else if(kid != null) {
+    			   map.put("kakaoLogin", sid);
+    		   }else if(fid != null) {
+    			   map.put("facebookLogin", sid);
+    		   }*/
+    		   map.put("ok", "ok");
+    	   }else {
+    		   map.put("sid", sid);
+    		   map.put("fail", "fail");
+    	   }
+    	   mv.addObject(map);
+    	   mv.setViewName("jsonView");
+    	   
+    	   return mv;
        }
       
 }

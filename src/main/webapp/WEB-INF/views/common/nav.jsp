@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+</script>
+
 <style type="text/css">
 @font-face {
 	font-family: 'DXSeNB-KSCpc-EUC-H';
@@ -51,7 +55,7 @@
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="main.do"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
+                <a href="main.do" class="billya"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
             <c:set var="profile" value="${profile }" scope="session" /> 
@@ -70,27 +74,25 @@
        			<c:if test="${!empty loginMember  }">
        			<span id="pname">${loginMember.user_name }님</span>
        			</c:if>
-                <a href="recvList.do">쪽지 확인용</a>
+                <a href="recvList.do" >쪽지 확인용</a>
                 <a href="logout.do">로그아웃</a>
        		</div>
        		</c:if>
 
-       		
-       		
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="active"><a href="main.do">Home</a></li>
-                    <li><a href="#">Notice</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="myproductlist.do">MyPage</a></li>
+                    <li class="active"><a href="main.do" >Home</a></li>
+                    <li><a href="#" >Notice</a></li>
+                    <li><a href="#" >About us</a></li>
+                    <li><a href="myproductlist.do" >MyPage</a></li>
                 </ul>
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-                <a href="showlist.do" class="btn amado-btn mb-15">Product List</a>
-                <a href="productinsertmain.do" class="btn amado-btn mb-15">Add a Product</a>
-                <a href="resultPay.do" class="btn amado-btn mb-15">PAYMENT</a>
+                <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
+               	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
+                <a href="resultPay.do" class="btn amado-btn mb-15" >PAYMENT</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
             </div>
             <!-- Social Button -->

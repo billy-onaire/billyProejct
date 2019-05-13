@@ -14,4 +14,5 @@ public interface SocialUserService {
     SocialUser selectSocial(String userid);
     ArrayList<String> searchId(Member member);
 	int selectCheckId(String uid);
+	int selectSocialCheck(String sid);
 }

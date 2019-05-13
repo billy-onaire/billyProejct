@@ -22,7 +22,12 @@ public class SocialUserServiceImpl implements SocialUserService{
 	public int selectCheckId(String uid) {
 		return socialDao.selectCheckId(mSession, uid);
 	}
-
+	
+	@Override
+	public int selectSocialCheck(String sid) {
+		return socialDao.selectSocialCheck(mSession, sid);
+	}
+	
 	@Override
 	public int insertSocial(SocialUser social) {
 		return socialDao.insertSocial(mSession, social);

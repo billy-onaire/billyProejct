@@ -35,7 +35,7 @@
 </script>
 </head>
 <body>
-<form action="googlelogin.do" method="post" id="gac">
+<form action="googleLogin.do" method="post" id="gac">
 <input type="hidden" name="access_token" id="at">
 <input type="hidden" name="name" id="name">
 <input type="hidden" name="profile" id="profile">
