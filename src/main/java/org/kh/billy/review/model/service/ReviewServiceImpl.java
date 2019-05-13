@@ -42,8 +42,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public int selectTotalPdetailReview() {
-		return reviewDao.selectTotalPdetailReview(mybatisSession);
+	public int selectTotalPdetailReview(int productNo) {
+		return reviewDao.selectTotalPdetailReview(mybatisSession, productNo);
 	}
 
 }

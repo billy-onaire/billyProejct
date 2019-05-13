@@ -15,15 +15,15 @@ public class ReviewList implements java.io.Serializable{
 	private String status;
 	private int product_no;
 	private String customer;
-	
 	private String first_img;
 	private String product_name;
+	private String review_status;
 	
 	public ReviewList() {}
 
 	public ReviewList(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
-			Date payment_enddate, String status, int product_no, String customer, String first_img,
-			String product_name) {
+			Date payment_enddate, String status, int product_no, String customer, String first_img, String product_name,
+			String review_status) {
 		super();
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
@@ -35,6 +35,7 @@ public class ReviewList implements java.io.Serializable{
 		this.customer = customer;
 		this.first_img = first_img;
 		this.product_name = product_name;
+		this.review_status = review_status;
 	}
 
 	public int getPayment_no() {
@@ -117,6 +118,14 @@ public class ReviewList implements java.io.Serializable{
 		this.product_name = product_name;
 	}
 
+	public String getReview_status() {
+		return review_status;
+	}
+
+	public void setReview_status(String review_status) {
+		this.review_status = review_status;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -126,8 +135,9 @@ public class ReviewList implements java.io.Serializable{
 		return "ReviewList [payment_no=" + payment_no + ", payment_price=" + payment_price + ", payment_quantity="
 				+ payment_quantity + ", payment_begindate=" + payment_begindate + ", payment_enddate=" + payment_enddate
 				+ ", status=" + status + ", product_no=" + product_no + ", customer=" + customer + ", first_img="
-				+ first_img + ", product_name=" + product_name + "]";
+				+ first_img + ", product_name=" + product_name + ", review_status=" + review_status + "]";
 	}
+
 	
 	
 }

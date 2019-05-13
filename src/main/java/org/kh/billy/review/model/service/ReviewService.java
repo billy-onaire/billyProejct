@@ -14,5 +14,5 @@ public interface ReviewService {
 	int insertReview(Review review);
 	List<ReviewList> selectListReview(ReviewPaging paging);
 	int selectTotalListReview();
-	int selectTotalPdetailReview();
+	int selectTotalPdetailReview(int productNo);
 }

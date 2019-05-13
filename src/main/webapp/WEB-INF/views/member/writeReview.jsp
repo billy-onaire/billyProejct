@@ -110,13 +110,16 @@
 			    <tr>
 			        <th>대여후기</th>
 			        <td><div class="col-12 mb-3">
-                        <textarea name="review_content" class="form-control w-100" id="comment" cols="30" rows="5" placeholder="대여한 제품에 대한 간단한 평가를 해주세요"></textarea>
+                        <textarea name="review_content" class="form-control w-100" id="comment" cols="30" rows="5" 
+                        placeholder="대여한 제품에 대한 간단한 평가를 해주세요 (30자 이내)" onkeyup="fnChkByte(this);"></textarea>
                         </div>
                     </td>
 			    </tr>
 			</table>
         	<center><button type="submit" name="addtocart" value="5" class="btn amado-btn">작성완료</button></center>
         	<input type="hidden" name="point" id="point" value="1">
+        	<input type="hidden" name="product_no" value="${pNo }">
+        	<input type="hidden" name="payment_no" value="${payNo }">
         </form>
        
         
@@ -137,6 +140,40 @@
     	  $("#point").val(point);
     	  return false;
     	});
+    
+    function fnChkByte(obj) {
+        var maxByte = 100; //최대 입력 바이트 수
+        var str = obj.value;
+        var str_len = str.length;
+     
+        var rbyte = 0;
+        var rlen = 0;
+        var one_char = "";
+        var str2 = "";
+     
+        for (var i = 0; i < str_len; i++) {
+            one_char = str.charAt(i);
+     
+            if (escape(one_char).length > 4) {
+                rbyte += 3; //한글3Byte
+            } else {
+                rbyte++; //영문 등 나머지 1Byte
+            }
+     
+            if (rbyte <= maxByte) {
+                rlen = i + 1; //return할 문자열 갯수
+            }
+        }
+     
+        if (rbyte > maxByte) {
+            alert("한글  30자 / 영문 " + maxByte + "자를 초과 입력할 수 없습니다.");
+            str2 = str.substr(0, rlen); //문자열 자르기
+            obj.value = str2;
+            fnChkByte(obj, maxByte);
+        } else {
+            document.getElementById('byteInfo').innerText = rbyte;
+        }
+    }
     </script>
     <!-- Popper js -->
     <script src="/billy/resources/js/popper.min.js"></script>
