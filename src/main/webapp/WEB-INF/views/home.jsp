@@ -86,7 +86,7 @@ $(function(){
 			<div class="amado-pro-catagory clearfix">
 				<!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=living">
                         <img src="/billy/resources/img/bg-img/living.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -99,7 +99,7 @@ $(function(){
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=clothes">
                         <img src="/billy/resources/img/bg-img/clothes2.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -112,7 +112,7 @@ $(function(){
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=electronics">
                         <img src="/billy/resources/img/bg-img/electronics4.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -125,7 +125,7 @@ $(function(){
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=etc">
                         <img src="/billy/resources/img/bg-img/5.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -138,7 +138,7 @@ $(function(){
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=kids">
                         <img src="/billy/resources/img/bg-img/6.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -151,7 +151,7 @@ $(function(){
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=sports">
                         <img src="/billy/resources/img/bg-img/sports.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">

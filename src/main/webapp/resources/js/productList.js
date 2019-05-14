@@ -1,7 +1,7 @@
 /*
     상품 리스트 출력 페이지 자바스크립트
     작성자 : 윤석호
-    최종 수정일 : 2019/05/02
+    최종 수정일 : 2019/05/14
 */
 
 let chosenPage = 1; // 페이징 선택 값
@@ -57,6 +57,18 @@ for (let i = 0; i < catagoryRadios.length; i++) {
             sub = [{ cno: 50, cname: "기타" }]
 
         createSubMenus(sub);
+
+        let pushData = {
+            pcategory_name: mainCategory,
+            page: chosenPage,
+            listCount: listCount,
+            sub_pcategory_no: subCategories,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+            sort: sortby
+        }
+        history.pushState(pushData, 'page', 'showlist.do#category='+mainCategory);
+
         requestProductListAjax();
     })
 }
@@ -89,13 +101,13 @@ function createSubMenus(sub) {
             if (event.target.checked)
                 subCategories.push(event.target.value);
             else
-                subCategories.splice(subCategories.indexOf(event.target.value),1); // 배열 요소 삭제 (인덱싱 -> splice 사용)
+                subCategories.splice(subCategories.indexOf(event.target.value), 1); // 배열 요소 삭제 (인덱싱 -> splice 사용)
             requestProductListAjax();
         })
     }
 }
 
-function requestProductListAjax() {
+function requestProductListAjax(data) {
     const xhr = new XMLHttpRequest();
     const listRow = document.getElementById('product_list_row');
     while (listRow.firstChild) {
@@ -103,10 +115,11 @@ function requestProductListAjax() {
     }
 
     xhr.onload = () => {
+        
         const products = JSON.parse(xhr.responseText);
 
         for (let i = 0; i < products.list.length; i++) {
-            
+
             const gridDiv = document.createElement('div');
             const singleProductWrapper = document.createElement('div');
             const productImg = document.createElement("div");
@@ -149,49 +162,59 @@ function requestProductListAjax() {
             const ratingIndex = products.list[i].rating;
             const restRating = ratingIndex - Math.floor(ratingIndex);
 
-            for(let i = 0; i < ratingIndex; i++){
+            for (let i = 0; i < ratingIndex; i++) {
                 const starIcon = document.createElement('i');
                 starIcon.classList = "fa fa-star";
-                starIcon.setAttribute('aria-hidden','true');
+                starIcon.setAttribute('aria-hidden', 'true');
                 ratingSection.appendChild(starIcon);
             }
-            if(restRating >= 0.5){
+            if (restRating >= 0.5) {
                 ratingSection.removeChild(ratingSection.firstChild)
                 const starIcon = document.createElement('i');
                 starIcon.classList = "fa fa-star-half-o";
-                starIcon.setAttribute('aria-hidden','true');
+                starIcon.setAttribute('aria-hidden', 'true');
                 ratingSection.appendChild(starIcon);
             }
             // 상세보기 처리
-            singleProductWrapper.addEventListener('click',()=>{
-                location.href = "pdetail.do?pno="+products.list[i].pno;
+            singleProductWrapper.addEventListener('click', () => {
+                location.href = "pdetail.do?pno=" + products.list[i].pno;
                 //location.href = "goReport.do?pno="+products.list[i].pno;
             });
 
         }
-        
+
 
         // 페이징 처리 섹션
         const pagination = document.querySelector('.pagination');
-        while(pagination.firstChild){
+        while (pagination.firstChild) {
             pagination.removeChild(pagination.firstChild);
         }
 
-        for(let i = products.page.start; i <= products.page.end; i++){
+        for (let i = products.page.start; i <= products.page.end; i++) {
 
             const pageItem = document.createElement('li');
             const pageLink = document.createElement('a');
-            
+
             pageItem.classList = "page-item";
             pageLink.classList = "page-link";
 
             pageLink.textContent = i;
-            
+
             pagination.appendChild(pageItem).appendChild(pageLink);
 
-            pageItem.addEventListener('click',()=>{
+            pageItem.addEventListener('click', () => {
                 chosenPage = i;
-                requestProductListAjax(); 
+                let pushData = {
+                    pcategory_name: mainCategory,
+                    page: chosenPage,
+                    listCount: listCount,
+                    sub_pcategory_no: subCategories,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice,
+                    sort: sortby
+                }
+                history.pushState(pushData, 'page', 'showlist.do#page='+i);
+                requestProductListAjax();
             })
         }
 
@@ -208,7 +231,11 @@ function requestProductListAjax() {
     }
     xhr.open('POST', 'getProductList.do');
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(requestData));
+    if(data){
+        xhr.send(JSON.stringify(data));
+    } else {
+        xhr.send(JSON.stringify(requestData));
+    }
 }
 
 // 숫자 세자리마다 ,찍기 함수
@@ -217,26 +244,50 @@ function numberWithCommas(x) {
 }
 // 페이지 로드시 AJAX 실행
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('#living').click();
+    const tempUrl = window.location.search.substring(1);
+    console.log(tempUrl);
+    if (tempUrl) {
+        const cv = tempUrl.split('=');
+        console.log(cv[1]);
+        switch (cv[1]) {
+            case 'living': document.querySelector('#living').click(); break;
+            case 'sports': document.querySelector('#sports').click(); break;
+            case 'electronics': document.querySelector('#electronics').click(); break;
+            case 'clothes': document.querySelector('#clothes').click(); break;
+            case 'kids': document.querySelector('#kids').click(); break;
+            case 'etc': document.querySelector('#etc').click(); break;
+        }
+    } else {
+        const dBtn = document.querySelector('#living');
+        if(!dBtn.checked){
+            document.querySelector('#living').click();
+        } else {
+            document.querySelector('#etc').click();
+            document.querySelector('#living').click();
+        }
+    }
+    let pushData = {
+        pcategory_name: mainCategory,
+        page: chosenPage,
+        listCount: listCount,
+        sub_pcategory_no: subCategories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        sort: sortby
+    }
+    history.pushState(pushData, 'page', 'showlist.do#page=1');
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 신고기능 테스트용 (삭제예정)
-function moveReport(){
-    location.href="goReport.do?pno=1";
+window.onpopstate = (event)=>{
+    alert(on);
+    console.log(history.state);
+    requestProductListAjax(history.state);
 }
+
+
+
+
+
+
+
+
