@@ -285,7 +285,9 @@
                                 <br><div class="ratings-review mb-15 d-flex align-items-center justify-content-between">                          
                                     <p class="avaibility"><i class="fa fa-circle"></i> 대여자 : ${p.seller_id }</p>                                
                                     <div class="review">
-                                        <a href="#" style="color:red">신고하기</a>
+                                    	<c:if test="${!empty loginMember }">
+	                                        <a href="goReport.do?pno=${p.product_no }" style="color:red">신고하기</a>
+                                    	</c:if>
                                     </div>
                                 </div><br><br>
                                 

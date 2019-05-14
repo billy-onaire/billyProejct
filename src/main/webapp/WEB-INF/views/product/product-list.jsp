@@ -144,10 +144,6 @@
                         <!-- Pagination -->
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -157,7 +153,6 @@
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
     <!-- 신고 기능 테스트 용-->
-    <button onclick="moveReport();"> 신고하기 </button>
 	<c:import url="../common/footer.jsp" />
     
 

@@ -3,6 +3,7 @@ let rContent = "";
 const id = document.getElementById('rid').value;
 const pno = document.querySelector('.summary-table li:first-child span:last-child').textContent;
 document.getElementById('rdate').valueAsDate = new Date(); // 날짜 오늘로 초기화
+const requestId = document.querySelector('#request__id').value;
 
 const rcategories = document.querySelectorAll('.nice-select ul li'); // 신고 카테고리
 
@@ -27,6 +28,7 @@ comment.addEventListener('keyup', () => {
 const reportBtn = document.querySelector('#reportBtn');
 
 function goAddReport(){
+
     const requestData = {
         report_no: 0,
         rcategory_no: cno,
@@ -34,7 +36,7 @@ function goAddReport(){
         report_id: id,
         report_date: 0,
         product_no: pno,
-        request_id: 'tjrgh0216'
+        request_id: requestId
     }
 
     const xhr = new XMLHttpRequest();
@@ -71,12 +73,19 @@ reportBtn.addEventListener('click', goAddReport,true);
 document.addEventListener('DOMContentLoaded',()=>{
     const xhr = new XMLHttpRequest();
     xhr.onload = () =>{
-        if(responseText == 'ok'){
-            reportBtn.removeEventListener('click',goAddReport,false);
-            reportBtn.textContent = "신청완료";
+        if(xhr.responseText == 'ok'){
+            
+        } else {
+            reportBtn.style.display ="none";
+            const newBtn = document.createElement('a');
+            newBtn.classList = "btn amado-btn w-100";
+            newBtn.textContent = "REPORT CLOSED";
+            newBtn.style.backgroundColor = "grey";
+
+            document.querySelector('.cart-btn').appendChild(newBtn);
         }
     }
-    xhr.open('GET', "checkReport.do?request_id=tjrgh0216");// 신청인 아이디 업데이트 필요
+    xhr.open('GET', "checkReport.do?request_id="+requestId);// 신청인 아이디 업데이트 필요
     xhr.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
     xhr.send();
 })
