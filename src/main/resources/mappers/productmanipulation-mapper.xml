@@ -72,7 +72,7 @@ from (
         PRODUCT_STARTDATE, PRODUCT_ENDDATE, WEEKEND_YN, WEEKDAY_YN, PRODUCT_DATE, PRODUCT_MODIFYDATE, DELETE_YN, CATEGORY_CODE, SELLER_ID, IMG_NO
         from product
         order by product_no desc) A
-    where rownum <= (#{perPageNum} * #{page}) and SELLER_ID = 'user01' and delete_yn = 'N') X
+    where rownum <= (#{perPageNum} * #{page}) and SELLER_ID = #{seller_id} and delete_yn = 'N') X
 where X.rnum > #{pageStart}
 ]]>
 	</select>
@@ -85,7 +85,81 @@ where X.rnum > #{pageStart}
 			join product_img b on a.img_no = b.img_no
 			where product_no = #{productNo}
 	</select>
+	<update id="updateMyProduct" parameterType="ProductForUpdate">
+	<!-- 조인뷰로 update를 할 때 mysql에서는 아래와 같이 두개 이상의 테이블도 수정가능하지만 oracle에서는 한 개의 테이블만 가능  -->
+	<!-- UPDATE 
+       (
+        SELECT 
+        a.PRODUCT_NAME as PRODUCT_NAME,
+        a.PRICE as PRICE,
+        a.PRODUCT_QUANTITY as PRODUCT_QUANTITY,
+        a.PRODUCT_CONTENT as PRODUCT_CONTENT,
+        a.PRODUCT_STARTDATE as PRODUCT_STARTDATE,
+        a.PRODUCT_ENDDATE as PRODUCT_ENDDATE,
+        a.WEEKEND_YN as WEEKEND_YN,
+        a.WEEKDAY_YN as WEEKDAY_YN,
+        a.PRODUCT_MODIFYDATE as PRODUCT_MODIFYDATE,
+        a.CATEGORY_CODE as CATEGORY_CODE,
+        b.FIRST_IMG as FIRST_IMG,
+        b.SECOND_IMG as SECOND_IMG,
+        b.THIRD_IMG as THIRD_IMG,
+        b.FOURTH_IMG as FOURTH_IMG       
+        FROM product a, product_img b
+        WHERE a.img_no = b.img_no and product_no = #{product_no}
+       )
+   SET 
+   PRODUCT_NAME = #{product_name},
+   PRICE = #{price},
+   PRODUCT_QUANTITY = #{product_quantity},
+   PRODUCT_CONTENT = #{product_content},
+   PRODUCT_STARTDATE = #{product_startdate},
+   PRODUCT_ENDDATE = #{product_enddate},
+   WEEKEND_YN = #{weekend_yn},
+   WEEKDAY_YN = #{weekday_yn},
+   PRODUCT_MODIFYDATE = sysdate,
+   CATEGORY_CODE = (select PCATEGORY_NO from PRODUCT_CATEGORY where PCATEGORY_NAME = #{pcategory_name} and SUB_PCATEGORY_NAME  = #{sub_pcategory_name}),
+   FIRST_IMG = #{first_img},
+   SECOND_IMG = #{second_img},
+   THIRD_IMG = #{third_img}, 
+   FOURTH_IMG = #{fourth_img} -->
+   UPDATE 
+       (
+        SELECT 
+        a.PRODUCT_NAME as PRODUCT_NAME,
+        a.PRICE as PRICE,
+        a.PRODUCT_QUANTITY as PRODUCT_QUANTITY,
+        a.PRODUCT_CONTENT as PRODUCT_CONTENT,
+        a.PRODUCT_STARTDATE as PRODUCT_STARTDATE,
+        a.PRODUCT_ENDDATE as PRODUCT_ENDDATE,
+        a.WEEKEND_YN as WEEKEND_YN,
+        a.WEEKDAY_YN as WEEKDAY_YN,
+        a.PRODUCT_MODIFYDATE as PRODUCT_MODIFYDATE,
+        a.CATEGORY_CODE as CATEGORY_CODE    
+        FROM product a
+        WHERE product_no = #{product_no}
+       )
+   SET 
+   PRODUCT_NAME = #{product_name},
+   PRICE = #{price},
+   PRODUCT_QUANTITY = #{product_quantity},
+   PRODUCT_CONTENT = #{product_content},
+   PRODUCT_STARTDATE = #{product_startdate},
+   PRODUCT_ENDDATE = #{product_enddate},
+   WEEKEND_YN = #{weekend_yn},
+   WEEKDAY_YN = #{weekday_yn},
+   PRODUCT_MODIFYDATE = sysdate,
+   CATEGORY_CODE = (select PCATEGORY_NO from PRODUCT_CATEGORY where PCATEGORY_NAME = #{pcategory_name} and SUB_PCATEGORY_NAME  = #{sub_pcategory_name})
+	</update>
 	
+	<update id="updateMyImage" parameterType="ProductForUpdate">
+		update product_img
+		set 
+		FIRST_IMG = #{first_img},
+   		SECOND_IMG = #{second_img},
+   		THIRD_IMG = #{third_img}, 
+   		FOURTH_IMG = #{fourth_img}
+		where img_no = (select img_no from product where product_no = #{product_no}) 
+	</update>
 	
 	<!-- <![CDATA[
 		SELECT *

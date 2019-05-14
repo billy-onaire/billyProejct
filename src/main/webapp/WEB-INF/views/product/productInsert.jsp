@@ -459,6 +459,14 @@
             }*/
             
             /*if($('._img').attr('src') == null){*/
+
+
+            if($('#product_content').val().length < 30 ){
+              alert('상품에 대한 설명을 30자 이상 작성해주세요.');
+              $('#product_content').focus();
+              return false;
+            }
+
             if($('.img_').attr('src') == undefined){
               alert('사진을 등록해주세요.');
               $('#coba').focus();
@@ -474,6 +482,14 @@
               $('#product_enddate').focus();
               return false;
             }
+
+
+             if(confirm("수정 하시겠습니까?")) {
+                
+            } else {
+            return false;
+            }
+
             /* alert($('#price').val()); */
             /* $('#price').val() = $('#price').val().replace(',' , ''); */
             /* ($('#price').val()).replace(/,/g, '');

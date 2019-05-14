@@ -49,6 +49,11 @@ public class ProductManipulationServiceImpl implements ProductManipulationServic
 	public int updateMyProduct(ProductForUpdate product) {
 		return pmd.updateMyProduct(mybatisSession, product);
 	}
+
+	@Override
+	public int updateMyImage(ProductForUpdate product) {
+		return pmd.updateMyImage(mybatisSession, product);
+	}
 	
 	
 	
