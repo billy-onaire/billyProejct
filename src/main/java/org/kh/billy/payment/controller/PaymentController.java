@@ -18,14 +18,16 @@ import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.payment.model.service.BootpayApi;
 import org.kh.billy.payment.model.service.PaymentService;
 import org.kh.billy.payment.model.vo.Payment;
+import org.kh.billy.payment.model.vo.PaymentCri;
+import org.kh.billy.payment.model.vo.PaymentPageMaker;
 import org.kh.billy.payment.model.vo.PaymentPaging;
-import org.kh.billy.product.model.vo.Criteria;
-import org.kh.billy.product.model.vo.PageMaker;
+import org.kh.billy.payment.model.vo.PaymentSearchCri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +46,11 @@ public class PaymentController {
 	static BootpayApi api;
 	
 	@RequestMapping(value="paylist.do")
-	public ModelAndView paymentMyList(Criteria cri, ModelAndView model) {
+	public ModelAndView paymentMyList(@RequestParam(name="entries", defaultValue="10") int entries, PaymentCri cri, ModelAndView model) {
 		String userId = "superje";
 		int count = payService.selectPaymentCount(userId);
-		PageMaker pageMaker = new PageMaker();
+		PaymentPageMaker pageMaker = new PaymentPageMaker();
+		cri.setPerPageNum(entries);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
 		cri.setSeller_id(userId);
@@ -59,6 +62,18 @@ public class PaymentController {
 		
 		return model;
 		
+	}
+	
+	@RequestMapping(value="paymentSearch.do")
+	public String searchList(@ModelAttribute("searchCri") PaymentSearchCri payCri, Model model) {
+		PaymentPageMaker pageMaker = new PaymentPageMaker();
+		pageMaker.setCri(payCri);
+		pageMaker.setTotalCount(payService.searchListCount(payCri));
+		
+		model.addAttribute("pmList", payService.listCriteria(payCri));
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "payment/paylistMypage";
 	}
 	/*(@RequestParam(name="pageCount") String pageCount, 
 			@RequestBody PaymentPaging setting, ArrayList<Payment> plist, HttpServletResponse response) throws IOException {
