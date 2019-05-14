@@ -21,8 +21,15 @@ public class HomeController {
 	public String home() {
 		logger.info("Welcome home!");
 		
-		
 		return "home";
+	}
+	
+	//관리자메인
+	@RequestMapping(value = "amain.do", method = RequestMethod.GET)
+	public String adminHome() {
+		logger.info("Welcome adminHome!");
+		
+		return "adminHome";
 	}
 	
 }

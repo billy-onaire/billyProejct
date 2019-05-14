@@ -9,17 +9,27 @@ public class SocialUser implements java.io.Serializable{
 
 	private String user_id;
 	private String social_type;
-	private String token;
 	private String social_code;
+	private String name;
+	private String profile;
 	
 	public SocialUser() {}
 
-	public SocialUser(String user_id, String social_type, String token, String social_code) {
+	public SocialUser(String user_id, String social_type, String social_code) {
 		super();
 		this.user_id = user_id;
 		this.social_type = social_type;
-		this.token = token;
 		this.social_code = social_code;
+	}
+
+	
+	public SocialUser(String user_id, String social_type, String social_code, String name, String profile) {
+		super();
+		this.user_id = user_id;
+		this.social_type = social_type;
+		this.social_code = social_code;
+		this.name = name;
+		this.profile = profile;
 	}
 
 	public String getUser_id() {
@@ -38,14 +48,6 @@ public class SocialUser implements java.io.Serializable{
 		this.social_type = social_type;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public String getSocial_code() {
 		return social_code;
 	}
@@ -58,10 +60,25 @@ public class SocialUser implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	@Override
 	public String toString() {
-		return "SocialUser [user_id=" + user_id + ", social_type=" + social_type + ", token=" + token + ", social_code="
-				+ social_code + "]";
+		return "SocialUser [user_id=" + user_id + ", social_type=" + social_type + ", social_code=" + social_code + "]";
 	}
-		
+
 }

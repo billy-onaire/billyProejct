@@ -5,9 +5,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONObject;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.NaverLoginBO;
+import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,6 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 @Controller
 public class NaverSocialController {
 
-	
 	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
 	
@@ -86,16 +87,19 @@ public class NaverSocialController {
     //네이버 로그인 유무체크
     @RequestMapping(value="naverLogin.do")
     public String naverCheckId(Model model, @RequestParam String name, @RequestParam String nickname, @RequestParam String email,
-    		@RequestParam String profileImage, @RequestParam String uid, HttpSession session, SessionStatus status) {
+    		@RequestParam String profileImage, @RequestParam String uid, HttpSession nSession, SessionStatus status, SocialUser social) {
+    	
+    	String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
+    	
+    	social.setName(name);
+    	social.setProfile(profileImage);
+    	social.setUser_id(userId);
+    	social.setSocial_code(uid);
     	
     	if(uid != null) {
-    		session.setAttribute("naverLogin", uid);
-    		session.setAttribute("profile", profileImage);
-    		session.setAttribute("name", name);
+    		nSession.setAttribute("naverLogin", social);
     		status.isComplete();
     	}
-    	
-    	model.addAttribute("email", email);
     	
     	if(socialService.selectCheckId(uid) > 0) {
     		return "home";

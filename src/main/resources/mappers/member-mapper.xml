@@ -98,8 +98,5 @@
    <delete id="deleteAutoNo" parameterType="String">
      delete from tb_sms where user_id = #{userId}
    </delete>
-   
-   
-   
 
 </mapper>
