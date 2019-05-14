@@ -12,7 +12,8 @@ public class ReviewPaging implements java.io.Serializable{
 	private int pageStartNum; // 출력할 페이지 시작 번호
 	private int listCnt; // 출력할 리스트 갯수
 	private int total; // 리스트 총 갯수
-
+	private String userId; //제품 대여한 사람 id
+	
 	{
 		pageCnt = 5;
 		index = 0;
@@ -21,6 +22,20 @@ public class ReviewPaging implements java.io.Serializable{
 	}
 
 	public ReviewPaging() {}
+
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+
 
 	public int getStart() {
 		return index * listCnt + 1;

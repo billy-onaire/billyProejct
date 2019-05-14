@@ -14,11 +14,13 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.review.model.service.ReviewService;
 import org.kh.billy.review.model.vo.Review;
 import org.kh.billy.review.model.vo.ReviewList;
 import org.kh.billy.review.model.vo.ReviewPaging;
 import org.kh.billy.review.model.vo.ReviewPagingFront;
+import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,13 +37,31 @@ public class ReviewController {
 	private ReviewService reviewService;
 	
 	@RequestMapping("reviewList.do")
-	public String reviewListPage(Model model, ReviewPaging paging, HttpSession session) {
-		/*System.out.println("session : " + session.getAttribute("kakaoLogin"));
-		if(session.getAttribute("loginMember").equals(null) || session.getAttribute("googleLogin").equals(null) ||
-				session.getAttribute("kakakoLogin").equals(null) || session.getAttribute("naverLogin").equals(null) || 
-				session.getAttribute("facebookLogin").equals(null)) {
+	public String reviewListPage(Model model, ReviewPaging paging, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		
+		if(session.getAttribute("loginMember") == null && session.getAttribute("kakaoLogin") == null &&
+				session.getAttribute("googleLogin") == null && session.getAttribute("facebookLogin") == null && 
+				session.getAttribute("NaverLogin") == null) {
 			return "redirect:login.do";
 		}else {
+			/*SocialUser su = null;
+			if(session.getAttribute("loginMember") != null) {
+				Member member = (Member)session.getAttribute("loginMember");
+				paging.setUserId(member.getUser_id());
+			}else if(session.getAttribute("kakaoLogin") != null) {
+				su = (SocialUser)session.getAttribute("kakaoLogin");
+				paging.setUserId(su.getUser_id());
+			}else if(session.getAttribute("googleLogin") != null) {
+				su = (SocialUser)session.getAttribute("googleLogin");
+				paging.setUserId(su.getUser_id());
+			}else if(session.getAttribute("facebookLogin") != null) {
+				su = (SocialUser)session.getAttribute("facebookLogin");
+				paging.setUserId(su.getUser_id());
+			}else if(session.getAttribute("NaverLogin") != null) {
+				su = (SocialUser)session.getAttribute("NaverLogin");
+				paging.setUserId(su.getUser_id());
+			}*/
 			List<ReviewList> lists = reviewService.selectListReview(paging);
 	        paging.setTotal(reviewService.selectTotalListReview());
 	        
@@ -49,15 +69,25 @@ public class ReviewController {
 	        model.addAttribute("p", paging);
 
 			return "member/reviewList";
-		}*/
-		
+		}
+		/*if(session == null) {
+			//return "redirect:login.do";
+			System.out.println("세션 없음");
+		}else {
+			System.out.println("세션 있음"+session);
+			System.out.println("loginuser : " + session.getAttribute("loginMember"));
+			System.out.println("k : " + session.getAttribute("kakaoLogin"));
+			System.out.println("g : " + session.getAttribute("googleLogin"));
+			System.out.println("F : " + session.getAttribute("facebookLogin"));
+			System.out.println("N : " + session.getAttribute("NaverLogin"));
+		}	
 		List<ReviewList> lists = reviewService.selectListReview(paging);
         paging.setTotal(reviewService.selectTotalListReview());
         
         model.addAttribute("lists", lists);
         model.addAttribute("p", paging);
 
-		return "member/reviewList";
+		return "member/reviewList";*/
 	}
 	
 	@RequestMapping("writeReview.do")
@@ -119,7 +149,7 @@ public class ReviewController {
 			jr.put("review_content", URLEncoder.encode(r.getReview_content(), "UTF-8"));
 			jr.put("review_date", r.getReview_date().toString());
 			jr.put("review_image", r.getReview_image());
-			
+			jr.put("review_no", r.getReview_no());
 			jarr.add(jr);
 		}
 		

@@ -92,6 +92,7 @@
 	                }
 	
 	            	 list +="<tr>";
+	            	 list +="<td>"+obj.list[i].review_no+"</td>";
 	            	 list +="<td>user01</td>";
 	            	 list +="<td>"+point+"</td>";
 	            	 list +="<td>"+decodeURIComponent(obj.list[i].review_content).replace(/\+/gi, " ") + "</td>";
@@ -114,7 +115,21 @@
 				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
 	        }
 	    });    
-	    	  	
+		    
+	    $(".datepicker, #qty").on("change", function(){
+	    	var begin = $("#beginDate").val();
+	    	var end = $("#endDate").val();
+	    	var beginArray = begin.split("-");
+			var endArray = end.split("-");
+			
+	    	var beginDate = new Date(beginArray[0], beginArray[1], beginArray[2].substring(0,2));
+	    	var endDate = new Date(endArray[0], endArray[1], endArray[2].substring(0,2));
+	    	var result = (endDate - beginDate)/1000/60/60/24 + 1;
+			var price = ${p.price} * result * $("#qty").val();
+			$("#price").text(price);
+			$("#hiddenPrice").val(price);
+	    });
+
 	}
 	</script>
 	
@@ -163,8 +178,7 @@
 		table.type03 {
 		    border-collapse: collapse;
 		    text-align: left;
-		    line-height: 1.5;
-		    /* border-top: 1px solid #ccc; */
+		    line-height: 1.5;		    
 		    border-left: 3px solid #FF9F00;
 		    border-right: 3px solid #FF9F00;
 		  margin : 20px 10px;
@@ -174,23 +188,34 @@
 		    padding: 10px;
 		    font-weight: bold;
 		    vertical-align: top;
-		    color: #153d73;
-		    /* border-right: 1px solid #ccc; */
-		    /* border-bottom: 1px solid #ccc; */
-		
+		    color: #153d73;		    
 		}
 		table.type03 td {
 		    width: 349px;
 		    padding: 10px;
-		    vertical-align: top;
-		    /* border-right: 1px solid #ccc; */
-		    /* border-bottom: 1px solid #ccc; */
+		    vertical-align: top;		   
 		}
 		
-		#form {
-			position: fixed;	
-			bottom: 0px;
-			right: 200px;
+		/* form table css */
+		table.type05 {
+		    border-collapse: collapse;
+		    text-align: left;
+		    line-height: 1.5;		    
+		    border-top: 3px solid #FF9F00;
+		    border-bottom: 3px solid #FF9F00;
+		  margin : 20px 10px;
+		}
+		table.type05 th {
+		    width: 147px;
+		    padding: 10px;
+		    font-weight: bold;
+		    vertical-align: top;
+		    color: #153d73;		    
+		}
+		table.type05 td {
+		    width: 349px;
+		    padding: 10px;
+		    vertical-align: top;		   
 		}
 	</style>
 </head>
@@ -265,7 +290,11 @@
 	                                </c:if>
                                 </div>
                             </div>
-                        </div><br>
+                        </div><hr><br>
+                        <h2>상품설명</h2><hr>
+                        <div class="short_overview my-5">
+                        	<p>${p.product_content }</p>
+                        </div><br><hr><br> 
                         <h2>거래지역</h2>
                         <hr>
                         <div id="mapAddress">${p.location_area }</div>
@@ -416,58 +445,32 @@
 							</table>
                             </div>
 							
-                            <div class="short_overview my-5">
+                            <%-- <div class="short_overview my-5">
                                 <p>${p.product_content }</p>
-                            </div>
+                            </div> --%>
 							
                             <!-- Add to Cart Form -->
-                            <div id="form">
-                            <%-- <form class="cart clearfix" method="post" style="clear:both;">
-                                <div class="cart-btn d-flex mb-50">
-                                    <p>갯수</p>
-                                    <div class="quantity">
-                                        <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
-                                        <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
-                                <div style="float:left;">
-                                	희망대여시작일 <br>
-                                    <input type="text" class="datepicker"> &nbsp;&nbsp;&nbsp;
-                                </div>
-                                <div>
-                                   	 희망대여반납일 <br>
-                                    <input type="text" class="datepicker">
-                                </div><br><br>
-                                <button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
-                            </form> --%>
+                            <br><br><br>                          
                             <form class="cart clearfix" method="post" style="clear:both;">
-                            <table style="text-align:center">
+                            <table class="type05">
                             <tr>
-                            	<td colspan="2">
-                            		<div class="cart-btn d-flex mb-50">
-                                    <p>갯수</p>
-                                    <div class="quantity">
-                                        <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                        <input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
-                                        <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                                    </div>
-                                </div>
+                            	<th>갯수</th>
+                            	<td>
+                            		<input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
                             	</td>
                             </tr>
+                            
                             <tr>
-                            	<td>
-                            		<div style="float:left;">
-                                	희망대여시작일 <br>
-                                    <input type="text" class="datepicker" placeholder="Select Date.."> &nbsp;&nbsp;&nbsp;
-                                </div>
-                            	</td>
-                            	<td>
-                            		<div>
-                                   	 희망대여반납일 <br>
-                                    <input type="text" class="datepicker" placeholder="Select Date..">
-                                </div>
-                            	</td>
+                            	<th>희망대여시작일</th>
+                            	<td><input type="text" class="datepicker" name="payment_begindate" id="beginDate" placeholder="Select Date.."></td>
+                            </tr>
+                            <tr>
+                            	<th>희망대여반납일</th>
+                            	<td><input type="text" class="datepicker" name="payment_enddate" id="endDate" placeholder="Select Date.."></td>
+                            </tr>
+                            <tr>
+                            	<th>가격</th>
+                            	<td><p id="price"></td>
                             </tr>
                             <tr>
                             	<td colspan="2" style="padding:30px">
@@ -475,8 +478,9 @@
                             	</td>
                             </tr>
                             </table>
+                            <input type="hidden" name="payment_price" id="hiddenPrice">
                             </form>
-							</div>
+							
                         </div>                  
                     </div>
                 </div>
@@ -488,6 +492,7 @@
             <table class="type09">
 			    <thead>
 			    <tr>
+			    	<th>삭제</th>
 			        <th width="150">ID</th>
 			        <th>별점</th>
 			        <th width="350">내용</th>
@@ -564,8 +569,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
 		flatpickr(".datepicker", {
-			enableTime: true,
-			dateFormat: "Y-m-d H:i",
+			dateFormat: "Y-m-d",
 			
 			minDate: "${p.product_startdate}",
 			maxDate: "${p.product_enddate}",
