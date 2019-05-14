@@ -169,7 +169,7 @@
                                 <br>
                                 <br>
                                 <div class="form-horizontal"> -->
-                                  <div class="container">
+                                  <!-- <div class="container">
                                   	<h3>이미 올린 사진</h3>
                                     <img class="img-fluid" src="/billy/resources/files/product/${product.first_img }" alt="Chania" width="230" height="170">
                                     
@@ -182,7 +182,7 @@
                                     <c:if test="${!product.fourth_img eq null }">
                                     <img class="img-fluid" src="/billy/resources/files/product/${product.fourth_img }" alt="Chania" width="230" height="170"> 
                                   	</c:if>
-                                  </div>
+                                  </div> -->
 
 
 
@@ -195,7 +195,7 @@
                                     <span aria-hidden="true" onclick="closeImage(this)" class="closeImage">&times;</span>
                                   </button>
                                   <label for="file-input1">
-                                    <p  id="imgbackground1"><img src="/billy/resources/files/product/${product.first_img }" class="imgbackground"></p>
+                                    <p  id="imgbackground1"><img src="/billy/resources/files/product/${product.first_img }" class="imgbackground" id="oldimg1"></p>
                                     <input type="hidden" value="${product.first_img }" name="imgfile[]" id="imgfile1">
                                   </label>
                                   <input type="file" name="files1" accept="image/*" onchange="previewImage(this)" id="file-input1" class="file-input"/>
@@ -217,6 +217,9 @@
                                     </p>
                                     <c:if test="${not empty product.second_img }">
                                     <input type="hidden" value="${product.second_img }" name="imgfile[]" id="imgfile2">
+                                    </c:if>
+                                    <c:if test="${empty product.second_img }">
+                                    <input type="hidden" value="" name="imgfile[]" id="imgfile2">
                                     </c:if>
                                   </label>
                                   <input type="file" name="files2" accept="image/*" onchange="previewImage(this)" id="file-input2" class="file-input" />
@@ -242,8 +245,11 @@
                                     <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
                                     </c:if>
                                     </p>
-                                    <c:if test="${not empty product.third_img }">
+                                    <c:if test="${not empty product.third_img }"><!-- DB에 사진이 없을 경우 -->
                                     <input type="hidden" value="${product.third_img }" name="imgfile[]" id="imgfile3">
+                                    </c:if>
+                                    <c:if test="${empty product.third_img }"><!-- DB에 사진이 없을 경우 -->
+                                    <input type="hidden" value="" name="imgfile[]" id="imgfile3">
                                     </c:if>
                                   </label>
                                   <input type="file" name="files3" accept="image/*" onchange="previewImage(this)" id="file-input3" class="file-input"/>
@@ -266,6 +272,9 @@
                                     </p>
                                     <c:if test="${not empty product.fourth_img }">
                                     <input type="hidden" value="${product.fourth_img }" name="imgfile[]" id="imgfile4">
+                                    </c:if>
+                                    <c:if test="${empty product.fourth_img }">
+                                    <input type="hidden" value="" name="imgfile[]" id="imgfile4">
                                     </c:if>
                                   </label>
                                   <input type="file" name="files4" accept="image/*" onchange="previewImage(this)" id="file-input4" class="file-input"/>
@@ -323,15 +332,19 @@
 										var file = f.files;
 
 										// 확장자 체크
-										if(!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)){
-											alert('gif, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+										if(!/\.(jpg|jpeg|png)$/i.test(file[0].name)){
+											alert('jpg, jpeg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
 
 											// 선택한 파일 초기화
 											f.outerHTML = f.outerHTML;
 
-											document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '';
+											document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
 
-										}
+										}else if(file[0].size > 1024 * 1024 * 2){
+                        // 용량 초과시 경고후 해당 파일의 용량도 보여줌
+                        alert('2MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+                        document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
+                    }
 										else {
 
 											// FileReader 객체 사용
@@ -339,7 +352,7 @@
 
 											// 파일 읽기가 완료되었을때 실행
 											reader.onload = function(rst){
-												document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="realimg" src="' + rst.target.result + '">';
+												document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="realimg" id="realimg'+f.name.split('s')[1]+'" src="' + rst.target.result + '">';
 											}
 
 											// 파일을 읽는다
@@ -369,12 +382,17 @@
                   }
 
                  
-                  
+                  //DB에는 사진 이름이 존재하는데 폴더에서 사진이 만약 삭제 되었을 경우
+                 /* $(document).ready(function(){
+                    var realIndex =  Array.prototype.slice.call( document.getElementsByClassName('imgbackground'), 0 );
+                  var index = realIndex.indexOf(event.currentTarget)+1;
+                  console.log('실제사진이 없을 때 확인용'+index);
+                  });*/
 
 									</script>	
 									
-
-                          <h3>직거래주말여부</h3>
+                          
+                          <h5>직거래주말여부</h5>
                           <c:forTokens items="${product.weekend_yn }" delims="," var="s">
 	                        <c:if test="${s eq 'Y' }">
 								<c:set var="checked6" value="checked"/>
@@ -396,7 +414,7 @@
                     </div>
 					          <br>
                     <div class="form-group">
-                        <label for="pwd">직거래가능요일(월,화,수,목,금):</label><br>
+                        <label for="">직거래가능요일(월,화,수,목,금):</label><br>
                         <c:forTokens items="${product.weekday_yn }" delims="," var="s">
 	                        <c:if test="${s eq 'monday' }">
 								<c:set var="checked0" value="checked"/>
@@ -689,8 +707,8 @@
 
             }
             //컨솔 확인용
-            console.log($('#product_startdate').val());
-            $("#datepicker").datepicker("getDate");
+            /*console.log($('#product_startdate').val());
+            $("#datepicker").datepicker("getDate");*/
           });
 
         </script>
@@ -719,6 +737,11 @@
               $('#coba').focus();
               return false;
             }*/
+            if($('#product_content').val().length < 30 ){
+              alert('상품에 대한 설명을 30자 이상 작성해주세요.');
+              $('#product_content').focus();
+              return false;
+            }
             if($('#product_startdate').val() == null){
               alert('대여가능시작일 입력하세요');
               $('#product_startdate').focus();
@@ -731,6 +754,23 @@
             }
             /*console.log($('#file-input1').val());
             return false;*/
+            console.log('새로운 첫 번째 사진 확인 : ' + $('#realimg1').attr('src'));
+            console.log('새로운 두 번째 사진 확인 : ' + $('#realimg2').attr('src'));
+            console.log('새로운 세 번째 사진 확인 : ' + $('#realimg3').attr('src'));
+            console.log('새로운 네 번 째 사진 확인 : ' + $('#realimg4').attr('src'));
+            console.log('기존의 첫 번째 사진 확인 : ' + $('#oldimg1').attr('src'));
+
+            if($('#oldimg1').attr('src') == null && $('#realimg1').attr('src') == null){
+              alert('대표 이미지는 필수 등록 해야 합니다.');
+              $('#imgbackground1').click();
+              return false;
+            }
+
+            if(confirm("수정 하시겠습니까?")) {
+                
+            } else {
+            return false;
+            }
           }
         </script>
         <script type="text/javascript">
@@ -765,7 +805,7 @@
         	$('#sel2').val('${product.sub_pcategory_name}');
         	
         </script>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
 									 $(document).ready(function(){
 						                    if(${not empty product.second_img }){
 						                    	console.log('두번째 사진 있음');
@@ -774,7 +814,7 @@
 						                    }
 
 						                  });
-									</script>		
+									</script>		 -->
         
         </body>
 

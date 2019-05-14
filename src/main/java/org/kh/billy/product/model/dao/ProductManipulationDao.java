@@ -38,7 +38,11 @@ public class ProductManipulationDao {
 	}
 
 	public int updateMyProduct(SqlSessionTemplate session, ProductForUpdate product) {
-		return 0;
+		return session.update("productManipulationMapper.updateMyProduct", product);
+	}
+
+	public int updateMyImage(SqlSessionTemplate session, ProductForUpdate product) {
+		return session.update("productManipulationMapper.updateMyImage", product);
 	}
 	
 }

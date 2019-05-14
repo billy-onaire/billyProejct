@@ -19,5 +19,7 @@ public interface ProductManipulationService {
 	ProductForUpdate selectMyProduct(int productNo);
 
 	int updateMyProduct(ProductForUpdate product);
+
+	int updateMyImage(ProductForUpdate product);
 	
 }
