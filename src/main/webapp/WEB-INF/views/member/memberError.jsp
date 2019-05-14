@@ -10,7 +10,7 @@
 <script type="text/javascript">
 $(function(){
 	alert("${message}");
-	location.href=history.back();
+	location.href="login.do";
 });
 </script>
 </head>

@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,54 +10,15 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-<!-- Title  -->
-<title>Billy - main</title>
-<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	<c:if test="${!empty googleLogin or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
-	<c:if test="${!empty googleLogin}">
-	 	var sid = $("#sid").val();
-	</c:if>
-	<c:if test="${!empty naverLogin}">
-		var sid = ${naverLogin.social_code};
-	</c:if>
-	<c:if test="${!empty kakaoLogin}">
-		var sid = ${kakaoLogin.social_code};
-	</c:if>
-	<c:if test="${!empty facebookLogin}">
-		var sid = ${facebookLogin.social_code};
-	</c:if>
-	$.ajax({
-		url: "socialCheck.do",
-		data: {
-			sid: sid
-		},
-		type: "get",
-		dataType: "json",
-		success: function(result){
-			if(result.hashMap.fail == "fail"){
-				location.href="socialEnroll.do";	
-			} 
-		},error: function(request, status, errorData){
-			console.log("error code : " + request.status
-					+ "\nmessage : " + request.responseText
-					+ "\nerror : " + errorData);
-		}
-	});//ajax
-	</c:if>
-});//ready
-</script>
+<meta charset="UTF-8">
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
-
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+<title>Billy - adminHome</title>
 </head>
 <body>
-<input type="hidden" id="sid" value="${googleLogin.social_code }">
-	<!-- Search Wrapper Area Start -->
+<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
 		<div class="search-close">
 			<i class="fa fa-close" aria-hidden="true"></i>
@@ -81,7 +43,7 @@ $(function(){
 
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
-		<c:import url="common/nav.jsp" />
+		<c:import url="common/adminNav.jsp" />
 		<!-- Product Catagories Area Start -->
 		<div class="products-catagories-area clearfix">
 			<div class="amado-pro-catagory clearfix">
@@ -168,16 +130,5 @@ $(function(){
 		<!-- Product Catagories Area End -->
 	</div>
 	<c:import url="common/footer.jsp" />
-	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-	<!-- Popper js -->
-	<script src="/billy/resources/js/popper.min.js"></script>
-	<!-- Bootstrap js -->
-	<script src="/billy/resources/js/bootstrap.min.js"></script>
-	<!-- Plugins js -->
-	<script src="/billy/resources/js/plugins.js"></script>
-	<!-- Active js -->
-	<script src="/billy/resources/js/active.js"></script>
 </body>
-
 </html>

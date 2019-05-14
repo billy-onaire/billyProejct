@@ -62,7 +62,7 @@ public class GoogleSocialController {
        //소셜로그인시 회원가입 안하면 넘어가게 하는 페이지
        @RequestMapping(value="socialEnroll.do")
        public String socialEnrollPage() {
-    	   return "home";
+    	   return "social/socialInfo";
        }
        
        // 구글 체크 페이지
@@ -75,18 +75,22 @@ public class GoogleSocialController {
        @RequestMapping(value="googleLogin.do")
        public String googleCheckPage(HttpServletRequest request, HttpSession gSession,SessionStatus status
     		   ,@RequestParam(name="uid") String uid, SocialUser social) {
-
-    	  String accessToken = request.getParameter("access_token");
-          String name = request.getParameter("name");
-          String profile = request.getParameter("profile");
+    	   
+    	  String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
+          String name = request.getParameter("name"); //소셜 닉네임및 이름
+          String profile = request.getParameter("profile"); //소셜 프로필사진
+          
+          social.setUser_id(userId);
+          social.setName(name);
+          social.setProfile(profile);
+          social.setSocial_code(uid);
           
           if(uid != null) {
-              gSession.setAttribute("googleLogin", uid);
-              gSession.setAttribute("name", name);
-              gSession.setAttribute("profile", profile);
-              status.setComplete();
+        	  gSession.setAttribute("googleLogin", social);
+              status.isComplete();
         	}
-          	System.out.println(gSession.getAttribute("googleLogin") + "\n 고유번호 : " +  uid);
+          
+         System.out.println(gSession.getAttribute("googleLogin") + "\n 고유번호 : " +  uid);
           
 		if (socialService.selectCheckId(uid) > 0) {
 			return "home";
@@ -158,7 +162,6 @@ public class GoogleSocialController {
        @RequestMapping(value="sinsert.do", method=RequestMethod.POST)
        public String insertSocialUser(HttpServletRequest request, SocialUser social, Member member, Model model) {
     	  
-    	   String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5);
     	   String userpwd = RandomStringUtils.randomNumeric(15);
     	   String socialCode = "";
     	   
@@ -178,11 +181,9 @@ public class GoogleSocialController {
     	   
     	 //패스워드 암호화처리
 
-    	   member.setUser_id(userId);
     	   member.setUser_pwd(bcryptPE.encode(userpwd));
     	   member.setAuthkey(socialCode);
     	   
-    	   social.setUser_id(userId);
     	   social.setSocial_code(socialCode);
     	   
     	   System.out.println("member : " + member + "\nsocial : " + social);
@@ -203,45 +204,16 @@ public class GoogleSocialController {
     	   
        }
        
-       @RequestMapping(value="socialCheck.do", method=RequestMethod.POST)
+       //소셜회원가입 유무 체크메소드
+       @RequestMapping(value="socialCheck.do"/*, method=RequestMethod.POST*/)
        public ModelAndView socialCheckInfo(ModelAndView mv, HttpServletRequest request, @RequestParam String sid) {
     	   Map<String, String> map = new HashMap<String, String>();
-    	   /*String gid = "";
-    	   String nid = "";
-    	   String kid = "";
-    	   String fid = "";
-    	   String sid = "";
-    	   if(request.getParameter("gid") != null) {
-    		   gid = request.getParameter("gid");
-    		   sid = gid;
-    	   }
-    	   if(request.getParameter("nid") != null) {
-    		   nid = request.getParameter("nid");
-    		   sid = nid;
-    	   }
-    	   if(request.getParameter("kid") != null) {
-    		   kid = request.getParameter("kid");
-    		   sid = kid;
-    	   }
-    	   if(request.getParameter("fid") != null) {
-    		   fid = request.getParameter("fid");
-    		   sid = fid;
-    	   }*/
-    	   
-    	   
+    	   System.out.println("sid : " + sid);
     	   if(socialService.selectSocialCheck(sid) >  0) {
-    		   /*if(gid != null) {
-    			   map.put("googleLogin", sid);
-    		   }else if(nid != null) {
-    			   map.put("naverLogin", sid);
-    		   }else if(kid != null) {
-    			   map.put("kakaoLogin", sid);
-    		   }else if(fid != null) {
-    			   map.put("facebookLogin", sid);
-    		   }*/
+    		   System.out.println("성공");
     		   map.put("ok", "ok");
     	   }else {
-    		   map.put("sid", sid);
+    		   System.out.println("실패");
     		   map.put("fail", "fail");
     	   }
     	   mv.addObject(map);

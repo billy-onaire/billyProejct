@@ -7,7 +7,6 @@
 	<resultMap id="resultSocial" type="SocialUser">
 		<id property="user_id" column="user_id" />
 		<result property="social_type" column="social_type" />
-		<result property="token" column="token" />
 		<result property="social_code" column="social_code" />
 	</resultMap>
 	

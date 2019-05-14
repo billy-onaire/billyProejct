@@ -162,7 +162,6 @@ a {
 </head>
 
 <body>
-
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<%-- <c:import url="../common/nav.jsp" /> --%>
@@ -171,18 +170,31 @@ a {
 		<div class="container">
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
 				<c:if test="${!empty kakaoLogin }">
-				  <input type="hidden" id="kid" name="kid" value="${kakaoLogin }">
+				  <input type="hidden" name="kid" value="${kakaoLogin.social_code }">
 				</c:if>
 				<c:if test="${!empty googleLogin }">
-				  <input type="hidden" id="gid" name="gid" value="${googleLogin }">
+				  <input type="hidden" name="gid" value="${googleLogin.social_code }">
 				</c:if>
 				<c:if test="${!empty naverLogin }">
-				  <input type="hidden" id="nid" name="nid" value="${naverLogin }">
+				  <input type="hidden" name="nid" value="${naverLogin.social_code }">
 				</c:if>
 				<c:if test="${!empty facebookLogin }">
-				  <input type="hidden" id="fid" name="fid" value="${facebookLogin }">
+				  <input type="hidden" name="fid" value="${facebookLogin.social_code }">
 				</c:if>
-
+				
+				<c:if test="${!empty kakaoLogin }">
+				  <input type="hidden" name="user_id" value="${kakaoLogin.user_id }">
+				</c:if>
+				<c:if test="${!empty googleLogin }">
+				  <input type="hidden" name="user_id" value="${googleLogin.user_id }">
+				</c:if>
+				<c:if test="${!empty naverLogin }">
+				  <input type="hidden" name="user_id" value="${naverLogin.user_id }">
+				</c:if>
+				<c:if test="${!empty facebookLogin }">
+				  <input type="hidden" name="user_id" value="${facebookLogin.user_id }">
+				</c:if>
+				
 				<h1>소셜 회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
@@ -193,7 +205,7 @@ a {
 					<input type="text" placeholder="Enter Name" id="user_name" name="user_name" required>
 					</c:if>				
 					<c:if test="${!empty naverLogin }"> 
-					<input type="hidden" placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
+					<input type="hidden" id="user_name" name="user_name" value="${naverLogin.name }" >
 					</c:if> 
 					<c:if test="${!empty googleLogin }">
 					<label for="user_name"><b>이름</b></label>
@@ -201,7 +213,7 @@ a {
 					</c:if>				
 					<c:if test="${!empty facebookLogin }">
 					<label for="user_name"><b>이름</b></label>
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" value="${name }" required>
+					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" value="${facebookLogin.name }" required>
 					</c:if>
 					
 					<!-- 핸드폰 -->
@@ -209,22 +221,8 @@ a {
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required>
 					
 					<!-- 이메일 -->
-					<c:if test="${!empty naverLogin }">
-					<label for="email"><b>Email</b></label>
-					<input type="hidden" placeholder="Enter Email" id="email" name="email" value="${email }" required>
-					</c:if>
-					<c:if test="${!empty googleLogin }">
 					<label for="email"><b>이메일</b></label>
 					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-					</c:if>
-					<c:if test="${!empty kakaoLogin }">
-					<label for="email"><b>이메일</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-					</c:if>				
-					<c:if test="${!empty facebookLogin }">
-					<label for="email"><b>이메일</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-					</c:if>
 		
 					<!-- 나머지 -->
 					<label for="address"><b>주소</b></label> 

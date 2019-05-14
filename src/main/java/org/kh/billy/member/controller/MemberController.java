@@ -108,7 +108,6 @@ public class MemberController {
        Member idCheck = memberService.selectIdCheck(userId);
        Map<String, Integer> map = new HashMap<>();
        
-       
        if(idCheck != null) {
     	   result = 1;
     	   map.put("cnt", result);
@@ -176,15 +175,16 @@ public class MemberController {
       return "member/login";
    }
    
+   //비밀번호 찾기시 휴대폰인증번호 보내기
    @RequestMapping(value="sendSms.do", method=RequestMethod.POST)
    public ModelAndView sendSMS(ModelAndView mv, Sms sms, Member member, HttpServletResponse response) throws Exception { // 휴대폰 문자보내기
-	   System.out.println("번호 : " + member.getUser_mobile() +"아이디 : " + member.getUser_id());
 	   String api_key = "NCSKN2UDLUWTX5XZ";
 	   String api_secret = "8RYWTQRUBQINOZ1L9QOS4B2HMLJJOIJI";
 	   Message coolsms = new Message(api_key, api_secret); // 메시지보내기 객체 생성
 	   String key = RandomStringUtils.randomNumeric(4); // 인증키 생성
 	   System.out.println("인증키 : " + key);
 	   HashMap<String, String> map = new HashMap<String, String>();
+	   
 	   if(member.getUser_id() != null) {
 		   sms.setUser_id(member.getUser_id());
 		   sms.setAuthno(key);
@@ -245,6 +245,7 @@ public class MemberController {
 	   return mv;
    }
    
+   //휴대폰인증 후 비밀번호변경 
    @RequestMapping(value="changePwd.do", method=RequestMethod.POST)
    public ModelAndView updateMemberPwd(Member member,ModelAndView mv) throws Exception{
 	   Map<String, String> map = new HashMap<String, String>();
