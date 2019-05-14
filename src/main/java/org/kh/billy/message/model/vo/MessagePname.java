@@ -170,9 +170,5 @@ public class MessagePname implements java.io.Serializable{
 	}
 
 
-	
-
-	
-	
 
 }

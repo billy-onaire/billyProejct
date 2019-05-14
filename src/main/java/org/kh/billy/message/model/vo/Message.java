@@ -23,10 +23,31 @@ public class Message implements java.io.Serializable{
 	private int product_no;
 	private String recv_show;
 	private String sent_show;
+	private int mms_parent;
 	
 	
 	public Message() {
 		
+	}
+
+
+	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
+			String recv_read, String recv_del, String sent_del, int product_no, String recv_show, String sent_show,
+			int mms_parent) {
+		super();
+		this.mms_no = mms_no;
+		this.recv_id = recv_id;
+		this.sent_id = sent_id;
+		this.mms_content = mms_content;
+		this.sent_date = sent_date;
+		this.read_date = read_date;
+		this.recv_read = recv_read;
+		this.recv_del = recv_del;
+		this.sent_del = sent_del;
+		this.product_no = product_no;
+		this.recv_show = recv_show;
+		this.sent_show = sent_show;
+		this.mms_parent = mms_parent;
 	}
 
 
@@ -150,26 +171,18 @@ public class Message implements java.io.Serializable{
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public int getMms_parent() {
+		return mms_parent;
 	}
 
 
-	public Message(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_read, String recv_del, String sent_del, int product_no, String recv_show, String sent_show) {
-		super();
-		this.mms_no = mms_no;
-		this.recv_id = recv_id;
-		this.sent_id = sent_id;
-		this.mms_content = mms_content;
-		this.sent_date = sent_date;
-		this.read_date = read_date;
-		this.recv_read = recv_read;
-		this.recv_del = recv_del;
-		this.sent_del = sent_del;
-		this.product_no = product_no;
-		this.recv_show = recv_show;
-		this.sent_show = sent_show;
+	public void setMms_parent(int mms_parent) {
+		this.mms_parent = mms_parent;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 
@@ -178,11 +191,10 @@ public class Message implements java.io.Serializable{
 		return "Message [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
 				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
 				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + ", recv_show="
-				+ recv_show + ", sent_show=" + sent_show + "]";
+				+ recv_show + ", sent_show=" + sent_show + ", mms_parent=" + mms_parent + "]";
 	}
 
 
-	
 	
 
 }

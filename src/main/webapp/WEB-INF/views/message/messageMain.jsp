@@ -67,6 +67,28 @@ $(document).ready(function(){
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url='../common/myPage.jsp'/>
+       
+       <!-- Cart Menu -->
+            <c:set var="profile" value="${profile }" scope="session" /> 
+			<c:set var="name" value="${name }" scope="session" /> 
+            <c:if test="${empty googleLogin and empty loginMember and empty naverLogin and empty kakaoLogin and empty facebookLogin}">
+            <div class="cart-fav-search mb-100">
+                <a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
+            </div>
+       		</c:if>
+       		<c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
+       			<div class="cart-fav-search mb-100" id="socialLogin">
+       			<c:if test="${!empty googleLogin  or !empty naverLogin or !empty kakaoLogin}">
+       			<img id="google_img"  src="${profile }">&nbsp; <span id="pname">${name }님</span>
+       			</c:if>
+       			<c:if test="${!empty facebookLogin}">
+       			<img id="facebook_img"  src="/billy/resources/img/social-img/fLogo.JPG">&nbsp; <span id="pname">${name }님</span>
+       			</c:if>		
+       			<c:if test="${!empty loginMember  }">
+       			<span id="pname">${loginMember.user_name }님</span>
+       			</c:if>
+       		</div>
+       		</c:if>
           
 
         <div class="amado_product_area section-padding-100">

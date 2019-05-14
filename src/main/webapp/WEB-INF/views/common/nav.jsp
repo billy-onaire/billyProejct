@@ -63,7 +63,6 @@
             <c:if test="${empty googleLogin and empty loginMember and empty naverLogin and empty kakaoLogin and empty facebookLogin}">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
-                <a href="recvList.do">쪽지 확인용</a>
             </div>
        		</c:if>
        		<c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">

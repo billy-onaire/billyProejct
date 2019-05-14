@@ -2,45 +2,27 @@ package org.kh.billy.message.controller;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.activation.CommandMap;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.maven.model.Model;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.message.model.service.MessageService;
 import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.message.model.vo.PageMakerMms;
-import org.kh.billy.product.model.vo.Criteria;
-import org.kh.billy.product.model.vo.PageMaker;
-import org.kh.billy.product.model.vo.Product;
-import org.kh.billy.product.model.vo.ProductForList;
-import org.kh.billy.product.model.vo.SettingList;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @Controller
 public class MessageController {
@@ -59,11 +41,22 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="recvList.do"/*, method=RequestMethod.POST*/)
-	public ModelAndView selectRecvList(ModelAndView mav, CriteriaMms cri, HttpSession session/*, @RequestParam(name="userid") String userid*/) {
+	public ModelAndView selectRecvList(ModelAndView mav, CriteriaMms cri, HttpSession session, HttpServletRequest request/*, @RequestParam(name="userid") String userid*/) {
 		//https://to-dy.tistory.com/90?category=700248 참고
-		Member m = (Member) session.getAttribute("loginMember");
+		
+		Member m = null;
+		if(session.getAttribute("loginMember") != null) {
+		m = (Member) session.getAttribute("loginMember");
+		}else if(session.getAttribute("loginMember") == null && session.getAttribute("googleLogin") != null) {
+			System.out.println("구글 로그인멤버 : " +session.getAttribute("googleLogin"));
+	          String name = request.getParameter("name");
+	          String profile = request.getParameter("profile");
+	          System.out.println("name : " + name);
+	          System.out.println("profile : " + profile);
+		}
+		
 		System.out.println("로그인멤버 : " + m);
-		String userid = m.getUser_id();
+		String userid = "user01";
 
 		int count = messageService.selectMessageCount(userid);
 		System.out.println("로그인 아이디 : " + userid);
@@ -90,7 +83,12 @@ public class MessageController {
 	@RequestMapping(value="sentList.do"/*, method=RequestMethod.POST*/)
 	public ModelAndView selectSentList(ModelAndView mav, CriteriaMms cri, HttpSession session) {
 		
-		Member m = (Member) session.getAttribute("loginMember");
+		Member m = null;
+		if(session.getAttribute("loginMember") != null) {
+		m = (Member) session.getAttribute("loginMember");
+		}else if(session.getAttribute("loginMember") == null && session.getAttribute("googleLogin") != null) {
+			m = (Member) session.getAttribute("googleLogin");
+		}
 		System.out.println("로그인멤버 : " + m);
 		String userid = m.getUser_id();
 		
