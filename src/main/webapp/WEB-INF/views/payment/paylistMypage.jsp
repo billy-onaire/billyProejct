@@ -27,9 +27,12 @@ $(document).ready(function(){
 <script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$('#sellList').click(function(){
-		location.href='bookingPage.do';	
-	});//click
+	$('#searchType').click(function(){
+		self.location = 
+			'paymentSearch.do${ pMaker.makeQuery(1) }' +
+					'&searchType=' + $('select option:selected').val() +
+					'&keyword=' + $('#searchType').val();
+	});
 });//ready
 </script>
     <!--  <script type="text/javascript">
@@ -60,7 +63,7 @@ $(function(){
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2><b>구매</b> 내역</h2>bookingPage.do
+						<h2><b>구매</b> 내역</h2><!-- bookingPage.do -->
 					</div>
 					<div class="col-sm-8">						
 						<a id='sellList' class="btn btn-primary"><iclass='material-icons'>payment</i><span>판매 내역</span></a>
@@ -74,7 +77,7 @@ $(function(){
                     <div class="col-sm-3">
 						<div class="show-entries">
 							<span>Show</span>
-							<select class="form-control">
+							<select class="form-control" name='entries'>
 								<option>5</option>
 								<option>10</option>
 								<option>15</option>
@@ -84,20 +87,20 @@ $(function(){
 						</div>
 					</div>
                     <div class="col-sm-9">
-						<button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+						<button type="button" class="btn btn-primary" id='idSearch'><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 							<label>ID</label>
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" name='keyword' value='${ payCri.keyword }' id='keywordInput'>
 						</div>
 						
 						<div class="filter-group">
 							<label></label>
-							<select class="form-control">
-								<option>거래상태</option>
-								<option>Delivered</option>
-								<option>Shipped</option>
-								<option>Pending</option>
-								<option>Cancelled</option>
+							<select class="form-control" name='searchType' id='searchType'>
+								<option value='not' <c:out value='${ payCri.searchType == null ? "selected" : "" }'/>>거래상태</option>
+								<option value='1' <c:out value='${ payCri.searchType eq "1" ? "selected" : "" }'/>>구매완료</option>
+								<option value='2' <c:out value='${ payCri.searchType eq "2" ? "selected" : "" }'/>>취소</option>
+								<option value='3' <c:out value='${ payCri.searchType eq "3" ? "selected" : "" }'/>>거래중</option>
+								<option value='4' <c:out value='${ payCri.searchType eq "4" ? "selected" : "" }'/>>판매완료</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -117,14 +120,14 @@ $(function(){
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ pmList.booking_no }</td>
-                		<td>${ pmList.seller_id }</td>
-                		<td>${ pmList.product_name }</td>
-                		<c:if test='${ pmList.status eq 1 }'>
+                		<td>${ payment.booking_no }</td>
+                		<td>${ payment.seller_id }</td>
+                		<td>${ payment.product_name }</td>
+                		<c:if test='${ payment.status eq 1 }'>
                 			<td><span class="status text-success">&bull;</span> 구매완료</td>
                 			<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
                 		</c:if>
-                		<c:if test='${ pmList.status eq 2 }'>
+                		<c:if test='${ payment.status eq 2 }'>
                 			<td><span class="status text-danger">&bull;</span> 취소</td>
                 			<td> </td>
                 		</c:if>
@@ -177,13 +180,15 @@ $(function(){
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
                             	<c:if test='${ pageMaker.prev }'>
-                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ pageMaker.startPage-1 }"/>'></a></li>
+                            		<li class='page-item'><a class='page-link' href='<c:url value="paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }"/>'>이전</a></li>
                             	</c:if>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
-                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ idx }"/>'>${ idx }.</a></li>
+                            		<li class='page-item' <c:out value="${ pageMaker.cri.page == idx ? 'class=active' : '' }"/>>
+                            			<a class='page-link' href='<c:url value="paymentSearch.do${ pageMaker.makeSearchUri(idx) }"/>'>${ idx }.</a>
+                            		</li>
                             	</c:forEach>
-                            	<c:if test='${ pageMaker.next }'>
-                            		<li class='page-item'><a class='page-link' href='<c:url value="paylist.do?page=${ pageMaker.endPage+1 }"/>'></a></li>
+                            	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
+                            		<li class='page-item'><a class='page-link' href='<c:url value="paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }"/>'>다음</a></li>
                             	</c:if>
                                 <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
                                 <li class="page-item"><a class="page-link" href="#">02.</a></li>

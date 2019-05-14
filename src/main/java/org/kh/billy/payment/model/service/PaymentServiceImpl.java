@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.kh.billy.payment.model.dao.PaymentDao;
 import org.kh.billy.payment.model.vo.Payment;
+import org.kh.billy.payment.model.vo.PaymentCri;
 import org.kh.billy.payment.model.vo.PaymentPaging;
+import org.kh.billy.payment.model.vo.PaymentSearchCri;
 import org.kh.billy.product.model.vo.Criteria;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ArrayList<Payment> selectPaymentPList(Criteria cri) {
+	public ArrayList<Payment> selectPaymentPList(PaymentCri cri) {
 		
 		return paymentDao.selectPaymentPList(mybatisSession, cri);
 	}
@@ -73,5 +75,17 @@ public class PaymentServiceImpl implements PaymentService {
 	public int selectPaymentCount(String userId) {
 
 		return paymentDao.selectPaymentCount(mybatisSession, userId);
+	}
+
+	@Override
+	public ArrayList<Payment> listCriteria(PaymentSearchCri payCri) {
+		List<Payment> pmList = paymentDao.listCriteria(mybatisSession, payCri);
+		return (ArrayList<Payment>)pmList;
+	}
+
+	@Override
+	public int searchListCount(PaymentSearchCri payCri) {
+		
+		return paymentDao.seachListCount(mybatisSession, payCri);
 	}
 }
