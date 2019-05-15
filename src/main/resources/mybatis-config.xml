@@ -26,6 +26,7 @@
          <typeAlias type="org.kh.billy.member.model.vo.Member" alias="Member" />
          <typeAlias type="org.kh.billy.sms.model.vo.Sms" alias="Sms" />
          <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
+         <typeAlias type="org.kh.billy.report.model.vo.ReportList" alias="ReportList"/>
    </typeAliases>
    <mappers>
 	  <mapper resource="mappers/productDetail-mapper.xml" />
