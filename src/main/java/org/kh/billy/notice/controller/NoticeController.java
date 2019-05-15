@@ -1,4 +1,4 @@
-/*package org.kh.billy.notice.controller;
+package org.kh.billy.notice.controller;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,10 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@RequestMapping("selectnoticelist.do")
-	public void selectNoticeList(Notice notice, NoticePage noticePage) {
-		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage); 
+	public String selectNoticeList(Notice notice, NoticePage noticePage) {
+		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
+		System.out.println("공지 리스트 확인용");
+		return "notice/noticeList";
 	}
 	
 	@RequestMapping(value="insertNotice.do", method=RequestMethod.POST)
@@ -40,4 +42,3 @@ public class NoticeController {
 		return null;
 	}
 }
-*/

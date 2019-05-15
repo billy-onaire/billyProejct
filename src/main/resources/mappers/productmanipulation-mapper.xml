@@ -161,6 +161,12 @@ where X.rnum > #{pageStart}
 		where img_no = (select img_no from product where product_no = #{product_no}) 
 	</update>
 	
+	<update id="deleteMyProduct" parameterType="int">
+		update product
+		set	delete_yn = 'Y'
+		where product_no = #{productNo}
+	</update>
+	
 	<!-- <![CDATA[
 		SELECT *
         FROM product

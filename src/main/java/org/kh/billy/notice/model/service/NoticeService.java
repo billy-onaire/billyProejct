@@ -1,4 +1,4 @@
-/*package org.kh.billy.notice.model.service;
+package org.kh.billy.notice.model.service;
 
 import java.util.ArrayList;
 
@@ -16,4 +16,3 @@ public interface NoticeService {
 	int deleteNotice(int noticeNo);
 
 }
-*/

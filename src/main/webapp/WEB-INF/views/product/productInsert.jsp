@@ -57,7 +57,7 @@
 
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-	<c:import url="../common/nav.jsp" />
+	   <c:import url="../common/nav.jsp" />
        
 
         <!-- Product Details Area Start -->
@@ -125,11 +125,7 @@
                                   <label for="usr">대여가(원):</label>
                                   <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" required style="width: 50%">
                               </div>
-                              
-                            <!-- <div class="container">
-                                <br>
-                                <br>
-                                <div class="form-horizontal"> -->
+                                                          
                                   <div class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label">상품사진(최대 4장 가능)</label>
@@ -139,9 +135,8 @@
                                             </div>
                                         </div>
                                     </div>                     
-                                    </div>              
-                                <!-- </div>  
-                            </div> -->
+                                  </div>             
+                             
 
                           <h3>직거래주말여부</h3>
                           <div class="form-check">
@@ -283,6 +278,8 @@
                 buttonText: "날짜선택",       // 버튼의 대체 텍스트
                 dateFormat: "yy-mm-dd",       // 날짜의 형식
                 format: 'yyyy-mm-dd',
+                minDate: 0,
+                maxDate: 29,
                 changeMonth: true,          // 월을 이동하기 위한 선택상자 표시여부
                 //minDate: 0,           // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
                 onClose: function( selectedDate ) { 
@@ -300,6 +297,8 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
+                minDate: 0,
+                maxDate: 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가
                 onClose: function( selectedDate ) {
@@ -341,7 +340,7 @@
                 maxCount:         4,
                 rowHeight:        '200px',
                 groupClassName:   'col-md-4 col-sm-4 col-xs-6',
-                maxFileSize:      '5000000',
+                maxFileSize:      '2000000',
                 placeholderImage: {
                     image: '/billy/resources/img/productinput/placeholder.png',
                     width : '100%'
@@ -364,7 +363,7 @@
                 },
                 onSizeErr : function(index, file){
                     console.log(index, file,  'file size too big');
-                    alert('파일 사이즈가 너무 큽니다.');
+                    alert('2MB 크기까지만 등록 가능합니다.');
                 }
             });
         });
@@ -484,7 +483,7 @@
             }
 
 
-             if(confirm("수정 하시겠습니까?")) {
+             if(confirm("등록 하시겠습니까?")) {
                 
             } else {
             return false;

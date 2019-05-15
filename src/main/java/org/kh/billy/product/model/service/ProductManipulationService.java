@@ -12,7 +12,7 @@ public interface ProductManipulationService {
 
 	ArrayList<Product> selectProductList(Criteria cri);
 
-	int deleteProduct(int productNo);
+	int deleteMyProduct(int productNo);
 
 	int selectProductCount(String userId);
 

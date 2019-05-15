@@ -31,6 +31,22 @@
         cursor:pointer;
         width: 8%;
       }
+
+      .line{
+        width: 80px;
+        height: 3px;
+        background-color: #fbb710;
+        margin-bottom: 15px;
+        display: block;
+      }
+        .product-price{
+        font-size: 24px;
+        font-weight: 400;
+        color: #fbb710;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
       .upreview{
         width: 160px;
       	height: 180px;
@@ -60,6 +76,9 @@
         display: none;
 
       }
+      /*.form-control{
+        background-color: #f5f7fa;
+      }*/
     </style>
     
     
@@ -104,7 +123,7 @@
                         <!-- Product Meta Data -->
                         <div class="product-meta-data">
                             <div class="line"></div>
-                            <p class="product-price">상품등록</p>
+                            <p class="product-price">상품수정</p>
 
                         </div>
                         
@@ -241,7 +260,7 @@
                                     	<img src="/billy/resources/files/product/${product.third_img }" class="imgbackground">
                                       
                                     </c:if>
-									<c:if test="${empty product.third_img }">
+									                   <c:if test="${empty product.third_img }">
                                     <img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
                                     </c:if>
                                     </p>
@@ -262,11 +281,11 @@
                                   </button>
                                   <label for="file-input4">
                                     <p  id="imgbackground4">
-                                    <c:if test="${not empty product.fourth_img }">
+                                    <c:if test="${not empty product.fourth_img }"><!-- DB에 사진이 없을 경우 -->
                                     	<img src="/billy/resources/files/product/${product.fourth_img }" class="imgbackground">
                                       <!-- <input type="hidden" value="${product.fourth_img }" name="imgfile[]"> -->
                                     </c:if>
-                                    <c:if test="${empty product.fourth_img }">
+                                    <c:if test="${empty product.fourth_img }"><!-- DB에 사진이 없을 경우 -->
                                     	<img src="/billy/resources/img/productinput/placeholder.png" class="imgbackground">
                                     </c:if>
                                     </p>
@@ -556,6 +575,8 @@
                 buttonText: "날짜선택",       // 버튼의 대체 텍스트
                 dateFormat: "yy-mm-dd",       // 날짜의 형식
                 format: 'yyyy-mm-dd',
+                minDate :0,
+                maxDate :29,
                 changeMonth: true,          // 월을 이동하기 위한 선택상자 표시여부
                 //minDate: 0,           // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
                 onClose: function( selectedDate ) { 
@@ -573,6 +594,8 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
+                minDate : 0,
+                maxDate : 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가
                 onClose: function( selectedDate ) {
@@ -606,47 +629,7 @@
             });
         });*/
         </script>
-        <script type="text/javascript">
-        $(function(){
-
-            $("#coba").spartanMultiImagePicker({
-                fieldName:        'fileUpload[]',
-                maxCount:         4,
-                rowHeight:        '200px',
-                groupClassName:   'col-md-4 col-sm-4 col-xs-6',
-                maxFileSize:      '5000000',
-                placeholderImage: {
-                    image: '/billy/resources/img/productinput/placeholder.png',
-                    width : '100%'
-                },
-                dropFileLabel : "Drop Here",
-                onAddRow:       function(index){
-                    console.log(index);
-                    console.log('add new row');
-                },
-                onRenderedPreview : function(index){
-                    console.log(index);
-                    console.log('preview rendered');
-                },
-                onRemoveRow : function(index){
-                    console.log(index);
-                },
-                onExtensionErr : function(index, file){
-                    console.log(index, file,  'extension err');
-                    alert('png, jpg 파일만 업로드 가능합니다.')
-                },
-                onSizeErr : function(index, file){
-                    console.log(index, file,  'file size too big');
-                    alert('파일 사이즈가 너무 큽니다.');
-                }
-            });
-        });
-        </script>
-        <script type="text/javascript">
-          $("#coba").find('img').each(function(){
-            console.log($(this).attr('src'));
-          });
-        </script>
+       
 
         <script type="text/javascript">
           //가격, 수량 input에 숫자만 입력되게 처리

@@ -1,4 +1,4 @@
-/*package org.kh.billy.notice.model.vo;
+package org.kh.billy.notice.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -80,4 +80,3 @@ public class Notice implements Serializable{
 	
 	
 }
-*/
