@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -58,10 +59,11 @@ public class KakaoSocialController {
 	       
 	       JsonNode userInfo = getKakaoUserInfo(code);	       
 	       System.out.println("카카오 유저 정보: " + userInfo);
-	          
+	       
+	       
+	        String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성  
 	        String name = null;
 	        String email = null;
-	        String thumbnailImage = null;
 	 		String profile = null;
 	        
 	        // 유저정보 카카오에서 가져오기 Get properties
@@ -77,17 +79,16 @@ public class KakaoSocialController {
 	        System.out.println("카카오 name: " + name);
 			System.out.println("profile : " + profile);
         	
+	        social.setName(name);
+	        social.setUser_id(userId);
+	        social.setProfile(profile);
+	        social.setSocial_code(kid);
 	        
 	        if(kid != null) {
-	              kSession.setAttribute("kakaoLogin", kid);
-	              kSession.setAttribute("name", name);
-	              kSession.setAttribute("email", email);
-	              kSession.setAttribute("thumbnailImage ", thumbnailImage );
-	              kSession.setAttribute("profile", profile);
+	              kSession.setAttribute("kakaoLogin", social);
 	              status.setComplete();
 	        }
-	        	model.addAttribute("kid", kid);
-	        
+	        		        
 	        if (socialService.selectCheckId(kid) > 0) {
 	    			return "home";
 	    	} else {
