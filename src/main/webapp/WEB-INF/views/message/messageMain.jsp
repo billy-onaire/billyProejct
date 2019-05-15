@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$('.cart_product_desc').on('click',function(){ 
 		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
 		//팝업창에 출력될 페이지 URL 
-		var popOption = "width=450, height=350, resizable=no, scrollbars=no, status=no;"; 
+		var popOption = "width=450, height=500, resizable=no, scrollbars=no, status=no;"; 
 		//팝업창 옵션(optoin) 
 		window.open(popUrl,"",popOption); 
 		
@@ -118,7 +118,7 @@ $(document).ready(function(){
                                         <tr>
                                             <th>보낸 사람</th>
                                             <th>상품명</th>
-                                            <th style="width: 200px">내용</th>
+                                            <th style="width: 200px">제목</th>
                                             <th>발송일</th>
                                             <th>읽음 여부</th>
                                         </tr>
@@ -134,7 +134,7 @@ $(document).ready(function(){
                                             	${mms.product_name }
                                             </td>
                                             <td class="cart_product_desc" id="${mms.mms_no }" >
-                                                <a href="">${mms.mms_content }</a>
+                                                <a href="">${mms.mms_title }</a>
                                             </td>
                                             <td class="price">
                                             <!-- 여기서는 날짜만 표시하고 상세보기에서 시간까지 표시 -->

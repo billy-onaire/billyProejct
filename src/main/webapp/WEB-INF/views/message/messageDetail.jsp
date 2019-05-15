@@ -44,13 +44,20 @@
 </style>
 
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
 				<div id="mmsWrite">
-					<form role="form" method="get" autocomplete="off">
+				<form action="mmsReply.do" method="post">
 						<input type="hidden" id="mms_no" name="mms_no" value="${list.mms_no }">
-					</form>
+						<input type="hidden" id="product_no" name="product_no" value="${list.product_no }">
+						<input type="hidden" id="product_name" name="product_name" value="${list.product_name }">
+						<input type="hidden" id="recv_id" name="recv_id" value="${list.recv_id }">
+						<input type="hidden" id="sent_id" name="sent_id" value="${list.sent_id }">
+						<input type="hidden" id="mms_title" name="mms_title" value="${list.mms_title }">
+					<!-- <form role="form" method="get" autocomplete="off">
+					</form> -->
 				<!-- 보낸 편지함 기준 -->  
 					<table class="board_view"> 
 
@@ -67,9 +74,9 @@
 						<c:if test="${list.sent_id eq 'testmk' }">
 				<tr> 
 					<th scope="row">보낸사람</th> 
-					<td>${list.recv_id}</td> 
+					<td><input type="text" id="id" value="${list.recv_id}" ></td> 
 					<th scope="row">상품명</th> 
-					<td>${list.product_name }</td> 
+					<%-- <td><input type="text" id="product_name" name="product_name" value="${list.product_name }" ></td>  --%>
 					
 				</tr> 
 				<tr></tr>
@@ -84,8 +91,12 @@
                 <c:if test="${list.recv_read eq 'N'}">
                  	읽지 않음
                  </c:if>
-						</td>
+				</td>
 				<td></td>
+				</tr>
+				<tr>
+				<th>제목</th>
+				<td> ${list.mms_title }</td>
 				</tr>  
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
@@ -105,7 +116,11 @@
 				<th scope="row">작성일</th> 
 				<td colspan=3"><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd KK:mm:ss "/></td> 
 				<td></td>
-				</tr>  
+				</tr>
+				<tr>
+				<th>제목</th>
+				<td> ${list.mms_title }</td>
+				</tr>   
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
 				</tr> 
@@ -117,7 +132,8 @@
 					</table>
 					
 					<br> 					
-							<input type="button" class="button" id="reply" value="답장하기" > 
+							<input type="submit" class="button" id="" value="답장하기" > 
+							</form>
 							<input type="button" class="button" id="delete" value="삭제하기" >
 					<br>
 <script>
@@ -145,28 +161,39 @@ $(function(){
 	 });
 });
 
-$(function(){
-	 $('#reply').on('click',function(){ 
-		var session = "${loginMember.user_id}" //로그인한 사람
-		var sid = "${list.sent_id}";
-		var rid = "${list.recv_id}";
-		console.log(session + ", " + sid + ", " + rid);
-		 var num = "${list.mms_no}"
-		 if(confirm("삭제하시겠습니까?")){
-			 if(sid == session){
-				 location.href="messageToDelSent.do?mms_no=" + num; 
-					
-				 window.opener.document.location.href = window.opener.document.URL;
-			 }
-			 else if(rid == session){
-				 location.href="messageToDelRecv.do?mms_no=" + num; 
-					
-				 window.opener.document.location.href = window.opener.document.URL;
-			 }
+$(function(){ 
+	console.log("${list.sent_id}");
+	console.log($("#mms_no").val());
+	console.log("${list.product_name}");
+	/* 메세지 답변 */ 
+	$('#reply').on('click',function(){ 
+		/* var sendData = {
+				mms_no : $("#mms_no").val(),
+				product_name : $("#product_name").val(),
+				recv_id : $("#id").val()	
+		}; */
+		var recv_id = "${list.sent_id}";
+		console.log($("#mms_no").val());
+		//location.href="mmsReply.do?mms_no=${list.mms_no}&product_name=${list.product_name}&recv_id=${list.sent_id}";
+		location.href="mmsReply.do?message=${list}";
+		
+	 /* $.ajax({
+		url: "mmsReply.do",
+		type: "GET",
+		data: recv_id,
+		dataType: "json",
+		success: function(data){
+			var jsondata = JSON.stringify(data);
 
-		 }
-		 
-	 });
+			alert(jsondata);
+			
+		},
+		error: function(){
+			alert("에러납니다");
+		}
+	}); */	//ajax 닫기 
+
+	}); //클릭 펑션 닫기
 });
 											
 </script>

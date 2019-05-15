@@ -22,6 +22,12 @@ public class MessagePname implements java.io.Serializable{
 	private String sent_del;
 	private int product_no;
 	private String product_name;
+	private String recv_show;
+	private String sent_show;
+	private int mms_originno;
+	private int mms_groupord;
+	private int mms_grouplayer;
+	private String mms_title;
 	
 	
 	public MessagePname() {
@@ -30,7 +36,8 @@ public class MessagePname implements java.io.Serializable{
 
 
 	public MessagePname(int mms_no, String recv_id, String sent_id, String mms_content, Date sent_date, Date read_date,
-			String recv_read, String recv_del, String sent_del, int product_no, String product_name) {
+			String recv_read, String recv_del, String sent_del, int product_no, String product_name, String recv_show,
+			String sent_show, int mms_originno, int mms_groupord, int mms_grouplayer, String mms_title) {
 		super();
 		this.mms_no = mms_no;
 		this.recv_id = recv_id;
@@ -43,6 +50,12 @@ public class MessagePname implements java.io.Serializable{
 		this.sent_del = sent_del;
 		this.product_no = product_no;
 		this.product_name = product_name;
+		this.recv_show = recv_show;
+		this.sent_show = sent_show;
+		this.mms_originno = mms_originno;
+		this.mms_groupord = mms_groupord;
+		this.mms_grouplayer = mms_grouplayer;
+		this.mms_title = mms_title;
 	}
 
 
@@ -156,6 +169,66 @@ public class MessagePname implements java.io.Serializable{
 	}
 
 
+	public String getRecv_show() {
+		return recv_show;
+	}
+
+
+	public void setRecv_show(String recv_show) {
+		this.recv_show = recv_show;
+	}
+
+
+	public String getSent_show() {
+		return sent_show;
+	}
+
+
+	public void setSent_show(String sent_show) {
+		this.sent_show = sent_show;
+	}
+
+
+	public int getMms_originno() {
+		return mms_originno;
+	}
+
+
+	public void setMms_originno(int mms_originno) {
+		this.mms_originno = mms_originno;
+	}
+
+
+	public int getMms_groupord() {
+		return mms_groupord;
+	}
+
+
+	public void setMms_groupord(int mms_groupord) {
+		this.mms_groupord = mms_groupord;
+	}
+
+
+	public int getMms_grouplayer() {
+		return mms_grouplayer;
+	}
+
+
+	public void setMms_grouplayer(int mms_grouplayer) {
+		this.mms_grouplayer = mms_grouplayer;
+	}
+
+
+	public String getMms_title() {
+		return mms_title;
+	}
+
+
+	public void setMms_title(String mms_title) {
+		this.mms_title = mms_title;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -166,9 +239,10 @@ public class MessagePname implements java.io.Serializable{
 		return "MessagePname [mms_no=" + mms_no + ", recv_id=" + recv_id + ", sent_id=" + sent_id + ", mms_content="
 				+ mms_content + ", sent_date=" + sent_date + ", read_date=" + read_date + ", recv_read=" + recv_read
 				+ ", recv_del=" + recv_del + ", sent_del=" + sent_del + ", product_no=" + product_no + ", product_name="
-				+ product_name + "]";
+				+ product_name + ", recv_show=" + recv_show + ", sent_show=" + sent_show + ", mms_originno="
+				+ mms_originno + ", mms_groupord=" + mms_groupord + ", mms_grouplayer=" + mms_grouplayer
+				+ ", mms_title=" + mms_title + "]";
 	}
-
-
-
+	
+	
 }

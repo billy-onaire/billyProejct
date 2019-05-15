@@ -4,8 +4,10 @@ package org.kh.billy.message.controller;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kh.billy.member.model.vo.Member;
@@ -15,12 +17,12 @@ import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.message.model.vo.PageMakerMms;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -40,6 +42,7 @@ public class MessageController {
 		return "message/messageWrite";
 	}
 	
+	
 	@RequestMapping(value="recvList.do"/*, method=RequestMethod.POST*/)
 	public ModelAndView selectRecvList(ModelAndView mav, CriteriaMms cri, HttpSession session, HttpServletRequest request/*, @RequestParam(name="userid") String userid*/) {
 		//https://to-dy.tistory.com/90?category=700248 참고
@@ -56,7 +59,7 @@ public class MessageController {
 		}
 		
 		System.out.println("로그인멤버 : " + m);
-		String userid = "user01";
+		String userid = m.getUser_id();
 
 		int count = messageService.selectMessageCount(userid);
 		System.out.println("로그인 아이디 : " + userid);
@@ -146,23 +149,7 @@ public class MessageController {
 		return mav;
 	}
 	
-	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
-	public ModelAndView insertMessage(Message message, HttpSession session) {
-		
-		
-		//session에서 userid 받아오기
-		Member m = (Member) session.getAttribute("loginMember");
-		System.out.println("로그인멤버 : " + m);
-		String userid = m.getUser_id();
-		System.out.println("userid");
-		message.setSent_id(userid);
-		messageService.insertMessage(message);
-		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
-		System.out.println("작성한 메세지 : " + message);
-		ModelAndView mv = new ModelAndView("redirect:/recvList.do");
-		
-		return mv;
-	}
+
 
 	@RequestMapping(value="messageDetail.do")
 	public ModelAndView selectDetailMessage(ModelAndView mv, @RequestParam int mms_no, HttpSession session) throws Exception{
@@ -177,6 +164,7 @@ public class MessageController {
 		m = messageService.selectDetailMessage(mms_no, userid);
 		System.out.println("no : " +  mms_no);
 		System.out.println("아이디 : " + m.getRecv_id());
+		System.out.println("title : " + m.getMms_title());
 
 
 		System.out.println("상세보기 메세지 출력 : " + m);
@@ -251,13 +239,79 @@ public class MessageController {
 
 		
 	}
-	//페이징처리
+
+	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
+	public ModelAndView insertMessage(Message message, HttpSession session) {
+		
+		
+		//session에서 userid 받아오기
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+		System.out.println("userid");
+		message.setSent_id(userid);
+		messageService.insertMessage(message);
+		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
+		System.out.println("작성한 메세지 : " + message);
+		ModelAndView mv = new ModelAndView("redirect:/recvList.do");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="mmsReply.do")
+	public ModelAndView mmsReplyPage(HttpServletRequest request, ModelAndView mv, MessagePname message) throws IOException{
+		//String id = request.getParameter("recv_id");
+		System.out.println("넘겨받은 message 객체 확인 : " + message);
+		//System.out.println("reply 출력(get) : " + id);
+		//System.out.println("넘겨받은 mms_no 확인 : " + request.getParameter("mms_no"));
+		//System.out.println("넘겨받은 product_name 확인 : " + request.getParameter("product_name"));
+		//System.out.println("넘겨받은 recv_id 확인 : " + request.getParameter("recv_id"));
+		//return "message/messageReply";
+		
+		message.setRecv_id(message.getSent_id());
+		message.setSent_id(message.getSent_id());
+		mv.addObject("m",message);
+		//mv.addObject("mms_no", request.getParameter("mms_no"));
+		//mv.addObject("product_name", request.getParameter("product_name"));
+		//mv.addObject("recv_id", request.getParameter("recv_id"));
+		
+		mv.setViewName("message/messageReply");
+		
+		
+		return mv;
+	}
+	
 	//쪽지 답장
-	public String insertReplyMessage(Message message, @RequestParam int mms_no, HttpServletRequest request) {
+	@RequestMapping(value="insertReply.do", method=RequestMethod.POST)	
+	public ModelAndView insertReplyMessage(MessagePname message, HttpSession session) {
+		//session에서 userid 받아오기
+		System.out.println("컨트롤러 넘어오나요?");
+		
+		//@ResponseBody는 아마 get방식일 때만 될겁니다. 그래서 삭제함.
+		//Component로 연결되어있으면 가능
+		//동욱 작성
+		message.setMms_originno(message.getMms_no());
+		System.out.println("db에 넣기전 message 객체 확인 : " + message);
+		Member m = (Member) session.getAttribute("loginMember");
+		System.out.println("로그인멤버 : " + m);
+		String userid = m.getUser_id();
+		System.out.println("userid");
+		message.setSent_id(userid);
+		
+		messageService.insertReplyMessage(message);
+		/*HashMap<String, String> hstParam = new HashMap<String, String>();
+		
 		
 		messageService.insertReplyMessage(message, mms_no);
+		hstParam.put("mms_no", String.valueOf(mms_no));
+		hstParam.put("recv_id", recv_id);
+		System.out.println("글번호 : " + mms_no);
+		System.out.println("받는 사람 : " + recv_id);
+		System.out.println("답장 메세지에 넘어온 값 확인 : " + message);*/
 		
-		return "message/messageMain";
+		ModelAndView mv = new ModelAndView("redirect:/mclose.do");
+		
+		return mv;
 	}
 	
 

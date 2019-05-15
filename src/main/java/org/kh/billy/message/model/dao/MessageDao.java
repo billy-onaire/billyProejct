@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.maven.execution.MavenSession;
 import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
@@ -57,7 +58,7 @@ public class MessageDao {
 	}
 
 
-	public int insertReplyMesage(SqlSessionTemplate mybatisSession, Message message, int mms_no) {
+	public int insertReplyMesage(SqlSessionTemplate mybatisSession, MessagePname message) {
 		// TODO Auto-generated method stub
 		return mybatisSession.insert("messageMapper.insertReplyMessage", message);
 	}
@@ -120,6 +121,5 @@ public class MessageDao {
 		// TODO Auto-generated method stub
 		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
 	}
-	
 
 }

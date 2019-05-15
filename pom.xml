@@ -299,6 +299,21 @@
         <artifactId>httpcore</artifactId>
         <version>4.4.6</version>
       </dependency>
+      
+<!-- spring-websocket -->
+
+        <dependency>
+
+            <groupId>org.springframework</groupId>
+
+            <artifactId>spring-websocket</artifactId>
+
+            <version>4.0.4.RELEASE</version>
+
+        </dependency>
+
+
+
         
         
 <!-- https://mvnrepository.com/artifact/com.github.spring-social/spring-social-google -->
