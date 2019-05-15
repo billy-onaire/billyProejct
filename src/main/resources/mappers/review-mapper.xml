@@ -35,7 +35,8 @@
 	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">
 		select *
 		from (select rownum rnum, p.* 
-			from (select * from review where product_no = #{productNo} order by review_date desc) p) 
+			from (select * from review 
+				join payment using(payment_no) where review.product_no = #{productNo} order by review_date desc) p) 
 		where rnum between #{start} and #{last}
 	</select>
 	

@@ -91,9 +91,8 @@
 	                	'</span><span class="starR on"></span>';
 	                }
 	
-	            	 list +="<tr>";
-	            	 list +="<td>"+obj.list[i].review_no+"</td>";
-	            	 list +="<td>user01</td>";
+	            	 list +="<tr>";	            	 
+	            	 list +="<td>"+obj.list[i].customer+"</td>";
 	            	 list +="<td>"+point+"</td>";
 	            	 list +="<td>"+decodeURIComponent(obj.list[i].review_content).replace(/\+/gi, " ") + "</td>";
 	            	 list +="<td>"+obj.list[i].review_date+"</td>";
@@ -102,6 +101,7 @@
 	            	 }else{
 	            		list +="<td></td>";
 	            	 }
+	            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";
 	                 list += "</tr>"
 	                 
 				} 
@@ -115,25 +115,42 @@
 				console.log("error code : " + request.status + "\nmessage : " + request.responseText + "\nerror : " + errorData);
 	        }
 	    });    
-		    
-	    $(".datepicker, #qty").on("change", function(){
-	    	var begin = $("#beginDate").val();
-	    	var end = $("#endDate").val();
-	    	var beginArray = begin.split("-");
-			var endArray = end.split("-");
-			
-	    	var beginDate = new Date(beginArray[0], beginArray[1], beginArray[2].substring(0,2));
-	    	var endDate = new Date(endArray[0], endArray[1], endArray[2].substring(0,2));
-	    	var result = (endDate - beginDate)/1000/60/60/24 + 1;
-			var price = ${p.price} * result * $("#qty").val();
-			$("#price").text(price);
-			$("#hiddenPrice").val(price);
-	    });
 
 	}
 	</script>
 	
 	<style type="text/css">
+		/* 대여자 정보 CSS*/
+		.dropbtn:hover, .dropbtn:focus {
+		  cursor:pointer;
+		}
+		
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		}
+		
+		.dropdown-content {
+		  display: none;
+		  position: absolute;
+		  background-color: #f1f1f1;
+		  min-width: 160px;
+		  overflow: auto;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  z-index: 1;
+		}
+		
+		.dropdown-content a {
+		  color: black;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+		
+		.dropdown a:hover {background-color: #ddd;}
+		
+		.show {display: block;}
+		
 		/* 리뷰 테이블 */
 		table.type09 {
 		    border-collapse: collapse;
@@ -312,7 +329,16 @@
                                 </a>
                                 <!-- Ratings & Review -->
                                 <br><div class="ratings-review mb-15 d-flex align-items-center justify-content-between">                          
-                                    <p class="avaibility"><i class="fa fa-circle"></i> 대여자 : ${p.seller_id }</p>                                
+                                    <%-- <p class="avaibility"><i class="fa fa-circle"></i> 대여자 : ${p.seller_id }</p> --%>                               
+                                    <div class="dropdown">
+										  <p onclick="myFunction()" class="dropbtn">대여자 : ${p.seller_id }</p>
+										  <div id="myDropdown" class="dropdown-content">
+										    <a href="#">${p.user_mobile }</a>
+										    <a href="#">쪽지쓰기</a>
+										    <a href="#">Contact</a>
+										  </div>
+									</div>
+										
                                     <div class="review">
                                     	<c:if test="${!empty loginMember }">
 	                                        <a href="goReport.do?pno=${p.product_no }" style="color:red">신고하기</a>
@@ -451,7 +477,7 @@
 							
                             <!-- Add to Cart Form -->
                             <br><br><br>                          
-                            <form class="cart clearfix" method="post" style="clear:both;">
+                            <form id="form" class="cart clearfix" method="post">
                             <table class="type05">
                             <tr>
                             	<th>갯수</th>
@@ -462,11 +488,11 @@
                             
                             <tr>
                             	<th>희망대여시작일</th>
-                            	<td><input type="text" class="datepicker" name="payment_begindate" id="beginDate" placeholder="Select Date.."></td>
+                            	<td><input type="text" class="datepicker" name="payment_begindate" id="beginDate" placeholder="Select Date.." required></td>
                             </tr>
                             <tr>
                             	<th>희망대여반납일</th>
-                            	<td><input type="text" class="datepicker" name="payment_enddate" id="endDate" placeholder="Select Date.."></td>
+                            	<td><input type="text" class="datepicker" name="payment_enddate" id="endDate" placeholder="Select Date.." required></td>
                             </tr>
                             <tr>
                             	<th>가격</th>
@@ -474,7 +500,7 @@
                             </tr>
                             <tr>
                             	<td colspan="2" style="padding:30px">
-                            		<button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
+                            		<button type="button" name="addtocart" value="5" class="btn amado-btn" onclick="formSubmit();">대여신청</button>                            		
                             	</td>
                             </tr>
                             </table>
@@ -491,8 +517,7 @@
             <h3 id="reviewCount"></h3> <br>
             <table class="type09">
 			    <thead>
-			    <tr>
-			    	<th>삭제</th>
+			    <tr>			    	
 			        <th width="150">ID</th>
 			        <th>별점</th>
 			        <th width="350">내용</th>
@@ -591,6 +616,65 @@
 
 			
 		});
+	</script>
+	
+	<script type="text/javascript">
+
+	/* 대여자 ID 눌렀을때 나오는 정보 스크립트 */	
+	/* When the user clicks on the button, 
+	toggle between hiding and showing the dropdown content */
+	function myFunction() {
+	  document.getElementById("myDropdown").classList.toggle("show");
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+	  if (!event.target.matches('.dropbtn')) {
+	    var dropdowns = document.getElementsByClassName("dropdown-content");
+	    var i;
+	    for (i = 0; i < dropdowns.length; i++) {
+	      var openDropdown = dropdowns[i];
+	      if (openDropdown.classList.contains('show')) {
+	        openDropdown.classList.remove('show');
+	      }
+	    }
+	  }
+	}
+	
+	/* 대여신청 가격 계산 자바스크립트 */
+    $(".datepicker, #qty").on("change", function(){
+    	var begin = $("#beginDate").val();
+    	var end = $("#endDate").val();
+    	var beginArray = begin.split("-");
+		var endArray = end.split("-");
+		
+    	var beginDate = new Date(beginArray[0], beginArray[1], beginArray[2]);
+    	var endDate = new Date(endArray[0], endArray[1], endArray[2]);
+    	var result = (endDate - beginDate)/1000/60/60/24 + 1;
+    	if(result < 1){
+    		alert("반납일이 시작일 보다 빠릅니다. 다시 선택해주세요.");
+    		$("#endDate").val("");
+    		return;
+    	}
+    	
+		var price = ${p.price} * result * $("#qty").val();
+		$("#price").text(price);
+		$("#hiddenPrice").val(price);
+    });
+	
+	/* form 전송 스크립트 */
+	function formSubmit(){
+		if($("#beginDate").val() == ""){
+			alert("대여 시작일을 선택해주세요");
+			return;
+		}
+		if($("#endDate").val() == ""){
+			alert("대여 반납일을 선택해주세요");
+			return;
+		}
+    	
+    	$("#form").submit();
+    }
 	</script>
     <!-- Popper js -->
     <script src="/billy/resources/js/popper.min.js"></script>
