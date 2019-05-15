@@ -66,9 +66,9 @@ public class MessageServiceImpl implements MessageService{
 
 
 	@Override
-	public int insertReplyMessage(Message message, int mms_no) {
+	public int insertReplyMessage(MessagePname message) {
 		
-		return messageDao.insertReplyMesage(mybatisSession, message, mms_no);
+		return messageDao.insertReplyMesage(mybatisSession, message);
 	}
 
 	@Override

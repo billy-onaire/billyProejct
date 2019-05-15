@@ -28,18 +28,12 @@ function checkContent(){
 	}
 }
 
-function popupClose(form) {
-    // form의 target을 부모 창으로 설정함            
-    form.target = opener.name;
+ function popupClose(form) {
+
     
     form.submit();
-    
-    if (opener != null) {
-        opener.insert = null;
-        
-        self.close();
-    }
-}
+
+} 
 </script>
 </head>
 
@@ -47,29 +41,31 @@ function popupClose(form) {
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
-				<div id="mmsWrite" style="height:500px;">
-					<form action="insertMms.do" method="post" onsubmit="return checkContent();" target="mmsList.do">
+				<div id="mmsReply" style="height:500px;">
+					<form action="insertReply.do" method="post" >
+					<input type="hidden" id="product_no" name="product_no" value="${m.product_no }">
 						<div class="form-group" >
 							<label for="name">상품명 : </label> <input type="text"
-								class="form-control" name="pname" value="product_name" readonly >
+								class="form-control" name="pname" value="${m.product_name} " readonly >
 							<label for="recvid">받는 사람 : </label> <input type="text"
-								class="form-control" name="recv_id" value="testmk2" readonly style="width: 100px;">
-							<input type="hidden" id="user_id" name="sent_id" value="${loginMember.user_id }">
+								class="form-control" name="recv_id" id="recv_id" value="${m.recv_id }" readonly style="width: 100px;">
+							보내는 사람 : <input type="text" id="user_id" name="sent_id" value="${loginMember.user_id }">
+							<input type="text" id="mms_no" name="mms_no" value="${m.mms_no }">
 						</div>
 
 						<div class="form-group">
 							<label for="title">제목 : </label> <input type="text" 
-								class="form-control" placeholder="반드시 작성해주세요." id="mms_title"
+								class="form-control" placeholder="반드시 작성해주세요." id="mms_title" value="Re: ${m.mms_title }"
 								name="mms_title" required>
 							<label for="content">내용 : </label> <textarea cols="70" rows="6"
 								class="form-control" placeholder="반드시 작성해주세요." id="mms_content"
 								name="mms_content" required></textarea>
 						</div>
 						
-						<input type="button" class="btn btn-warning btn-block"
-							id="mmsWrite" style="color: white" onclick="popupClose(form);" value="보내기" >
+						<input type="submit" class="btn btn-warning btn-block"
+							id="mmsReply" style="color: white" value="보내기" >
 							<input type="button" class="btn btn-warning btn-block"
-							id="mmsWrite" style="color: white" onclick="window.close()" value="취소">
+							id="mmsReply" style="color: white" onclick="window.close()" value="취소">
 					</form>
 				</div>
 			</div>

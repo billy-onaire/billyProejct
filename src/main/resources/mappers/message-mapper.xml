@@ -15,8 +15,14 @@
 		<result property="recv_del" column="recv_del" />
 		<result property="sent_del" column="sent_del" />
 		<result property="product_no" column="product_no" />
+		<result property="recv_show" column="recv_show" />
+		<result property="sent_show" column="sent_show" />
+		<result property="mms_originno" column="mms_originno" />
+		<result property="mms_groupord" column="mms_groupord" />
+		<result property="mms_grouplayer" column="mms_grouplayer" />
+		<result property="mms_title" column="mms_title" />
 	</resultMap>
-	
+
 	<resultMap id="resultMessagePname" type="MessagePname">
 		<id property="mms_no" column="mms_no" />
 		<result property="recv_id" column="recv_id" />
@@ -29,21 +35,27 @@
 		<result property="sent_del" column="sent_del" />
 		<result property="product_no" column="product_no" />
 		<result property="product_name" column="product_name" />
+		<result property="recv_show" column="recv_show" />
+		<result property="sent_show" column="sent_show" />
+		<result property="mms_originno" column="mms_originno" />
+		<result property="mms_groupord" column="mms_groupord" />
+		<result property="mms_grouplayer" column="mms_grouplayer" />
+		<result property="mms_title" column="mms_title" />
 	</resultMap>
 
 	<select id="selectRecvList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
 	 		 <![CDATA[
-        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.recv_show, X.sent_show, X.product_name
+        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.RECV_SHOW, X.SENT_SHOW, X.MMS_ORIGINNO, X.MMS_GROUPORD, X.MMS_GROUPLAYER, X.MMS_TITLE, X.PRODUCT_NAME
 		from ( 
-		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.recv_show, A.sent_show, A.product_name
+		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.RECV_SHOW, A.SENT_SHOW, A.MMS_ORIGINNO, A.MMS_GROUPORD, A.MMS_GROUPLAYER, A.MMS_TITLE, A.PRODUCT_NAME
 		    from (
 		        select m.MMS_NO, m.RECV_ID, m.SENT_ID, m.MMS_CONTENT, m.SENT_DATE, m.READ_DATE, 
-		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name		    	
+		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name, m.MMS_ORIGINNO, m.mms_groupord, m.MMS_GROUPLAYER, m.MMS_TITLE		    	
 		        from MESSAGE m
 		        join product p
 				on m.product_no = p.product_no
-		        order by sent_date desc) A
+		        order by m.mms_originno DESC, m.mms_groupord ASC) A
 		    where rownum <= (#{perPageNum} * #{page}) and recv_id = #{recv_id} and recv_del = 'N' ) x
 		where X.rnum > #{pageStart}
 	
@@ -54,16 +66,16 @@
 	<select id="selectSentList" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
 			<![CDATA[
-        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO,  X.recv_show, X.sent_show, X.product_name
+        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.RECV_SHOW, X.SENT_SHOW, X.MMS_ORIGINNO, X.MMS_GROUPORD, X.MMS_GROUPLAYER, X.MMS_TITLE, X.PRODUCT_NAME
 		from ( 
-		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.recv_show, A.sent_show, A.product_name
+		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.RECV_SHOW, A.SENT_SHOW, A.MMS_ORIGINNO, A.MMS_GROUPORD, A.MMS_GROUPLAYER, A.MMS_TITLE, A.PRODUCT_NAME
 		    from (
 		        select m.MMS_NO, m.RECV_ID, m.SENT_ID, m.MMS_CONTENT, m.SENT_DATE, m.READ_DATE, 
-		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name			    	
+		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name, m.MMS_ORIGINNO, m.mms_groupord, m.MMS_GROUPLAYER, m.MMS_TITLE		    	
 		        from MESSAGE m
 		        join product p
 				on m.product_no = p.product_no
-		        order by sent_date desc) A
+		        order by m.mms_originno DESC, m.mms_groupord ASC) A
 		    where rownum <= (#{perPageNum} * #{page}) and sent_id = #{sent_id} and sent_del = 'N') x
 		where X.rnum > #{pageStart}
 	
@@ -74,16 +86,16 @@
 	 resultMap="resultMessagePname" useCache="true">
 	 
 	 			<![CDATA[
-        select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.recv_show, X.sent_show, X.product_name
-		from (    
-		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.recv_show, A.sent_show, A.product_name
-		     from (     
+  select X.MMS_NO, X.RECV_ID, X.SENT_ID, X.MMS_CONTENT, X.SENT_DATE, X.READ_DATE, X.RECV_READ, X.RECV_DEL, X.SENT_DEL, X.PRODUCT_NO, X.RECV_SHOW, X.SENT_SHOW, X.MMS_ORIGINNO, X.MMS_GROUPORD, X.MMS_GROUPLAYER, X.MMS_TITLE, X.PRODUCT_NAME
+		from ( 
+		    select rownum as rnum, A.MMS_NO, A.RECV_ID, A.SENT_ID, A.MMS_CONTENT, A.SENT_DATE, A.READ_DATE, A.RECV_READ, A.RECV_DEL, A.SENT_DEL, A.PRODUCT_NO, A.RECV_SHOW, A.SENT_SHOW, A.MMS_ORIGINNO, A.MMS_GROUPORD, A.MMS_GROUPLAYER, A.MMS_TITLE, A.PRODUCT_NAME
+		    from (
 		        select m.MMS_NO, m.RECV_ID, m.SENT_ID, m.MMS_CONTENT, m.SENT_DATE, m.READ_DATE, 
-		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name			    	
+		    	m.RECV_READ, m.RECV_DEL, m.SENT_DEL, m.PRODUCT_NO, m.RECV_SHOW, m.sent_show, p.product_name, m.MMS_ORIGINNO, m.mms_groupord, m.MMS_GROUPLAYER, m.MMS_TITLE		    	
 		        from MESSAGE m
 		        join product p
 				on m.product_no = p.product_no
-		        order by sent_date desc) A
+		        order by m.mms_originno DESC, m.mms_groupord ASC) A
 		    where rownum <= (#{perPageNum} * #{page}) and (sent_id = #{sent_id} and sent_del = 'Y' and sent_show = 'N') or (recv_id = #{recv_id} and recv_del = 'Y' and recv_show = 'N')) x
 		where X.rnum > #{pageStart}
 	
@@ -104,12 +116,17 @@
 			default,
 			3,
 			default,
-			default)
+			default,
+			sq_mno.nextval,
+			default,
+			default,
+			#{mms_title})
 	</insert>
 	
 	<select id="selectDetailMessage" parameterType="MessagePname" 
 	 resultMap="resultMessagePname" useCache="true">
-		select m.mms_no, m.sent_id, m.recv_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read
+		<!-- select m.mms_no, m.sent_id, m.recv_id, m.mms_content, m.sent_date, p.product_name, m.read_date, m.recv_read, m.mms_title -->
+		select *
 		from message m
 		join product p
 		on m.product_no = p.product_no
@@ -168,6 +185,31 @@
 	
 	<select id="selectMessageCount3" resultType="int" parameterType="string">
 		select count(*) from message where recv_show = 'N' and sent_show = 'N' and ((sent_id = #{sent_id} and sent_del = 'Y') or (recv_id = #{recv_id} and recv_del = 'Y'))
+	</select>
+	
+	<insert id="insertReplyMessage" parameterType="MessagePname"
+	useGeneratedKeys="true">
+	insert into message values(
+	sq_mno.nextval,
+	#{recv_id},
+	#{sent_id},
+	#{mms_content},
+	sysdate,
+	default,
+	default,
+	default,
+	default,
+	#{product_no},
+	default,
+	default,
+	#{mms_originno},
+	1,
+	1,
+	#{mms_title})
+	</insert>
+	
+	<select id="selectMessageCount2" resultType="int" parameterType="string">
+		select count(*) from message where recv_id = #{recv_id}  and recv_read = 'N' and recv_del = 'N'
 	</select>
 
 </mapper>

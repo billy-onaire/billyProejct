@@ -19,7 +19,7 @@ public interface MessageService {
 
 	int deleteFinalMessage(int mms_no, String userid);
 
-	int insertReplyMessage(Message message, int mms_no);
+	int insertReplyMessage(MessagePname message);
 
 	ArrayList<Message> selectDelList(CriteriaMms cri);
 
