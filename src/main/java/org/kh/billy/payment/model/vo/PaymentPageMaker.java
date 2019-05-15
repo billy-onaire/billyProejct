@@ -22,7 +22,11 @@ public class PaymentPageMaker implements Serializable {
 	private boolean prev;       // 페이징 이전 버튼 활성화 여부
 	private boolean next;       // 페이징 다음 버튼 활서화 여부
 	
-	private PaymentCri cri;       // 앞서 생성한 Criteria를 주입받는다.
+	private PaymentSearchCri cri;       // 앞서 생성한 Criteria를 주입받는다.
+	
+	public PaymentPageMaker(PaymentSearchCri payCri) {
+		this.cri = payCri;
+	}
 
 	public int getTotalCount() {
 		return totalCount;
@@ -34,28 +38,35 @@ public class PaymentPageMaker implements Serializable {
 		calcData();
 	}
 	public String makeSearchUri(int page) {
-		UriComponents uri = UriComponentsBuilder.newInstance()
+		UriComponentsBuilder uri = UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
-				.queryParam("pagePageNum", cri.getPerPageNum())
-				.queryParam("searchType", ((PaymentSearchCri)cri).getSearchType())
-				.queryParam("keyword", encoding(((PaymentSearchCri)cri).getKeyword()))
-				.build();
+				.queryParam("pagePageNum", cri.getPerPageNum());
+		
+		if(((PaymentSearchCri) cri).getSearchType() != null) {
+			uri
+			.queryParam("searchType", ((PaymentSearchCri) cri).getSearchType())
+			.queryParam("keyword", ((PaymentSearchCri) cri).getKeyword());
+		}
 		
 		logger.info("searchType : " + ((PaymentSearchCri)cri).getSearchType());
-		return uri.toUriString();
-	}
-	private String encoding(String keyword) {
-		if(keyword == null || keyword.trim().length() == 0) return "";
-		
-		try {
-			return URLEncoder.encode(keyword, "UTF-8");
-		} catch (Exception e) {
-			return "";
-		}
+		return uri.build().encode().toString();
 	}
 	
 	private void calcData() {
-		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
+		int page = this.cri.getPage();
+		int perPageNum = this.cri.getPerPageNum();
+		
+		endPage = (int)(Math.ceil(page/(double)displayPageNum)*displayPageNum);
+		startPage = (endPage - displayPageNum) + 1;
+		
+		int tempEndPage = (int)(Math.ceil(totalCount/(double)perPageNum));
+		
+		if(endPage > tempEndPage)
+			this.endPage = tempEndPage;
+		
+		prev = (startPage != 1);
+		next = (endPage * perPageNum < totalCount);
+		/*endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
 		
 		startPage = (endPage - displayPageNum) + 1;
 		
@@ -67,7 +78,7 @@ public class PaymentPageMaker implements Serializable {
 		
 		prev = startPage == 1 ? false : true;
 		
-		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
+		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;*/
 	}
 
 	public int getStartPage() {
@@ -114,7 +125,7 @@ public class PaymentPageMaker implements Serializable {
 		return cri;
 	}
 
-	public void setCri(PaymentCri cri) {
+	public void setCri(PaymentSearchCri cri) {
 		this.cri = cri;
 	}
 

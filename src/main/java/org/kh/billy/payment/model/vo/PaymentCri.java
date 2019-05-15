@@ -19,11 +19,10 @@ public class PaymentCri implements Serializable{
     }
     
     public void setPage(int page) {
-    	if(page <=0 ) {
+    	if(page <=0 ) 
     		this.page = 1;
-    		return;
-    	}
-    	this.page = page;
+    	else
+    		this.page = page;
     }
     
     public int getPage() {
@@ -31,11 +30,10 @@ public class PaymentCri implements Serializable{
     }
     
     public void setPerPageNum(int perPageNum) {
-    	if(perPageNum <= 0 || perPageNum > 100) {
+    	if(perPageNum <= 0 || perPageNum > 100)
     		this.perPageNum = 10;
-    		return;
-    	}
-    	this.perPageNum = perPageNum;
+    	else
+    		this.perPageNum = perPageNum;
     }
     
     public int getPerPageNum() {

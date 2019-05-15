@@ -16,14 +16,14 @@ public class Payment implements Serializable {
 	private String customer;
 	private String booking_no;
 	private String seller_id;
-	private String product_name;
+	private String product_title;
 	private String review_status;
 	
 	public Payment() {}
 
 	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
 			Date payment_enddate, String status, int product_no, String customer, String booking_no, String seller_id,
-			String product_name, String review_status) {
+			String product_title, String review_status) {
 		super();
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
@@ -35,7 +35,7 @@ public class Payment implements Serializable {
 		this.customer = customer;
 		this.booking_no = booking_no;
 		this.seller_id = seller_id;
-		this.product_name = product_name;
+		this.product_title = product_title;
 		this.review_status = review_status;
 	}
 
@@ -119,12 +119,12 @@ public class Payment implements Serializable {
 		this.seller_id = seller_id;
 	}
 
-	public String getProduct_name() {
-		return product_name;
+	public String getproduct_title() {
+		return product_title;
 	}
 
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setproduct_title(String product_title) {
+		this.product_title = product_title;
 	}
 
 	public String getReview_status() {
@@ -144,7 +144,7 @@ public class Payment implements Serializable {
 		return "Payment [payment_no=" + payment_no + ", payment_price=" + payment_price + ", payment_quantity="
 				+ payment_quantity + ", payment_begindate=" + payment_begindate + ", payment_enddate=" + payment_enddate
 				+ ", status=" + status + ", product_no=" + product_no + ", customer=" + customer + ", booking_no="
-				+ booking_no + ", seller_id=" + seller_id + ", product_name=" + product_name + ", review_status="
+				+ booking_no + ", seller_id=" + seller_id + ", product_title=" + product_title + ", review_status="
 				+ review_status + "]";
 	}
 }

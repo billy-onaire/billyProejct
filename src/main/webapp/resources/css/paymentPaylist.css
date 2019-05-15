@@ -135,7 +135,7 @@
 	table.table td a:hover {
 		color: #2196F3;
 	}
-	table.table td a.view {        
+	table.table td div.view {        
 		width: 30px;
 		height: 30px;
 		color: #fab336;
@@ -143,9 +143,10 @@
 		border-radius: 30px;
 		text-align: center;
     }
-    table.table td a.view i {
+    table.table td div.view i {
         font-size: 22px;
 		margin: 2px 0 0 1px;
+		cursor: pointer;
     }   
 	table.table .avatar {
 		border-radius: 50%;

@@ -45,130 +45,49 @@ public class PaymentController {
 	
 	static BootpayApi api;
 	
-	@RequestMapping(value="paylist.do")
-	public ModelAndView paymentMyList(@RequestParam(name="entries", defaultValue="10") int entries, PaymentCri cri, ModelAndView model) {
-		String userId = "superje";
-		int count = payService.selectPaymentCount(userId);
-		PaymentPageMaker pageMaker = new PaymentPageMaker();
-		cri.setPerPageNum(entries);
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(count);
-		cri.setSeller_id(userId);
-		
-		ArrayList<Payment> plist = payService.selectPaymentPList(cri);
-		model.addObject("pmList", plist);
-		model.addObject("pageMaker", pageMaker);
-		model.setViewName("payment/paylistMypage");
-		
-		return model;
-		
-	}
-	
 	@RequestMapping(value="paymentSearch.do")
-	public String searchList(@ModelAttribute("searchCri") PaymentSearchCri payCri, Model model) {
-		PaymentPageMaker pageMaker = new PaymentPageMaker();
-		pageMaker.setCri(payCri);
+	public ModelAndView searchList(PaymentSearchCri payCri, ModelAndView mav) {
+		//거래&결제내역
+		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
 		pageMaker.setTotalCount(payService.searchListCount(payCri));
 		
-		model.addAttribute("pmList", payService.listCriteria(payCri));
-		model.addAttribute("pageMaker", pageMaker);
+		mav.addObject("pmList", payService.listCriteria(payCri));
+		mav.addObject("pageMaker", pageMaker);
+		mav.setViewName("payment/paylistMypage");
 		
-		return "payment/paylistMypage";
+		return mav;
 	}
-	/*(@RequestParam(name="pageCount") String pageCount, 
-			@RequestBody PaymentPaging setting, ArrayList<Payment> plist, HttpServletResponse response) throws IOException {
-		int currentPage = setting.getPage();
-		int listCount = setting.getListCount();
-		int totalCount = payService.selectTotalListCount(setting);
+	@RequestMapping("paymentWaiting.do")
+	public ModelAndView paymentWaiting(PaymentSearchCri payCri, ModelAndView mav) {
+		//결제대기 내역
+		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
+		pageMaker.setTotalCount(payService.searchWaitingListCount(payCri));
 		
-		int totalPage = totalCount/listCount;
-		int countPage = Integer.parseInt(pageCount); //페이징 개수
+		mav.addObject("pmList", payService.listWatingCriteria(payCri));
 		
-		if(totalCount % listCount > 0)
-			totalPage++;
-		if(currentPage > totalPage)
-			setting.setPage(totalPage);
-		
-		int startPage = ((currentPage - 1)/10) * countPage + 1;
-		int endPage = startPage + countPage - 1;
-		
-		if(endPage > totalPage)
-			endPage = totalPage;
-		
-		int startList = (currentPage - 1)*listCount + 1;
-		int endList = currentPage * listCount;
-		
-		setting.setTotalCount(totalCount);
-		setting.setTotalPage(totalPage);
-		setting.setStartPage(startPage);
-		setting.setEndPage(endPage);
-		setting.setStartList(startList);
-		setting.setEndPage(endPage);
-		logger.info("setting : " + setting);
-		
-		plist = payService.selectPaymentList(setting);
-		JSONObject job = new JSONObject();
-		JSONArray jar = new JSONArray();
-		for(Payment p : plist) {
-			JSONObject ob = new JSONObject();
-			ob.put("booking_no", p.getBooking_no());
-			ob.put("product_name", p.getProduct_name());
-			ob.put("seller_id", p.getSeller_id());
-			ob.put("status", p.getStatus());
-			
-			jar.add(ob);
-		}
-		JSONObject pagingJson = new JSONObject();
-		pagingJson.put("start", startPage);
-		pagingJson.put("end", endPage);
-		pagingJson.put("currentPage", currentPage);
-		pagingJson.put("totalPage", totalPage);
-		
-		job.put("plist", jar);
-		job.put("page", pagingJson);
-		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.print(job.toString());
-		out.flush();
-		out.close();
-	}*/
-	/*public void payList(ArrayList<Payment> pmList, ModelAndView mav, HttpServletResponse response) throws IOException {
-		pmList = payService.selectPaymentMyList();
-		
-		JSONObject job = new JSONObject();
-		JSONArray jar = new JSONArray();
-		
-		for(Payment p : pmList) {
-			JSONObject ob = new JSONObject();
-			ob.put("booking_no", p.getBooking_no());
-			ob.put("seller_id", p.getSeller_id());
-			try {
-				ob.put("pStatus", URLEncoder.encode(p.getStatus(), "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			jar.add(ob);
-		}
-		job.put("pmList", jar);
-		logger.info("mav payMylist : " + jar.toJSONString());
-		
-		response.setContentType("application/json; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println(jar.toJSONString());
-		out.flush();
-		out.close();
-	}*/
+		return mav;
+	}
 	
 	@RequestMapping(value="bookingPage.do")
-	public String paymentMyList(Payment payment, ArrayList<Payment> myPmList) {
+	public ModelAndView bookingPage(Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
+		//예약 영수증
+		//requestparam으로 customer 꺼내오기. 아직 로그인 못하니까 나중에
+		int re = payService.insertBookingList(payment);
+		System.out.println("re : " + re);
+		String customer = "superje";
+		payment = payService.selectBookingUser(customer);
+		System.out.println("payment : " + payment);
 		
-		return "payment/bookingPage";
+		mav.addObject("payment", payment);
+		mav.setViewName("payment/bookingPage");
+		
+		return mav;
 	}
 	
 	@RequestMapping(value="resultPay.do")
 	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {
-		 pmList = payService.selectPaymentList();
+		//영수증
+		pmList = payService.selectPaymentList();
 		logger.info("payment : " + payment);
 		
 		mav.addObject("pmList", pmList);

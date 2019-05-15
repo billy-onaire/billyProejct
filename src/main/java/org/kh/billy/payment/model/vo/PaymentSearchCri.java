@@ -2,16 +2,20 @@ package org.kh.billy.payment.model.vo;
 
 import java.io.Serializable;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PaymentSearchCri extends PaymentCri implements Serializable {
 	private static final long serialVersionUID = -7952725067099699077L;
 	
 	private String searchType;
 	private String keyword;
 	
-	public PaymentSearchCri() {}
+	public PaymentSearchCri() {
+		this.searchType = null;
+		this.keyword = null;
+	}
 
 	public PaymentSearchCri(String searchType, String keyword) {
-		super();
 		this.searchType = searchType;
 		this.keyword = keyword;
 	}
@@ -31,6 +35,18 @@ public class PaymentSearchCri extends PaymentCri implements Serializable {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	
+	public String makeSearchUri() {
+    	UriComponentsBuilder uri = UriComponentsBuilder.newInstance()
+    			.queryParam("page", getPage())
+				.queryParam("pagePageNum", getPerPageNum());
+    	if(searchType != null) {
+    		uri
+    		.queryParam("searchType", this.searchType)
+    		.queryParam("keyword", this.keyword);
+    	}
+    	return uri.build().encode().toString();
+    }
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
