@@ -36,6 +36,9 @@
 	    // 3.페이징 처리할 ajax셋팅
 	    paging.ajax = ajaxList;
 	    ajaxList();
+	    
+	    //예약페이지이동
+	    
 	});
 	 
 	var ajaxList = function(){    
@@ -451,7 +454,7 @@
 							
                             <!-- Add to Cart Form -->
                             <br><br><br>                          
-                            <form class="cart clearfix" method="post" style="clear:both;">
+                            <form class="cart clearfix" method="post" style="clear:both;" action='bookingPage.do'>
                             <table class="type05">
                             <tr>
                             	<th>갯수</th>
@@ -474,10 +477,12 @@
                             </tr>
                             <tr>
                             	<td colspan="2" style="padding:30px">
-                            		<button type="submit" name="addtocart" value="5" class="btn amado-btn">대여신청</button>
+                            		<button id='goBooking' type='submit' name="addtocart" value="5" class="btn amado-btn">대여신청</button>
                             	</td>
                             </tr>
                             </table>
+                            <input type='hidden' name='seller_id' value='${ p.seller_id }'/>
+                            <input type='hidden' name='product_no' value='${ p.product_no }'/>
                             <input type="hidden" name="payment_price" id="hiddenPrice">
                             </form>
 							

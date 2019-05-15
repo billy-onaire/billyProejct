@@ -66,18 +66,6 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ArrayList<Payment> selectPaymentPList(PaymentCri cri) {
-		
-		return paymentDao.selectPaymentPList(mybatisSession, cri);
-	}
-
-	@Override
-	public int selectPaymentCount(String userId) {
-
-		return paymentDao.selectPaymentCount(mybatisSession, userId);
-	}
-
-	@Override
 	public ArrayList<Payment> listCriteria(PaymentSearchCri payCri) {
 		List<Payment> pmList = paymentDao.listCriteria(mybatisSession, payCri);
 		return (ArrayList<Payment>)pmList;
@@ -87,5 +75,29 @@ public class PaymentServiceImpl implements PaymentService {
 	public int searchListCount(PaymentSearchCri payCri) {
 		
 		return paymentDao.seachListCount(mybatisSession, payCri);
+	}
+
+	@Override
+	public int searchWaitingListCount(PaymentSearchCri payCri) {
+		
+		return paymentDao.searchWaitingListCount(mybatisSession, payCri);
+	}
+
+	@Override
+	public ArrayList<Payment> listWatingCriteria(PaymentSearchCri payCri) {
+		List<Payment> pmList = paymentDao.listWaitingCriteria(mybatisSession, payCri);
+		return (ArrayList<Payment>)pmList;
+	}
+
+	@Override
+	public int insertBookingList(Payment payment) {
+		
+		return paymentDao.insertBookingList(mybatisSession, payment);
+	}
+
+	@Override
+	public Payment selectBookingUser(String customer) {
+		
+		return paymentDao.selectBookingUser(mybatisSession, customer);
 	}
 }

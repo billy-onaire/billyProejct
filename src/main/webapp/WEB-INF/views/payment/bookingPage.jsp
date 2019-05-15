@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,8 +64,8 @@
 														<i class="material-icons">face</i>
 													</span>
 													<div class="form-group label-floating">
-			                                          	<label class="control-label">Seller</label>
-			                                          	<input name="name" type="text" class="form-control" value='dirtyShoes002'>
+			                                          	<label class="control-label">판매자</label>
+			                                          	<input name="name" type="text" class="form-control" value='${ payment.seller_id }'>
 			                                        </div>
 												</div>
 
@@ -83,11 +84,11 @@
 		                                	<div class="col-sm-6">
 		                                    	<div class="form-group label-floating">
 		                                        	<label class="control-label">Product</label>
-	                                        		<input type='text' class='form-control' value='더러운 신발(332364)'/>
+	                                        		<input type='text' class='form-control' value='${ payment.product_title }'/>
 		                                    	</div>
 												<div class="form-group label-floating">
 		                                        	<label class="control-label">Charge</label>
-	                                        		<input type='text' class='form-control' value='54.000₩(3일)'/>
+	                                        		<input type='text' class='form-control' value='${ payment.product_price }₩(${ payment.product_enddate - payment.product_begindate }일)'/>
 		                                    	</div>
 		                                	</div>
 		                            	</div>

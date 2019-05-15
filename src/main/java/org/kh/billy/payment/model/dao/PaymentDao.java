@@ -22,19 +22,26 @@ public class PaymentDao {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentMyList");
 		return (ArrayList<Payment>)pmList;
 	}
-	public ArrayList<Payment> selectPaymentPList(SqlSessionTemplate mybatisSession, PaymentCri cri) {
-		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentPList", cri);
-		return (ArrayList<Payment>)pmList;
-	}
-	public int selectPaymentCount(SqlSessionTemplate mybatisSession, String userId) {
-		return mybatisSession.selectOne("paymentMapper.selectPaymentCount", userId);
-	}
 	public ArrayList<Payment> listCriteria(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.listCriteria", payCri);
 		return (ArrayList<Payment>)pmList;
 	}
 	public int seachListCount(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
 		return mybatisSession.selectOne("paymentMapper.searchListCount", payCri);
+	}
+	public int searchWaitingListCount(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+		return mybatisSession.selectOne("paymentMapper.searchWaitingListCount", payCri);
+	}
+	public ArrayList<Payment> listWaitingCriteria(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+		List<Payment> pmList = mybatisSession.selectList("paymentMapper.listWaitingCriteria", payCri);
+		return (ArrayList<Payment>)pmList;
+	}
+	public int insertBookingList(SqlSessionTemplate mybatisSession, Payment payment) {
+		return mybatisSession.insert("paymentMapper.insertBookingList", payment);
+	}
+	public Payment selectBookingUser(SqlSessionTemplate mybatisSession, String customer) {
+		
+		return mybatisSession.selectOne("paymentMapper.selectBookingUser", customer);
 	}
 	
 	/*public ArrayList<Payment> searchPayment(Payment payment) {}
