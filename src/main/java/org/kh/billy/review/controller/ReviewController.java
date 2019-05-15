@@ -40,12 +40,12 @@ public class ReviewController {
 	public String reviewListPage(Model model, ReviewPaging paging, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		
-		if(session.getAttribute("loginMember") == null && session.getAttribute("kakaoLogin") == null &&
+		/*if(session.getAttribute("loginMember") == null && session.getAttribute("kakaoLogin") == null &&
 				session.getAttribute("googleLogin") == null && session.getAttribute("facebookLogin") == null && 
 				session.getAttribute("NaverLogin") == null) {
 			return "redirect:login.do";
 		}else {
-			/*SocialUser su = null;
+			SocialUser su = null;
 			if(session.getAttribute("loginMember") != null) {
 				Member member = (Member)session.getAttribute("loginMember");
 				paging.setUserId(member.getUser_id());
@@ -61,7 +61,7 @@ public class ReviewController {
 			}else if(session.getAttribute("NaverLogin") != null) {
 				su = (SocialUser)session.getAttribute("NaverLogin");
 				paging.setUserId(su.getUser_id());
-			}*/
+			}
 			List<ReviewList> lists = reviewService.selectListReview(paging);
 	        paging.setTotal(reviewService.selectTotalListReview());
 	        
@@ -69,12 +69,13 @@ public class ReviewController {
 	        model.addAttribute("p", paging);
 
 			return "member/reviewList";
-		}
-		/*if(session == null) {
+		}*/
+		if(session.getAttribute("loginMember") == null) {
 			//return "redirect:login.do";
 			System.out.println("세션 없음");
 		}else {
 			System.out.println("세션 있음"+session);
+			System.out.println(session.getId() + ", " + session.getServletContext());
 			System.out.println("loginuser : " + session.getAttribute("loginMember"));
 			System.out.println("k : " + session.getAttribute("kakaoLogin"));
 			System.out.println("g : " + session.getAttribute("googleLogin"));
@@ -87,7 +88,7 @@ public class ReviewController {
         model.addAttribute("lists", lists);
         model.addAttribute("p", paging);
 
-		return "member/reviewList";*/
+		return "member/reviewList";
 	}
 	
 	@RequestMapping("writeReview.do")

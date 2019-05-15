@@ -18,9 +18,9 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty googleLogin or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
+	'<c:if test="${!empty loginMember}">'
 		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
-	</c:if>
+	'</c:if>'
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
  	 
    	  $("#email").on('blur', function(e){
@@ -167,65 +167,34 @@ a {
 		<%-- <c:import url="../common/nav.jsp" /> --%>
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
-		<div class="container">
+		<div class="container" >
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
-				<c:if test="${!empty kakaoLogin }">
-				  <input type="hidden" name="kid" value="${kakaoLogin.social_code }">
-				</c:if>
-				<c:if test="${!empty googleLogin }">
-				  <input type="hidden" name="gid" value="${googleLogin.social_code }">
-				</c:if>
-				<c:if test="${!empty naverLogin }">
-				  <input type="hidden" name="nid" value="${naverLogin.social_code }">
-				</c:if>
-				<c:if test="${!empty facebookLogin }">
-				  <input type="hidden" name="fid" value="${facebookLogin.social_code }">
-				</c:if>
-				
-				<c:if test="${!empty kakaoLogin }">
-				  <input type="hidden" name="user_id" value="${kakaoLogin.user_id }">
-				</c:if>
-				<c:if test="${!empty googleLogin }">
-				  <input type="hidden" name="user_id" value="${googleLogin.user_id }">
-				</c:if>
-				<c:if test="${!empty naverLogin }">
-				  <input type="hidden" name="user_id" value="${naverLogin.user_id }">
-				</c:if>
-				<c:if test="${!empty facebookLogin }">
-				  <input type="hidden" name="user_id" value="${facebookLogin.user_id }">
-				</c:if>
-				
+				<input type="hidden" name="social_code" value="${loginMember.social_code }">
+				<input type="hidden" name="user_id" value="${loginMember.user_id }">
+				<input type="hidden" name="social_type" value="${loginMember.social_type }">
+								
 				<h1>소셜 회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
-									
-					<!-- 이름받기 -->
-					<c:if test="${!empty kakaoLogin }">
+				
+				<c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook' }">
+					<input type="hidden" name="user_name" value="${loginMember.name }">
+				</c:if>
+				<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' }">
 					<label for="user_name"><b>이름</b></label>
 					<input type="text" placeholder="Enter Name" id="user_name" name="user_name" required>
-					</c:if>				
-					<c:if test="${!empty naverLogin }"> 
-					<input type="hidden" id="user_name" name="user_name" value="${naverLogin.name }" >
-					</c:if> 
-					<c:if test="${!empty googleLogin }">
-					<label for="user_name"><b>이름</b></label>
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" required>
-					</c:if>				
-					<c:if test="${!empty facebookLogin }">
-					<label for="user_name"><b>이름</b></label>
-					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" value="${facebookLogin.name }" required>
-					</c:if>
+				</c:if>
 					
-					<!-- 핸드폰 -->
-					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required>
-					
-					<!-- 이메일 -->
-					<label for="email"><b>이메일</b></label>
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+				<!-- 핸드폰 -->
+				<label for="user_mobile"><b>핸드폰 번호</b></label> 
+				<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required>
+				
+				<!-- 이메일 -->
+				<label for="email"><b>이메일</b></label>
+				<input type="text" placeholder="Enter Email" id="email" name="email" required>
 		
-					<!-- 나머지 -->
-					<label for="address"><b>주소</b></label> 
+				<!-- 나머지 -->
+				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
 				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
 					<div class="input-group-append">

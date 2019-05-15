@@ -1,8 +1,10 @@
 package org.kh.billy.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -65,6 +67,16 @@ public class MemberDao {
 
 	public int updateMemberPwd(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.updateMemberPwd", member);
+	}
+
+	public int selectTotalCount(SqlSessionTemplate session) {
+		return session.selectOne("memberMapper.selectTotalCount");
+	}
+
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate session, Paging paging) {
+		List<Member> list = session.selectList("memberMapper.selectMemberList", paging);
+		ArrayList<Member> mList = (ArrayList<Member>)list;
+		return mList;
 	}
 	
 	

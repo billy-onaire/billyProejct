@@ -85,7 +85,7 @@
 					<li><a href="#" >제품게시글관리</a></li>
 					<li><a href="#" >신고관리</a></li>
 					<li><a href="#" >About us</a></li>
-					<li><a href="#" >회원관리</a></li>
+					<li><a href="memberManagementPage.do" >회원관리</a></li>
 				</ul>
 			</nav>
 			<!-- Button Group -->

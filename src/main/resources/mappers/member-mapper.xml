@@ -59,6 +59,28 @@
       select * from tb_user where user_id = #{user_id}      
    </select>
    
+   <!-- 회원관리 총 게시물수 체크 -->
+   <select id="selectTotalCount" resultType="int">
+   		select count(user_id)
+   		from tb_user
+   		where verify = 'y'
+   		order by user_enroll desc
+   </select>
+   
+   <!-- 회원관리 리스트 조회 -->
+   <select id="selectMemberList" resultType="org.kh.billy.member.model.vo.Paging">
+   		<![CDATA[
+   		select user_id, user_pwd, user_mobile, user_name, email, authkey, 
+		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
+		from (select rownum rnum, user_id, user_pwd, user_mobile, user_name, email, authkey, 
+		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
+		from tb_user
+		where verify = 'y'
+		order by user_enroll desc, user_name desc)
+		where rnum >= #{startPage} and rnum <= #{endPage}
+		]]>
+   </select>
+   
    <insert id = "insertMember" parameterType="Member">
 	  insert into tb_user values(#{user_id}, #{user_pwd}, 
 	  #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'n', #{address}, 

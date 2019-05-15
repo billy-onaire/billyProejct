@@ -1,19 +1,20 @@
 package org.kh.billy.member.controller;
 
-import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthScrollBarUI;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONObject;
 import org.kh.billy.member.model.service.MemberService;
+import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,13 +72,11 @@ public class MemberController {
    //로그인 아이디 체크
    @RequestMapping(value="loginCheck.do", method=RequestMethod.POST)
    public String selectCheckId(Model model,HttpServletRequest request, HttpSession session, SessionStatus status, Member member) {
-	   System.out.println("구글세션 : " + session.getAttribute("googleLogin"));
-	   if(session.getAttribute("googleLogin") != null) {
-		   session.invalidate();
-		   System.out.println("구글세션 날라감");
-	   }
+	  
 	   Member user = memberService.selectCheckId(member.getUser_id());
-
+	   
+	   user.setSocial_type("user");
+	   
 	   if(user != null) {
 		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
 		   session.setAttribute("loginMember", user);
@@ -87,7 +84,6 @@ public class MemberController {
 		   System.out.println(user.getUser_id() + "님 로그인 성공!!");
 		   
 		   return "home";
-		   
 		   }else {
 			   model.addAttribute("message", "로그인 실패");
 			   return "member/memberError";
@@ -263,4 +259,25 @@ public class MemberController {
 	   return mv;
    }
    
+   //회원관리 페이지 이동
+   @RequestMapping(value="memberManagementPage.do")
+   public String memberBoardList(Model model, BasePage bPage) {
+	   Paging paging = new Paging();
+	   paging.setBpage(bPage);
+	   paging.setTotalCount(memberService.selectTotalCount());	//DB에 저장된 회원 총 인원수체크
+	   model.addAttribute("paging", paging);
+	   ArrayList<Member> mList = memberService.selectMemberList(paging);
+	   System.out.println("BasePage : " + bPage);
+	   System.out.println("paging : " + paging);
+	   for(Member member : mList) {
+		   System.out.println("mList : " + member);
+	   }
+	   if(mList != null) {
+		   model.addAttribute("mList", paging);
+		   return "member/memberManagementPage";
+	   }else {
+		   model.addAttribute("message", "조회할 게시글이 없습니다.");
+		   return "member/memberError";
+	   }
+   }
 }
