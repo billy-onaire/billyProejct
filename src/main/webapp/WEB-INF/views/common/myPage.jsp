@@ -40,7 +40,7 @@
                         <li><a href="reviewList.do"><span class="catagories-menu-radios">내가 작성한 후기 </span></a></li>
                         <li><a href="paymentSearch.do"><span class="catagories-menu-radios">거래/결제 내역 </span></a></li>
                         <li><a href="paymentWaiting.do"><span class="catagories-menu-radios">결제대기 내역 </span></a></li>
-                        <li><a href="#"><span class="catagories-menu-radios">신고내역 </span></a></li>
+                        <li><a href="myReport.do"><span class="catagories-menu-radios">신고내역 </span></a></li>
                         <li><a href="recvList.do"><span class="catagories-menu-radios">쪽지 </span></a></li>
                     </ul>
                 </div>

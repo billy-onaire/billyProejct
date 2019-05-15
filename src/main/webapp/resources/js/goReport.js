@@ -28,6 +28,9 @@ comment.addEventListener('keyup', () => {
 const reportBtn = document.querySelector('#reportBtn');
 
 function goAddReport(){
+    if(rContent == ""){
+        rContent = "no contents";
+    }
 
     const requestData = {
         report_no: 0,

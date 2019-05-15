@@ -3,6 +3,7 @@ package org.kh.billy.socialuser.controller;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.kh.billy.member.controller.MemberController;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.SocialUser;
@@ -93,19 +94,22 @@ public class FacebookSocialController {
                 User userProfile = facebook.fetchObject("me", User.class);
                 fid = userProfile.getId();
                 email = userProfile.getEmail();
-                String name = userProfile.getName();
+                
+                String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
+                String name = userProfile.getName(); //소셜 닉네임및 이름
+                
+                social.setUser_id(userId);
+                social.setName(name);
+                social.setSocial_code(fid);
                              
-                System.out.println("Facebook 아이디: " + fid);
+                System.out.println("Facebook socialcode: " + fid);
                 System.out.println("Facebook email: " + email);
                 System.out.println("Facebook name: " + name);
                 
                 if(fid != null) {
-  	              fSession.setAttribute("facebookLogin", fid);
-  	              fSession.setAttribute("name", name);
-  	              fSession.setAttribute("email", email);
-  	              status.setComplete();
-  	        }
-  	        	model.addAttribute("fid", fid);
+  	              fSession.setAttribute("facebookLogin", social);
+  	              status.isComplete(); 
+                }
                 
             } catch (MissingAuthorizationException e) {
                 e.printStackTrace();

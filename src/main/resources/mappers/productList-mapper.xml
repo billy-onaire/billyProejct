@@ -56,7 +56,8 @@
 	</choose>
 	<![CDATA[	
 		AND PRICE >= #{minPrice}
-		AND PRICE <= #{maxPrice}		
+		AND PRICE <= #{maxPrice}
+		AND DELETE_YN = 'N'		
 								GROUP BY  P.PRODUCT_NO, PRODUCT_NAME, PRICE, FIRST_IMG, PRODUCT_DATE
 								ORDER BY ${sort} ) S
 	  				WHERE ROWNUM <= #{endList}) X
@@ -82,7 +83,7 @@
 		AND PRICE >= #{minPrice}
 		AND PRICE <= #{maxPrice}		
 	]]>
-		
+		AND DELETE_YN = 'N'	
 	</select>
 
 
