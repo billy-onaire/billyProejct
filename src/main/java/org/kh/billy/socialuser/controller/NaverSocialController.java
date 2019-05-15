@@ -91,13 +91,14 @@ public class NaverSocialController {
     	
     	String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
     	
+    	social.setUser_id(userId);
+    	social.setSocial_type("naver");
+    	social.setSocial_code(uid);
     	social.setName(name);
     	social.setProfile(profileImage);
-    	social.setUser_id(userId);
-    	social.setSocial_code(uid);
     	
     	if(uid != null) {
-    		nSession.setAttribute("naverLogin", social);
+    		nSession.setAttribute("loginMember", social);
     		status.isComplete();
     	}
     	

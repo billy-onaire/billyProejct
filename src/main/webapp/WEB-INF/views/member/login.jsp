@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>billy login</title>
+<title>Billy - login</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -45,6 +45,7 @@
 		line-height: 26px;
         font-weight: bold;
 		text-align: center;
+		border: none;
 		background: #FF9F00;
     }
     .social-btn .btn {
@@ -79,9 +80,7 @@
 		position: relative;
 		top: 2px;
 	}
-	.fa-kakao-talk{
-		background-image: url('../../resources/img/social-img/카카오톡로고.png');
-	}
+	
     .or-seperator {
         margin: 50px 0 15px;
         text-align: center;
