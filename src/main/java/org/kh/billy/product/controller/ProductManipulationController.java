@@ -67,7 +67,7 @@ public class ProductManipulationController {
 		//System.out.println("메스드는 들어가지는지?");
 		
 		ArrayList<Product> list = pms.selectProductList(cri);
-		System.out.println("리스트 확인 : " + list);
+		//System.out.println("리스트 확인 : " + list);
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		return "product/myProductList";
@@ -165,7 +165,7 @@ public class ProductManipulationController {
 	public ModelAndView selectMyUpdateView(ModelAndView mv, @RequestParam(name="product_no") int productNo) {
 		ProductForUpdate product = pms.selectMyProduct(productNo);
 		product.setPcategory_name(product.getPcategory_name().toUpperCase());
-		System.out.println("상품확인 : " + product);
+		//System.out.println("상품확인 : " + product);
 		mv.addObject("product",product);
 		mv.setViewName("product/productUpdate");
 		return mv;
@@ -174,18 +174,20 @@ public class ProductManipulationController {
 	@RequestMapping(value="myproductupdate.do",method=RequestMethod.POST)
 	public String updateMyProduct(ProductForUpdate product, @RequestParam(name="files1") MultipartFile file1, @RequestParam(name="files2") MultipartFile file2, @RequestParam(name="files3") MultipartFile file3, @RequestParam(name="files4") MultipartFile file4, 
 							@RequestParam(name="imgfile[]") String[] img, HttpServletRequest request, @RequestParam("sel1") String pcategory_name, @RequestParam("sel2") String sub_pcategory_name) throws IllegalStateException, IOException {//, @RequestParam(name="") MultipartFile[] file
-		System.out.println("수정하면서 넘겨받은 주 카테고리 : " + pcategory_name);
-		System.out.println("수정하면서 넘겨받은 세부 카테고리 : " + sub_pcategory_name);
+		//해결안 한 문제 : DB에는 사진이 있는데 실제 사진이 없는 경우 -> productUpdate.jsp에서 사진이 안 보이는 걸로 나옴->placeholder.jpg 이미지로 대체하게 해야 함.
+		
+		//System.out.println("수정하면서 넘겨받은 주 카테고리 : " + pcategory_name);
+		//System.out.println("수정하면서 넘겨받은 세부 카테고리 : " + sub_pcategory_name);
 		
 		//카테고리 이름을 그대로 사용하거나 새로 수정헀을 수 있기 때문에 @RequestParam으로 값을 넘겨 받습니다.
 		product.setPcategory_name(pcategory_name.toLowerCase());
 		product.setSub_pcategory_name(sub_pcategory_name);
-		System.out.println("수정할 상품 : " + product);
+		//System.out.println("수정할 상품 : " + product);
 		
 		//기존의 사진 유무, 이름을 확인합니다.
-		for(int i=0; i<img.length;i++) {
+		/*for(int i=0; i<img.length;i++) {
 			System.out.println("기존의" + i + "번째 사진 이름 : "+img[i]);
-		}
+		}*/
 		//기존의 사진 1 2 3 4 2번 을 삭제하고 컨트롤러로 전송하면 img.length는 3이고  1 3 4 사진 전송//p태그 밖으로 꺼냈음
 		//ProductForUpdate oldProduct = pms.selectMyProduct(productNo);
 		//System.out.println("기존의 상품 확인"+oldProduct);
@@ -357,10 +359,14 @@ public class ProductManipulationController {
 	}
 	
 	@RequestMapping(value="myproductdelete.do",method=RequestMethod.POST)
-	public String deleteProduct(Product product) {
-		int productNo = product.getProduct_no();
-		int result = pms.deleteProduct(productNo);
-		return "redirect:myproductlist.do?userid=" + product.getSeller_id();
+	public String deleteMyProduct(@RequestParam(name="product_no") int productNo, HttpServletRequest request) {
+		System.out.println("삭제 product_no 확인 : " + productNo);
+		System.out.println("reuqest로 product_no 확인 : " + request.getParameter("product_no"));
+		if(pms.deleteMyProduct(productNo) > 0)
+			System.out.println("상품 삭제 성공");
+		else
+			System.out.println("상품 삭제 실패");
+		return "redirect:myproductlist.do?";
 	}
 	
 }

@@ -18,15 +18,12 @@ public class ProductManipulationDao {
 	}
 
 	public ArrayList<Product> seleteMyProductList(SqlSessionTemplate session, Criteria cri) {
-		
-		//List<Notice> list = session.selectList("noticeMapper.selectTop5Write");
 		List<Product> list = session.selectList("productManipulationMapper.seleteMyProductList", cri);
 		return (ArrayList<Product>)list;
 	}
 
-	public int productDelete(SqlSessionTemplate session, int productNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMyProduct(SqlSessionTemplate session, int productNo) {
+		return session.update("productManipulationMapper.deleteMyProduct", productNo);
 	}
 
 	public int selectProductCount(SqlSessionTemplate session, String userId) {

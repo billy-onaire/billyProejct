@@ -1,4 +1,4 @@
-/*package org.kh.billy.notice.model.vo;
+package org.kh.billy.notice.model.vo;
 
 import java.io.Serializable;
 
@@ -151,4 +151,3 @@ public class NoticePage implements Serializable {
 	
 	
 }
-*/

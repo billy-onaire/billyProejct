@@ -30,8 +30,8 @@ public class ProductManipulationServiceImpl implements ProductManipulationServic
 	}
 
 	@Override
-	public int deleteProduct(int productNo) {
-		return pmd.productDelete(mybatisSession, productNo);
+	public int deleteMyProduct(int productNo) {
+		return pmd.deleteMyProduct(mybatisSession, productNo);
 		
 	}
 

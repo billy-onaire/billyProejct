@@ -1,4 +1,4 @@
-/*package org.kh.billy.notice.model.dao;
+package org.kh.billy.notice.model.dao;
 
 import java.util.ArrayList;
 
@@ -30,4 +30,3 @@ public class NoticeDao {
 	}
 
 }
-*/
