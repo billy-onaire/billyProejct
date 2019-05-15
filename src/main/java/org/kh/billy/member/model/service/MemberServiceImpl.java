@@ -7,7 +7,9 @@ import javax.inject.Inject;
 import org.kh.billy.common.MailHandler;
 import org.kh.billy.common.TempKey;
 import org.kh.billy.member.model.dao.MemberDao;
+import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
+import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,5 +133,15 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int updateMemberPwd(Member member) {
 		return memberDao.updateMemberPwd(mybatisSession, member);
+	}
+
+	@Override
+	public int selectTotalCount() {
+		return memberDao.selectTotalCount(mybatisSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectMemberList(Paging paging) {
+		return memberDao.selectMemberList(mybatisSession, paging);
 	}
 }

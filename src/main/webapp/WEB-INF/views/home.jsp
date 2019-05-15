@@ -15,29 +15,20 @@
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	<c:if test="${!empty googleLogin or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
-	<c:if test="${!empty googleLogin}">
-	 	var sid = $("#sid").val();
-	</c:if>
-	<c:if test="${!empty naverLogin}">
-		var sid = ${naverLogin.social_code};
-	</c:if>
-	<c:if test="${!empty kakaoLogin}">
-		var sid = ${kakaoLogin.social_code};
-	</c:if>
-	<c:if test="${!empty facebookLogin}">
-		var sid = ${facebookLogin.social_code};
-	</c:if>
+	'<c:if test="${!empty loginMember}">'
+		
+	var sid = "${loginMember.social_code}";
+	
 	$.ajax({
 		url: "socialCheck.do",
 		data: {
 			sid: sid
 		},
-		type: "get",
+		type: "post",
 		dataType: "json",
 		success: function(result){
 			if(result.hashMap.fail == "fail"){
-				location.href="socialEnroll.do";	
+				location.href="socialEnroll.do";
 			} 
 		},error: function(request, status, errorData){
 			console.log("error code : " + request.status
@@ -45,8 +36,8 @@ $(function(){
 					+ "\nerror : " + errorData);
 		}
 	});//ajax
-	</c:if>
-});//ready
+	'</c:if>'
+});//ready 
 </script>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">

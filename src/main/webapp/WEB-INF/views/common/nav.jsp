@@ -58,26 +58,27 @@
                 <a href="main.do" class="billya"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
             </div>
             <!-- Cart Menu -->
-            <c:if test="${empty googleLogin and empty loginMember and empty naverLogin and empty kakaoLogin and empty facebookLogin}">
+            <c:if test="${empty loginMember}">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
             </div>
        		</c:if>
-       		<c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}">
+       		<%-- <c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}"> --%>
+       		<c:if test="${!empty loginMember}">
        			<div class="cart-fav-search mb-100" id="socialLogin">
-       			<c:if test="${!empty googleLogin}">
-       			<img id="google_img"  src="${googleLogin.profile }">&nbsp; <span id="pname">${googleLogin.name }님</span>
+       			<c:if test="${loginMember.social_type eq 'google'}">
+       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${loginMember.name }님</span>
        			</c:if>
-       			<c:if test="${!empty naverLogin}">
-       			<img id="google_img"  src="${naverLogin.profile }">&nbsp; <span id="pname">${naverLogin.name }님</span>
+       			<c:if test="${loginMember.social_type eq 'naver'}">
+       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${loginMember.name }님</span>
        			</c:if>
-       			<c:if test="${!empty kakaoLogin}">
+       			<c:if test="${loginMember.social_type eq 'kakao'}">
        			<img id="google_img"  src="${kakaoLogin.profile }">&nbsp; <span id="pname">${kakaoLogin.name }님</span>
        			</c:if>
-       			<c:if test="${!empty facebookLogin}">
+       			<c:if test="${loginMember.social_type eq 'facebook'}">
        			<img id="facebook_img"  src="/billy/resources/img/social-img/fLogo.JPG">&nbsp; <span id="pname">${facebookLogin.name }님</span>
        			</c:if>		
-       			<c:if test="${!empty loginMember  }">
+       			<c:if test="${loginMember.social_type eq 'user' }">
        			<span id="pname">${loginMember.user_name }님</span>
        			</c:if>
                 <a href="logout.do">로그아웃</a>
@@ -96,7 +97,7 @@
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-                <a href="showlist.do" class="btn amado-btn mb-15" >채팅</a>
+                <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
                 <a href="resultPay.do" class="btn amado-btn mb-15" >PAYMENT</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->

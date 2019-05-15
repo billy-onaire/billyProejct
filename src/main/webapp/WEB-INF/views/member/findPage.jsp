@@ -115,7 +115,7 @@
     								+ "\nmessage : " + request.responseText
     								+ "\nerror : " + errorData);
     						}
-    					});//a-ajax
+    					});//ajax
     				}); //click
     			}
     		},error: function(request, status, errorData){

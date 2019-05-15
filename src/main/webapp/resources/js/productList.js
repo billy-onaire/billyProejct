@@ -245,7 +245,7 @@ function numberWithCommas(x) {
 // 페이지 로드시 AJAX 실행
 document.addEventListener('DOMContentLoaded', () => {
     const tempUrl = window.location.search.substring(1);
-    console.log(tempUrl);
+    
     if (tempUrl) {
         const cv = tempUrl.split('=');
         console.log(cv[1]);
@@ -278,9 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     history.pushState(pushData, 'page', 'showlist.do#page=1');
 })
 
-window.onpopstate = (event)=>{
-    alert(on);
-    console.log(history.state);
+window.onpopstate = ()=>{
     requestProductListAjax(history.state);
 }
 

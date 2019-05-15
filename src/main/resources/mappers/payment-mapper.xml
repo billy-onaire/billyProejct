@@ -15,51 +15,65 @@
 		<result property="customer" column="customer" />
 		<result property="booking_no" column="booking_no" />
 		<result property="seller_id" column="seller_id" />
-		<result property="product_name" column="product_name" />
+		<result property="product_title" column="product_title" />
 		<result property="review_status" column="review_status" />
 	</resultMap>
+	
+	<insert id="insertBookingList" parameterType="payment" useGeneratedKeys="true">
+		insert into payment values
+		(SQ_PAYNO.nextval, #{ payment_price }, #{ payment_quantity }, #{ payment_begindate }, #{ payment_enddate }, 
+		 '3', #{ product_no }, 'superje', 
+		 'BK_'||SQ_BKNO.nextval, #{ seller_id }, #{ product_title }, default)
+	</insert>
+	
+	<select id="selectBookingUser" parameterType="String" resultMap="resultPayment">
+		select * from payment 
+		where rownum = 1 and customer = #{ customer }
+		order by payment_no desc;
+	</select>
 	<!-- select booking_no, pd.seller_id, py.product_title, status
 		from payment py
 		join product pd using (product_no)
 		where status in (1,2) and py.seller_id = pd.seller_id and seller_id = #{ userId } -->
-	
-	<select id="selectPaymentCount" resultType="_int" parameterType="string">
-		select count(*) from payment where seller_id = #{ userId } and status in (1,2)
-	</select>
-	
-	<select id="selectPaymentPList" resultMap="resultPayment" parameterType="hashmap">
-	<![CDATA[
-		select o.rm, o.booking_no, o.payment_price, o.status, o.product_name, o.seller_id, o.customer
-		from
-		(
-			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_name, i.seller_id, i.customer
-			from
-			(
-				select booking_no, payment_price, status, product_name, seller_id, customer
-				from payment order by booking_no desc
-			) i
-			where rownum <= (#{ perPageNum} * #{ page }) 
-		) o
-		where o.rm > #{ pageStart }
-	]]>
-	</select>
-	
 	<select id="listCriteria" resultMap="resultPayment">
 	<![CDATA[
-		select o.rm, o.booking_no, o.payment_price, o.status, o.product_name, o.seller_id, o.customer
+		select o.rm, o.booking_no, o.payment_price, o.status, o.product_title, o.seller_id, o.customer
 		from
 		(
-			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_name, i.seller_id, i.customer
+			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_title, i.seller_id, i.customer
 			from
 			(
-				select booking_no, payment_price, status, product_name, seller_id, customer
+				select booking_no, payment_price, status, product_title, seller_id, customer
 				from payment order by booking_no desc
 			) i
 			where rownum <= (#{ perPageNum } * #{ page }) and status in (1,2)
 		) o
 		where o.rm > #{ pageStart }
+		]]>
+			<include refid="search"/>
+		<![CDATA[
 	]]>
-	<include refid="search"/>
+	</select>
+	
+	<select id="listWaitingCriteria" resultMap="resultPayment">
+	<![CDATA[
+		select o.rm, o.booking_no, o.payment_price, o.status, o.product_title, o.seller_id, o.customer
+		from
+		(
+			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_title, i.seller_id, i.customer
+			from
+			(
+				select booking_no, payment_price, status, product_title, seller_id, customer
+				from payment order by booking_no desc
+			) i
+			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
+		) o
+		where o.rm > #{ pageStart }
+		]]>
+			
+		<![CDATA[
+	]]>
+	
 	</select>
 	
 	<select id="searchListCount" resultType="_int">
@@ -69,24 +83,32 @@
 		<include refid="search"/>
 	</select>
 	
-	<select id="selectPaymentList" resultMap="resultPayment">
-		select * from payment
+	<select id="searchWaitingListCount" resultType="_int">
+		select count(*)
+		from payment
+		where status = 3
 	</select>
 	
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == '1'.toString()">
-				and status == #{ keyword } 
+			<if test="searchType == '1'.toString">
+				and status = #{ keyword } 
 			</if>
-			<if test="searchType == '2'.toString()">
-				and status == #{ keyword }
+			<if test="searchType == '2'.toString">
+				and status = #{ keyword }
 			</if>
-			<if test="searchType == '3'.toString()">
-				and status == #{ keyword }
+			<if test="searchType == '3'.toString">
+				and status = #{ keyword }
 			</if>
-			<if test="searchType == '4'.toString()">
-				and status == #{ keyword }
+			<if test="searchType == '4'.toString">
+				and status = #{ keyword }
 			</if>
+		</if>
+	</sql>
+	
+	<sql id="searchSeller">
+		<if test="searchType != null">
+			and seller_id like #{ keyword } 
 		</if>
 	</sql>
 	<!-- <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">

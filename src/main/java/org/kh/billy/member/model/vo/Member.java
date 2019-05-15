@@ -9,7 +9,6 @@ public class Member implements java.io.Serializable{
 
 	private static final long serialVersionUID = 791489045932352347L;
 	
-	   
 	   private String user_id;
 	   private String user_pwd;
 	   private String user_mobile;
@@ -25,10 +24,11 @@ public class Member implements java.io.Serializable{
 	   private int report_count;
 	   private String delete_yn;
 	   private int total_count;
+	   private String social_type;
 	   
 	   public Member() {}
 	   
-	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String authkey, String verify,
+	   public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String authkey, String verify,
 			String address, String my_introduce, String location_area, Date user_enroll, Date user_update,
 			int report_count, String delete_yn, int total_count) {
 
@@ -49,8 +49,29 @@ public class Member implements java.io.Serializable{
 		this.delete_yn = delete_yn;
 		this.total_count = total_count;
 	}
-	
-	
+
+	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String authkey,
+			String verify, String address, String my_introduce, String location_area, Date user_enroll,
+			Date user_update, int report_count, String delete_yn, int total_count, String social_type) {
+		super();
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_mobile = user_mobile;
+		this.user_name = user_name;
+		this.email = email;
+		this.authkey = authkey;
+		this.verify = verify;
+		this.address = address;
+		this.my_introduce = my_introduce;
+		this.location_area = location_area;
+		this.user_enroll = user_enroll;
+		this.user_update = user_update;
+		this.report_count = report_count;
+		this.delete_yn = delete_yn;
+		this.total_count = total_count;
+		this.social_type = social_type;
+	}
+
 	public String getAuthkey() {
 		return authkey;
 	}
@@ -145,6 +166,14 @@ public class Member implements java.io.Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSocial_type() {
+		return social_type;
+	}
+
+	public void setSocial_type(String social_type) {
+		this.social_type = social_type;
 	}
 
 	@Override

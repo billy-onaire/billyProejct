@@ -15,7 +15,7 @@
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-<title>Billy - adminHome</title>
+<title>Billy - 관리자메인</title>
 </head>
 <body>
 <!-- Search Wrapper Area Start -->

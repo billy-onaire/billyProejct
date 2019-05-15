@@ -81,12 +81,14 @@ public class GoogleSocialController {
           String profile = request.getParameter("profile"); //소셜 프로필사진
           
           social.setUser_id(userId);
+          social.setSocial_type("google");
+          social.setSocial_code(uid);
           social.setName(name);
           social.setProfile(profile);
-          social.setSocial_code(uid);
           
           if(uid != null) {
-        	  gSession.setAttribute("googleLogin", social);
+        	  //gSession.setAttribute("googleLogin", social);
+        	  gSession.setAttribute("loginMember", social);
               status.isComplete();
         	}
           
@@ -163,28 +165,12 @@ public class GoogleSocialController {
        public String insertSocialUser(HttpServletRequest request, SocialUser social, Member member, Model model) {
     	  
     	   String userpwd = RandomStringUtils.randomNumeric(15);
-    	   String socialCode = "";
-    	   
-    	   if(request.getParameter("gid") != null) {
-    		   socialCode = request.getParameter("gid");
-    		   social.setSocial_type("google");
-    	   }else if(request.getParameter("nid") != null) {
-    		   socialCode = request.getParameter("nid"); 
-    		   social.setSocial_type("naver");
-    	   }else if(request.getParameter("kid") != null) {
-    		   socialCode = request.getParameter("kid");
-    		   social.setSocial_type("kakao");
-    	   }else if(request.getParameter("fid") != null) {
-    		   socialCode = request.getParameter("fid");
-    		   social.setSocial_type("facebook");
-    	   }
-    	   
-    	 //패스워드 암호화처리
+
+    	   //패스워드 암호화처리
 
     	   member.setUser_pwd(bcryptPE.encode(userpwd));
-    	   member.setAuthkey(socialCode);
+    	   member.setAuthkey(social.getSocial_code());
     	   
-    	   social.setSocial_code(socialCode);
     	   
     	   System.out.println("member : " + member + "\nsocial : " + social);
     	   	   
@@ -205,15 +191,13 @@ public class GoogleSocialController {
        }
        
        //소셜회원가입 유무 체크메소드
-       @RequestMapping(value="socialCheck.do"/*, method=RequestMethod.POST*/)
+       @RequestMapping(value="socialCheck.do", method=RequestMethod.POST)
        public ModelAndView socialCheckInfo(ModelAndView mv, HttpServletRequest request, @RequestParam String sid) {
     	   Map<String, String> map = new HashMap<String, String>();
-    	   System.out.println("sid : " + sid);
+
     	   if(socialService.selectSocialCheck(sid) >  0) {
-    		   System.out.println("성공");
     		   map.put("ok", "ok");
     	   }else {
-    		   System.out.println("실패");
     		   map.put("fail", "fail");
     	   }
     	   mv.addObject(map);
