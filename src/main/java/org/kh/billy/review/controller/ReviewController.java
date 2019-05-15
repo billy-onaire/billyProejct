@@ -151,6 +151,7 @@ public class ReviewController {
 			jr.put("review_date", r.getReview_date().toString());
 			jr.put("review_image", r.getReview_image());
 			jr.put("review_no", r.getReview_no());
+			jr.put("customer", r.getCustomer());
 			jarr.add(jr);
 		}
 		
@@ -167,6 +168,11 @@ public class ReviewController {
 		sendObj.put("p", pagingObj);
 		
 		return sendObj.toJSONString();
-		
+	}
+	
+	@RequestMapping("delReview.do")
+	public String deleteReview(int rno, int pno) {
+		System.out.println("rno : " + rno);
+		return "redirect:pdetail.do?pno="+pno;
 	}
 }

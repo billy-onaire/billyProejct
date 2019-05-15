@@ -15,11 +15,12 @@ public class Review implements java.io.Serializable{
 	private Date review_date;
 	private int payment_no;
 	private int product_no;
+	private String customer;
 	
 	public Review () {}
 
 	public Review(int review_no, String review_content, String review_image, int point, Date review_date,
-			int payment_no, int product_no) {
+			int payment_no, int product_no, String customer) {
 		super();
 		this.review_no = review_no;
 		this.review_content = review_content;
@@ -28,6 +29,7 @@ public class Review implements java.io.Serializable{
 		this.review_date = review_date;
 		this.payment_no = payment_no;
 		this.product_no = product_no;
+		this.customer = customer;
 	}
 
 	public int getReview_no() {
@@ -86,6 +88,14 @@ public class Review implements java.io.Serializable{
 		this.product_no = product_no;
 	}
 
+	public String getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -94,7 +104,7 @@ public class Review implements java.io.Serializable{
 	public String toString() {
 		return "Review [review_no=" + review_no + ", review_content=" + review_content + ", review_image="
 				+ review_image + ", point=" + point + ", review_date=" + review_date + ", payment_no=" + payment_no
-				+ ", product_no=" + product_no + "]";
+				+ ", product_no=" + product_no + ", customer=" + customer + "]";
 	}
 
 	

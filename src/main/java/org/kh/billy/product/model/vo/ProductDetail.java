@@ -33,6 +33,8 @@ public class ProductDetail implements java.io.Serializable{
 	private String fourth_img;
 	private String pcategory_name;
 	private String sub_pcategory_name;
+	private String user_name;
+	private String user_mobile;
 	
 	public ProductDetail() {}
 
@@ -40,7 +42,7 @@ public class ProductDetail implements java.io.Serializable{
 			String progress, Date product_startdate, Date product_enddate, String weekend_yn, String weekday_yn,
 			Date product_date, Date product_modifydate, String delete_yn, int category_code, String seller_id,
 			int img_no, String location_area, String first_img, String second_img, String third_img, String fourth_img,
-			String pcategory_name, String sub_pcategory_name) {
+			String pcategory_name, String sub_pcategory_name, String user_name, String user_mobile) {
 		super();
 		this.product_no = product_no;
 		this.product_name = product_name;
@@ -65,6 +67,8 @@ public class ProductDetail implements java.io.Serializable{
 		this.fourth_img = fourth_img;
 		this.pcategory_name = pcategory_name;
 		this.sub_pcategory_name = sub_pcategory_name;
+		this.user_name = user_name;
+		this.user_mobile = user_mobile;
 	}
 
 	public int getProduct_no() {
@@ -251,6 +255,22 @@ public class ProductDetail implements java.io.Serializable{
 		this.sub_pcategory_name = sub_pcategory_name;
 	}
 
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_mobile() {
+		return user_mobile;
+	}
+
+	public void setUser_mobile(String user_mobile) {
+		this.user_mobile = user_mobile;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -265,9 +285,8 @@ public class ProductDetail implements java.io.Serializable{
 				+ category_code + ", seller_id=" + seller_id + ", img_no=" + img_no + ", location_area=" + location_area
 				+ ", first_img=" + first_img + ", second_img=" + second_img + ", third_img=" + third_img
 				+ ", fourth_img=" + fourth_img + ", pcategory_name=" + pcategory_name + ", sub_pcategory_name="
-				+ sub_pcategory_name + "]";
+				+ sub_pcategory_name + ", user_name=" + user_name + ", user_mobile=" + user_mobile + "]";
 	}
-	
-	
+
 	
 }
