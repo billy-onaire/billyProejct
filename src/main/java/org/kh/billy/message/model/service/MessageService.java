@@ -9,7 +9,7 @@ import org.kh.billy.message.model.vo.MessagePname;
 public interface MessageService {
 
 
-	int insertMessage(Message message);
+	int insertMessage(MessagePname message);
 
 	Message selectMessage(int mms_no);
 

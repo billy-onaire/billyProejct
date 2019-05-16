@@ -65,42 +65,6 @@ public class GoogleSocialController {
     	   return "social/socialInfo";
        }
        
-       // 구글 체크 페이지
-       @RequestMapping(value="googleCheck.do", method= { RequestMethod.GET, RequestMethod.POST })
-       public String googleCheckPage() {
-          return "social/googleCheck";
-       }
-       
-       // 구글 사용자 정보 넘기기
-       @RequestMapping(value="googleLogin.do")
-       public String googleCheckPage(HttpServletRequest request, HttpSession gSession,SessionStatus status
-    		   ,@RequestParam(name="uid") String uid, SocialUser social) {
-    	   
-    	  String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
-          String name = request.getParameter("name"); //소셜 닉네임및 이름
-          String profile = request.getParameter("profile"); //소셜 프로필사진
-          
-          social.setUser_id(userId);
-          social.setSocial_type("google");
-          social.setSocial_code(uid);
-          social.setName(name);
-          social.setProfile(profile);
-          
-          if(uid != null) {
-        	  //gSession.setAttribute("googleLogin", social);
-        	  gSession.setAttribute("loginMember", social);
-              status.isComplete();
-        	}
-          
-         System.out.println(gSession.getAttribute("googleLogin") + "\n 고유번호 : " +  uid);
-          
-		if (socialService.selectCheckId(uid) > 0) {
-			return "home";
-		} else {
-			System.out.println("구글로그인 성공!!");
-			return "social/socialInfo";
-		}
-     }
        //토큰 및 사용자 정보 저장 및 불러오기
        @RequestMapping(value = "token.do", method=RequestMethod.POST)
        public ModelAndView doSessionAssignActionPage(SocialUser social, HttpServletRequest request, HttpServletResponse response, ModelAndView model) throws Exception {
@@ -160,10 +124,43 @@ public class GoogleSocialController {
            return model;
        }
        
+       // 구글 체크 페이지
+       @RequestMapping(value="googleCheck.do", method= { RequestMethod.GET, RequestMethod.POST })
+       public String googleCheckPage() {
+    	   return "social/googleCheck";
+       }
+       
+       // 구글 사용자 정보 넘기기
+       @RequestMapping(value="googleLogin.do")
+       public String googleCheckPage(HttpServletRequest request, HttpSession gSession,SessionStatus status
+    		   ,@RequestParam(name="uid") String uid, Member member) {
+    	   
+    	   String name = request.getParameter("name"); //소셜 닉네임및 이름
+    	   String profile = request.getParameter("profile"); //소셜 프로필사진
+    	   
+    	   member.setSname(name);
+    	   member.setSocial_type("google");
+    	   member.setSocial_code(uid);
+    	   member.setProfile(profile);
+    	   
+    	   String userId = socialService.selectCheckId(uid);  
+    	   member.setUser_id(userId);
+    	   gSession.setAttribute("loginMember", member);
+    	   status.isComplete();
+    	   
+    	   if (userId != null) {
+    		   return "home";
+    	   } else {
+    		   System.out.println("구글로그인 성공!!");
+    		   return "social/socialInfo";
+    	   }
+       }
+
+       
        //소셜로그인 후 입력정보 받고 등록하기
        @RequestMapping(value="sinsert.do", method=RequestMethod.POST)
-       public String insertSocialUser(HttpServletRequest request, SocialUser social, Member member, Model model) {
-    	  
+       public String insertSocialUser(HttpServletRequest request, HttpSession session, SocialUser social, Member member, Model model) {
+    	  System.out.println("소셜 위에부분 : " + member);
     	   String userpwd = RandomStringUtils.randomNumeric(15);
 
     	   //패스워드 암호화처리
@@ -171,13 +168,13 @@ public class GoogleSocialController {
     	   member.setUser_pwd(bcryptPE.encode(userpwd));
     	   member.setAuthkey(social.getSocial_code());
     	   
-    	   
     	   System.out.println("member : " + member + "\nsocial : " + social);
     	   	   
     	   if(memberSerive.insertSmember(member) > 0) {
     		   System.out.println("회원정보등록성공!");
     		   if(socialService.insertSocial(social) > 0) {
     			   System.out.println("소셜회원정보등록성공!");
+    			   session.setAttribute("loginMember", member);
     			   return "home";
     		   }else {
     			   model.addAttribute("message", "소셜회원등록실패!");

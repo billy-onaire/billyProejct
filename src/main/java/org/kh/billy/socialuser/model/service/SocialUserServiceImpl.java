@@ -19,7 +19,7 @@ public class SocialUserServiceImpl implements SocialUserService{
 	private SocialUserDao socialDao;
 	
 	@Override
-	public int selectCheckId(String uid) {
+	public String selectCheckId(String uid) {
 		return socialDao.selectCheckId(mSession, uid);
 	}
 	

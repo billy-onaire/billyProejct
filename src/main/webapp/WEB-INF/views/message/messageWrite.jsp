@@ -19,16 +19,24 @@
 <script src="/billy/resources/js/messageList.js"></script>
 <script type="text/javascript">
 
-function checkContent(){
+/* function checkContent(){
 	var mms_content = $("#mms_content").val();
 	if(!(mms_content.length >= 1)){
 		alert("반드시 내용을 입력 해주세요.");
 		$("#mms_content").select();
 		return false;
 	}
-}
+} */
 
 function popupClose(form) {
+	
+	var mms_content = $("#mms_content").val();
+	if(!(mms_content.length >= 1)){
+		alert("반드시 내용을 입력 해주세요.");
+		$("#mms_content").select();
+		return false;
+	}
+	
     // form의 target을 부모 창으로 설정함            
     form.target = opener.name;
     
@@ -51,10 +59,11 @@ function popupClose(form) {
 					<form action="insertMms.do" method="post" onsubmit="return checkContent();" target="mmsList.do">
 						<div class="form-group" >
 							<label for="name">상품명 : </label> <input type="text"
-								class="form-control" name="pname" value="product_name" readonly >
+								class="form-control" name="pname" value="${m.product_name }" readonly >
 							<label for="recvid">받는 사람 : </label> <input type="text"
-								class="form-control" name="recv_id" value="testmk2" readonly style="width: 100px;">
+								class="form-control" name="recv_id" value="${m.recv_id }" readonly style="width: 100px;">
 							<input type="hidden" id="user_id" name="sent_id" value="${loginMember.user_id }">
+							<input type="hidden" id="pno" name="pno" value="${m.product_no }">
 						</div>
 
 						<div class="form-group">

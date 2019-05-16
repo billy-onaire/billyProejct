@@ -103,7 +103,7 @@
 	 
 	</select>
 	
-	<insert id="insertMessage" parameterType="Message" useGeneratedKeys="true">
+	<insert id="insertMessage" parameterType="MessagePname" useGeneratedKeys="true">
 		insert into message values(
 			sq_mno.nextval,
 			#{recv_id}, 
@@ -114,7 +114,7 @@
 			default, 
 			default, 
 			default,
-			3,
+			#{product_no},
 			default,
 			default,
 			sq_mno.nextval,
@@ -208,7 +208,7 @@
 	#{mms_title})
 	</insert>
 	
-	<select id="selectMessageCount2" resultType="int" parameterType="string">
+	<select id="selectUnread" resultType="int" parameterType="string">
 		select count(*) from message where recv_id = #{recv_id}  and recv_read = 'N' and recv_del = 'N'
 	</select>
 

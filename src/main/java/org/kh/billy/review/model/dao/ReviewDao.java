@@ -33,4 +33,8 @@ public class ReviewDao {
 		return session.selectOne("reviewMapper.selectTotalPdetailReview", productNo);
 		
 	}
+
+	public int deleteReview(SqlSessionTemplate session, int rno) {
+		return session.delete("reviewMapper.deleteReview", rno);
+	}
 }

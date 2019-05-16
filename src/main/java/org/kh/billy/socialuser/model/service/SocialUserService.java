@@ -13,6 +13,6 @@ public interface SocialUserService {
     int deleteSocial(String userid);
     SocialUser selectSocial(String userid);
     ArrayList<String> searchId(Member member);
-	int selectCheckId(String uid);
+	String selectCheckId(String uid);
 	int selectSocialCheck(String sid);
 }

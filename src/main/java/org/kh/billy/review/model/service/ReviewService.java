@@ -15,4 +15,5 @@ public interface ReviewService {
 	List<ReviewList> selectListReview(ReviewPaging paging);
 	int selectTotalListReview();
 	int selectTotalPdetailReview(int productNo);
+	int deleteReview(int rno);
 }

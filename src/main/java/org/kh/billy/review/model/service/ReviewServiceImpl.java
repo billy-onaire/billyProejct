@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.selectTotalPdetailReview(mybatisSession, productNo);
 	}
 
+	@Override
+	public int deleteReview(int rno) {
+		return reviewDao.deleteReview(mybatisSession, rno);
+	}
+
 }

@@ -68,7 +68,7 @@ $(document).ready(function(){
 	<c:import url="../common/nav.jsp" />
 	<c:import url='../common/myPage.jsp'/>
        
-       <!-- Cart Menu -->
+       <%-- <!-- Cart Menu -->
             <c:set var="profile" value="${profile }" scope="session" /> 
 			<c:set var="name" value="${name }" scope="session" /> 
             <c:if test="${empty googleLogin and empty loginMember and empty naverLogin and empty kakaoLogin and empty facebookLogin}">
@@ -88,9 +88,9 @@ $(document).ready(function(){
        			<span id="pname">${loginMember.user_name }님</span>
        			</c:if>
        		</div>
-       		</c:if>
+       		</c:if> --%>
           
-
+		 <a href="mmsSocket.do">웹소켓</a>
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
@@ -110,7 +110,7 @@ $(document).ready(function(){
         <br>
                     
                     <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
-                        <div class="cart-table clearfix" style="padding-left: 40px;">
+                        <div class="cart-table clearfix" >
                             <div id="tab1" class="tabcontent" style="display: block;">
                                 <table class="table table-responsive">
                               
@@ -134,7 +134,7 @@ $(document).ready(function(){
                                             	${mms.product_name }
                                             </td>
                                             <td class="cart_product_desc" id="${mms.mms_no }" >
-                                                <a href="">${mms.mms_title }</a>
+                                                ${mms.mms_title }
                                             </td>
                                             <td class="price">
                                             <!-- 여기서는 날짜만 표시하고 상세보기에서 시간까지 표시 -->

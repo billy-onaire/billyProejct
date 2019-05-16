@@ -31,12 +31,15 @@ $(function(){
 	setSearchType();
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
-	if(showPrev !== 'true')
+	if(!showPrev)
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(showNext !== 'true')
+	if(!showNext)
 		$('#page-next').addClass('disabled');
+	
+	console.log("prev : " + showPrev);
+	console.log('next : ' + showNext);
 	
 	var nowPage = '${ pageMaker.cri.page }';
 	$('#page'+nowPage).addClass('active');
@@ -50,6 +53,7 @@ function setPageEntry(){
 	var $entries = $("#entries");
 	var nowPage = '${ pageMaker.cri.page }';
 	console.log(nowPage);
+	console.log(perPageNum);
 	$entries.val(perPageNum).prop('selected', true);
 	$entries.on('change', function(){
 		location.href = 'paymentSearch.do?page=' + nowPage + '&perPageNum=' + $entries.val();
@@ -135,6 +139,7 @@ function setSearchType() {
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                    	<th></th>
                         <th>no</th>
                         <th>판매자</th>
 						<th>제목</th>				
@@ -145,9 +150,10 @@ function setSearchType() {
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
+                		<td>${ status.index }</td>
                 		<td>${ payment.booking_no }</td>
                 		<td>${ payment.seller_id }</td>
-                		<td>${ payment.product_title }</td>
+                		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 1 }'>
                 			<td><span class="status text-success">&bull;</span> 구매완료</td>
                 			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
@@ -204,14 +210,18 @@ function setSearchType() {
                     <div class="col-12">
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
-                            		<li class='page-item' id='page-prev'><a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }'>이전</a></li>
+                            		<li class='page-item' id='page-prev'>
+                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i></a>
+                            		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
                             			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
-                            		<li class='page-item' id='page-next'><a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'>다음</a></li>
+                            		<li class='page-item' id='page-next'>
+                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            		</li>
                             	</c:if>
                                 <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
                                 <li class="page-item"><a class="page-link" href="#">02.</a></li>
