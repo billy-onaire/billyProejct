@@ -15,7 +15,7 @@
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	'<c:if test="${!empty loginMember}">'
+	'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'
 		
 	var sid = "${loginMember.social_code}";
 	
@@ -46,6 +46,7 @@ $(function(){
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 </head>
 <body>
+<h1>${loginMember }</h1>
 <input type="hidden" id="sid" value="${googleLogin.social_code }">
 	<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
