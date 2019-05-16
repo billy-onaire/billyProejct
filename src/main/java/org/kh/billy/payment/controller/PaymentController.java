@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -46,35 +47,52 @@ public class PaymentController {
 	static BootpayApi api;
 	
 	@RequestMapping(value="paymentSearch.do")
-	public ModelAndView searchList(PaymentSearchCri payCri, ModelAndView mav) {
+	public ModelAndView searchList(PaymentCri payCri, ModelAndView mav) {
 		//거래&결제내역
+		ArrayList<Payment> p = payService.listCriteria(payCri);
+		mav.addObject("pmList", p);
 		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
-		pageMaker.setTotalCount(payService.searchListCount(payCri));
 		
-		mav.addObject("pmList", payService.listCriteria(payCri));
+		int totalCount = payService.searchListCount(payCri);
+		pageMaker.setTotalCount(totalCount);
+		
 		mav.addObject("pageMaker", pageMaker);
 		mav.setViewName("payment/paylistMypage");
 		
 		return mav;
 	}
 	@RequestMapping("paymentWaiting.do")
-	public ModelAndView paymentWaiting(PaymentSearchCri payCri, ModelAndView mav) {
+	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav) {
 		//결제대기 내역
 		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
 		pageMaker.setTotalCount(payService.searchWaitingListCount(payCri));
 		
 		mav.addObject("pmList", payService.listWatingCriteria(payCri));
+		mav.addObject("pageMaker", pageMaker);
+		mav.setViewName("payment/paymentWaiting");
 		
 		return mav;
 	}
+	@RequestMapping("doPayment.do")
+	public void doPayment(Payment payment, HttpServletResponse response) throws IOException {
+		JSONObject job = new JSONObject();
+		
+		job.put("price", payment.getPayment_price());
+		
+		PrintWriter pw = response.getWriter();
+		pw.println(job.toJSONString());
+		pw.flush();
+		pw.close();
+	}
 	
 	@RequestMapping(value="bookingPage.do")
-	public ModelAndView bookingPage(Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
+	public ModelAndView bookingPage(@RequestParam(name="customer") String customer, Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
 		//예약 영수증
 		//requestparam으로 customer 꺼내오기. 아직 로그인 못하니까 나중에
+		payment.setCustomer(customer);
 		int re = payService.insertBookingList(payment);
 		System.out.println("re : " + re);
-		String customer = "superje";
+		System.out.println("customer: " + customer);
 		payment = payService.selectBookingUser(customer);
 		System.out.println("payment : " + payment);
 		
@@ -95,6 +113,10 @@ public class PaymentController {
 		logger.info("mav pay : " + mav.toString());
 		
 		return mav;
+	}
+	@RequestMapping("bookingMsg.do")
+	public void bookingMsg() {
+		
 	}
 	 
 	@RequestMapping("goPayPage.do")

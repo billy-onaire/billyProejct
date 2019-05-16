@@ -2,8 +2,10 @@ package org.kh.billy.payment.model.vo;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Component
 public class PaymentSearchCri extends PaymentCri implements Serializable {
 	private static final long serialVersionUID = -7952725067099699077L;
 	
