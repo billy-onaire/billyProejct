@@ -16,25 +16,11 @@ public class ReportList implements Serializable{
 	private int product_no;
 	private String request_id;
 	private String first_img;
+	private String product_name;
 	
 	public ReportList() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public ReportList(int report_no, int rcategory_no, String report_content, String report_id, Date report_date,
-			int product_no, String request_id, String first_img) {
-		super();
-		this.report_no = report_no;
-		this.rcategory_no = rcategory_no;
-		this.report_content = report_content;
-		this.report_id = report_id;
-		this.report_date = report_date;
-		this.product_no = product_no;
-		this.request_id = request_id;
-		this.first_img = first_img;
-	}
-
-
 
 	public int getReport_no() {
 		return report_no;
@@ -100,6 +86,14 @@ public class ReportList implements Serializable{
 		this.first_img = first_img;
 	}
 
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -108,7 +102,9 @@ public class ReportList implements Serializable{
 	public String toString() {
 		return "ReportList [report_no=" + report_no + ", rcategory_no=" + rcategory_no + ", report_content="
 				+ report_content + ", report_id=" + report_id + ", report_date=" + report_date + ", product_no="
-				+ product_no + ", request_id=" + request_id + ", first_img=" + first_img + "]";
+				+ product_no + ", request_id=" + request_id + ", first_img=" + first_img + ", product_name="
+				+ product_name + "]";
 	}
+	
 	
 }

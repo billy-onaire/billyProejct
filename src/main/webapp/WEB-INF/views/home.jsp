@@ -15,8 +15,7 @@
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'
-		
+	'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'		
 	var sid = "${loginMember.social_code}";
 	
 	$.ajax({

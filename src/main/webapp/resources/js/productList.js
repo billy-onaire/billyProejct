@@ -37,6 +37,7 @@ const subCatagory = document.querySelector('.widget-desc');
 for (let i = 0; i < catagoryRadios.length; i++) {
     catagoryRadios[i].addEventListener('change', () => {
         chosenPage = 1; // 현재 페이지 초기화
+        
         while (subCatagory.firstChild) {
             subCatagory.removeChild(subCatagory.firstChild);
         }
@@ -98,6 +99,7 @@ function createSubMenus(sub) {
         subCategories.push(checkbox.value);
 
         checkbox.addEventListener('change', (event) => {
+            chosenPage = 1;
             if (event.target.checked)
                 subCategories.push(event.target.value);
             else
@@ -115,7 +117,6 @@ function requestProductListAjax(data) {
     }
 
     xhr.onload = () => {
-        
         const products = JSON.parse(xhr.responseText);
 
         for (let i = 0; i < products.list.length; i++) {
