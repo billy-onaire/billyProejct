@@ -17,7 +17,7 @@
     <title>Billy Product Details</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -104,8 +104,10 @@
 	            	 }else{
 	            		list +="<td></td>";
 	            	 }
-	            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";
-	                 list += "</tr>"
+	            	 "<c:if test='${!empty session.admin}'>"
+		            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";		               
+		             "</c:if>"
+		             list += "</tr>"
 	                 
 				} 
 	            $("#list").html(list);
