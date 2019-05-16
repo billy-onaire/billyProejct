@@ -15,14 +15,35 @@
 <!-- Title  -->
 <title>Social 회원가입</title>
 
-<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	'<c:if test="${!empty loginMember}">'
 		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
 	'</c:if>'
+	var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
  	 
+	$("#user_id").on('keydown', function(e){
+   		var id = $('#user_id').val();
+   	 
+    	if(id.length > 12){
+    		e.preventDefault();
+    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
+            $(this).val("");
+            $(this).focus();
+       } 
+    	
+   	}).on('blur', function(){
+   		if($(this).val() == '') return;
+   		var id = $('#user_id').val();
+   		if(id.length < 6){
+   			alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
+            $(this).val("");
+            $(this).focus();	
+   		}
+   	});
+	
    	  $("#email").on('blur', function(e){
    		 if($(this).val() == '') return;
   		 	if(!getMail.test($("#email").val())){
@@ -31,10 +52,7 @@ $(function(){
             $('#email').focus();
   		 	}  
  	  	});
-   	  
-});
- 
-
+});   	  
 $(function(){
 
     $("#user_mobile").on('keydown', function(e){
@@ -81,6 +99,46 @@ $(function(){
             }
       }
   });  
+});
+
+$(function(){
+	$("#idck").click(function() {
+        console.log("에이작스 먹나요?");
+        $.ajax({
+        	url : "idCheck.do",
+            type : "post",
+            dataType: "json",
+            data : {userId : $("#user_id").val()},
+            success : function(data) {
+            	console.log("ajax success 확인 : " + data.hashMap.cnt);
+            	
+                if (data.hashMap.cnt > 0) {
+                	
+                	$(".result").text("존재하는 아이디입니다.");
+                    $(".result").attr("style", "color:#f00"); 
+                    $("#user_id").val('');
+                    $("#user_id").focus();
+ 
+                	
+                } else if($("#user_id").val() == null) {
+                	
+                	$(".result").text("아이디를 입력해주세요.");
+                    $(".result").attr("style", "color:#00f"); 
+                	       	
+                } else {
+                	 
+                	$(".result").text("사용가능한 아이디입니다.");
+                    $(".result").attr("style", "color:#00f");
+
+                }
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });
+   	  
+	});
 });
 </script>
 
@@ -166,19 +224,29 @@ a {
 	<div class="main-content-wrapper d-flex clearfix">
 		<%-- <c:import url="../common/nav.jsp" /> --%>
 		<!-- 회원가입 폼 -->
+		<h1>${loginMember }</h1>
 		<div class="login-enroll-form clearfix">
 		<div class="container" >
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="social_code" value="${loginMember.social_code }">
-				<input type="hidden" name="user_id" value="${loginMember.user_id }">
 				<input type="hidden" name="social_type" value="${loginMember.social_type }">
-								
+				<input type="hidden" name="profile" value="${loginMember.profile }">
+												
 				<h1>소셜 회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
+
+				<label for="user_id"><b>아이디</b></label> 
+					<div class="input-group mb-3">					
+					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
+						<div class="input-group-append">
+						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
+						</div>
+					</div>
+					<p class="result"></p>
 				
 				<c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook' }">
-					<input type="hidden" name="user_name" value="${loginMember.name }">
+					<input type="hidden" name="user_name" value="${loginMember.user_name }">
 				</c:if>
 				<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' }">
 					<label for="user_name"><b>이름</b></label>
@@ -216,7 +284,6 @@ a {
 			        }).open();
 			    }
 				</script>
-				
 				
 				<label for="location_area"><b>주거래가능 지역</b></label> 
 				<div class="input-group mb-4">	

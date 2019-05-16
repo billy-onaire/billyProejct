@@ -20,7 +20,7 @@
 			success: function(result){
 				if(result != null){
 					$("#at").val(result.hashMap.access_token);
-					$("#name").val(decodeURIComponent(result.hashMap.name));
+					$("#name").val(decodeURIComponent(result.hashMap.name).replace(/\+/gi, " "));
 					$("#profile").val(result.hashMap.profile);
 					$("#uid").val(result.hashMap.uid);
 					$("#gac").submit();

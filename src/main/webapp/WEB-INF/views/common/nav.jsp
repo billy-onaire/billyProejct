@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,7 @@
 
 #pname {
 	font-family: 'DXSeNB-KSCpc-EUC-H';
-	font-size: 30pt;
+	font-size: 20pt;
 }
 
 .mb-100{
@@ -66,20 +67,17 @@
        		<%-- <c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}"> --%>
        		<c:if test="${!empty loginMember}">
        			<div class="cart-fav-search mb-100" id="socialLogin">
+       			<c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'kakao'}">
+       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
+       			</c:if>
        			<c:if test="${loginMember.social_type eq 'google'}">
-       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${loginMember.name }님</span>
-       			</c:if>
-       			<c:if test="${loginMember.social_type eq 'naver'}">
-       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${loginMember.name }님</span>
-       			</c:if>
-       			<c:if test="${loginMember.social_type eq 'kakao'}">
-       			<img id="google_img"  src="${kakaoLogin.profile }">&nbsp; <span id="pname">${kakaoLogin.name }님</span>
+       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.sname, "+", " ") }님</span>
        			</c:if>
        			<c:if test="${loginMember.social_type eq 'facebook'}">
-       			<img id="facebook_img"  src="/billy/resources/img/social-img/fLogo.JPG">&nbsp; <span id="pname">${facebookLogin.name }님</span>
+       			<img id="facebook_img"  src="/billy/resources/img/social-img/fLogo.JPG">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>		
        			<c:if test="${loginMember.social_type eq 'user' }">
-       			<span id="pname">${loginMember.user_name }님</span>
+       			<span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>
                 <a href="logout.do">로그아웃</a>
        		</div>
@@ -92,7 +90,9 @@
                     <li class="active"><a href="main.do" >Home</a></li>
                     <li><a href="selectnoticelist.do" >Notice</a></li>
                     <li><a href="#" >About us</a></li>
-                    <li><a href="myproductlist.do" >MyPage</a></li>
+                    <c:if test="${!empty loginMember }">
+                    	<li><a href="myproductlist.do" >MyPage</a></li>
+                    </c:if>
                 </ul>
             </nav>
             <!-- Button Group -->
