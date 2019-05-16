@@ -62,10 +62,8 @@
 									<p>조회 선택</p>
 									<form id="sortForm" method="get">
 										<select name="select">
-											<option value="1 DESC NULLS LAST">Newest</option>
-											<option value="3 NULLS LAST">Price (Low to High)</option>
-											<option value="3 DESC NULLS LAST">Price (High to Low)</option>
-											<option value="6 DESC NULLS LAST">Popular</option>
+											<option value="1">내가 신고한 내역</option>
+											<option value="2">누군가 나를 신고한 내역</option>
 										</select>
 									</form>
 								</div>
@@ -78,33 +76,65 @@
 					<div class="table-users">
 						<div class="header">REPORT</div>
 
-						<table cellspacing="0">
+						<table cellspacing="0" id="table_report1">
 							<tr>
 								<th>Picture</th>
-								<th>Name</th>
+								<th>Product Name</th>
 								<th>Category</th>
 								<th>ID</th>
 								<th width="230">Contents</th>
 							</tr>
 
-							<tr>
-								<td><img src="http://lorempixel.com/100/100/people/1" alt="" class="t-img" /></td>
-								<td>Jane Doe</td>
-								<td>jane.doe@foo.com</td>
-								<td>01 800 2000</td>
-								<td>Lorem ipsum dolor sit amet, consectetur adipisicing
-									elit.</td>
-							</tr>
+							
 							<c:forEach var="r" items="${mylist}">
 								<tr>
-									<td><img src="/billy/resources/files/product/${r.first_img}" alt="img" class="t-img" /></td>
-									<td>${r.report_no }</td>
-									<td><a href="pdetail.do?pno=${r.product_no }">${r.product_no}</a></td>
-									<td>${r.report_date }</td>
+									<td><a href="pdetail.do?pno=${r.product_no }"><img src="/billy/resources/files/product/${r.first_img}" alt="img" class="t-img" /></a></td>
+									<td><a href="pdetail.do?pno=${r.product_no }">${r.product_name}</a></td>
+									<td>
+										<c:choose>
+											<c:when test="${r.rcategory_no == 1}"> <a href="pdetail.do?pno=${r.product_no }">부적절한 이미지인 경우</a> </c:when>
+											<c:when test="${r.rcategory_no == 2}"> <a href="pdetail.do?pno=${r.product_no }">욕설 및 스팸 게시물인 경우 </a></c:when>
+											<c:when test="${r.rcategory_no == 3}"> <a href="pdetail.do?pno=${r.product_no }">거래 시간 미준수한 경우 </a></c:when>
+											<c:when test="${r.rcategory_no == 4}"> <a href="pdetail.do?pno=${r.product_no }">사진과 상이한 물품의 품질인 경우 </a></c:when>
+											<c:when test="${r.rcategory_no == 5}"> <a href="pdetail.do?pno=${r.product_no }">거래 시 욕설 또는 협박을 한 경우 </a></c:when>
+											<c:when test="${r.rcategory_no == 6}"> <a href="pdetail.do?pno=${r.product_no }">기타</a> </c:when>
+										</c:choose>
+									</td>
+									<td>${r.report_id }</td>
 									<td>${r.report_content}</td>
 								</tr>
 							</c:forEach>
 						</table>
+
+						<table cellspacing="0" id="table_report2">
+								<tr>
+									<th>Picture</th>
+									<th>Product Name</th>
+									<th>Category</th>
+									<th>ID</th>
+									<th width="230">Contents</th>
+								</tr>
+	
+								
+								<c:forEach var="r" items="${slist}">
+									<tr>
+										<td><a href="pdetail.do?pno=${r.product_no }"><img src="/billy/resources/files/product/${r.first_img}" alt="img" class="t-img" /></a></td>
+										<td><a href="pdetail.do?pno=${r.product_no }">${r.product_name}</a></td>
+										<td>
+											<c:choose>
+												<c:when test="${r.rcategory_no == 1}"> <a href="pdetail.do?pno=${r.product_no }">부적절한 이미지인 경우</a> </c:when>
+												<c:when test="${r.rcategory_no == 2}"> <a href="pdetail.do?pno=${r.product_no }">욕설 및 스팸 게시물인 경우 </a></c:when>
+												<c:when test="${r.rcategory_no == 3}"> <a href="pdetail.do?pno=${r.product_no }">거래 시간 미준수한 경우 </a></c:when>
+												<c:when test="${r.rcategory_no == 4}"> <a href="pdetail.do?pno=${r.product_no }">사진과 상이한 물품의 품질인 경우 </a></c:when>
+												<c:when test="${r.rcategory_no == 5}"> <a href="pdetail.do?pno=${r.product_no }">거래 시 욕설 또는 협박을 한 경우 </a></c:when>
+												<c:when test="${r.rcategory_no == 6}"> <a href="pdetail.do?pno=${r.product_no }">기타</a> </c:when>
+											</c:choose>
+										</td>
+										<td>${r.report_id }</td>
+										<td>${r.report_content}</td>
+									</tr>
+								</c:forEach>
+							</table>
 					</div>
 
 				</div>
@@ -138,48 +168,9 @@
 	<script src="/billy/resources/js/plugins.js"></script>
 	<!-- Active js -->
 	<script src="/billy/resources/js/active.js"></script>
-	<!-- Product List js -->
-
+	<!-- myReport js -->
+	<script src="/billy/resources/js/myReport.js"></script>
 </body>
 
 </html>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%-- <div class="main-content-wrapper d-flex clearfix">
-		<c:import url="../common/nav.jsp" />
-		<c:import url="../common/myPage.jsp" />
-
-		<div>
-			<table class="type06">
-				<tr>
-					<th class="even">신고 번호</th>
-					<th class="even">물품 번호</th>
-					<th class="even">카테고리</th>
-					<th class="even">아이디</th>
-					<th class="even">신고날짜</th>
-				</tr>
-				<c:forEach var="r" items="${mylist}">
-				<tr>
-					<td>${r.report_no }</td>
-					<td><a href="pdetail.do?pno=${r.product_no }">${r.product_no}</a></td>
-					<td>${r.report_date }</td>
-					<td></td>
-				</tr>						
-			</c:forEach>
-			</table>
-			
-		</div>
-
-	</div> --%>

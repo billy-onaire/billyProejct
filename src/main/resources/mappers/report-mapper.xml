@@ -23,6 +23,7 @@
 		<result property="product_no" column="product_no" />
 		<result property="request_id" column="request_id" />
 		<result property="first_img" column="first_img" />
+		<result property="product_name" column="product_name" />
 	</resultMap>
 
 	<select id="insertReport" parameterType="Report">
@@ -40,7 +41,7 @@
 	</select>
 
 	<select id="selectWhatIReport" resultMap="resultReportList">
-		SELECT REPORT_NO,
+		SELECT REPORT_NO, P.PRODUCT_NAME,
 		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE, R.PRODUCT_NO,
 		REQUEST_ID, FIRST_IMG
 		FROM TB_REPORT R
@@ -52,7 +53,7 @@
 	</select>
 
 	<select id="selectReportedBy" resultMap="resultReportList">
-		SELECT REPORT_NO,
+		SELECT REPORT_NO, P.PRODUCT_NAME,
 		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE, R.PRODUCT_NO,
 		REQUEST_ID, FIRST_IMG
 		FROM TB_REPORT R
