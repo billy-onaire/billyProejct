@@ -31,7 +31,6 @@
    <sql id="userInfo">
       #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'y', #{address}, #{my_introduce}, #{location_area},
       #{user_enroll}, sysdate, default, default, default 
-     
    </sql>
    
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
@@ -47,7 +46,7 @@
    </select>	
    
    <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
-      select user_id from tb_user where user_id = #{user_id}
+      select user_id from tb_user left join socialuser using (user_id) where user_id = #{user_id}
    </select>
    
    <select id="selectCheckANo" parameterType="String" resultType="String">

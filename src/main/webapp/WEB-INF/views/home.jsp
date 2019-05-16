@@ -46,8 +46,6 @@ $(function(){
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 </head>
 <body>
-<h1>${loginMember }</h1>
-<input type="hidden" id="sid" value="${googleLogin.social_code }">
 	<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
 		<div class="search-close">

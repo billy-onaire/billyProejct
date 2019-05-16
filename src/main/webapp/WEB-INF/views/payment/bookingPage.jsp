@@ -25,7 +25,39 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="${ pageContext.request.contextPath }/resources/js/bookf/demo.css" rel="stylesheet" />
 </head>
-
+<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+	//날짜 계산
+	var endDate = $('#ed').val() instanceof Date ? $('#ed').val() : new Date($('#ed').val());
+	var beginDate = $('#bd').val() instanceof Date ? $('#bd').val() : new Date($('#bd').val());
+	
+	endDate = new Date(endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate());
+	beginDate = new Date(beginDate.getFullYear(), beginDate.getMonth()+1, beginDate.getDate());
+	
+	var result = Math.abs(endDate.getTime() - beginDate.getTime());
+	result = Math.ceil(result / (1000*3600*24));
+	
+	var str =  $('#won').val() + '₩' + '(' + (result+1) + '일)';
+	$('#resultDate').val(str);
+	
+	$('#sendMsgbtn').click(function(){
+		$ajax({
+			/* url: 'bookingMsg.do',
+			type: 'post' */
+			/* data */
+			/* url: 'printReview.do',
+	        type: 'post',
+	        data: submitData,
+	        dataType: "json", */
+		})//ajax
+	})//쪽지보내기
+	
+	$('#bookingfinish').click(function(){
+		location.href='main.do';
+	})//click
+});
+</script>
 <body id='bookingBody'>
 	<div class="image-container set-full-height">
 	    <!--   Big container   -->
@@ -56,7 +88,7 @@
 		                            <div class="tab-pane" id="details">
 		                            	<div class="row">
 			                            	<div class="col-sm-12">
-			                                	<h4 class="info-text"> ㅇㅇㅇ님께서 예약신청하신 내용입니다.</h4>
+			                                	<h4 class="info-text"> ${ payment.customer }님께서 예약신청하신 내용입니다.</h4>
 			                            	</div>
 		                                	<div class="col-sm-6">
 												<div class="input-group">
@@ -76,7 +108,7 @@
 													</span>
 													<div class="form-group label-floating">
 			                                          	<label class="control-label">Your Email</label>
-			                                          	<input name="name2" type="text" class="form-control" value='2u3u123@naver.com'>
+			                                          	<input name="name2" type="text" class="form-control" value='이메일!'>
 			                                        </div>
 												</div>
 
@@ -84,11 +116,14 @@
 		                                	<div class="col-sm-6">
 		                                    	<div class="form-group label-floating">
 		                                        	<label class="control-label">Product</label>
-	                                        		<input type='text' class='form-control' value='${ payment.product_title }'/>
+	                                        		<input type='text' class='form-control' value='${ payment.product_name }'/>
 		                                    	</div>
 												<div class="form-group label-floating">
 		                                        	<label class="control-label">Charge</label>
-	                                        		<input type='text' class='form-control' value='${ payment.product_price }₩(${ payment.product_enddate - payment.product_begindate }일)'/>
+		                                        	<input type='hidden' id='ed' value='${ payment.payment_enddate }'/> 
+		                                        	<input type='hidden' id='bd' value='${ payment.payment_begindate }'/> 
+		                                        	<input type='hidden' id='won' value='${ payment.payment_price }'/> 
+	                                        		<input type='text' id='resultDate' class='form-control' value=' '/>
 		                                    	</div>
 		                                	</div>
 		                            	</div>
@@ -134,6 +169,7 @@
 	                                    		<div class="form-group">
 		                                            <label>더  궁금한 내용을 쪽지로 보내보세요!</label>
 		                                            <textarea class="form-control" placeholder="" rows="6"></textarea>
+		                                            <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd' id='sendMsgbtn' name='finish' value='쪽지 보내기' />
 		                                        </div>
 		                                    </div>
 		                                    <div class="col-sm-4">
@@ -151,7 +187,7 @@
 	                        	<div class="wizard-footer">
 	                            	<div class="pull-right">
 	                                    <input type='button' class='btn btn-next btn-fill btn-warning btn-wd' name='next' value='Next' />
-	                                    <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd' name='finish' value='Finish' />
+	                                    <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd' name='finish' id='bookingfinish' value='확인' />
 	                                </div>
 	                                <div class="pull-left">
 	                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />

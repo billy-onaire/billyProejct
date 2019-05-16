@@ -25,6 +25,9 @@ public class Member implements java.io.Serializable{
 	   private String delete_yn;
 	   private int total_count;
 	   private String social_type;
+	   private String profile;
+	   private String social_code;
+	   private String sname;
 	   
 	   public Member() {}
 	   
@@ -52,7 +55,8 @@ public class Member implements java.io.Serializable{
 
 	public Member(String user_id, String user_pwd, String user_mobile, String user_name, String email, String authkey,
 			String verify, String address, String my_introduce, String location_area, Date user_enroll,
-			Date user_update, int report_count, String delete_yn, int total_count, String social_type) {
+			Date user_update, int report_count, String delete_yn, int total_count, String social_type, String profile,
+			String social_code, String sname) {
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -70,6 +74,9 @@ public class Member implements java.io.Serializable{
 		this.delete_yn = delete_yn;
 		this.total_count = total_count;
 		this.social_type = social_type;
+		this.profile = profile;
+		this.social_code = social_code;
+		this.sname = sname;
 	}
 
 	public String getAuthkey() {
@@ -175,6 +182,30 @@ public class Member implements java.io.Serializable{
 	public void setSocial_type(String social_type) {
 		this.social_type = social_type;
 	}
+	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	
+	public String getSocial_code() {
+		return social_code;
+	}
+
+	public void setSocial_code(String social_code) {
+		this.social_code = social_code;
+	}
+	
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
 
 	@Override
 	public String toString() {
@@ -182,8 +213,8 @@ public class Member implements java.io.Serializable{
 				+ user_name + ", email=" + email + ", authkey=" + authkey + ", verify=" + verify + ", address="
 				+ address + ", my_introduce=" + my_introduce + ", location_area=" + location_area + ", user_enroll="
 				+ user_enroll + ", user_update=" + user_update + ", report_count=" + report_count + ", delete_yn="
-				+ delete_yn + ", total_count=" + total_count + "]";
+				+ delete_yn + ", total_count=" + total_count + ", social_type=" + social_type + ", profile=" + profile
+				+ ", social_code=" + social_code + ", sname=" + sname + "]";
 	}
-	
-	
+
 }

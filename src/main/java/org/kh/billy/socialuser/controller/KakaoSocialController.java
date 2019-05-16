@@ -21,6 +21,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kh.billy.member.controller.MemberController;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
@@ -48,12 +49,7 @@ public class KakaoSocialController {
 	
 	 @RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession kSession,
-	          HttpServletRequest request, HttpServletResponse response, SessionStatus status, SocialUser social) {
-	       
-		 if(kSession.getAttribute("loginMember") != null) {
-  		   kSession.invalidate();
-  		   System.out.println("사용자세션 날라감");
-		 }
+	          HttpServletRequest request, HttpServletResponse response, SessionStatus status, Member member) {
 		 
 		 System.out.println("카카오 로그인 할때 임시 코드값: " + code);
 	       
@@ -61,7 +57,6 @@ public class KakaoSocialController {
 	       System.out.println("카카오 유저 정보: " + userInfo);
 	       
 	       
-	        String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성  
 	        String name = null;
 	        String email = null;
 	 		String profile = null;
@@ -79,17 +74,16 @@ public class KakaoSocialController {
 	        System.out.println("카카오 name: " + name);
 			System.out.println("profile : " + profile);
         	
-	        social.setName(name);
-	        social.setUser_id(userId);
-	        social.setProfile(profile);
-	        social.setSocial_code(kid);
-	        
-	        if(kid != null) {
-	              kSession.setAttribute("kakaoLogin", social);
-	              status.setComplete();
-	        }
+	        member.setUser_name(name);
+	        member.setProfile(profile);
+	        member.setSocial_code(kid);
+	        member.setSocial_type("kakao");
+	        String userId = socialService.selectCheckId(kid);
+	        member.setUser_id(userId);
+	        kSession.setAttribute("loginMember", member);
+	        status.setComplete();
 	        		        
-	        if (socialService.selectCheckId(kid) > 0) {
+	        if (userId != null) {
 	    			return "home";
 	    	} else {
 	    			System.out.println("카카오 로그인 성공! 소셜 회원가입 페이지로!");

@@ -173,6 +173,12 @@ public class ReviewController {
 	@RequestMapping("delReview.do")
 	public String deleteReview(int rno, int pno) {
 		System.out.println("rno : " + rno);
+		int result = reviewService.deleteReview(rno);
+		if(result > 0) {
+			System.out.println("리뷰 삭제성공");
+		}else {
+			System.out.println("리뷰 삭제 실패");
+		}
 		return "redirect:pdetail.do?pno="+pno;
 	}
 }

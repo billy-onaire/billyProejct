@@ -17,7 +17,7 @@
     <title>Billy Product Details</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -104,8 +104,10 @@
 	            	 }else{
 	            		list +="<td></td>";
 	            	 }
-	            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";
-	                 list += "</tr>"
+	            	 "<c:if test='${!empty session.admin}'>"
+		            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";		               
+		             "</c:if>"
+		             list += "</tr>"
 	                 
 				} 
 	            $("#list").html(list);
@@ -487,7 +489,7 @@
                             <tr>
                             	<th>갯수</th>
                             	<td>
-                            		<input type="number" class="qty-text" id="qty" step="1" min="1" max="${p.product_quantity }" name="quantity" value="1">
+                            		<input type="number" class="qty-text" id="qty" step="1" min="1" max="${ p.product_quantity }" name="payment_quantity" >
                             	</td>
                             </tr>
                             
@@ -509,6 +511,8 @@
                             	</td>
                             </tr>
                             </table>
+                            <input type='hidden' name='product_name' value='${ p.product_name }'/>
+                            <input type='hidden' name='customer' value='${ loginMember.user_id }'/>
                             <input type='hidden' name='seller_id' value='${ p.seller_id }'/>
                             <input type='hidden' name='product_no' value='${ p.product_no }'/>
                             <input type="hidden" name="payment_price" id="hiddenPrice">

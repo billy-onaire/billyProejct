@@ -1,9 +1,11 @@
 /**
  *  bootpay 연동 소스
  */
-function bb() {
+function bb(info) {
+	
+	
 BootPay.request({
-	price: '1000', //실제 결제되는 가격
+	price: info.price, //실제 결제되는 가격
 	application_id: "5cc01b9c396fa67735bd0665",
 	name: '블링블링 마스카라', //결제창에서 보여질 이름
 	/*pg: 'inicis',*/
@@ -62,7 +64,4 @@ BootPay.request({
 	//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
 	console.log(data);
 });
-}
-function bbb() {
-	location.href='bookingPage.do';
 }

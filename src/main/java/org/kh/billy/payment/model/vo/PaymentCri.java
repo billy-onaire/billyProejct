@@ -3,6 +3,7 @@ package org.kh.billy.payment.model.vo;
 import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 public class PaymentCri implements Serializable{
@@ -10,12 +11,16 @@ public class PaymentCri implements Serializable{
 	
 	private int page;
     private int perPageNum;
+    private String searchType;
+    private String keyword;
 
 	private String seller_id;
     
     public PaymentCri() {
     	this.page = 1;
     	this.perPageNum = 10;
+    	this.searchType = null;
+    	this.keyword = null;
     }
     
     public void setPage(int page) {
@@ -35,8 +40,35 @@ public class PaymentCri implements Serializable{
     	else
     		this.perPageNum = perPageNum;
     }
+    public String makeSearchUri() {
+    	UriComponentsBuilder uri = UriComponentsBuilder.newInstance()
+    			.queryParam("page", getPage())
+				.queryParam("pagePageNum", getPerPageNum());
+    	if(searchType != null) {
+    		uri
+    		.queryParam("searchType", this.searchType)
+    		.queryParam("keyword", this.keyword);
+    	}
+    	return uri.build().encode().toString();
+    }
     
-    public int getPerPageNum() {
+    public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getPerPageNum() {
     	return perPageNum;
     }
     

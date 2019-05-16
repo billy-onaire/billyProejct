@@ -16,11 +16,11 @@ public interface PaymentService {
 	int updatePayment(Payment payment);
 	int deletePayment(String payment_no);
 	
-	ArrayList<Payment> listCriteria(PaymentSearchCri payCri);
-	int searchListCount(PaymentSearchCri payCri);
+	ArrayList<Payment> listCriteria(PaymentCri payCri);
+	int searchListCount(PaymentCri payCri);
 	
-	int searchWaitingListCount(PaymentSearchCri payCri);
-	ArrayList<Payment> listWatingCriteria(PaymentSearchCri payCri);
+	int searchWaitingListCount(PaymentCri payCri);
+	ArrayList<Payment> listWatingCriteria(PaymentCri payCri);
 	
 	int insertBookingList(Payment payment);
 	Payment selectBookingUser(String customer);

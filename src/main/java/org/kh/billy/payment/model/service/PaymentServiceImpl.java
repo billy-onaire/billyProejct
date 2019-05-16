@@ -66,25 +66,25 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ArrayList<Payment> listCriteria(PaymentSearchCri payCri) {
+	public ArrayList<Payment> listCriteria(PaymentCri payCri) {
 		List<Payment> pmList = paymentDao.listCriteria(mybatisSession, payCri);
 		return (ArrayList<Payment>)pmList;
 	}
 
 	@Override
-	public int searchListCount(PaymentSearchCri payCri) {
+	public int searchListCount(PaymentCri payCri) {
 		
 		return paymentDao.seachListCount(mybatisSession, payCri);
 	}
 
 	@Override
-	public int searchWaitingListCount(PaymentSearchCri payCri) {
+	public int searchWaitingListCount(PaymentCri payCri) {
 		
 		return paymentDao.searchWaitingListCount(mybatisSession, payCri);
 	}
 
 	@Override
-	public ArrayList<Payment> listWatingCriteria(PaymentSearchCri payCri) {
+	public ArrayList<Payment> listWatingCriteria(PaymentCri payCri) {
 		List<Payment> pmList = paymentDao.listWaitingCriteria(mybatisSession, payCri);
 		return (ArrayList<Payment>)pmList;
 	}

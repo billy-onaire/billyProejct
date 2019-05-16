@@ -22,9 +22,9 @@ public class PaymentPageMaker implements Serializable {
 	private boolean prev;       // 페이징 이전 버튼 활성화 여부
 	private boolean next;       // 페이징 다음 버튼 활서화 여부
 	
-	private PaymentSearchCri cri;       // 앞서 생성한 Criteria를 주입받는다.
+	private PaymentCri cri;       // 앞서 생성한 Criteria를 주입받는다.
 	
-	public PaymentPageMaker(PaymentSearchCri payCri) {
+	public PaymentPageMaker(PaymentCri payCri) {
 		this.cri = payCri;
 	}
 
@@ -42,19 +42,22 @@ public class PaymentPageMaker implements Serializable {
 				.queryParam("page", page)
 				.queryParam("pagePageNum", cri.getPerPageNum());
 		
-		if(((PaymentSearchCri) cri).getSearchType() != null) {
+		if(cri.getSearchType() != null) {
 			uri
-			.queryParam("searchType", ((PaymentSearchCri) cri).getSearchType())
-			.queryParam("keyword", ((PaymentSearchCri) cri).getKeyword());
+			.queryParam("searchType", cri.getSearchType())
+			.queryParam("keyword", cri.getKeyword());
 		}
 		
-		logger.info("searchType : " + ((PaymentSearchCri)cri).getSearchType());
+		logger.info("searchType : " + cri.getSearchType());
 		return uri.build().encode().toString();
 	}
 	
 	private void calcData() {
 		int page = this.cri.getPage();
 		int perPageNum = this.cri.getPerPageNum();
+		
+		/*int startRow = (currentPage -1) * pageList + 1;
+		int endRow = startRow + pageList - 1;*/
 		
 		endPage = (int)(Math.ceil(page/(double)displayPageNum)*displayPageNum);
 		startPage = (endPage - displayPageNum) + 1;
@@ -64,21 +67,12 @@ public class PaymentPageMaker implements Serializable {
 		if(endPage > tempEndPage)
 			this.endPage = tempEndPage;
 		
-		prev = (startPage != 1);
+		prev = (startPage != 1);		
 		next = (endPage * perPageNum < totalCount);
-		/*endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
 		
-		startPage = (endPage - displayPageNum) + 1;
-		
-		int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
-		
-		if(endPage > tempEndPage) {
-			endPage = tempEndPage;
-		}
-		
-		prev = startPage == 1 ? false : true;
-		
-		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;*/
+		System.out.println("prev : " + prev);
+
+		System.out.println("next : " + next);
 	}
 
 	public int getStartPage() {
