@@ -299,18 +299,20 @@
         <artifactId>httpcore</artifactId>
         <version>4.4.6</version>
       </dependency>
-      
-<!-- spring-websocket -->
+     
+   <!-- 웹 소켓 maven dependency  설정 -->   
+ 		<dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
 
         <dependency>
-
             <groupId>org.springframework</groupId>
-
-            <artifactId>spring-websocket</artifactId>
-
-            <version>4.0.4.RELEASE</version>
-
+            <artifactId>spring-messaging</artifactId>
+            <version>5.0.4.RELEASE</version>
         </dependency>
+
 
 
 

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 public class MessageDao {
 	
-	public int insertMessage(SqlSessionTemplate mybatisSession, Message message) {
+	public int insertMessage(SqlSessionTemplate mybatisSession, MessagePname message) {
 		return mybatisSession.insert("messageMapper.insertMessage", message);
 	}
 

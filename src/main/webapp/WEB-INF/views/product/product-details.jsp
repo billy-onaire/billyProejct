@@ -30,8 +30,48 @@
 	<link rel="stylesheet" href="/billy/resources/css/reviewdetailpaging.css">
 	<script type="text/javascript" src="/billy/resources/js/pdetail-review-paging.js"></script>
 	
+	<!-- 쪽지 보내기용 -->
+	<script src="/billy/resources/js/messageList.js"></script>
+	
 	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
+	//쪽지 보낼 때, sent_id & recv_id & pno & product_name 넘긴다
+	$('#sent_mms').click(function(){
+			var pNo = "${p.product_no }";
+			alert(pNo);
+
+		
+		$.ajax({
+			url : 'mmsWrite.do',
+			type: 'GET',
+			traditional : true,
+		    data        : pNo,
+		    success     : function(data) {
+		    	alert("완료!");
+		        alert(data);  
+		        window.opener.location.reload();
+	            self.close();
+		    },
+		    error       : function(request, status, error) {
+		    	alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+	            self.close();
+		    }
+
+
+		});//ajax 닫기
+
+	});
+	
+	function insertPopup() {
+	    // window.name = "부모창 이름";            
+	    window.name = "pdetail.do";
+	    
+	    // window.open("자식창 이름", "불러올 자식 창의 닉네임", "팝업창 옵션");
+	    window.open("mmsWrite.do?pno=${p.product_no}", "insert",
+	    		"width=450, height=500, menubar=no, status=no, toolbar=no, left=700, top=200");
+	}
+	
+	
 	$(function(){
 	    // 3.페이징 처리할 ajax셋팅
 	    paging.ajax = ajaxList;
@@ -337,7 +377,9 @@
 										  <p onclick="myFunction()" class="dropbtn">대여자 : ${p.seller_id }</p>
 										  <div id="myDropdown" class="dropdown-content">
 										    <a href="#">${p.user_mobile }</a>
-										    <a href="#">쪽지쓰기</a>
+										    <!-- <a href="#" id="sentmms">쪽지쓰기</a>	 -->									    
+										    <a href="#" id="sent_mms" onclick="insertPopup();">쪽지쓰기</a>	 
+										    <input type="hidden" id="mms_pno" value="${p.product_no }">									    
 										    <a href="#">Contact</a>
 										  </div>
 									</div>

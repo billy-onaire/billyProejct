@@ -16,6 +16,8 @@ import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
 import org.kh.billy.message.model.vo.PageMakerMms;
+import org.kh.billy.product.model.service.ProductDetailService;
+import org.kh.billy.product.model.vo.ProductDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,16 +33,20 @@ public class MessageController {
 
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private ProductDetailService pdetailService;
 
 	@RequestMapping("mmsList.do")
 	public String mmsListPage() throws IOException {
 		return "recvList.do";
 	}
 	
-	@RequestMapping("mmsWrite.do")
-	public String mmsWritePage() throws IOException{
-		return "message/messageWrite";
+	@RequestMapping("mmsSocket.do")
+	public String mmsSocketPage() throws IOException {
+		return "message/socket";
 	}
+	
 	
 	
 	@RequestMapping(value="recvList.do"/*, method=RequestMethod.POST*/)
@@ -239,21 +245,39 @@ public class MessageController {
 
 		
 	}
-
-	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
-	public ModelAndView insertMessage(Message message, HttpSession session) {
+	@RequestMapping(value="mmsWrite.do", method=RequestMethod.GET)
+	public ModelAndView mmsWritePage(ModelAndView mv, HttpServletRequest request, @RequestParam(name="pno") int pNo/*@RequestParam(value="mms_pno") int mms_pno*/) throws IOException{
+		System.out.println(pNo);
 		
+		ProductDetail pDetail = pdetailService.selectProductDetail(pNo);
+		System.out.println(pDetail); 
+		
+		MessagePname m = new MessagePname();
+		m.setProduct_name(pDetail.getProduct_name());
+		m.setProduct_no(pDetail.getProduct_no());
+		m.setRecv_id(pDetail.getSeller_id());
+		
+		mv.addObject("m", m);
+		System.out.println("넘기기 전 메세지 : " + m); //여기까지 확인
+		mv.setViewName("message/messageWrite");
+		return mv;
+	}
+	
+	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
+	public ModelAndView insertMessage(MessagePname message, HttpSession session, int pno) {
+		System.out.println("인서트 넘어 오나요>");
 		
 		//session에서 userid 받아오기
 		Member m = (Member) session.getAttribute("loginMember");
 		System.out.println("로그인멤버 : " + m);
 		String userid = m.getUser_id();
-		System.out.println("userid");
+
 		message.setSent_id(userid);
 		messageService.insertMessage(message);
 		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
 		System.out.println("작성한 메세지 : " + message);
-		ModelAndView mv = new ModelAndView("redirect:/recvList.do");
+		
+		ModelAndView mv = new ModelAndView("redirect:pdetail.do?pno="+pno);
 		
 		return mv;
 	}

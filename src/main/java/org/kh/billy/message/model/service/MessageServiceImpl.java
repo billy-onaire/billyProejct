@@ -25,7 +25,7 @@ public class MessageServiceImpl implements MessageService{
 	private MessageDao messageDao;
 
 	@Override
-	public int insertMessage(Message message) {
+	public int insertMessage(MessagePname message) {
 		return messageDao.insertMessage(mybatisSession, message);
 		
 	}
