@@ -109,6 +109,7 @@
     <li class="list-group-item list-group-item-light">Light item</li>
     <li class="list-summary-wrapper">aaa</li>
   </ul>
+  <a href="noticewriteview.do">write폼으로 가기 </a>
                             <div>
                             </div>
                            </div>
