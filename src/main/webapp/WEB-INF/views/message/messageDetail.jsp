@@ -40,7 +40,6 @@
 }
 
 
-
 </style>
 
 <body>
@@ -69,21 +68,20 @@
 					</colgroup> 
 				<br>
 				<br>
-
+				
 						<tbody> 
-						<c:if test="${list.sent_id eq 'testmk' }">
+						<c:if test="${list.recv_id eq  loginMember.user_id   }">
 				<tr> 
 					<th scope="row">보낸사람</th> 
-					<td><input type="text" id="id" value="${list.recv_id}" ></td> 
+					<td>${list.recv_id}</td> 
 					<th scope="row">상품명</th> 
-					<%-- <td><input type="text" id="product_name" name="product_name" value="${list.product_name }" ></td>  --%>
-					
+					<td>${list.product_name }</td> 					
 				</tr> 
 				<tr></tr>
 				<tr> 
 				<th scope="row">작성일</th> 
-				<td ><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd"/></td> 
-				<th scope="row">읽음 여부</th> 
+				<td><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd"/></td> 
+				<th scope="row">읽음여부</th> 
 				<td>
 				<c:if test="${list.recv_read eq 'Y'}">
                        	<fmt:formatDate value="${list.read_date }" pattern="yyyy-MM-dd KK:mm:ss"/>
@@ -95,8 +93,8 @@
 				<td></td>
 				</tr>
 				<tr>
-				<th>제목</th>
-				<td> ${list.mms_title }</td>
+				<th>제&nbsp;&nbsp;&nbsp;목</th>
+				<td colspan="4"> ${list.mms_title }</td>
 				</tr>  
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
@@ -104,23 +102,32 @@
 					
 					</c:if>
 					
-					<c:if test="${list.sent_id ne 'testmk' }">
-					<tr> 
+					<c:if test="${list.sent_id eq  loginMember.user_id  }">
+				<tr> 
 					<th scope="row">받는사람</th> 
-					<td>${list.sent_id}</td> 
+					<td>${list.recv_id}</td> 
 					<th scope="row">상품명</th> 
 					<td>${list.product_name }</td> 
 				</tr> 
 				<tr></tr>
 				<tr> 
 				<th scope="row">작성일</th> 
-				<td colspan=3"><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd KK:mm:ss "/></td> 
+				<td><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd KK:mm:ss "/>&nbsp;&nbsp;</td> 
+				<th scope="row">읽음여부</th> 
+				<td>
+				<c:if test="${list.recv_read eq 'Y'}">
+                       	<fmt:formatDate value="${list.read_date }" pattern="yyyy-MM-dd KK:mm:ss"/>
+                 </c:if> 
+                <c:if test="${list.recv_read eq 'N'}">
+                 	읽지 않음
+                 </c:if>
+				</td>
 				<td></td>
 				</tr>
 				<tr>
-				<th>제목</th>
-				<td> ${list.mms_title }</td>
-				</tr>   
+				<th>제&nbsp;&nbsp;&nbsp;목</th>
+				<td colspan="4"> ${list.mms_title }</td>
+				</tr> 
 				<tr>
 				<td colspan="4" style="border: 1px solid #ccc; height : 100px; width : 350px;">${list.mms_content }</td> 
 				</tr> 
@@ -132,11 +139,20 @@
 					</table>
 					
 					<br> 					
-							<input type="submit" class="button" id="" value="답장하기" > 
+							<input type="submit" class="button" id="reply" value="답장하기" > 
 							</form>
 							<input type="button" class="button" id="delete" value="삭제하기" >
 					<br>
 <script>
+$(function(){
+	var session = "${loginMember.user_id}" //로그인한 사람
+	var sid = "${list.sent_id}";
+	if(session == sid){
+		$("#reply").hide();
+		$("#delete").css('margin-left', '130px');
+	}
+});
+
 $(function(){
 	 $('#delete').on('click',function(){ 
 		var session = "${loginMember.user_id}" //로그인한 사람

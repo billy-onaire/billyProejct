@@ -83,12 +83,12 @@ $(document).ready(function(){
         <br>
                     
                     <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
-                        <div class="cart-table clearfix" style="padding-left: 40px;">                         
+                        <div class="cart-table clearfix" >                         
                             <div id="tab3" class="tabcontent" >
                                 <table class="table table-responsive">
                                     <thead style="text-align: center;">
                                         <tr>
-                                            <th>받은 사람/보낸 사람</th>
+                                            <th>받은 사람/<br>보낸 사람</th>
                                             <th>상품명</th>                                            
                                             <th style="width: 200px">제목</th>
                                             <th>받은날짜</th>

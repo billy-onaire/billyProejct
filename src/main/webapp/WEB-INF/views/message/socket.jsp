@@ -8,74 +8,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="billy/resources/js/sockjs-0.3.4.min.js"></script>
+<script type="text/javascript" src="billy/resources/js/stomp.min.js"></script>
+<script>
+var sock = null,
+stompClient = null;
 
-	<!-- 웹 소켓 사용해서 현재 몇개의 쪽지가 도착했는지 구해오기. --> 
+// connect() 은 onload 시점에서 수행될 수 있도록 지정
+function connect(){
+sock = new SockJS("http://localhost:8888/billy");
+stompClient = Stomp.over(sock);    //stomp client 구성
+stompClient.connect({}, function(frame){
+   console.log('connected stomp over sockjs');
+   // subscribe message
+   stompClient.subscribe('mmsSocket.do', onMessage);
+});
 
-    <script type="text/javascript">
+}
 
-    var wsUri = "ws://localhost:8888/billy/count";
-
-    function send_message() {
-
-        websocket = new WebSocket(wsUri);
-
-        websocket.onopen = function(evt) {
-
-            onOpen(evt);
-
-        };
-
-        websocket.onmessage = function(evt) {
-
-            onMessage(evt);
-
-        };
-
-        websocket.onerror = function(evt) {
-
-            onError(evt);
-
-        };
-
-    }
-
-   
-
-    function onOpen(evt) 
-
-    {
-
-       websocket.send("${recv_id}");
-
-    }
-
-    function onMessage(evt) {
-
-    		$('#count').append(evt.data);
-
-    }
-
-    function onError(evt) {
-
-    }
-
-    $(document).ready(function(){
-
-    		send_message();
-
-    });
-
-    		
-
-    
-
-        </script>
-
-
-
+function onMessage(message){
+console.log("Receive Data from server : "+message);
+$("#chatMessageArea").append(message.body+"<br />");
+$("#chatArea").scrollTop($("#chatMessageArea").height()-$("#chatArea").height());
+}
+</script>
 </head>
 <body>
+
+<div id="chatArea">
+<div id="chatMessageArea">
+
+</div>
+</div>
 
 </body>
 </html>
