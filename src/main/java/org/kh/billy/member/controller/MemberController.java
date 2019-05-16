@@ -74,13 +74,12 @@ public class MemberController {
    public String selectCheckId(Model model,HttpServletRequest request, HttpSession session, SessionStatus status, Member member) {
 	  
 	   Member user = memberService.selectCheckId(member.getUser_id());
-	   
 	   user.setSocial_type("user");
-	   
+
 	   if(user != null) {
 		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
 		   session.setAttribute("loginMember", user);
-		   status.isComplete();
+		   status.setComplete();
 		   System.out.println(user.getUser_id() + "님 로그인 성공!!");
 		   
 		   return "home";

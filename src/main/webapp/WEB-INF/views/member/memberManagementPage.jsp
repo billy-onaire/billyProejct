@@ -2,9 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta charset="UTF-8">
+<!-- Favicon  -->
+<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+<!-- Core Style CSS -->
+<link rel="stylesheet" href="/billy/resources/css/core-style.css">
 <title>Billy - 회원관리</title>
 </head>
 <body>
@@ -12,7 +22,7 @@
 <c:import url="../common/adminNav.jsp" />
 	<div class="products-catagories-area clearfix">
 		<div class="amado-pro-catagory clearfix">
-	<ul class="btn-group pagination">
+	<ul class="pagination">
 		<c:if test="${paging.prev }">
 		<li>
 			<a href='<c:url value="memberManagementPage.do?page=${paging.startPage - 1 }"/>'><i class="fa fa-chevron-left"></i></a>

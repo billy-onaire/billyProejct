@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.kh.billy.member.controller.MemberController;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
@@ -56,16 +57,11 @@ public class FacebookSocialController {
     
     @RequestMapping(value = "facebookLogin.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String facebookSignInCallback(@RequestParam String code, HttpSession fSession,
-    		SessionStatus status, SocialUser social, Model model) throws Exception {
-    	
-    	if(fSession.getAttribute("loginMember") != null) {
-   		   fSession.invalidate();
-   		   System.out.println("사용자세션 날라감");
- 		 }
+    		SessionStatus status, Member member, Model model) throws Exception {
     
     	String fid = "";
     	String email="";
-    	
+    	String userId = "";
         try {
              String redirectUri = oAuth2Parameters.getRedirectUri();
             System.out.println("Redirect URI : " + redirectUri);
@@ -95,23 +91,21 @@ public class FacebookSocialController {
                 fid = userProfile.getId();
                 email = userProfile.getEmail();
                 
-                String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
                 String name = userProfile.getName(); //소셜 닉네임및 이름
                 
-                social.setUser_id(userId);
-                social.setName(name);
-                social.setSocial_code(fid);
-                             
+                member.setUser_name(name);
+                member.setSocial_code(fid);
+                member.setSocial_type("facebook");             
+                
                 System.out.println("Facebook socialcode: " + fid);
                 System.out.println("Facebook email: " + email);
                 System.out.println("Facebook name: " + name);
-                
-                if(fid != null) {
-  	              fSession.setAttribute("facebookLogin", social);
-  	              status.isComplete(); 
-                }
-                
-            } catch (MissingAuthorizationException e) {
+                userId = socialService.selectCheckId(fid);
+                member.setUser_id(userId);
+  	            fSession.setAttribute("loginMember", member);
+  	            status.setComplete(); 
+
+        } catch (MissingAuthorizationException e) {
                 e.printStackTrace();
             }
    
@@ -120,12 +114,12 @@ public class FacebookSocialController {
             e.printStackTrace();
         }
          
-        if (socialService.selectCheckId(fid) > 0) {
+        if (userId != null) {
 			return "home";
         } else {
 			System.out.println("페이스북 로그인 성공! 소셜 회원가입 페이지로!");
 			return "social/socialInfo";
-	}
+        }
     }
 
 }

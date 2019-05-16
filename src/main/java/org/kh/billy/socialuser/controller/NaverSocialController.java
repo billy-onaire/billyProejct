@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONObject;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.NaverLoginBO;
 import org.kh.billy.socialuser.model.vo.SocialUser;
@@ -75,7 +76,6 @@ public class NaverSocialController {
     	
     	OAuth2AccessToken oauthToken;
     	oauthToken = naverLoginBO.getAccessToken(session, code, state);
-
     	//로그인 사용자 정보를 읽어옴
     	apiResult = naverLoginBO.getUserProfile(oauthToken);
     	model.addAttribute("result", apiResult);
@@ -85,24 +85,22 @@ public class NaverSocialController {
     }
     
     //네이버 로그인 유무체크
-    @RequestMapping(value="naverLogin.do")
-    public String naverCheckId(Model model, @RequestParam String name, @RequestParam String nickname, @RequestParam String email,
-    		@RequestParam String profileImage, @RequestParam String uid, HttpSession nSession, SessionStatus status, SocialUser social) {
+    @RequestMapping(value="naverLogin.do", method=RequestMethod.POST)
+    public String naverCheckId(Model model, @RequestParam String user_name, @RequestParam String nickname, @RequestParam String email,
+    		@RequestParam String profile, @RequestParam String uid, HttpSession nSession, SessionStatus status, Member member) {
     	
-    	String userId = RandomStringUtils.randomAlphabetic(5) + RandomStringUtils.randomNumeric(5); //소셜 아이디 생성
+    	member.setSocial_type("naver");
+    	member.setSocial_code(uid);
+    	member.setUser_name(user_name);
+    	member.setSname(nickname);
+    	member.setProfile(profile);
     	
-    	social.setUser_id(userId);
-    	social.setSocial_type("naver");
-    	social.setSocial_code(uid);
-    	social.setName(name);
-    	social.setProfile(profileImage);
+    	String userId = socialService.selectCheckId(uid);  
+ 	   	member.setUser_id(userId);
+ 	   	nSession.setAttribute("loginMember", member);
+ 	   	status.setComplete();
     	
-    	if(uid != null) {
-    		nSession.setAttribute("loginMember", social);
-    		status.isComplete();
-    	}
-    	
-    	if(socialService.selectCheckId(uid) > 0) {
+    	if(userId != null) {
     		return "home";
     	}else {
     		System.out.println("네이버로그인 성공!");
