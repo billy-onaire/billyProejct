@@ -22,17 +22,17 @@ public class PaymentDao {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentMyList");
 		return (ArrayList<Payment>)pmList;
 	}
-	public ArrayList<Payment> listCriteria(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+	public ArrayList<Payment> listCriteria(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.listCriteria", payCri);
 		return (ArrayList<Payment>)pmList;
 	}
-	public int seachListCount(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+	public int seachListCount(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
 		return mybatisSession.selectOne("paymentMapper.searchListCount", payCri);
 	}
-	public int searchWaitingListCount(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+	public int searchWaitingListCount(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
 		return mybatisSession.selectOne("paymentMapper.searchWaitingListCount", payCri);
 	}
-	public ArrayList<Payment> listWaitingCriteria(SqlSessionTemplate mybatisSession, PaymentSearchCri payCri) {
+	public ArrayList<Payment> listWaitingCriteria(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.listWaitingCriteria", payCri);
 		return (ArrayList<Payment>)pmList;
 	}

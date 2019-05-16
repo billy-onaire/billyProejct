@@ -24,29 +24,41 @@ $(document).ready(function(){
 <link href='${ pageContext.request.contextPath }/resources/css/core-style.css' rel='stylesheet'/>
 <link href='${ pageContext.request.contextPath }/resources/css/style.css' rel='stylesheet'/>
 <!-- the end of the CSS -->
-<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<!-- bootPay -->    
+<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.0.min.js" type="application/javascript"></script>
+<script src='${ pageContext.request.contextPath }/resources/js/bootpaySource.js' type="application/javascript"></script>
+<script type='text/javascript' src='${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js'></script>
 <script type="text/javascript">
 $(function(){
 	setPageEntry();
 	setSearchType();
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
-	if(!showPrev)
+	if(showPrev !== 'true')
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(!showNext)
+	if(showNext !== 'true')
 		$('#page-next').addClass('disabled');
-	
-	console.log("prev : " + showPrev);
-	console.log('next : ' + showNext);
 	
 	var nowPage = '${ pageMaker.cri.page }';
 	$('#page'+nowPage).addClass('active');
 	
+	var data = {"price": $('.goPriceJe').val(), "sellerId": $('.sellerId').val()};
+	console.log('data : ' + data);
 	$('.view i').click(function() {
-		location.href = 'resultPay.do';
+		$.ajax({
+			url: 'resultPay.do',
+			type: 'post',
+			cache: 'false',
+			dataType: 'json',
+			data: data,
+			success: function() {
+				
+			}//success
+		});//ajax
 	});
+	console.log('${ payment.payment_price }');
 });//ready
 function setPageEntry(){
 	var perPageNum = '${ pageMaker.cri.perPageNum }';
@@ -56,7 +68,7 @@ function setPageEntry(){
 	console.log(perPageNum);
 	$entries.val(perPageNum).prop('selected', true);
 	$entries.on('change', function(){
-		location.href = 'paymentSearch.do?page=' + nowPage + '&perPageNum=' + $entries.val();
+		location.href = 'paymentWaiting.do?page=' + nowPage + '&perPageNum=' + $entries.val();
 	})//change
 }// paging function
 function setSearchType() {
@@ -66,10 +78,8 @@ function setSearchType() {
 	$searchTypeBox.val('${ pageMaker.cri.searchType }').prop('selected', true);
 	
 	$('#idSearch').click(function() {
-		var $inputVal = $('#searchType option:selected').val();
-		$keyword.val($inputVal);
 		console.log($('#keywordInput').val());
-		var url = 'paymentSearch.do?page=1' + '&perPagenum=' + '${ pageMaker.cri.perPageNum }'
+		var url = 'paymentWaiting.do?page=1' + '&perPagenum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()
 		+ '&keyword=' + encodeURIComponent($keyword.val());
 		location.href = url;
@@ -87,7 +97,7 @@ function setSearchType() {
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2><b>구매</b> 내역</h2><!-- bookingPage.do -->
+						<h2><b>구매대기</b> 내역</h2><!-- bookingPage.do -->
 					</div>
 					<div class="col-sm-8">						
 						<a id='sellList' class="btn btn-primary"><iclass='material-icons'>payment</i><span>판매 내역</span></a>
@@ -114,22 +124,13 @@ function setSearchType() {
 						<button type="button" class="btn btn-primary" id='idSearch'><i class="fa fa-search"></i></button>
 						<div class="filter-group">
 							<!-- <label>ID</label> -->
-							<input type="hidden" class="form-control" name='keyword' value='${ pageMaker.cri.keyword }' id='keywordInput'>
+							<input type="text" class="form-control" name='keyword' value='${ pageMaker.cri.keyword }' id='keywordInput'>
 						</div>
 						
 						<div class="filter-group">
 							<label></label>
 							<select class="form-control" name='searchType' id='searchType'>
-								<option value=''>거래상태</option>
-								<option value='1'>구매완료</option>
-								<option value='2'>취소</option>
-								<option value='3'>거래중</option>
-								<option value='4'>판매완료</option>
-								<%-- <option value='not' <c:out value='${ searchCri.searchType == null ? "selected" : "" }'/>>거래상태</option>
-								<option value='1' <c:out value='${ searchCri.searchType eq "1" ? "selected" : "" }'/>>구매완료</option>
-								<option value='2' <c:out value='${ searchCri.searchType eq "2" ? "selected" : "" }'/>>취소</option>
-								<option value='3' <c:out value='${ searchCri.searchType eq "3" ? "selected" : "" }'/>>거래중</option>
-								<option value='4' <c:out value='${ searchCri.searchType eq "4" ? "selected" : "" }'/>>판매완료</option> --%>
+								<option value='seller_id'>ID</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -139,71 +140,27 @@ function setSearchType() {
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                    	<th></th>
                         <th>no</th>
                         <th>판매자</th>
 						<th>제목</th>				
-                        <th>거래상태</th>						
-						<th>영수증</th>
+                        <th>거래상태</th>
+                        <th>가격</th>						
+						<th>결제하기</th>
                     </tr>
                 </thead>
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ status.index }</td>
                 		<td>${ payment.booking_no }</td>
-                		<td>${ payment.seller_id }</td>
+                		<td class='sellerId'>${ payment.seller_id }</td>
                 		<td>${ payment.product_name }</td>
-                		<c:if test='${ payment.status eq 1 }'>
-                			<td><span class="status text-success">&bull;</span> 구매완료</td>
+                		<c:if test='${ payment.status eq 3 }'>
+                			<td><span class="status text-info">&bull;</span> 구매중</td>
+                			<td class='goPriceJe'>${ payment.payment_price }₩</td>
                 			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
-                		</c:if>
-                		<c:if test='${ payment.status eq 2 }'>
-                			<td><span class="status text-danger">&bull;</span> 취소</td>
-                			<td> </td>
                 		</c:if>
                 	</tr>
                 </c:forEach>
-                </tbody>
-                <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</td>
-						<td><a href="#">더러운 신발 팝니다~</a></td>                   
-						<td><span class="status text-success">&bull;</span> 구매완료</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-					<tr>
-                        <td>2</td>
-                        <td><img src="#" class="avatar" alt="Avatar"> Paula Wilson</td>
-                        <td><a href="#">fdfdfdfdfdfdfdf</a></td>                       
-						<td><span class="status text-info">&bull;</span> 거래중</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr> -->
-					<!-- <tr>
-                        <td>3</td>
-                        <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
-						<td>Berlin</td>
-                        <td>Jul 04, 2017</td>
-                        <td><span class="status text-danger">&bull;</span> 취소</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>                        
-                    </tr>
-					<tr>
-                        <td>4</td>
-                        <td><a href="#"><img src="/examples/images/avatar/4.jpg" class="avatar" alt="Avatar"> Mary Saveley</a></td>
-						<td>New York</td>
-                        <td>Jul 16, 2017</td>						
-						<td><span class="status text-warning">&bull;</span> 결제대기</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-					<tr>
-                        <td>5</td>
-                        <td><a href="#"><img src="/examples/images/avatar/5.jpg" class="avatar" alt="Avatar"> Martin Sommer</a></td>
-						<td>Paris</td>
-                        <td>Aug 04, 2017</td>
-						<td><span class="status text-success">&bull;</span> 거래완료</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr> -->
                 </tbody>
             </table>
              <div class="row">
@@ -211,16 +168,16 @@ function setSearchType() {
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
                             		<li class='page-item' id='page-prev'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i></a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i></a>
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
                             		<li class='page-item' id='page-next'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
                                 <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
@@ -232,20 +189,6 @@ function setSearchType() {
                     </div>
                 </div>
             </div>
-			<!-- <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">6</a></li>
-					<li class="page-item"><a href="#" class="page-link">7</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div> -->
         </div>
     </div>     
 </div>

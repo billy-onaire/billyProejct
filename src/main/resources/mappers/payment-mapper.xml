@@ -15,21 +15,30 @@
 		<result property="customer" column="customer" />
 		<result property="booking_no" column="booking_no" />
 		<result property="seller_id" column="seller_id" />
-		<result property="product_title" column="product_title" />
+		<result property="product_name" column="product_name" />
 		<result property="review_status" column="review_status" />
 	</resultMap>
-	
+	<!-- SQ_PAYNO.nextval -->
 	<insert id="insertBookingList" parameterType="payment" useGeneratedKeys="true">
 		insert into payment values
 		(SQ_PAYNO.nextval, #{ payment_price }, #{ payment_quantity }, #{ payment_begindate }, #{ payment_enddate }, 
-		 '3', #{ product_no }, 'superje', 
-		 'BK_'||SQ_BKNO.nextval, #{ seller_id }, #{ product_title }, default)
+		 '3', #{ product_no }, 
+		 
+		 	(select user_id
+			 from tb_user
+			 where user_id = #{ customer })
+		 , 
+		 'BK_'||SQ_BKNO.nextval, #{ seller_id }, 
+		 
+		 	#{ product_name }
+		 
+		 , default)
 	</insert>
 	
 	<select id="selectBookingUser" parameterType="String" resultMap="resultPayment">
 		select * from payment 
 		where rownum = 1 and customer = #{ customer }
-		order by payment_no desc;
+		order by payment_no desc
 	</select>
 	<!-- select booking_no, pd.seller_id, py.product_title, status
 		from payment py
@@ -37,16 +46,16 @@
 		where status in (1,2) and py.seller_id = pd.seller_id and seller_id = #{ userId } -->
 	<select id="listCriteria" resultMap="resultPayment">
 	<![CDATA[
-		select o.rm, o.booking_no, o.payment_price, o.status, o.product_title, o.seller_id, o.customer
+		select o.rm, o.booking_no, o.payment_price, o.status, o.product_name, o.seller_id, o.customer
 		from
 		(
-			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_title, i.seller_id, i.customer
+			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_name, i.seller_id, i.customer
 			from
 			(
-				select booking_no, payment_price, status, product_title, seller_id, customer
-				from payment order by booking_no desc
+				select booking_no, payment_price, status, product_name, seller_id, customer
+				from payment order by payment_no desc
 			) i
-			where rownum <= (#{ perPageNum } * #{ page }) and status in (1,2)
+			where rownum <= (#{ perPageNum } * #{page}) and status in (1,2)
 		) o
 		where o.rm > #{ pageStart }
 		]]>
@@ -57,20 +66,20 @@
 	
 	<select id="listWaitingCriteria" resultMap="resultPayment">
 	<![CDATA[
-		select o.rm, o.booking_no, o.payment_price, o.status, o.product_title, o.seller_id, o.customer
+		select o.rm, o.booking_no, o.payment_price, o.status, o.product_name, o.seller_id, o.customer
 		from
 		(
-			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_title, i.seller_id, i.customer
+			select rownum as rm, i.booking_no, i.payment_price, i.status, i.product_name, i.seller_id, i.customer
 			from
 			(
-				select booking_no, payment_price, status, product_title, seller_id, customer
-				from payment order by booking_no desc
+				select booking_no, payment_price, status, product_name, seller_id, customer
+				from payment order by payment_no desc
 			) i
 			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
 		) o
 		where o.rm > #{ pageStart }
 		]]>
-			
+			<include refid="searchSeller"/>
 		<![CDATA[
 	]]>
 	
@@ -108,7 +117,7 @@
 	
 	<sql id="searchSeller">
 		<if test="searchType != null">
-			and seller_id like #{ keyword } 
+			and o.seller_id like #{ keyword } 
 		</if>
 	</sql>
 	<!-- <insert id="insertMember" parameterType="Member" useGeneratedKeys="true">
