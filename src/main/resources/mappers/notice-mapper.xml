@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="noticeMapper">
+	
+	<resultMap id="resultNotice" type="notice">
+		<id property="notice_no" column="notice_no" />
+		<result property="admin_id" column="admin_id" />
+		<result property="notice_title" column="notice_title" />
+		<result property="notice_content" column="notice_content" />
+		<result property="notice_originalfile" column="notice_originalfile" />
+		<result property="notice_renamefile" column="notice_renamefile" />
+		<result property="notice_date" column="notice_date" />
+		
+	</resultMap>
+	
+	<insert id="insertNotice" parameterType="Notice" useGeneratedKeys="true">
+	insert into notice values(SQ_NTNO.nextval, #{admin_id}, #{notice_title}, #{notice_content}, #{notice_originalfile}, #{notice_renamefile}, sysdate)
+	</insert>	
+	<select id="selectNoticeCount" resultType="int">
+	select count(*) from notice
+	</select>
+	<!-- <select id="selectNoticeList" resultMap="resultNotice" parameterType="hashmap">
+	<![CDATA[
+        select X.NOTICE_NO, X.ADMIN_ID, X.NOTICE_TITLE, X.NOTICE_CONTENT, X.NOTICE_ORIGINALFILE, X.NOTICE_RENAMEFILE, X.NOTICE_DATE        
+		from ( 
+		    select rownum as rnum, A.NOTICE_NO, A.ADMIN_ID, A.NOTICE_TITLE, A.NOTICE_CONTENT, A.NOTICE_ORIGINALFILE, A.NOTICE_RENAMEFILE, A.NOTICE_DATE
+		    from (
+		        select NOTICE_NO, ADMIN_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ORIGINALFILE, NOTICE_RENAMEFILE, NOTICE_DATE
+		        from NOTICE
+		        order by NOTICE_NO desc) A
+		    where rownum <= (#{perPageNum} * #{page})) X
+		where X.rnum > #{pageStart}
+	]]>
+	</select> -->
+</mapper>

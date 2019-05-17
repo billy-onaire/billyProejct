@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.kh.billy.notice.model.dao.NoticeDao;
 import org.kh.billy.notice.model.vo.Notice;
 import org.kh.billy.notice.model.vo.NoticePage;
+import org.kh.billy.product.model.vo.Criteria;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,15 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 	
 	@Override
-	public ArrayList<Notice> selectNoticeList(NoticePage noticePage) {
+	public ArrayList<Notice> selectNoticeList(Criteria cri) {
 		
-		return noticeDao.selectNoticeList(noticePage);
+		return noticeDao.selectNoticeList(mybatisSession,cri);
 	}
 
 	@Override
 	public int insertNotice(Notice notice) {
 
-		return noticeDao.insertNotice(notice);
+		return noticeDao.insertNotice(mybatisSession, notice);
 	}
 
 	@Override
@@ -40,6 +41,11 @@ public class NoticeServiceImpl implements NoticeService{
 	public int deleteNotice(int noticeNo) {
 
 		return noticeDao.deleteNotice(noticeNo);
+	}
+
+	@Override
+	public int selectNoticeCount() {
+		return noticeDao.selectNoticeCount(mybatisSession);
 	}
 
 }

@@ -13,16 +13,21 @@ public class Notice implements Serializable{
 	private String admin_id;
 	private String notice_title;
 	private String notice_content;
+	private String notice_originalfile;
+	private String notice_renamefile;
 	private Date notice_date;
 	
 	public Notice() {}
 
-	public Notice(int notice_no, String admin_id, String notice_title, String notice_content, Date notice_date) {
+	public Notice(int notice_no, String admin_id, String notice_title, String notice_content,
+			String notice_originalfile, String notice_renamefile, Date notice_date) {
 		super();
 		this.notice_no = notice_no;
 		this.admin_id = admin_id;
 		this.notice_title = notice_title;
 		this.notice_content = notice_content;
+		this.notice_originalfile = notice_originalfile;
+		this.notice_renamefile = notice_renamefile;
 		this.notice_date = notice_date;
 	}
 
@@ -58,6 +63,22 @@ public class Notice implements Serializable{
 		this.notice_content = notice_content;
 	}
 
+	public String getNotice_originalfile() {
+		return notice_originalfile;
+	}
+
+	public void setNotice_originalfile(String notice_originalfile) {
+		this.notice_originalfile = notice_originalfile;
+	}
+
+	public String getNotice_renamefile() {
+		return notice_renamefile;
+	}
+
+	public void setNotice_renamefile(String notice_renamefile) {
+		this.notice_renamefile = notice_renamefile;
+	}
+
 	public Date getNotice_date() {
 		return notice_date;
 	}
@@ -73,8 +94,11 @@ public class Notice implements Serializable{
 	@Override
 	public String toString() {
 		return "Notice [notice_no=" + notice_no + ", admin_id=" + admin_id + ", notice_title=" + notice_title
-				+ ", notice_content=" + notice_content + ", notice_date=" + notice_date + "]";
+				+ ", notice_content=" + notice_content + ", notice_originalfile=" + notice_originalfile
+				+ ", notice_renamefile=" + notice_renamefile + ", notice_date=" + notice_date + "]";
 	}
+
+	
 	
 	
 	
