@@ -141,7 +141,17 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public ArrayList<Member> selectMemberList(Paging paging) {
-		return memberDao.selectMemberList(mybatisSession, paging);
+	public int selectSearchTotalCount(String search, String select) {
+		return memberDao.selectSearchTotalCount(mybatisSession, search, select);
+	}
+	
+	@Override
+	public ArrayList<Member> selectMemberList(BasePage bPage) {
+		return memberDao.selectMemberList(mybatisSession, bPage);
+	}
+
+	@Override
+	public ArrayList<Member> selectSearchMemberList(BasePage bPage, String search, String select) {
+		return memberDao.selectSearchMemberList(mybatisSession,bPage,search,select);
 	}
 }

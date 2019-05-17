@@ -63,11 +63,23 @@
    		select count(user_id)
    		from tb_user
    		where verify = 'y'
-   		order by user_enroll desc
+   </select>
+   
+   <!-- 회원관리 검색 총 게시물수 체크 -->
+   <select id="selectSearchTotalCount" parameterType="map" resultType="int">
+   		select count(user_id)
+   		from tb_user
+   		where verify = 'y' 
+			<if test='search == null'>
+				and ${select} = 'Y'
+			</if>
+			<if test='search != null'> 
+				and ${select} like '%' || #{search} || '%'
+			</if>
    </select>
    
    <!-- 회원관리 리스트 조회 -->
-   <select id="selectMemberList" resultType="org.kh.billy.member.model.vo.Paging">
+   <select id="selectMemberList" parameterType="org.kh.billy.member.model.vo.BasePage" resultMap="resultMember">
    		<![CDATA[
    		select user_id, user_pwd, user_mobile, user_name, email, authkey, 
 		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
@@ -76,7 +88,29 @@
 		from tb_user
 		where verify = 'y'
 		order by user_enroll desc, user_name desc)
-		where rnum >= #{startPage} and rnum <= #{endPage}
+		where rnum >= #{rowStart} and rnum <= #{rowEnd}
+		]]>
+   </select>
+   
+   <!-- 회원관리 검색 리스트 조회 -->
+   <select id="selectSearchMemberList" parameterType="map" resultMap="resultMember">
+   		<![CDATA[
+   		select user_id, user_pwd, user_mobile, user_name, email, authkey, 
+		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
+		from (select rownum rnum, user_id, user_pwd, user_mobile, user_name, email, authkey, 
+		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
+		from tb_user
+		where verify = 'y'
+		]]>
+		<if test='search == null'>
+			and ${select} = 'Y'
+		</if>
+		<if test='search != null'> 
+			and ${select} like '%' || #{search} || '%'
+		</if>
+		<![CDATA[
+		order by user_enroll desc, user_name desc)
+		where rnum >= #{rowStart} and rnum <= #{rowEnd}
 		]]>
    </select>
    

@@ -2,6 +2,7 @@ package org.kh.billy.member.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
@@ -26,5 +27,7 @@ public interface MemberService {
 		void deleteAutoNo(String user_id);
 		int updateMemberPwd(Member member);
 		int selectTotalCount();
-		ArrayList<Member> selectMemberList(Paging paging);
+		ArrayList<Member> selectMemberList(BasePage bPage);
+		int selectSearchTotalCount(String search, String select);
+		ArrayList<Member> selectSearchMemberList(BasePage bPage, String search, String select);
 }

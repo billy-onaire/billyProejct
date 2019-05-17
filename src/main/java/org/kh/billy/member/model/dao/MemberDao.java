@@ -1,8 +1,11 @@
 package org.kh.billy.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
@@ -73,8 +76,32 @@ public class MemberDao {
 		return session.selectOne("memberMapper.selectTotalCount");
 	}
 
-	public ArrayList<Member> selectMemberList(SqlSessionTemplate session, Paging paging) {
-		List<Member> list = session.selectList("memberMapper.selectMemberList", paging);
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate session, BasePage bPage) {
+		List<Member> list = session.selectList("memberMapper.selectMemberList", bPage);
+		ArrayList<Member> mList = (ArrayList<Member>)list;
+		return mList;
+	}
+
+	public int selectSearchTotalCount(SqlSessionTemplate session,String search, String select) {
+		Map<String, String> map = new HashMap<>();
+		if(select.equals("delete_yn")) {
+			map.put("select", select);
+		}else {
+			map.put("search", search);
+			map.put("select", select);
+		}
+		System.out.println("DAO select : " + select + ", " +search);
+		return session.selectOne("memberMapper.selectSearchTotalCount",map);
+	}
+
+	public ArrayList<Member> selectSearchMemberList(SqlSessionTemplate session, BasePage bPage, String search,
+			String select) {
+		Map<String, String> map = new HashMap<>();
+		map.put("search", search);
+		map.put("select", select);
+		map.put("rowStart", String.valueOf(bPage.getRowStart()));
+		map.put("rowEnd", String.valueOf(bPage.getRowEnd()));
+		List<Member> list = session.selectList("memberMapper.selectSearchMemberList",map);
 		ArrayList<Member> mList = (ArrayList<Member>)list;
 		return mList;
 	}
