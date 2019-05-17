@@ -1,6 +1,5 @@
 package org.kh.billy.review.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.review.model.vo.Review;
@@ -21,8 +20,8 @@ public class ReviewDao {
 		return session.selectList("reviewMapper.selectListReview", paging);
 	}
 
-	public int selectTotalListReview(SqlSessionTemplate session) {
-		return session.selectOne("reviewMapper.selectTotalListReview");
+	public int selectTotalListReview(SqlSessionTemplate session, String userId) {
+		return session.selectOne("reviewMapper.selectTotalListReview", userId);
 	}
 
 	public List<Review> selectPdetailReview(SqlSessionTemplate session, ReviewPagingFront pagingFront) {

@@ -14,7 +14,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Billy Product Details</title>
+    <title>상품상세보기</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
@@ -525,13 +525,13 @@
                             <!-- Add to Cart Form -->
                             <br><br><br>                          
 
-                            <form class="cart clearfix" method="post" style="clear:both;" action='bookingPage.do'>
+                            <form id="form" class="cart clearfix" method="post" style="clear:both;" action='bookingPage.do'>
 
                             <table class="type05">
                             <tr>
                             	<th>갯수</th>
                             	<td>
-                            		<input type="number" class="qty-text" id="qty" step="1" min="1" max="${ p.product_quantity }" name="payment_quantity" >
+                            		<input type="number" class="qty-text" id="qty" step="1" min="1" max="${ p.product_quantity }" name="payment_quantity" value="1">
                             	</td>
                             </tr>
                             
@@ -549,7 +549,7 @@
                             </tr>
                             <tr>
                             	<td colspan="2" style="padding:30px">
-                            		<button id='goBooking' type='submit' name="addtocart" value="5" class="btn amado-btn" onclick="formSubmit();">대여신청</button>
+                            		<button id='goBooking' type='button' name="addtocart" value="5" class="btn amado-btn" onclick="formSubmit();">대여신청</button>
                             	</td>
                             </tr>
                             </table>
