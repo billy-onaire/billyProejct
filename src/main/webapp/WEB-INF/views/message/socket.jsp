@@ -1,44 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <!DOCTYPE html>
 <html>
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="billy/resources/js/sockjs-0.3.4.min.js"></script>
-<script type="text/javascript" src="billy/resources/js/stomp.min.js"></script>
+
+<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+
+
 <script>
-var sock = null,
-stompClient = null;
+var socket = null;
+/* $(document).ready(function(){
+	connectWS();
+}); */
 
-// connect() 은 onload 시점에서 수행될 수 있도록 지정
-function connect(){
-sock = new SockJS("http://localhost:8888/billy");
-stompClient = Stomp.over(sock);    //stomp client 구성
-stompClient.connect({}, function(frame){
-   console.log('connected stomp over sockjs');
-   // subscribe message
-   stompClient.subscribe('mmsSocket.do', onMessage);
-});
+function connectWS(){
+	var wsUri = "ws://localhost:8888/billy/mmsSocket.do?pno=1234";
+	var ws = new WebSocket(wsUri);
+	socket = ws;
+	
+	ws.onopen = function () {
+	    console.log('Info: connection opened.');
+	    
+	};
 
+
+	ws.onmessage = function (event) {
+	    console.log("ReceiveMessage : ", evt.data+'\n');
+	};
+
+
+	ws.onclose = function (event) { 
+		console.log('Info: connection closed.'); 
+		/* setTimeout( function(){ connect(); }, 1000); // retry connection!! */
+	};
+	ws.onerror = function (err) { console.log('Error :', err); };
+	
 }
 
-function onMessage(message){
-console.log("Receive Data from server : "+message);
-$("#chatMessageArea").append(message.body+"<br />");
-$("#chatArea").scrollTop($("#chatMessageArea").height()-$("#chatArea").height());
-}
 </script>
+
+<script>
+$('#btnSend').on('click', function(event) {
+	alert("확인");
+	event.preventDefault();
+	if (socket.readyState !== 1) return;
+		  let msg = $('input#msg').val();
+		  socket.send(msg);
+	});
+	
+	 connectWS(); 
+</script>
+
 </head>
 <body>
 
-<div id="chatArea">
-<div id="chatMessageArea">
 
-</div>
+<div class="well">
+	<input type="text" id="msg" value="1212" class="form-control">
+	<button id="btnSend" class="btn btn-primary">Send Message</button>
 </div>
 
 </body>

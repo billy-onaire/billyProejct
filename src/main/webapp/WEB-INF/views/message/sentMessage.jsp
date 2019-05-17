@@ -11,8 +11,7 @@
 <title>Billy</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="img/core-img/favicon.ico">
-<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png"><script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script>
 $(document).ready(function(){ 
 	/* 게시글 제목 클릭 상세보기 */ 

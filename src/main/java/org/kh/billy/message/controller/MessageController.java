@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.message.model.service.MessageService;
 import org.kh.billy.message.model.vo.CriteriaMms;
@@ -246,8 +247,8 @@ public class MessageController {
 		
 	}
 	@RequestMapping(value="mmsWrite.do", method=RequestMethod.GET)
-	public ModelAndView mmsWritePage(ModelAndView mv, HttpServletRequest request, @RequestParam(name="pno") int pNo/*@RequestParam(value="mms_pno") int mms_pno*/) throws IOException{
-		System.out.println(pNo);
+	public ModelAndView mmsWritePage(ModelAndView mv, HttpServletRequest request, HttpSession session, @RequestParam(name="pno") int pNo/*@RequestParam(value="mms_pno") int mms_pno*/) throws IOException{
+		System.out.println("선택한 상품 넘버 : " + pNo);
 		
 		ProductDetail pDetail = pdetailService.selectProductDetail(pNo);
 		System.out.println(pDetail); 
@@ -256,7 +257,13 @@ public class MessageController {
 		m.setProduct_name(pDetail.getProduct_name());
 		m.setProduct_no(pDetail.getProduct_no());
 		m.setRecv_id(pDetail.getSeller_id());
+		Member mem = (Member) session.getAttribute("loginMember");
 		
+		String userid = mem.getUser_id();
+		
+		
+		m.setSent_id(userid);
+		System.out.println("로그인멤버 : " + userid);
 		mv.addObject("m", m);
 		System.out.println("넘기기 전 메세지 : " + m); //여기까지 확인
 		mv.setViewName("message/messageWrite");
@@ -266,13 +273,16 @@ public class MessageController {
 	@RequestMapping(value="insertMms.do", method=RequestMethod.POST)
 	public ModelAndView insertMessage(MessagePname message, HttpSession session, int pno) {
 		System.out.println("인서트 넘어 오나요>");
-		
+		System.out.println("선택한 상품 넘버에 대한 답장 : " + pno);
 		//session에서 userid 받아오기
-		Member m = (Member) session.getAttribute("loginMember");
+		
+		message.setProduct_no(pno);
+
+/*		Member m = (Member) session.getAttribute("loginMember");
 		System.out.println("로그인멤버 : " + m);
 		String userid = m.getUser_id();
-
 		message.setSent_id(userid);
+		System.out.println("로그인한 아이디 : " + userid);*/
 		messageService.insertMessage(message);
 		//db에는 값이 잘 들어가는데 출력하면 null로 나온당
 		System.out.println("작성한 메세지 : " + message);

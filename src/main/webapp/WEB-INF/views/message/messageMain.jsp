@@ -11,7 +11,7 @@
 <title>Billy</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="img/core-img/favicon.ico">
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script>
 $(document).ready(function(){ 
