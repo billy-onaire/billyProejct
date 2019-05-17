@@ -28,11 +28,14 @@ public class Paging {		//페이징 처리VO
 	private void calcPage() {
 		endPage = (int)(Math.ceil(bPage.getPage() / (double)viewPageNum) * viewPageNum);
 		int tempEndPage = (int)(Math.ceil(totalCount / (double)bPage.getOnePageNum()));
+		startPage = (endPage - viewPageNum) + 1;
+		
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
-		
-		startPage = (endPage - viewPageNum) + 1;
+		if(startPage <= 0) {
+			startPage = 1;
+		}
 		
 		prev = startPage == 1 ? false : true;
 		next = endPage * bPage.getOnePageNum() >= totalCount ? false : true;

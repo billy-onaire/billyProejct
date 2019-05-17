@@ -264,19 +264,53 @@ public class MemberController {
 	   Paging paging = new Paging();
 	   paging.setBpage(bPage);
 	   paging.setTotalCount(memberService.selectTotalCount());	//DB에 저장된 회원 총 인원수체크
-	   model.addAttribute("paging", paging);
-	   ArrayList<Member> mList = memberService.selectMemberList(paging);
+	   ArrayList<Member> mList = memberService.selectMemberList(bPage);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
+	   
 	   System.out.println("BasePage : " + bPage);
 	   System.out.println("paging : " + paging);
-	   for(Member member : mList) {
-		   System.out.println("mList : " + member);
-	   }
+
 	   if(mList != null) {
-		   model.addAttribute("mList", paging);
+		   model.addAttribute("mList",mList);
+		   model.addAttribute("paging", paging);
 		   return "member/memberManagementPage";
 	   }else {
 		   model.addAttribute("message", "조회할 게시글이 없습니다.");
 		   return "member/memberError";
 	   }
+   }
+   
+   //회원관리 아이디,이름,탈퇴회원으로 검색 리스트 
+   @RequestMapping(value="mSearchList.do", method=RequestMethod.POST)
+   public String memberSearchList(@RequestParam String selection, @RequestParam String search, Model model, BasePage bPage) {
+	   System.out.println("selection : " + selection + "\nsearch : " + search);
+	   String select = "";
+	   if(selection.equals("userId")) {
+		   select = "user_id";
+	   }else if(selection.equals("userName")) {
+		   select = "user_name";
+	   }else if(selection.equals("deleteUser")) {
+		   select = "delete_yn";
+	   }
+	   System.out.println("검색할 셀렉트문 : " + select);
+	   Paging paging = new Paging();
+	   paging.setBpage(bPage);
+	   paging.setTotalCount(memberService.selectSearchTotalCount(search, select));	//DB에 저장된 회원 총 인원수체크
+	   System.out.println("검색게시물수 : " + memberService.selectSearchTotalCount(search, select));
+	   ArrayList<Member> mList = memberService.selectSearchMemberList(bPage, search, select);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
+	   for(Member m : mList) {
+		   System.out.println("mList : " + m);
+	   }
+	   
+	   if(mList != null) {
+		   model.addAttribute("mList",mList);
+		   model.addAttribute("paging", paging);
+		   model.addAttribute("search", search);
+		   model.addAttribute("select", select);
+		   return "member/memberManagementPage";
+	   }else {
+		   model.addAttribute("message", "조회할 게시글이 없습니다.");
+		   return "member/memberError";
+	   }
+	   
    }
 }

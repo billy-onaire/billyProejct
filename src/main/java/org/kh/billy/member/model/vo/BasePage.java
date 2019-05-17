@@ -3,6 +3,8 @@ package org.kh.billy.member.model.vo;
 public class BasePage {		//특정 페이지 조회 VO
 	private int page;		//현재 페이지번호
 	private int onePageNum;		//한 페이지당 보여줄 게시글 갯수
+	private int rowStart;  //한 페이지당 보여줄 게시글 첫글
+	private int rowEnd;	  //한 페이지당 보여줄 게시글 마지막글
 	
 	public int getPageStart() {
 		return (this.page - 1) * onePageNum;
@@ -38,9 +40,20 @@ public class BasePage {		//특정 페이지 조회 VO
 		}
 	}
 
+	public int getRowStart() {
+		rowStart = ((page - 1) * onePageNum) + 1;
+		return rowStart;
+	}
+	
+	public int getRowEnd() {
+		rowEnd = rowStart + onePageNum - 1;
+		return rowEnd;
+	}
+
 	@Override
 	public String toString() {
-		return "BasePage [page=" + page + ", onePageNum=" + onePageNum + "]";
+		return "BasePage [page=" + page + ", onePageNum=" + onePageNum + ", rowStart=" + rowStart + ", rowEnd=" + rowEnd
+				+ "]";
 	}
 	
 }
