@@ -1,5 +1,6 @@
 package org.kh.billy.report.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.product.model.vo.Product;
@@ -30,6 +31,11 @@ public class ReportDao {
 
 	public List<ReportList> selectReportedBy(SqlSessionTemplate mybatisSession, String request_id) {
 		List<ReportList> list = mybatisSession.selectList("reportMapper.selectReportedBy", request_id);
+		return list;
+	}
+
+	public List<Report> selectReportList(SqlSessionTemplate mybatisSession) {
+		List<Report> list = mybatisSession.selectList("reportMapper.selectReportList");
 		return list;
 	}
 

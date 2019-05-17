@@ -16,6 +16,8 @@ public interface ReportService {
 
 	ArrayList<ReportList> selectWhatIReport(String id);
 
-	ArrayList<ReportList> selectReportedBy(String id); 
+	ArrayList<ReportList> selectReportedBy(String id);
+
+	ArrayList<Report> selectReportList(); 
 	
 }

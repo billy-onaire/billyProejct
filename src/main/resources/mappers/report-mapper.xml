@@ -61,5 +61,10 @@
 		JOIN PRODUCT_IMG I ON (P.IMG_NO = I.IMG_NO)
 		WHERE REPORT_ID = #{request_id}
 	</select>
+	
+	<select id="selectReportList" resultMap="resultReport">
+		SELECT *
+		FROM TB_REPORT
+	</select>
 
 </mapper>
