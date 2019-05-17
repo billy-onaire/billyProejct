@@ -1,6 +1,5 @@
 package org.kh.billy.review.model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.review.model.vo.Review;
@@ -13,7 +12,7 @@ public interface ReviewService {
 	List<Review> selectPdetailReview(ReviewPagingFront paging);
 	int insertReview(Review review);
 	List<ReviewList> selectListReview(ReviewPaging paging);
-	int selectTotalListReview();
+	int selectTotalListReview(String userId);
 	int selectTotalPdetailReview(int productNo);
 	int deleteReview(int rno);
 }

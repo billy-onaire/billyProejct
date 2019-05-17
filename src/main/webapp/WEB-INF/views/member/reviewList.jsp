@@ -24,7 +24,7 @@
 
 	<!-- 페이징 관련 -->
 	<link rel="stylesheet" href="/billy/resources/css/reviewpaging.min.css">
-	<link rel="stylesheet" href="/billy/resources/css/reviewpaging-theme.min.css">
+	<!-- <link rel="stylesheet" href="/billy/resources/css/reviewpaging-theme.min.css"> -->
 	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
 
 	<style type="text/css">

@@ -1,6 +1,5 @@
 package org.kh.billy.review.model.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.billy.review.model.dao.ReviewDao;
@@ -32,8 +31,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public int selectTotalListReview() {
-		return reviewDao.selectTotalListReview(mybatisSession);
+	public int selectTotalListReview(String userId) {
+		return reviewDao.selectTotalListReview(mybatisSession, userId);
 	}
 
 	@Override
