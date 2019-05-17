@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +9,43 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta charset="UTF-8">
+
+<!-- Title  -->
+<title>Billy - main</title>
+<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'		
+	var sid = "${loginMember.social_code}";
+	
+	$.ajax({
+		url: "socialCheck.do",
+		data: {
+			sid: sid
+		},
+		type: "post",
+		dataType: "json",
+		success: function(result){
+			if(result.hashMap.fail == "fail"){
+				location.href="socialEnroll.do";
+			} 
+		},error: function(request, status, errorData){
+			console.log("error code : " + request.status
+					+ "\nmessage : " + request.responseText
+					+ "\nerror : " + errorData);
+		}
+	});//ajax
+	'</c:if>'
+});//ready 
+</script>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-<title>Billy - 관리자메인</title>
 </head>
 <body>
-<!-- Search Wrapper Area Start -->
+	<!-- Search Wrapper Area Start -->
 	<div class="search-wrapper section-padding-100">
 		<div class="search-close">
 			<i class="fa fa-close" aria-hidden="true"></i>
@@ -49,7 +76,7 @@
 			<div class="amado-pro-catagory clearfix">
 				<!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=living">
                         <img src="/billy/resources/img/bg-img/living.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -62,7 +89,7 @@
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=clothes">
                         <img src="/billy/resources/img/bg-img/clothes2.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -75,7 +102,7 @@
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=electronics">
                         <img src="/billy/resources/img/bg-img/electronics4.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -88,7 +115,7 @@
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=etc">
                         <img src="/billy/resources/img/bg-img/5.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -101,7 +128,7 @@
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=kids">
                         <img src="/billy/resources/img/bg-img/6.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -114,7 +141,7 @@
 
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="showlist.do?pcategory_name=sports">
                         <img src="/billy/resources/img/bg-img/sports.jpg" alt="">
                         <!-- Hover Content -->
                         <div class="hover-content">
@@ -130,5 +157,16 @@
 		<!-- Product Catagories Area End -->
 	</div>
 	<c:import url="common/footer.jsp" />
+	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+	<!-- Popper js -->
+	<script src="/billy/resources/js/popper.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="/billy/resources/js/bootstrap.min.js"></script>
+	<!-- Plugins js -->
+	<script src="/billy/resources/js/plugins.js"></script>
+	<!-- Active js -->
+	<script src="/billy/resources/js/active.js"></script>
 </body>
+
 </html>

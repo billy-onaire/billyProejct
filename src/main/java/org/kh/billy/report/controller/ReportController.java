@@ -24,15 +24,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReportController {
 	@Autowired
 	private ReportService rs;
+	
+	@RequestMapping("goReportAdmin.do")
+	public String goReportAdminPage() {
+		return "report/adminReport";
+	}
+	
+	@RequestMapping("getAdminReportInfo.do")
+	public void getAdminReportInfo(HttpServletResponse response) {
+		ArrayList<Report> rlist = rs.selectReportList();
+	}
+	
 	@RequestMapping("myReport.do")
 	public ModelAndView myReportPage(ModelAndView mv, HttpSession session) {
 		Member m = (Member) session.getAttribute("loginMember");
 		String user_id = m.getUser_id();
-		System.out.println(user_id);
 		ArrayList<ReportList> r1 = rs.selectWhatIReport(user_id);
 		ArrayList<ReportList> r2 = rs.selectReportedBy(user_id);
-		System.out.println(r1);
-		System.out.println(r2);
 		mv.setViewName("report/myReport");
 		mv.addObject("mylist", r1);
 		mv.addObject("slist", r2);

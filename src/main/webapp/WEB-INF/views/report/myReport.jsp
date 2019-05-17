@@ -116,22 +116,22 @@
 								</tr>
 	
 								
-								<c:forEach var="r" items="${slist}">
+								<c:forEach var="s" items="${slist}">
 									<tr>
-										<td><a href="pdetail.do?pno=${r.product_no }"><img src="/billy/resources/files/product/${r.first_img}" alt="img" class="t-img" /></a></td>
-										<td><a href="pdetail.do?pno=${r.product_no }">${r.product_name}</a></td>
+										<td><a href="pdetail.do?pno=${s.product_no }"><img src="/billy/resources/files/product/${s.first_img}" alt="img" class="t-img" /></a></td>
+										<td><a href="pdetail.do?pno=${s.product_no }">${s.product_name}</a></td>
 										<td>
 											<c:choose>
-												<c:when test="${r.rcategory_no == 1}"> <a href="pdetail.do?pno=${r.product_no }">부적절한 이미지인 경우</a> </c:when>
-												<c:when test="${r.rcategory_no == 2}"> <a href="pdetail.do?pno=${r.product_no }">욕설 및 스팸 게시물인 경우 </a></c:when>
-												<c:when test="${r.rcategory_no == 3}"> <a href="pdetail.do?pno=${r.product_no }">거래 시간 미준수한 경우 </a></c:when>
-												<c:when test="${r.rcategory_no == 4}"> <a href="pdetail.do?pno=${r.product_no }">사진과 상이한 물품의 품질인 경우 </a></c:when>
-												<c:when test="${r.rcategory_no == 5}"> <a href="pdetail.do?pno=${r.product_no }">거래 시 욕설 또는 협박을 한 경우 </a></c:when>
-												<c:when test="${r.rcategory_no == 6}"> <a href="pdetail.do?pno=${r.product_no }">기타</a> </c:when>
+												<c:when test="${s.rcategory_no == 1}"> <a href="pdetail.do?pno=${s.product_no }">부적절한 이미지인 경우</a> </c:when>
+												<c:when test="${s.rcategory_no == 2}"> <a href="pdetail.do?pno=${s.product_no }">욕설 및 스팸 게시물인 경우 </a></c:when>
+												<c:when test="${s.rcategory_no == 3}"> <a href="pdetail.do?pno=${s.product_no }">거래 시간 미준수한 경우 </a></c:when>
+												<c:when test="${s.rcategory_no == 4}"> <a href="pdetail.do?pno=${s.product_no }">사진과 상이한 물품의 품질인 경우 </a></c:when>
+												<c:when test="${s.rcategory_no == 5}"> <a href="pdetail.do?pno=${s.product_no }">거래 시 욕설 또는 협박을 한 경우 </a></c:when>
+												<c:when test="${s.rcategory_no == 6}"> <a href="pdetail.do?pno=${s.product_no }">기타</a> </c:when>
 											</c:choose>
 										</td>
-										<td>${r.report_id }</td>
-										<td>${r.report_content}</td>
+										<td>${s.report_id }</td>
+										<td>${s.report_content}</td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -147,6 +147,7 @@
 							</ul>
 						</nav>
 					</div>
+					<button onclick="goReportAdmin();">관리자 테스트</button>
 				</div>
 			</div>
 		</div>

@@ -44,4 +44,9 @@ public class ReportServiceImpl implements ReportService{
 		return (ArrayList<ReportList>) rd.selectReportedBy(mybatisSession,id);
 	}
 
+	@Override
+	public ArrayList<Report> selectReportList() {
+		return (ArrayList<Report>) rd.selectReportList(mybatisSession);
+	}
+
 }
