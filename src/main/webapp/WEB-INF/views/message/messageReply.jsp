@@ -8,8 +8,7 @@
 <title>쪽지 보내기</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
-
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 
