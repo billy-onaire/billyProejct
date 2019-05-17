@@ -98,18 +98,38 @@
                            <div class="container">
 
                                  <h2>List Group With Contextual Classes</h2>
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-success">Success item</li>
-    <li class="list-group-item list-group-item-secondary">Secondary item</li>
-    <li class="list-group-item list-group-item-info">Info item</li>
-    <li class="list-group-item list-group-item-warning">Warning item</li>
-    <li class="list-group-item list-group-item-danger">Danger item</li>
-    <li class="list-group-item list-group-item-primary">Primary item</li>
-    <li class="list-group-item list-group-item-dark">Dark item</li>
-    <li class="list-group-item list-group-item-light">Light item</li>
-    <li class="list-summary-wrapper">aaa</li>
-  </ul>
-  <a href="noticewriteview.do">write폼으로 가기 </a>
+								  <ul class="list-group">
+								    <li class="list-group-item list-group-item-success">Success item</li>
+								    <li class="list-group-item list-group-item-secondary">Secondary item</li>
+								    <li class="list-group-item list-group-item-info">Info item</li>
+								    <li class="list-group-item list-group-item-warning">Warning item</li>
+								    <li class="list-group-item list-group-item-danger">Danger item</li>
+								    <li class="list-group-item list-group-item-primary">Primary item</li>
+								    <li class="list-group-item list-group-item-dark">Dark item</li>
+								    <li class="list-group-item list-group-item-light">Light item</li>
+								    <li class="list-summary-wrapper">aaa</li>
+								  </ul>
+								  <a href="noticewriteview.do">write폼으로 가기 </a>
+  							<div class="center" >
+                            <table class="table" style="width:800px; text-align: center;" id="productList">
+                              <tr>
+                                  <th width="45%">상품명</th>
+                                  <th width="7.5%">수량</th>
+
+                                  <th width="10%">가격</th>
+                                  <th width="15%">최근수정일자</th>                                  
+                                  <th width="17.5%">수정/삭제</th>
+                              </tr>
+                              <%-- <c:forEach items="${list }" var="list">
+                                <tr><td><a href="pdetail.do?pno=${list.notice_no}" style="font-size: 15px; color: #2a6496;">${list.notice_title}</a></td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
+                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post"><button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;<button type="submit" class="btn btn-warning btn-sm" onclick="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">삭제</button></form></td></tr>
+                                
+                              
+                              </c:forEach> --%>
+                            </table>                                          
+                            
+                          </div> 
+  
                             <div>
                             </div>
                            </div>

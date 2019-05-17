@@ -27,6 +27,7 @@
          <typeAlias type="org.kh.billy.sms.model.vo.Sms" alias="Sms" />
          <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
          <typeAlias type="org.kh.billy.report.model.vo.ReportList" alias="ReportList"/>
+         <typeAlias type="org.kh.billy.notice.model.vo.Notice" alias="Notice"/>
    </typeAliases>
    <mappers>
 	  <mapper resource="mappers/productDetail-mapper.xml" />
@@ -40,5 +41,6 @@
       <mapper resource="mappers/review-mapper.xml" />
       <mapper resource="mappers/member-mapper.xml" />
       <mapper resource="mappers/report-mapper.xml" />
+      <mapper resource="mappers/notice-mapper.xml" />
    </mappers>
 </configuration>

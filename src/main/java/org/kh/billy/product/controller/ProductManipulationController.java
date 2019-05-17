@@ -39,9 +39,6 @@ public class ProductManipulationController {
 	private ProductImgService productImgService;
 	
 	@Autowired
-	private SocialUserService socialService;
-	
-	@Autowired
 	private ProductManipulationService pms;
 	
 	@RequestMapping(value="productinsertmain.do")

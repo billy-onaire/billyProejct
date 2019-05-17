@@ -51,7 +51,7 @@
       padding: 10px;
     }*/
     .main-content-wrapper{
-        z-index: 1001;
+        z-index: 1050;
     }
     </style>
 </head>
@@ -102,7 +102,7 @@
                             <br><br><br><br>
                                                      
                            <div class="container">
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-sm-10">
                                       One of three columns
                                     </div>
@@ -112,30 +112,32 @@
                                     <div class="col-sm">
                                       One of three columns
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <h2>공지사항 글 쓰기</h2>
+                                <form method="post" action="insertnotice.do" id="noticefrm" enctype="multipart/form-data"  >
                                 <div class="form-group">
-                                    <input type="text" name="notice_title" id="" class="form-control" placeholder="제목을 입력하세요.">
+                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." required>
                                 </div>
                                 <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" id="customFile" name="filename">
+                                  <input type="file" class="custom-file-input" id="file" name="file">
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                 <!-- <div class="form-group">
                                     <input type="file" name="notice_file" id="" class="form-group">
                                 </div> -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <textarea name="" id="" style="resize: none; width:100%;" placeholder="내용을 입력하세요."></textarea>
-                                </div>
+                                </div> -->
                                 
-                                <form method="post" action="insertnotice.do" id="noticefrm">
-                                    <textarea name="ir1" id="ir1" rows="10" cols="100">에디터에 기본으로 삽입할 글(수정 모드)이 </textarea>
+                                
+                                    <textarea name="notice_content" id="notice_content" rows="10" cols="100"></textarea>
 
                                   <textarea id="summernote" name="editordata"></textarea>
                                   <button class="btn btn-primary" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
                                   <!-- <button type="submit" class="btn btn-primary pull-right" onclick="return confirm('정말로 등록하시겠습니까?')">등록</button> -->
-                                  <button class="btn btn-primary pull-right" onclick="submitContents();">등록</button>
+                                  <button  class="btn btn-primary pull-right" onclick="submitContents();">등록</button>
+                                  <!-- onclick="submitContents();" -->
                                 </form>
                                 
                                 
@@ -198,24 +200,23 @@
             var oEditors = [];
             nhn.husky.EZCreator.createInIFrame({
              oAppRef: oEditors,
-             elPlaceHolder: "ir1",
+             elPlaceHolder: "notice_content",
              sSkinURI: "/billy/resources/se2/SmartEditor2Skin.html",
              fCreator: "createSEditor2"
             });
+            
+            function submitContents() {
+                oEditors.getById["notice_content"].exec("UPDATE_CONTENTS_FIELD", []);
+                alert(document.getElementById("notice_content").value);   
 
+                try {
+                    $('#noticefrm').submit();
+                } catch(e) {}
+            }
 
         </script>
         <script type="text/javascript">
-            function submitContents() {
-             // 에디터의 내용이 textarea에 적용된다.
-             oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-
-             // 에디터의 내용에 대한 값 검증은 이곳에서
-             // document.getElementById("ir1").value를 이용해서 처리한다.
-
-             try {
-                 $('#noticefrm').submit();
-             } catch(e) {}            
+                        
         </script>
         </body>
 
