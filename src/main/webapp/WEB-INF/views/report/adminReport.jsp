@@ -78,7 +78,7 @@
 				<div class="table-users">
 					<div class="header">REPORT</div>
 
-					<table cellspacing="0" id="table_report1">
+					<table cellspacing="0" id="adminTable">
 						<tr>
 							<th>신고 번호</th>
 							<th>카테고리</th>
@@ -87,14 +87,23 @@
 							<th>신고일</th>
 							<th>물품 번호</th>
 							<th>요청 아이디</th>
-							<th width="230"></th>
+							<th width="230">승인</th>
 						</tr>
 					</table>
 				</div>
+				<div class="row">
+                    <div class="col-12">
+                        <!-- Pagination -->
+                        <nav aria-label="navigation">
+                            <ul class="pagination justify-content-end mt-50">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
 			</div>
 			<!-- Product Catagories Area End -->
 		</div>
-		
+	</div>	
 		<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 		<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 		<!-- Popper js -->

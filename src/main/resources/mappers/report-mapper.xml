@@ -12,6 +12,7 @@
 		<result property="report_date" column="report_date" />
 		<result property="product_no" column="product_no" />
 		<result property="request_id" column="request_id" />
+		<result property="report_progress" column="report_progress" />
 	</resultMap>
 
 	<resultMap id="resultReportList" type="ReportList">
@@ -29,7 +30,7 @@
 	<select id="insertReport" parameterType="Report">
 		INSERT INTO TB_REPORT
 		VALUES(SQ_RPNO.NEXTVAL,
-		#{rcategory_no},#{report_content},#{report_id},sysdate,#{product_no},#{request_id})
+		#{rcategory_no},#{report_content},#{report_id},sysdate,#{product_no},#{request_id},'M')
 	</select>
 
 	<select id="selectCheckReport" resultType="_int">
@@ -41,30 +42,60 @@
 	</select>
 
 	<select id="selectWhatIReport" resultMap="resultReportList">
-		SELECT REPORT_NO, P.PRODUCT_NAME,
-		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE, R.PRODUCT_NO,
+		SELECT REPORT_NO,
+		P.PRODUCT_NAME,
+		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE,
+		R.PRODUCT_NO,
 		REQUEST_ID, FIRST_IMG
 		FROM TB_REPORT R
-		JOIN PRODUCT P ON (R.PRODUCT_NO =
+		JOIN PRODUCT P ON
+		(R.PRODUCT_NO =
 		P.PRODUCT_NO)
-		JOIN PRODUCT_IMG I ON (P.IMG_NO = I.IMG_NO)
+		JOIN PRODUCT_IMG I ON (P.IMG_NO =
+		I.IMG_NO)
 		WHERE
 		REQUEST_ID = #{request_id}
 	</select>
 
 	<select id="selectReportedBy" resultMap="resultReportList">
-		SELECT REPORT_NO, P.PRODUCT_NAME,
-		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE, R.PRODUCT_NO,
+		SELECT REPORT_NO,
+		P.PRODUCT_NAME,
+		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE,
+		R.PRODUCT_NO,
 		REQUEST_ID, FIRST_IMG
 		FROM TB_REPORT R
-		JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
-		JOIN PRODUCT_IMG I ON (P.IMG_NO = I.IMG_NO)
+		JOIN PRODUCT P ON
+		(R.PRODUCT_NO = P.PRODUCT_NO)
+		JOIN PRODUCT_IMG I ON (P.IMG_NO =
+		I.IMG_NO)
 		WHERE REPORT_ID = #{request_id}
 	</select>
-	
+
 	<select id="selectReportList" resultMap="resultReport">
-		SELECT *
-		FROM TB_REPORT
+		SELECT X.RNUM,
+		X.REPORT_NO, X.RCATEGORY_NO, X.REPORT_CONTENT, X.REPORT_ID,
+		X.REPORT_DATE, X.PRODUCT_NO, X.REQUEST_ID
+		FROM (
+		SELECT ROWNUM AS RNUM, S.REPORT_NO, S.RCATEGORY_NO,
+		S.REPORT_CONTENT, S.REPORT_ID, S.REPORT_DATE, S.PRODUCT_NO,
+		S.REQUEST_ID
+		FROM (
+		SELECT R.REPORT_NO, R.RCATEGORY_NO, R.REPORT_CONTENT, R.REPORT_ID,
+		R.REPORT_DATE, R.PRODUCT_NO, R.REQUEST_ID
+		FROM TB_REPORT R
+		ORDER BY REPORT_NO DESC ) S
+		<![CDATA[
+			WHERE ROWNUM <= #{endList}) X
+			WHERE X.RNUM >= #{startList}
+		]]>
 	</select>
 
+	<select id="selectTotalListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_REPORT
+	</select>
+	
+	<update id="updateReportApproval1" parameterType="string">
+		UPDATE TB_REPORT SET REPORT_PROGRESS = 'Y' WHERE REPORT_NO = #{rno}
+	</update>
 </mapper>
