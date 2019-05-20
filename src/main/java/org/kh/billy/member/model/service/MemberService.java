@@ -15,7 +15,7 @@ public interface MemberService {
 		Member selectCheckId(String userid);
 		int insertMember(Member member);
 		int updateMember(Member member);
-		int deleteMember(String userid);
+		int deleteMember(String userId);
 		Member selectMember(String userid);
 		List<Member> searchId(Member member);
 		int create(Member member) throws Exception;
@@ -31,5 +31,6 @@ public interface MemberService {
 		ArrayList<Member> selectMemberList(BasePage bPage);
 		int selectSearchTotalCount(String search, String select);
 		ArrayList<Member> selectSearchMemberList(BasePage bPage, String search, String select);
-
+		int updateBackMember(String userId);
+		String selectDeleteUser(String userId);
 }

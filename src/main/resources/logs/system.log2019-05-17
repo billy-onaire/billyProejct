@@ -1,0 +1,152 @@
+[00:48:56][INFO ][HomeController.java:22]: - Welcome home!
+[03:59:53][WARN ][DefaultHandlerExceptionResolver.java:250]: - Request method 'GET' not supported
+[03:59:59][INFO ][HomeController.java:22]: - Welcome home!
+[15:56:52][INFO ][HomeController.java:22]: - Welcome home!
+[15:59:34][INFO ][HomeController.java:22]: - Welcome home!
+[15:59:42][WARN ][BCryptPasswordEncoder.java:90]: - Encoded password does not look like BCrypt
+[16:00:51][WARN ][BCryptPasswordEncoder.java:90]: - Encoded password does not look like BCrypt
+[16:01:34][INFO ][HomeController.java:22]: - Welcome home!
+[16:01:34][INFO ][HomeController.java:22]: - Welcome home!
+[16:08:10][INFO ][HomeController.java:22]: - Welcome home!
+[16:10:20][INFO ][MemberController.java:163]: - kdw912001@naver.com: auth confirmed
+[16:15:17][INFO ][HomeController.java:22]: - Welcome home!
+[16:15:36][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:15:36][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:15:36][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:15:39][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:15:39][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:21][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:21][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:21][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:24][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:24][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:48][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:48][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:48][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:49][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:16:49][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[16:26:57][INFO ][HomeController.java:22]: - Welcome home!
+[16:27:35][INFO ][HomeController.java:22]: - Welcome home!
+[16:33:20][INFO ][MemberController.java:163]: - kdw912001@naver.com: auth confirmed
+[16:33:50][INFO ][HomeController.java:22]: - Welcome home!
+[16:33:59][INFO ][MemberController.java:163]: - kdw912001@naver.com: auth confirmed
+[16:34:21][WARN ][BCryptPasswordEncoder.java:90]: - Encoded password does not look like BCrypt
+[16:34:28][INFO ][MemberController.java:163]: - kdw912001@naver.com: auth confirmed
+[16:35:46][INFO ][MemberController.java:163]: - kdw912001@naver.com: auth confirmed
+[16:47:30][INFO ][HomeController.java:22]: - Welcome home!
+[17:05:06][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:06][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:07][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:07][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:07][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:08][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:05:08][INFO ][PaymentPageMaker.java:51]: - searchType : null
+[17:07:23][INFO ][HomeController.java:22]: - Welcome home!
+[17:09:03][WARN ][DispatcherServlet.java:1205]: - No mapping found for HTTP request with URI [/billy/findId.do] in DispatcherServlet with name 'appServlet'
+[17:09:07][WARN ][DispatcherServlet.java:1205]: - No mapping found for HTTP request with URI [/billy/findId.do] in DispatcherServlet with name 'appServlet'
+[17:09:09][WARN ][DispatcherServlet.java:1205]: - No mapping found for HTTP request with URI [/billy/findId.do] in DispatcherServlet with name 'appServlet'
+[17:47:06][INFO ][HomeController.java:22]: - Welcome home!
+[17:50:25][INFO ][HomeController.java:22]: - Welcome home!
+[17:50:27][INFO ][HomeController.java:22]: - Welcome home!
+[19:00:34][INFO ][HomeController.java:22]: - Welcome home!
+[19:03:12][INFO ][HomeController.java:22]: - Welcome home!
+[19:15:20][INFO ][HomeController.java:22]: - Welcome home!
+[19:27:42][INFO ][HomeController.java:22]: - Welcome home!
+[19:54:55][INFO ][HomeController.java:22]: - Welcome home!
+[19:55:51][INFO ][HomeController.java:22]: - Welcome home!
+[20:21:20][WARN ][AbstractApplicationContext.java:557]: - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+[20:21:20][ERROR][ContextLoader.java:316]: - Context initialization failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1710)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:583)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:741)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:409)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:291)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:103)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4812)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5278)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1423)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1413)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:500)
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1769)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706)
+	... 21 more
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:121)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parse(XMLConfigBuilder.java:99)
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:494)
+	... 24 more
+Caused by: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.typeAliasesElement(XMLConfigBuilder.java:171)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:109)
+	... 26 more
+Caused by: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:200)
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:89)
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:261)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.typeAliasesElement(XMLConfigBuilder.java:164)
+	... 27 more
+[20:21:57][WARN ][AbstractApplicationContext.java:557]: - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+[20:21:57][ERROR][ContextLoader.java:316]: - Context initialization failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1710)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:583)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:741)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:409)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:291)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:103)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4812)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5278)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1423)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1413)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:500)
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1769)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1706)
+	... 21 more
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:121)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parse(XMLConfigBuilder.java:99)
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:494)
+	... 24 more
+Caused by: org.apache.ibatis.builder.BuilderException: Error registering typeAlias for 'Notice'. Cause: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.typeAliasesElement(XMLConfigBuilder.java:171)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:109)
+	... 26 more
+Caused by: java.lang.ClassNotFoundException: Cannot find class: org.kh.billy.Notice.model.vo.Notice
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:200)
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:89)
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:261)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.typeAliasesElement(XMLConfigBuilder.java:164)
+	... 27 more
+[20:22:48][INFO ][HomeController.java:22]: - Welcome home!
+[21:05:23][INFO ][HomeController.java:22]: - Welcome home!
+[21:06:12][INFO ][HomeController.java:22]: - Welcome home!
+[21:06:55][INFO ][HomeController.java:22]: - Welcome home!

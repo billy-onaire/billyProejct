@@ -159,19 +159,31 @@ $(document).ready(function(){
                     </div>
 
                 
-                      <div class="centertwo">
-                          <ul class="pagination">
-                                <c:if test="${pageMakerMms.prev }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${pageMakerMms.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
-                                </c:if>
-                                <c:forEach begin="${pageMakerMms.startPage }" end="${pageMakerMms.endPage }" var="idx">
-                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${idx }"/>">${idx }</a></li>
-                                </c:forEach>
-                                <c:if test="${pageMakerMms.next }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="recvList.do?page=${pageMakerMms.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+   				<div class="row">
+                    <div class="col-12">
+                        <nav aria-label="navigation">
+                            <ul class="pagination justify-content-end mt-50">
+                            		<li class='page-item' id='page-prev'>
+                            			<a class="page-link" href="<c:url value="recvList.do?page=${pageMakerMms.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a>
+                            		</li>
+                            	<c:forEach begin="${pageMakerMms.startPage }" end="${pageMakerMms.endPage }" var="idx">
+                            		<li class='page-item' id='page${ idx }'>
+                            			<a class="page-link" href="<c:url value="recvList.do?page=${idx }"/>">${idx }</a>
+                            		</li>
+                            	</c:forEach>
+                            	<c:if test="${pageMakerMms.next }">
+                            		<li class='page-item' id='page-next'>
+                            			<a class='page-link' href="<c:url value="recvList.do?page=${pageMakerMms.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a>
+                            		</li>
                             	</c:if>
+                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
+                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
+                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
+                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
-                      </div> 
+                        </nav>
+                    </div>
+                </div>> 
                           <br> 
             </div>
         </div>

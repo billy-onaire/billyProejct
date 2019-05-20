@@ -15,4 +15,6 @@ public interface SocialUserService {
     ArrayList<String> searchId(Member member);
 	String selectCheckId(String uid);
 	int selectSocialCheck(String sid);
+	Member selectUserInfo(String userId);
+	String selectDeleteSocial(String userId);
 }

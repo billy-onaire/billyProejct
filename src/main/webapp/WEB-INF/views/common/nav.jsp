@@ -35,6 +35,7 @@
 
 </head>
 <body>
+<h1>${loginMember }</h1>
 	<!-- Mobile Nav (max width 767px)-->
          <!-- Mobile Nav (max width 767px)-->
         <div class="mobile-nav">
@@ -99,7 +100,6 @@
             <div class="amado-btn-group mt-30 mb-100">
                 <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
-                <a href="resultPay.do" class="btn amado-btn mb-15" >PAYMENT</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
             </div>
             <!-- Social Button -->

@@ -27,8 +27,8 @@ public class MemberDao {
 		return session.update("memberMapper.updateMember", member);
 	}
 	
-	public int deleteMember(SqlSessionTemplate session, Member member) {
-		return session.update("memberMapper.deleteMember", member);
+	public int deleteMember(SqlSessionTemplate session, String userId) {
+		return session.update("memberMapper.deleteMember", userId);
 	}
 
 	public Member selectCheckId(SqlSessionTemplate session, String userId) {
@@ -90,15 +90,18 @@ public class MemberDao {
 			map.put("search", search);
 			map.put("select", select);
 		}
-		System.out.println("DAO select : " + select + ", " +search);
 		return session.selectOne("memberMapper.selectSearchTotalCount",map);
 	}
 
 	public ArrayList<Member> selectSearchMemberList(SqlSessionTemplate session, BasePage bPage, String search,
 			String select) {
 		Map<String, String> map = new HashMap<>();
-		map.put("search", search);
-		map.put("select", select);
+		if(select.equals("delete_yn")) {
+			map.put("select", select);
+		}else {
+			map.put("select", select);
+			map.put("search", search);
+		}
 		map.put("rowStart", String.valueOf(bPage.getRowStart()));
 		map.put("rowEnd", String.valueOf(bPage.getRowEnd()));
 		List<Member> list = session.selectList("memberMapper.selectSearchMemberList",map);
@@ -106,5 +109,11 @@ public class MemberDao {
 		return mList;
 	}
 
-	
+	public int updateBackMember(SqlSessionTemplate session, String userId) {
+		return session.update("memberMapper.updateBackMember", userId);
+	}
+
+	public String selectDeleteUser(SqlSessionTemplate session, String userId) {
+		return session.selectOne("memberMapper.selectDeleteUser", userId);
+	}	
 }

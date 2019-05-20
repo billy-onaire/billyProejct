@@ -16,7 +16,7 @@
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
     <style>
@@ -106,7 +106,31 @@
 								    <li class="list-group-item list-group-item-danger">Danger item</li>
 								    <li class="list-group-item list-group-item-primary">Primary item</li>
 								    <li class="list-group-item list-group-item-dark">Dark item</li>
-								    <li class="list-group-item list-group-item-light">Light item</li>
+								    <li class="list-group-item list-group-item-light">
+								    <span class="notice-title" style="width: 50%; display: inline-block;">hi?</span>
+
+                                    
+                                    <span class="notice-eye" style="width: 10%; display: inline-block;">
+								    <i class="material-icons">
+									remove_red_eye
+									</i>
+                                    </span>
+                                    <span class="notice-file" style="width: 10%; display: inline-block;">
+									<i class="material-icons">
+									attach_file
+									</i>
+                                    </span>
+                                    
+                                    <span class="notice-date" style="width: 10%;  display: inline-block;">
+                                        2019.01.02
+                                    </span>
+                                    <div>
+                                    <span class="notice-date pull-right" style="width: 10%;  display: inline-block;">
+                                        관리자
+                                    </span>
+                                    </div>
+
+									</li>
 								    <li class="list-summary-wrapper">aaa</li>
 								  </ul>
 								  <a href="noticewriteview.do">write폼으로 가기 </a>

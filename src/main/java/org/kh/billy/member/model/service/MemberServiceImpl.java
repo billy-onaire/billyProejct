@@ -56,9 +56,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int deleteMember(String userid) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMember(String userId) {
+		return memberDao.deleteMember(mybatisSession, userId);
 	}
 
 	@Override
@@ -152,5 +151,14 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectSearchMemberList(mybatisSession,bPage,search,select);
 	}
 
+	@Override
+	public int updateBackMember(String userId) {
+		return memberDao.updateBackMember(mybatisSession, userId);
+	}
 
+	//탈퇴된 회원 유무
+	@Override
+	public String selectDeleteUser(String userId) {
+		return memberDao.selectDeleteUser(mybatisSession, userId);
+	}
 }
