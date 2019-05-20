@@ -115,7 +115,5 @@ public class MemberDao {
 
 	public String selectDeleteUser(SqlSessionTemplate session, String userId) {
 		return session.selectOne("memberMapper.selectDeleteUser", userId);
-	}
-	
-	
+	}	
 }

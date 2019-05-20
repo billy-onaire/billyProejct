@@ -38,31 +38,42 @@
       }
     }
 
-
-    $(document).on('click', '#findId', function () {
-      var name = $('#name').val();
-      var phone = $('#phone').val();
-
-      var postData = { 'user_name': name, 'phone': phone };
-
+//아이디 찾기
+ $(function() {   
+	
+	$("#findId").click(function() {
+	
+	  $("#findId").hide();
+	  
       $.ajax({
         url: "findId.do",
-        data: postData,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        type: "post",
+        data: {user_name: $("#user_name").val(), user_mobile: $("#phone").val() },
         dataType: "json",
+        success: function(obj){       	
+        	console.log(obj);  //object 라고 출력됨
+			//리턴된 객체 하나를 문자열로 변환 처리
+			var objStr = JSON.stringify(obj);
+			//문자열을 json 객체로 바꿈
+			var jsonObj = JSON.parse(objStr);
+			
+			var outValues = $("#d3").html();
+			
+			if(jsonObj != null){
+			for(var i in jsonObj.list){
+				outValues += jsonObj.list[i].user_id + "<br>";
+			}		
+			$("#d3").append("<p style=text-align:center;>" + "조회하신 회원님의 아이디 : " + "<br>" + outValues + "</p>")
+			}else{
+			$("#d3").append("<p style=text-align:center;>" + "아이디가 존재하지 않습니다." + "</p>")}
+       		 },
+            error: function (XMLHttpRequest, textStatus, errorThrown){
 
-        success: function (data) {
-          var idLists = data.user_Id;
-          var idLength = idLists.idLength;
-          var idFind = idList.substring(1, idLength - 1)
-          $("#idList").append("<h1" + "조회하신 회원님의 아이디는 : " + idFind + "입니다. </h1>")
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
-          alert('정보를 다시 입력해주시길 바랍니다.');
-        }
+            	alert('정보를 다시 입력해주시길 바랍니다.' );
+            }
       });
     });
+	}); 
     
     function sendSms(){
     	var userId = $("#puserId").val();
@@ -155,27 +166,25 @@
 					<br>
 				</div>
 				<!-- 아이디 찾기  -->
-				<div id="findId">
-					<form>
+				<div id="findIdd">
 						<div class="form-group">
 							<label for="uname">Username:</label> <input type="text"
-								class="form-control" id="finame" placeholder="Enter username"
-								name="finame" required>
+								class="form-control" id="user_name" placeholder="Enter username"
+								name="user_name" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
-
+					
 						<div class="form-group">
 							<label for="phone">Phone:</label> <input type="text"
-								class="form-control" id="fiphone"
-								placeholder="Enter phone number" name="fiphone" required>
+								class="form-control" id="phone"
+								placeholder="Enter phone number" name="phone" required>
 							<div class="valid-feedback">Valid.</div>
 							<div class="invalid-feedback">Please fill out this field.</div>
 						</div>
-						<br> <br> <span id="idList"></span>
+						<p><div id="d3"></div></p>
 						<button type="submit" class="btn btn-warning btn-block"
 							id="findId" style="color: white">확인</button>
-					</form>
 				</div>
 				<!-- 비밀번호 찾기  -->
 				<div id="findPwd">

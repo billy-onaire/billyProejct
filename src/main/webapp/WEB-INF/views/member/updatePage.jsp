@@ -207,133 +207,6 @@ a {
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
 	
-	<c:if test="${!empty kakaoLogin or !empty naverLogin or !empty googleLogin or !empty facebookLogin}">
-	<!-- 소셜회원정보 수정 폼 -->
-	<div class="main-content-wrapper d-flex clearfix">
-		<!-- 회원수정 폼 -->
-		<div class="login-enroll-form clearfix">
-		<div class="container">
-				<form action="smupdate.do" method="post" enctype="multipart/form-data">
-				<h1>소셜 회원정보 수정</h1>
-				<p>Please fill in this form to create an account.</p>
-				<hr>
-					<c:if test="${!empty kakaoLogin }">
-					<input type="hidden" id="user_id" name="user_id" value="${kakaoLogin.userId }">
-					</c:if>
-					<c:if test="${!empty googleLogin }">
-					<input type="hidden" id="user_id" name="user_id" value="${googleLogin.userId }">
-					</c:if>
-					<c:if test="${!empty naverLogin }">
-					<input type="hidden" id="user_id" name="user_id" value="${naverLogin.userId }">
-					</c:if>
-					<c:if test="${!empty facebookLogin }">
-					<input type="hidden" id="user_id" name="user_id" value="${facebookLogin.userId }">
-					</c:if>
-					
-					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-					<label for="email"><b>이메일</b></label> 
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
-
-				<label for="address"><b>주소</b></label> 
-				<div class="input-group mb-5">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
-					<div class="input-group-append">
-					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>
-					</div>
-				</div>
-				<!-- <div id="map1" style="width:300px;height:300px;margin-top:10px;display:none"></div> -->
-				<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
-				<script>
-			    function searchAddress1() {
-			        new daum.Postcode({
-			            oncomplete: function(data) {
-			                var addr = data.address; // 최종 주소 변수
-
-			                // 주소 정보를 해당 필드에 넣는다.
-			                document.getElementById("address").value = addr;
-			            }
-			        }).open();
-			    }
-				</script>
-				
-				
-				<label for="location_area"><b>주거래가능 지역</b></label> 
-				<div class="input-group mb-4">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" required readonly>
-					<div class="input-group-append">
-					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
-					</div>
-				</div>			
-			    <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-				<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
-				<script>
-				 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-			        mapOption = {
-			            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-			            level: 5 // 지도의 확대 레벨
-			        };
-
-			    //지도를 미리 생성
-			    var map = new daum.maps.Map(mapContainer, mapOption);
-			    //주소-좌표 변환 객체를 생성
-			    var geocoder = new daum.maps.services.Geocoder();
-			    //마커를 미리 생성
-			    var marker = new daum.maps.Marker({
-			        position: new daum.maps.LatLng(37.537187, 127.005476),
-			        map: map
-			    });
-
-			    function searchAddress() {
-			        new daum.Postcode({
-			            oncomplete: function(data) {
-			                var addr = data.address; // 최종 주소 변수
-
-			                // 주소 정보를 해당 필드에 넣는다.
-			                document.getElementById("location_area").value = addr;
-			                // 주소로 상세 정보를 검색
-			                geocoder.addressSearch(data.address, function(results, status) {
-			                    // 정상적으로 검색이 완료됐으면
-			                    if (status === daum.maps.services.Status.OK) {
-
-			                        var result = results[0]; //첫번째 결과의 값을 활용
-
-			                        // 해당 주소에 대한 좌표를 받아서
-			                        var coords = new daum.maps.LatLng(result.y, result.x);
-			                        // 지도를 보여준다.
-			                        mapContainer.style.display = "block";
-			                        map.relayout();
-			                        // 지도 중심을 변경한다.
-			                        map.setCenter(coords);
-			                        // 마커를 결과값으로 받은 위치로 옮긴다.
-			                        marker.setPosition(coords)
-			                    }
-			                });
-			            }
-			        }).open();
-			    }
-				</script>
-				
-				<label for="my_introduce"><b>본인소개</b></label>
-				<textarea style="background-color: #f1f1f1" class="form-control"
-					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
-
-				<hr>
-				<p>
-					By creating an account you agree to our <a href="#">Terms &
-						Privacy</a>.
-				</p>
-
-				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange">수정하기</button>
-		</form>
-		</div>
-		</div>
-	</div>
-	</c:if>
-	
 	<!-- 일반회원정보 수정 폼 -->
 	<c:if test="${!empty loginMember}">
 	<div class="main-content-wrapper d-flex clearfix">
@@ -341,7 +214,7 @@ a {
 		<div class="login-enroll-form clearfix">
 		<div class="container">
 				<form action="mupdate.do" method="post" enctype="multipart/form-data">
-				<h1>일반 회원정보 수정</h1>
+				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
 				<label for="user_id"><b>아이디</b></label> 
@@ -453,7 +326,7 @@ a {
 				</p>
 
 				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange">등록하기</button>
+					style="background-color: orange">수정하기</button>
 		</form>
 		</div>
 		</div>

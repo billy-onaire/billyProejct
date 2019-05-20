@@ -1,6 +1,7 @@
 package org.kh.billy.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
@@ -16,7 +17,7 @@ public interface MemberService {
 		int updateMember(Member member);
 		int deleteMember(String userId);
 		Member selectMember(String userid);
-		ArrayList<String> searchId(Member member);
+		List<Member> searchId(Member member);
 		int create(Member member) throws Exception;
 		void updateVerify(Member member);
 		Member selectIdCheck(String userId);
