@@ -16,7 +16,7 @@
     <title>Amado - Furniture Ecommerce Template | Checkout</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -83,7 +83,7 @@
 	<c:import url="../common/myPage.jsp" />
 	
 	<h1>Review</h1>
-		<form class="cart clearfix" method="post" enctype="multipart/form-data" action="insertReview.do">
+		<form id="form" class="cart clearfix" method="post" enctype="multipart/form-data" action="insertReview.do">
                    <br><br>       	
             <table class="type04">
 			    <tr>
@@ -111,12 +111,12 @@
 			        <th>대여후기</th>
 			        <td><div class="col-12 mb-3">
                         <textarea name="review_content" class="form-control w-100" id="comment" cols="30" rows="5" 
-                        placeholder="대여한 제품에 대한 간단한 평가를 해주세요 (30자 이내)" onkeyup="fnChkByte(this);"></textarea>
+                        placeholder="대여한 제품에 대한 간단한 평가를 해주세요 (30자 이내)"></textarea>
                         </div>
                     </td>
 			    </tr>
 			</table>
-        	<center><button type="submit" name="addtocart" value="5" class="btn amado-btn">작성완료</button></center>
+        	<center><button type="button" name="addtocart" value="5" class="btn amado-btn" onclick="formSubmit();">작성완료</button></center>
         	<input type="hidden" name="point" id="point" value="1">
         	<input type="hidden" name="product_no" value="${pNo }">
         	<input type="hidden" name="payment_no" value="${payNo }">
@@ -173,6 +173,17 @@
         } else {
             document.getElementById('byteInfo').innerText = rbyte;
         }
+    }
+    </script>
+    
+    <!-- 폼 전송 스크립트 -->
+    <script type="text/javascript">
+    function formSubmit(){
+    	if($("#comment").val() == ""){
+    		alert("대여후기를 작성해주세요!!");
+    		return;
+    	}
+    	$("#form").submit();
     }
     </script>
     <!-- Popper js -->

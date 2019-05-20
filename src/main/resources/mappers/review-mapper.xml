@@ -26,7 +26,7 @@
 			from (select * from payment 
 				join product using (product_no) join product_img using (img_no) 
 				where customer = #{userId} order by review_status asc, payment_no desc) p) 
-		where rnum between #{start} and #{last}
+		where rnum between #{start} and #{last}		
 	</select>
 	
 	<select id="selectTotalListReview" parameterType="String" resultType="int">
@@ -48,4 +48,10 @@
 	<delete id="deleteReview" parameterType="int">
 		delete from review where review_no = #{rno}
 	</delete>
+	
+	<update id="updateReviewStatus" parameterType="int">
+		update payment 
+		set review_status = 'Y' 
+		where payment_no = #{pno}
+	</update>
 </mapper>

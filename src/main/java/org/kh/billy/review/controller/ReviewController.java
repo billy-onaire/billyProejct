@@ -90,6 +90,7 @@ public class ReviewController {
 		}
 		
 		reviewService.insertReview(review);
+		reviewService.updateReviewStatus(review.getPayment_no());
 		
 		return "redirect:reviewList.do";
 	}
