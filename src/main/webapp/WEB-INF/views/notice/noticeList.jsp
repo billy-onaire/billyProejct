@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,193 +12,215 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>상품수정</title>
+    <title>공지사항</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
+    <!-- Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-    <style>
-    /*.line{
-        width: 80px;
-    height: 3px;
-    background-color: #fbb710;
-    margin-bottom: 15px;
-    display: block;
-    }
-    .product-price{
-    font-size: 24px;
-    font-weight: 400;
-    color: #fbb710;
-    line-height: 1;
-    margin-bottom: 10px;
-    }
-    
-    .center {
-      margin: auto;
-      width: 90%;
-      
-      padding: 10px;
-    }
-    .centertwo {
-      margin: auto;
-      width: 60%;
-      
-      padding: 10px;
-    }*/
-    </style>
+    <!-- Material Icons CSS-->
+    <style type="text/css">
+        .material-icons {
+         font-family: 'Material Icons';
+         font-weight: normal;
+         font-style: normal;
+         font-size: 17px;  /* Preferred icon size 기본 사이즈 24px*/ 
+         display: inline-block;
+         line-height: 1;
+         text-transform: none;
+         letter-spacing: normal;
+         word-wrap: normal;
+         white-space: nowrap;
+         direction: ltr;                                                      
+
+         /* Support for all WebKit browsers. */
+         -webkit-font-smoothing: antialiased;
+         /* Support for Safari and Chrome. */
+         text-rendering: optimizeLegibility;
+
+         /* Support for Firefox. */
+         -moz-osx-font-smoothing: grayscale;
+
+         /* Support for IE. */
+         font-feature-settings: 'liga';
+     }
+
+ </style>
 </head>
 
 <body>
-     <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
+   <!-- Search Wrapper Area Start -->
+   <div class="search-wrapper section-padding-100">
+    <div class="search-close">
+        <i class="fa fa-close" aria-hidden="true"></i>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="search-content">
+                    <form action="#" method="get">
+                        <input type="search" name="search" id="search" placeholder="Type your keyword...">
+                        <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Search Wrapper Area End -->
+</div>
+<!-- Search Wrapper Area End -->
 
-    <!-- ##### Main Content Wrapper Start ##### -->
-    <div class="main-content-wrapper d-flex clearfix">
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
     <c:import url="../common/nav.jsp" />
 
-        <!-- Product Details Area Start -->
-        <div class="single-product-area section-padding-100 clearfix">
-        
-            <div class="container-fluid">
-            
-                <div class="row">
-                
-                   <div class="col-12">
-                   
-                        <div class="single_product_desc">
-                        
-                            <!-- Product Meta Data -->
-                            <div class="product-meta-data">
-                                <div class="line"></div>
-                                <p class="product-price">공지사항</p>
-            
-                            </div>
-                            
-                            <br><br><br><br>
-                                                     
-                           <div class="container">
+    <!-- Product Details Area Start -->
+    <div class="single-product-area section-padding-100 clearfix">
 
-                                 <h2>List Group With Contextual Classes</h2>
-								  <ul class="list-group">
-								    <li class="list-group-item list-group-item-success">Success item</li>
-								    <li class="list-group-item list-group-item-secondary">Secondary item</li>
-								    <li class="list-group-item list-group-item-info">Info item</li>
-								    <li class="list-group-item list-group-item-warning">Warning item</li>
-								    <li class="list-group-item list-group-item-danger">Danger item</li>
-								    <li class="list-group-item list-group-item-primary">Primary item</li>
-								    <li class="list-group-item list-group-item-dark">Dark item</li>
-								    <li class="list-group-item list-group-item-light">
-								    <span class="notice-title" style="width: 50%; display: inline-block;">hi?</span>
+        <div class="container-fluid">
 
-                                    
-                                    <span class="notice-eye" style="width: 10%; display: inline-block;">
-								    <i class="material-icons">
-									remove_red_eye
-									</i>
-                                    </span>
-                                    <span class="notice-file" style="width: 10%; display: inline-block;">
-									<i class="material-icons">
-									attach_file
-									</i>
-                                    </span>
-                                    
-                                    <span class="notice-date" style="width: 10%;  display: inline-block;">
-                                        2019.01.02
-                                    </span>
-                                    <div>
-                                    <span class="notice-date pull-right" style="width: 10%;  display: inline-block;">
-                                        관리자
-                                    </span>
-                                    </div>
+            <div class="row">
 
-									</li>
-								    <li class="list-summary-wrapper">aaa</li>
-								  </ul>
-								  <a href="noticewriteview.do">write폼으로 가기 </a>
-  							<div class="center" >
-                            <table class="table" style="width:800px; text-align: center;" id="productList">
-                              <tr>
-                                  <th width="45%">상품명</th>
-                                  <th width="7.5%">수량</th>
+             <div class="col-12">
 
-                                  <th width="10%">가격</th>
-                                  <th width="15%">최근수정일자</th>                                  
-                                  <th width="17.5%">수정/삭제</th>
-                              </tr>
-                              <%-- <c:forEach items="${list }" var="list">
-                                <tr><td><a href="pdetail.do?pno=${list.notice_no}" style="font-size: 15px; color: #2a6496;">${list.notice_title}</a></td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
-                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post"><button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;<button type="submit" class="btn btn-warning btn-sm" onclick="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">삭제</button></form></td></tr>
-                                
-                              
-                              </c:forEach> --%>
-                            </table>                                          
-                            
-                          </div> 
-  
+                <div class="single_product_desc">
+
+                    <!-- Product Meta Data -->
+                    <div class="product-meta-data">
+                        <div class="line"></div>
+                        <p class="product-price">공지사항</p>
+
+                    </div>
+
+                    <br><br><br><br>
+
+                    <div class="container">
+
+                       <!-- <h2>내용이 span</h2>
+                       <ul class="list-group">
+                        <c:forEach items="${list }" var="list">
+                        <li class="list-group-item list-group-item-light">
+                            <span class="notice-title" style="width: 50%; height: 35px; display: inline-block;">${list.notice_content }</span>
+                            <span class="notice-eye" style="width: 10%; display: inline-block;">
+                                <i class="material-icons">
+                                   remove_red_eye
+                               </i>
+                           </span>
+                           <span class="notice-file" style="width: 10%; display: inline-block;">
+                               <i class="material-icons">
+                                   attach_file
+                               </i>
+                           </span>
+
+                           <span class="notice-date" style="width: 10%;  display: inline-block;">
+                            2019.01.02
+                        </span>
+                        <span class="notice-date" style="width: 10%;  display: inline-block;">
+                            관리자
+                        </span>
+                    </li>
+                </c:forEach>
+                <li class="list-summary-wrapper">aaa</li>
+            </ul> -->
+
+
+            <!-- <h2>내용이 div</h2> -->
+            <ul class="list-group">
+                <c:forEach items="${list }" var="list">
+                <li class="list-group-item list-group-item-action" style="height: 45px;  ">
+                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }" style="font-size: 20px;">${list.notice_title }</a></div>
+                    <div class="notice-eye" style="width: 15%; float: left;">
+                        <div>
+
+                            <i class="material-icons" >
+                                remove_red_eye                                    
+                            </i>
+                            <span style="font-size: 15px;">1234</span>
+                        </div>
+                    </div>
+                    <div class="notice-file" style="width: 5%; float: left;">
+                       	<c:if test="${!empty list.notice_renamefile }">
+                        <i class="material-icons">
+                            attach_file
+                        </i>
+                        </c:if>
+                    </div>
+
+                    <div class="notice-date clearfix" style="width: 10%;  float: right;">
+
+                        <div style="display: inline-block; line-height: 13px;">
                             <div>
+                            <span style="font-size: 12px;">관리자</span>
                             </div>
-                           </div>
 
+                            <span style="font-size: 10px;">${list.notice_date }</span>
 
+                        </div>
 
-                          <div class="centertwo">
-                          <ul class="pagination">
-                                <!-- <c:if test="${pageMaker.prev }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                    </div>                                    
+                </li>
+            </c:forEach>            
+        </ul>
+                        <ul class="pagination" style="margin-left: auto;  margin-right: auto; width:100%;">
+                                <c:if test="${pageMaker.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${idx }"/>">${idx }</a></li>
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${idx }"/>">${idx }</a></li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
-                                </c:if> -->
-                            </ul>
-                            </div> 
-                          <br>                          
-                        </div> 
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            </c:if>
+                        </ul>
+        <a href="noticewriteview.do">write폼으로 가기 </a>
+        
+
+                    <div>
                     </div>
                 </div>
+
+
+
+                <!-- <div class="centertwo">
+                  <ul class="pagination">
+                                <c:if test="${pageMaker.prev }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${idx }"/>">${idx }</a></li>
+                                </c:forEach>
+                                <c:if test="${pageMaker.next }">
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            </c:if>
+                        </ul>
+                    </div>  -->
+                    <br>                          
+                </div> 
             </div>
-        </div>      
-    <!-- Product Details Area End -->      
+        </div>
+    </div>
+</div>      
+<!-- Product Details Area End -->      
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
 
 
-    <c:import url="../common/footer.jsp" />
+<c:import url="../common/footer.jsp" />
 
-        <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 
-        <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 
-        <script src="/billy/resources/js/jquery-ui.js"></script>
-        <!-- Popper js -->
-        <script src="/billy/resources/js/popper.min.js"></script>
-        <!-- Bootstrap js -->
-        <script src="/billy/resources/js/bootstrap.min.js"></script>
-        <!-- Plugins js -->
-        <script src="/billy/resources/js/plugins.js"></script>
-        
-        </body>
+<script src="/billy/resources/js/jquery-ui.js"></script>
+<!-- Popper js -->
+<script src="/billy/resources/js/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="/billy/resources/js/bootstrap.min.js"></script>
+<!-- Plugins js -->
+<script src="/billy/resources/js/plugins.js"></script>
+
+</body>
 
 </html>

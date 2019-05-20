@@ -1,12 +1,18 @@
 package org.kh.billy.notice.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.notice.model.service.NoticeService;
 import org.kh.billy.notice.model.vo.Notice;
@@ -29,7 +35,40 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	@RequestMapping("selectnoticelist.do")
+	@RequestMapping("noticefiledown.do")
+	public void noticeFileDownload(HttpServletRequest request, HttpServletResponse response, @RequestParam("of") String originalFile, @RequestParam("rf") String renameFile) throws IOException {
+		//공지사항 첨부파일 다운로드 
+		request.setCharacterEncoding("utf-8");
+		
+		String path = request.getSession().getServletContext().getRealPath("/resources/files/noticefile");
+		
+		ServletOutputStream downOut = response.getOutputStream();
+		
+		File downFile = new File(path + "/" + renameFile);
+		
+		response.setContentType("text/plain; charset=utf-8");
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + new String(originalFile.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+		
+		BufferedInputStream bin = new BufferedInputStream(new FileInputStream(downFile));
+		
+		int read = -1;
+		while((read = bin.read()) != -1) {
+			downOut.write(read);
+			downOut.flush();
+		}
+		downOut.close();
+		bin.close();
+	}
+	@RequestMapping("noticedetail.do")
+	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
+		System.out.println(noticeNo);
+		Notice notice = noticeService.selectNotice(noticeNo);
+		System.out.println(notice);
+		mv.addAttribute("notice", notice);
+		return "notice/noticeDetail";
+	}
+	
+	@RequestMapping("noticelist.do")
 	public String selectNoticeList(Criteria cri, Notice notice, Model mv) {
 		//ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
 		System.out.println("공지 리스트 확인용");
@@ -80,27 +119,28 @@ public class NoticeController {
 		
 		//String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
 		
-		
+		//임의의 admin_id 입력
+		notice.setAdmin_id("admin");
+		System.out.println("파일 유무 " + file);
+		if(!file.getOriginalFilename().equals("")) {
 		notice.setNotice_originalfile(file.getOriginalFilename());
-		try {
-			//UUID적용
-			String reFileName = uploadFile(file.getOriginalFilename()/*, file.getBytes()*/);
-			notice.setNotice_renamefile(reFileName);
-			
-			//임의의 admin_id 입력
-			notice.setAdmin_id("admin");
-			
-			if(noticeService.insertNotice(notice) > 0)
-				System.out.println("공지글 작성 완료");
-			else
-				System.out.println("공지글 작성 실패");
-			
-			file.transferTo(new File(savePath + "\\" + reFileName));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		
+			try {
+				//UUID적용
+				String reFileName = uploadFile(file.getOriginalFilename()/*, file.getBytes()*/);
+				notice.setNotice_renamefile(reFileName);
+				
+				file.transferTo(new File(savePath + "\\" + reFileName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		if(noticeService.insertNotice(notice) > 0)
+			System.out.println("공지글 작성 완료");
+		else
+			System.out.println("공지글 작성 실패");
 		return "home";
 	}
 	

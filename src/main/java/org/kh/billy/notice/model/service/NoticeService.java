@@ -18,4 +18,6 @@ public interface NoticeService {
 
 	ArrayList<Notice> selectNoticeList(Criteria cri);
 
+	Notice selectNotice(int noticeNo);
+
 }

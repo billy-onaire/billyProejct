@@ -1,6 +1,7 @@
 package org.kh.billy.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.kh.billy.notice.model.vo.Notice;
 import org.kh.billy.notice.model.vo.NoticePage;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Repository;
 public class NoticeDao {
 
 	public ArrayList<Notice> selectNoticeList(SqlSessionTemplate session, Criteria cri) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list =  session.selectList("noticeMapper.selectNoticeList", cri);
+		return (ArrayList<Notice>)list;
 	}
 
 	public int insertNotice(SqlSessionTemplate session, Notice notice) {
@@ -32,6 +33,10 @@ public class NoticeDao {
 
 	public int selectNoticeCount(SqlSessionTemplate session) {
 		return session.selectOne("noticeMapper.selectNoticeCount");
+	}
+
+	public Notice selectNotice(SqlSessionTemplate session, int noticeNo) {
+		return session.selectOne("noticeMapper.selectNotice", noticeNo);
 	}
 
 }
