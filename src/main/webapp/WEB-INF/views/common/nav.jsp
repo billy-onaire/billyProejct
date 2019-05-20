@@ -89,7 +89,7 @@
             <nav class="amado-nav">
                 <ul>
                     <li class="active"><a href="main.do" >Home</a></li>
-                    <li><a href="selectnoticelist.do" >Notice</a></li>
+                    <li><a href="noticelist.do" >Notice</a></li>
                     <li><a href="#" >About us</a></li>
                     <c:if test="${!empty loginMember }">
                       <li><a href="mPageMain.do" >MyPage</a></li>

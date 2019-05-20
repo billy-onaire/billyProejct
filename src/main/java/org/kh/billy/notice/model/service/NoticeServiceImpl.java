@@ -48,4 +48,9 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeCount(mybatisSession);
 	}
 
+	@Override
+	public Notice selectNotice(int noticeNo) {
+		return noticeDao.selectNotice(mybatisSession, noticeNo);
+	}
+
 }

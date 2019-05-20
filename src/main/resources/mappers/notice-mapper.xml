@@ -21,7 +21,7 @@
 	<select id="selectNoticeCount" resultType="int">
 	select count(*) from notice
 	</select>
-	<!-- <select id="selectNoticeList" resultMap="resultNotice" parameterType="hashmap">
+	<select id="selectNoticeList" resultMap="resultNotice" parameterType="hashmap">
 	<![CDATA[
         select X.NOTICE_NO, X.ADMIN_ID, X.NOTICE_TITLE, X.NOTICE_CONTENT, X.NOTICE_ORIGINALFILE, X.NOTICE_RENAMEFILE, X.NOTICE_DATE        
 		from ( 
@@ -33,5 +33,8 @@
 		    where rownum <= (#{perPageNum} * #{page})) X
 		where X.rnum > #{pageStart}
 	]]>
-	</select> -->
+	</select>
+	<select id="selectNotice" resultMap="resultNotice" parameterType="int">
+		select * from notice where notice_no = #{noticeNo}
+	</select>
 </mapper>
