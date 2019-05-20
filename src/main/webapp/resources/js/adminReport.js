@@ -1,12 +1,82 @@
+let chosenPage = 1;
+const listCount = 10;
+
+
+
+
+
 function getAdminReportInfo(){
     const xhr = new XMLHttpRequest();
 
     xhr.onload = ()=>{
-        
+        const report = JSON.parse(xhr.responseText);
+
+        const table = document.querySelector('#adminTable');
+        console.log(report.list);
+        for(let i = 0; i < report.list.length; i++){
+            const tr = document.createElement('tr');
+            const infos = {
+                rno: report.list[i].rno,
+                cno: report.list[i].cno,
+                content: report.list[i].content,
+                rid: report.list[i].rid,
+                rdate: report.list[i].rdate,
+                pno: report.list[i].pno,
+                qid: report.list[i].qid
+            }
+
+            for(let j in infos){
+                const td = document.createElement('td');
+                td.textContent = infos[j];
+                tr.appendChild(td);
+            }
+            const button1 = document.createElement('button');
+            button1.textContent = '신고 승인';
+            tr.appendChild(button1);
+            button1.addEventListener('click',()=>{
+                location.href = "reportApproval.do?rno="+infos.rno+"&rid="+infos.rid;
+            })
+
+            const button2 = document.createElement('button');
+            button2.textContent = '승인 거절';
+            tr.appendChild(button2);
+            button2.addEventListener('click',()=>{
+                location.href = 'reportDisapproval.do?rno='+infos.rno;
+            })
+
+            table.appendChild(tr);
+        }
+        const pagination = document.querySelector('.pagination');
+        while (pagination.firstChild) {
+            pagination.removeChild(pagination.firstChild);
+        }
+
+        for (let i = report.page.start; i <= report.page.end; i++) {
+
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
+
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+
+            pageLink.textContent = i;
+
+            pagination.appendChild(pageItem).appendChild(pageLink);
+
+            pageItem.addEventListener('click', () => {
+                chosenPage = i;
+                requestProductListAjax();
+            })
+        }
     }
-    xhr.open('GET','getAdminReportInfo.do');
-    xhr.setRequestHeader('Content-Type','x-www-form-urlencoded');
-    xhr.send();
+    const requestData = {
+        page: chosenPage,
+        listCount: listCount
+    }
+
+    xhr.open('POST','getAdminReportInfo.do');
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.send(JSON.stringify(requestData));
 }
 
 document.addEventListener('DOMContentLoaded',()=>{

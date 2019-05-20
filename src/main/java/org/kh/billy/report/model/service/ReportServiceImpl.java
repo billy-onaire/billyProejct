@@ -6,6 +6,7 @@ import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.dao.ReportDao;
 import org.kh.billy.report.model.vo.Report;
 import org.kh.billy.report.model.vo.ReportList;
+import org.kh.billy.report.model.vo.ReportSetting;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,24 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public ArrayList<Report> selectReportList() {
-		return (ArrayList<Report>) rd.selectReportList(mybatisSession);
+	public ArrayList<Report> selectReportList(ReportSetting setting) {
+		return (ArrayList<Report>) rd.selectReportList(mybatisSession, setting);
+	}
+
+	@Override
+	public int selectTotalListCount(ReportSetting setting) {
+		return rd.selectTotalListCount(mybatisSession, setting);
+	}
+
+	@Override
+	public int updateReportApproval1(String rno) {
+		System.out.println("service: "+rno);
+		return rd.updateReportApproval1(mybatisSession, rno);
+	}
+
+	@Override
+	public void updateReportApproval2(String rid) {
+		rd.updateReportApproval2(mybatisSession, rid);
 	}
 
 }

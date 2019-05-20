@@ -6,6 +6,7 @@ import java.util.List;
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.vo.Report;
 import org.kh.billy.report.model.vo.ReportList;
+import org.kh.billy.report.model.vo.ReportSetting;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -34,9 +35,24 @@ public class ReportDao {
 		return list;
 	}
 
-	public List<Report> selectReportList(SqlSessionTemplate mybatisSession) {
-		List<Report> list = mybatisSession.selectList("reportMapper.selectReportList");
+	public List<Report> selectReportList(SqlSessionTemplate mybatisSession, ReportSetting setting) {
+		List<Report> list = mybatisSession.selectList("reportMapper.selectReportList", setting);
 		return list;
 	}
+
+	public int selectTotalListCount(SqlSessionTemplate mybatisSession, ReportSetting setting) {
+		
+		return mybatisSession.selectOne("reportMapper.selectTotalListCount", setting);
+	}
+
+	public int updateReportApproval1(SqlSessionTemplate mybatisSession, String rno) {
+		System.out.println("dao : "+rno);
+		return mybatisSession.update("reportMapper.updateReportApproval1", rno);
+	}
+
+	public void updateReportApproval2(SqlSessionTemplate mybatisSession, String rid) {
+		mybatisSession.update("reportMapper.updateReportApproval2", rid);
+	}
+
 
 }
