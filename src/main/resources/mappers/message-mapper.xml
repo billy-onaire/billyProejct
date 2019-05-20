@@ -208,8 +208,12 @@
 	#{mms_title})
 	</insert>
 	
-	<select id="selectUnread" resultType="int" parameterType="string">
+	<!-- <select id="selectUnread" resultType="int" parameterType="string">
 		select count(*) from message where recv_id = #{recv_id}  and recv_read = 'N' and recv_del = 'N'
+	</select> -->
+	
+	<select id="selectUnreadMessage" resultType="int" parameterType="string">
+		select count(*) from message where recv_id = #{recv_id}  and recv_read = 'N' and recv_del = 'N' and recv_show = 'N' 
 	</select>
 
 </mapper>

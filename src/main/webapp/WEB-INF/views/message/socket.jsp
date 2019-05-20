@@ -20,7 +20,7 @@ var socket = null;
 }); */
 
 function connectWS(){
-	var wsUri = "ws://localhost:8888/billy/mmsSocket.do?pno=1234";
+	var wsUri = "ws://localhost:8888/billy/mmsSocket.do";
 	var ws = new WebSocket(wsUri);
 	socket = ws;
 	

@@ -1,13 +1,15 @@
 package org.kh.billy.message.model.service;
 
 import java.util.ArrayList;
+
+import org.kh.billy.message.model.dao.MessageDao;
 import org.kh.billy.message.model.vo.CriteriaMms;
 import org.kh.billy.message.model.vo.Message;
 import org.kh.billy.message.model.vo.MessagePname;
+import org.mybatis.spring.SqlSessionTemplate;
 
 
 public interface MessageService {
-
 
 	int insertMessage(MessagePname message);
 
@@ -36,6 +38,8 @@ public interface MessageService {
 	int updateDelRecvMessage(int mms_no);
 
 	int updateDelSentMessage(int mms_no);
+
+	int selectUnreadMessage(String userid); 
 
 
 }
