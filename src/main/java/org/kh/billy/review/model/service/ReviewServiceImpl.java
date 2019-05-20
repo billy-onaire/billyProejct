@@ -50,4 +50,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.deleteReview(mybatisSession, rno);
 	}
 
+	@Override
+	public int updateReviewStatus(int paymentNo) {
+		return reviewDao.updateReviewStatus(mybatisSession, paymentNo);
+	}
+
 }

@@ -77,44 +77,37 @@
     <!-- Search Wrapper Area End -->
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-	<c:import url="../common/nav.jsp" />
-	<c:import url="../common/myPage.jsp" />
+	<c:import url="../common/adminNav.jsp" />
 	  
 		<div>
+		<select id='listCount' name='listCount' onchange='listCnt();'>
+			<option value='5' >5</option>
+			<option value='10'>10</option>
+			<option value='15'>15</option>
+			<option value='20'>20</option>
+		</select><br>
 		<table class="type06">
 	    	<tr>
-		        <th class="even">이미지</th>
+		        <th class="even">제품번호</th>
 		        <th class="even">제품명</th>
-		        <th class="even">대여기간</th>
-		        <th class="even">후기작성</th>
+		        <th class="even">대여자</th>
+		        <th class="even">상태</th>
+		        <th class="even"><button>전체선택</button></th>
 		    </tr>
-		    <c:forEach var="r" items="${lists}">
+		    <c:forEach var="r" items="${list}">
 				<tr>
-					<td><img src="/billy/resources/files/product/${r.first_img}"></td>
-					<td><a href="pdetail.do?pno=${r.product_no }" style="font-size:15pt; font-weight:bold">${r.product_name}</a></td>
-					<td>						
-						<c:set var="begindate" value="${fn:replace(r.payment_begindate, '-', '.')}"/>
-						<c:set var="enddate" value="${fn:replace(r.payment_enddate, '-', '.')}"/>
-						${begindate } ~ ${enddate }
-					</td>
+					<td>${r.product_no }</td>
+					<td>${r.product_name}</td>
+					<td>${r.seller_id }</td>
 					<td>
-						<c:if test="${r.review_status eq 'N'}">
-							<div class="cart-btn mt-100">
-							<c:url var="insertReview" value="writeReview.do">
-			        		<c:param name="name" value="${r.product_name }" />
-			        		<c:param name="img" value="${r.first_img }" />
-			        		<c:param name="begin" value="${begindate }" />
-			        		<c:param name="end" value="${enddate }" />
-			        		<c:param name="pno" value="${r.product_no }" />
-			        		<c:param name="payno" value="${r.payment_no }" />
-				        	</c:url>			       
-			                	<a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>		                		               
-			             	</div>
-		             	</c:if>
-		             	<c:if test="${r.review_status eq 'Y' }">
-		                	작성완료
-		                </c:if>
-		            </td>
+						<c:if test="${r.delete_yn eq 'N'}">
+							활성
+						</c:if>
+						<c:if test="${r.delete_yn eq 'Y'}">
+							비활성
+						</c:if>
+					</td>
+					<td><input type="checkbox"></td>
 				</tr>						
 			</c:forEach>
 		</table>
@@ -142,7 +135,7 @@
 			</c:if>
 		</ul>
 		</center>
-		<form action="reviewList.do" method="post" id='frmPaging'>
+		<form action="adminProduct.do" method="post" id='frmPaging'>
 			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
 			<input type='hidden' name='index' id='index' value='${p.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${p.pageStartNum}'>

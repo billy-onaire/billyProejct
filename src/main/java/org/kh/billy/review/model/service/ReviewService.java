@@ -15,4 +15,5 @@ public interface ReviewService {
 	int selectTotalListReview(String userId);
 	int selectTotalPdetailReview(int productNo);
 	int deleteReview(int rno);
+	int updateReviewStatus(int paymentNo);
 }
