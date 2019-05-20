@@ -1,8 +1,10 @@
 package org.kh.billy.member.controller;
 
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.BasePage;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,10 +47,41 @@ public class MemberController {
    @Autowired
    private BCryptPasswordEncoder bcryptPE;
    
+   
    @RequestMapping("mfind.do")
    public String findPage() {
       return "member/findPage";
    }
+   
+   //아이디 찾기
+   @RequestMapping(value = "findId.do" , method = RequestMethod.POST)
+   public @ResponseBody void findingId(@ModelAttribute Member member, HttpServletResponse response)throws Exception {
+	response.setContentType("text/html; charset=utf-8");
+   	List <Member> idList = new ArrayList<>();
+   	idList = memberService.searchId(member);
+   		// 전송용 객체 생성
+ 		JSONObject sendObj = new JSONObject();
+ 		// 배열 객체 생성
+ 		JSONArray jarr = new JSONArray();
+ 		
+ 		// list 를 jarr 에 복사
+ 		for(Member foundId : idList) {
+ 			JSONObject juser = new JSONObject();
+
+ 			juser.put("user_id", foundId.getUser_id());
+ 			// jarr 에 juser 저장
+ 			jarr.add(juser);
+ 		}
+ 		sendObj.put("list", jarr);
+ 		
+ 		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(sendObj.toJSONString());
+		out.flush();
+		out.close();
+   }
+   
+   
    
    @RequestMapping("changePwdPage.do")
    public String changePwdPage(Model model, @RequestParam String userId) {

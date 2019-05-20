@@ -1,6 +1,7 @@
 package org.kh.billy.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -67,15 +68,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public ArrayList<String> searchId(Member member) {
-		ArrayList<Member> idList = (ArrayList<Member>) memberDao.searchId(mybatisSession, member);
-		ArrayList<String> idLists = new ArrayList<>();
-		for(int i = 0; i < idList.size(); i++) {
-			String id = idList.get(i).getUser_id();
-			idLists.add(id);
-		}
+	public List<Member> searchId(Member member) {
+		List<Member> idList = (ArrayList<Member>) memberDao.searchId(mybatisSession, member);
 		
-		return idLists;
+		
+		return idList;
 	
 	}
 	
@@ -154,4 +151,6 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<Member> selectSearchMemberList(BasePage bPage, String search, String select) {
 		return memberDao.selectSearchMemberList(mybatisSession,bPage,search,select);
 	}
+
+
 }

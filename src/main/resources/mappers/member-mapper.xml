@@ -50,12 +50,16 @@
    </select>
    
    <select id="selectCheckANo" parameterType="String" resultType="String">
-   		select authno from tb_sms where user_id = #{userId}
-   		
+   		select authno from tb_sms where user_id = #{userId} 		
    </select>
    
-   <select id="selectMember" parameterType="string" resultMap="resultMember" useCache="true">
-      select * from tb_user where user_id = #{user_id}      
+   <select id="selectFindId" parameterType="Member" resultType="String">
+   	  select user_id from tb_user where user_name = #{user_name} and user_mobile = #{user_mobile} 
+   </select>
+   
+   <select id="selectMember" parameterType="Member" resultMap="resultMember" useCache="true">
+      select * from tb_user where authkey not in (select social_code from socialuser) 
+      and user_mobile = #{user_mobile} and user_name = #{user_name}     
    </select>
    
    <!-- 회원관리 총 게시물수 체크 -->

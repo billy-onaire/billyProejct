@@ -105,6 +105,6 @@ public class MemberDao {
 		ArrayList<Member> mList = (ArrayList<Member>)list;
 		return mList;
 	}
-	
+
 	
 }
