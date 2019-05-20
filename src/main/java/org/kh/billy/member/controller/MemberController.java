@@ -1,5 +1,6 @@
 package org.kh.billy.member.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,22 +73,26 @@ public class MemberController {
    //로그인 아이디 체크
    @RequestMapping(value="loginCheck.do", method=RequestMethod.POST)
    public String selectCheckId(Model model,HttpServletRequest request, HttpSession session, SessionStatus status, Member member) {
-	  
+	   if(memberService.selectDeleteUser(member.getUser_id()) != null){
+		   model.addAttribute("message", "탈퇴된 회원입니다.");
+		   return "member/memberError";
+	   }
+	   
 	   Member user = memberService.selectCheckId(member.getUser_id());
-	   user.setSocial_type("user");
-
+	   
 	   if(user != null) {
 		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
-		   session.setAttribute("loginMember", user);
-		   status.setComplete();
-		   System.out.println(user.getUser_id() + "님 로그인 성공!!");
-		   
-		   return "home";
+			   user.setSocial_type("user");
+			   session.setAttribute("loginMember", user);
+			   status.setComplete();
+			   System.out.println(user.getUser_id() + "님 로그인 성공!!");
+			   
+			   return "home";
 		   }else {
 			   model.addAttribute("message", "로그인 실패");
 			   return "member/memberError";
 		   }
-	   }else {
+	   }else{
 		   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
 		   return "member/memberError";
 	   }
@@ -265,9 +270,6 @@ public class MemberController {
 	   paging.setBpage(bPage);
 	   paging.setTotalCount(memberService.selectTotalCount());	//DB에 저장된 회원 총 인원수체크
 	   ArrayList<Member> mList = memberService.selectMemberList(bPage);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
-	   
-	   System.out.println("BasePage : " + bPage);
-	   System.out.println("paging : " + paging);
 
 	   if(mList != null) {
 		   model.addAttribute("mList",mList);
@@ -280,10 +282,11 @@ public class MemberController {
    }
    
    //회원관리 아이디,이름,탈퇴회원으로 검색 리스트 
-   @RequestMapping(value="mSearchList.do", method=RequestMethod.POST)
-   public String memberSearchList(@RequestParam String selection, @RequestParam String search, Model model, BasePage bPage) {
-	   System.out.println("selection : " + selection + "\nsearch : " + search);
+   @RequestMapping(value="mSearchList.do")
+   public String memberSearchList(@RequestParam(value="selection", required=false, defaultValue="") String selection,@RequestParam(value="search", required=false, defaultValue="") String search,
+		   HttpServletRequest request,Model model, BasePage bPage) {
 	   String select = "";
+	   
 	   if(selection.equals("userId")) {
 		   select = "user_id";
 	   }else if(selection.equals("userName")) {
@@ -291,26 +294,55 @@ public class MemberController {
 	   }else if(selection.equals("deleteUser")) {
 		   select = "delete_yn";
 	   }
-	   System.out.println("검색할 셀렉트문 : " + select);
+	   
 	   Paging paging = new Paging();
 	   paging.setBpage(bPage);
-	   paging.setTotalCount(memberService.selectSearchTotalCount(search, select));	//DB에 저장된 회원 총 인원수체크
-	   System.out.println("검색게시물수 : " + memberService.selectSearchTotalCount(search, select));
-	   ArrayList<Member> mList = memberService.selectSearchMemberList(bPage, search, select);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
-	   for(Member m : mList) {
-		   System.out.println("mList : " + m);
+	   ArrayList<Member> mList = new ArrayList<>();
+	   if(select != "") {
+		   paging.setTotalCount(memberService.selectSearchTotalCount(search, select));	//DB에 저장된 회원 총 인원수체크
+		   mList = memberService.selectSearchMemberList(bPage, search, select);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
+	   }else {
+		   paging.setTotalCount(memberService.selectTotalCount());	
+		   mList = memberService.selectMemberList(bPage);	
 	   }
 	   
 	   if(mList != null) {
 		   model.addAttribute("mList",mList);
 		   model.addAttribute("paging", paging);
+		   model.addAttribute("selection", selection);
 		   model.addAttribute("search", search);
-		   model.addAttribute("select", select);
 		   return "member/memberManagementPage";
 	   }else {
 		   model.addAttribute("message", "조회할 게시글이 없습니다.");
 		   return "member/memberError";
 	   }
-	   
+   }
+   
+   //신고횟수 3회시 탈퇴시키는 메소드
+   @RequestMapping(value="deleteMember.do")
+   public ModelAndView deleteMember(ModelAndView mv, @RequestParam String userId) throws UnsupportedEncodingException {
+	   Map<String, String> map = new HashMap<>();
+	   if(memberService.deleteMember(userId) > 0) {
+		   map.put("message", URLEncoder.encode("회원 탈퇴되었습니다.", "UTF-8"));
+	   }else {
+		   map.put("message", URLEncoder.encode("회원 탈퇴실패","UTF-8"));
+	   }
+	   mv.addObject(map);
+	   mv.setViewName("jsonView");
+	   return mv;
+   }
+   
+   //회원복구 시키는 메소드
+   @RequestMapping(value="backMember.do")
+   public ModelAndView backMember(ModelAndView mv, @RequestParam String userId) throws UnsupportedEncodingException {
+	   Map<String, String> map = new HashMap<>();
+	   if(memberService.updateBackMember(userId) > 0) {
+		   map.put("message", URLEncoder.encode("회원 복구되었습니다.", "UTF-8"));
+	   }else {
+		   map.put("message", URLEncoder.encode("회원 복구실패","UTF-8"));
+	   }
+	   mv.addObject(map);
+	   mv.setViewName("jsonView");
+	   return mv;
    }
 }

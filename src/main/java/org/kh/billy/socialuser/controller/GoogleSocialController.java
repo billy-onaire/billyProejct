@@ -133,7 +133,7 @@ public class GoogleSocialController {
        // 구글 사용자 정보 넘기기
        @RequestMapping(value="googleLogin.do")
        public String googleCheckPage(HttpServletRequest request, HttpSession gSession,SessionStatus status
-    		   ,@RequestParam(name="uid") String uid, Member member) {
+    		   ,@RequestParam(name="uid") String uid, Member member,Model model) {
     	   
     	   String name = request.getParameter("name"); //소셜 닉네임및 이름
     	   String profile = request.getParameter("profile"); //소셜 프로필사진
@@ -143,12 +143,24 @@ public class GoogleSocialController {
     	   member.setSocial_code(uid);
     	   member.setProfile(profile);
     	   
-    	   String userId = socialService.selectCheckId(uid);  
+    	   String userId = socialService.selectCheckId(uid);
+    	   if(socialService.selectDeleteSocial(userId) != null) {
+    		   model.addAttribute("message", "탈퇴된 회원입니다.");
+    		   return "member/memberError";
+    	   }
+    	   
     	   member.setUser_id(userId);
     	   gSession.setAttribute("loginMember", member);
-    	   status.isComplete();
+    	   status.setComplete();
     	   
     	   if (userId != null) {
+    		   member = socialService.selectUserInfo(userId);
+    		   member.setSname(name);
+    		   member.setProfile(profile);
+    		   member.setSocial_type("google");
+        	   member.setSocial_code(uid);
+    		   gSession.setAttribute("loginMember", member);
+    		   status.setComplete();
     		   return "home";
     	   } else {
     		   System.out.println("구글로그인 성공!!");

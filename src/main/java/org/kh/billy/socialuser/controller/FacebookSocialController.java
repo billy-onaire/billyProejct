@@ -101,6 +101,11 @@ public class FacebookSocialController {
                 System.out.println("Facebook email: " + email);
                 System.out.println("Facebook name: " + name);
                 userId = socialService.selectCheckId(fid);
+                if(socialService.selectDeleteSocial(userId) != null) {
+         		   model.addAttribute("message", "탈퇴된 회원입니다.");
+         		   return "member/memberError";
+         	   }
+                
                 member.setUser_id(userId);
   	            fSession.setAttribute("loginMember", member);
   	            status.setComplete(); 
@@ -115,6 +120,11 @@ public class FacebookSocialController {
         }
          
         if (userId != null) {
+           member = socialService.selectUserInfo(userId);
+ 		   member.setSocial_type("facebook");
+     	   member.setSocial_code(fid);
+ 		   fSession.setAttribute("loginMember", member);
+ 		   status.setComplete();
 			return "home";
         } else {
 			System.out.println("페이스북 로그인 성공! 소셜 회원가입 페이지로!");

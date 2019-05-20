@@ -33,6 +33,11 @@
       #{user_enroll}, sysdate, default, default, default 
    </sql>
    
+   <!-- 탈퇴된 회원 유무체크 -->
+   <select id="selectDeleteUser" parameterType="String" resultType="String">
+   		select user_id from tb_user where user_id = #{userId} and delete_yn = 'Y'
+   </select>
+   
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
       select * from tb_user where user_id = #{userId} and verify = 'y'
    </select>
@@ -94,14 +99,12 @@
    
    <!-- 회원관리 검색 리스트 조회 -->
    <select id="selectSearchMemberList" parameterType="map" resultMap="resultMember">
-   		<![CDATA[
    		select user_id, user_pwd, user_mobile, user_name, email, authkey, 
 		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
 		from (select rownum rnum, user_id, user_pwd, user_mobile, user_name, email, authkey, 
 		verify, address, my_introduce, location_area, user_enroll, user_update, report_count, delete_yn, total_count
 		from tb_user
 		where verify = 'y'
-		]]>
 		<if test='search == null'>
 			and ${select} = 'Y'
 		</if>
@@ -146,12 +149,19 @@
    		update tb_user set user_pwd = #{user_pwd} where user_id = #{user_id}
    </update>
    
+   <update id="updateBackMember" parameterType="String">
+   		update tb_user set delete_yn = 'N' where user_id = #{user_id}
+   </update>
+   
+   <!-- 신고횟수가 3회이면 우선 탈퇴시킴 delete_yn => Y로 바꿈 (정지) -->
    <delete id="deleteMember" parameterType="string" >
-      delete from tb_user where user_id = #{user_id}
+      update tb_user set delete_yn = 'Y' where user_id = #{user_id}
    </delete>
    
    <delete id="deleteAutoNo" parameterType="String">
      delete from tb_sms where user_id = #{userId}
    </delete>
+   
+   
 
 </mapper>

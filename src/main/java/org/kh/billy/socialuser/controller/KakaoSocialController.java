@@ -44,8 +44,6 @@ public class KakaoSocialController {
 	 
 	 @Autowired
 	 private SocialUserService socialService;
-	   
-	 
 	
 	 @RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession kSession,
@@ -79,11 +77,23 @@ public class KakaoSocialController {
 	        member.setSocial_code(kid);
 	        member.setSocial_type("kakao");
 	        String userId = socialService.selectCheckId(kid);
+	        if(socialService.selectDeleteSocial(userId) != null) {
+	    		   model.addAttribute("message", "탈퇴된 회원입니다.");
+	    		   return "member/memberError";
+	    	}
+	        
 	        member.setUser_id(userId);
 	        kSession.setAttribute("loginMember", member);
 	        status.setComplete();
 	        		        
 	        if (userId != null) {
+	        		member = socialService.selectUserInfo(userId);
+	    		   member.setSname(name);
+	    		   member.setProfile(profile);
+	    		   member.setSocial_type("kakao");
+	        	   member.setSocial_code(kid);
+	    		   kSession.setAttribute("loginMember", member);
+	    		   status.setComplete();
 	    			return "home";
 	    	} else {
 	    			System.out.println("카카오 로그인 성공! 소셜 회원가입 페이지로!");

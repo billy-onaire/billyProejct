@@ -220,17 +220,18 @@ a {
 </head>
 
 <body>
+<h1>${loginMember }</h1>
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<%-- <c:import url="../common/nav.jsp" /> --%>
 		<!-- 회원가입 폼 -->
-		<h1>${loginMember }</h1>
 		<div class="login-enroll-form clearfix">
 		<div class="container" >
 		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="social_code" value="${loginMember.social_code }">
 				<input type="hidden" name="social_type" value="${loginMember.social_type }">
 				<input type="hidden" name="profile" value="${loginMember.profile }">
+				<input type="hidden" name="sname" value="${loginMember.sname }">
 												
 				<h1>소셜 회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
