@@ -14,17 +14,15 @@ public class Payment implements Serializable {
 	private String status;
 	private int product_no;
 	private String customer;
-	private String booking_no;
-	private String seller_id;
-	private String product_name;
 	private String review_status;
+	private String product_name;
+	private String seller_id;
 	
 	public Payment() {}
 
 	public Payment(int payment_no, int payment_price, int payment_quantity, Date payment_begindate,
-			Date payment_enddate, String status, int product_no, String customer, String booking_no, String seller_id,
-			String product_name, String review_status) {
-		super();
+			Date payment_enddate, String status, int product_no, String customer, String review_status,
+			String product_name, String seller_id) {
 		this.payment_no = payment_no;
 		this.payment_price = payment_price;
 		this.payment_quantity = payment_quantity;
@@ -33,10 +31,9 @@ public class Payment implements Serializable {
 		this.status = status;
 		this.product_no = product_no;
 		this.customer = customer;
-		this.booking_no = booking_no;
-		this.seller_id = seller_id;
-		this.product_name = product_name;
 		this.review_status = review_status;
+		this.product_name = product_name;
+		this.seller_id = seller_id;
 	}
 
 	public int getPayment_no() {
@@ -103,12 +100,20 @@ public class Payment implements Serializable {
 		this.customer = customer;
 	}
 
-	public String getBooking_no() {
-		return booking_no;
+	public String getReview_status() {
+		return review_status;
 	}
 
-	public void setBooking_no(String booking_no) {
-		this.booking_no = booking_no;
+	public void setReview_status(String review_status) {
+		this.review_status = review_status;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
 	}
 
 	public String getSeller_id() {
@@ -119,22 +124,6 @@ public class Payment implements Serializable {
 		this.seller_id = seller_id;
 	}
 
-	public String getproduct_name() {
-		return product_name;
-	}
-
-	public void setproduct_name(String product_name) {
-		this.product_name = product_name;
-	}
-
-	public String getReview_status() {
-		return review_status;
-	}
-
-	public void setReview_status(String review_status) {
-		this.review_status = review_status;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -143,9 +132,9 @@ public class Payment implements Serializable {
 	public String toString() {
 		return "Payment [payment_no=" + payment_no + ", payment_price=" + payment_price + ", payment_quantity="
 				+ payment_quantity + ", payment_begindate=" + payment_begindate + ", payment_enddate=" + payment_enddate
-				+ ", status=" + status + ", product_no=" + product_no + ", customer=" + customer + ", booking_no="
-				+ booking_no + ", seller_id=" + seller_id + ", product_name=" + product_name + ", review_status="
-				+ review_status + "]";
+				+ ", status=" + status + ", product_no=" + product_no + ", customer=" + customer + ", review_status="
+				+ review_status + ", product_name=" + product_name + ", seller_id=" + seller_id + "]";
 	}
+
 }
 

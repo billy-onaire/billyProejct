@@ -69,7 +69,7 @@ function setSearchType() {
 		var $inputVal = $('#searchType option:selected').val();
 		$keyword.val($inputVal);
 		console.log($('#keywordInput').val());
-		var url = 'paymentSearch.do?page=1' + '&perPagenum=' + '${ pageMaker.cri.perPageNum }'
+		var url = 'paymentSearch.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()
 		+ '&keyword=' + encodeURIComponent($keyword.val());
 		location.href = url;
@@ -125,11 +125,6 @@ function setSearchType() {
 								<option value='2'>취소</option>
 								<option value='3'>거래중</option>
 								<option value='4'>판매완료</option>
-								<%-- <option value='not' <c:out value='${ searchCri.searchType == null ? "selected" : "" }'/>>거래상태</option>
-								<option value='1' <c:out value='${ searchCri.searchType eq "1" ? "selected" : "" }'/>>구매완료</option>
-								<option value='2' <c:out value='${ searchCri.searchType eq "2" ? "selected" : "" }'/>>취소</option>
-								<option value='3' <c:out value='${ searchCri.searchType eq "3" ? "selected" : "" }'/>>거래중</option>
-								<option value='4' <c:out value='${ searchCri.searchType eq "4" ? "selected" : "" }'/>>판매완료</option> --%>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -151,7 +146,7 @@ function setSearchType() {
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
                 		<td>${ status.index }</td>
-                		<td>${ payment.booking_no }</td>
+                		<td>${ payment.payment_no }</td>
                 		<td>${ payment.seller_id }</td>
                 		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 1 }'>

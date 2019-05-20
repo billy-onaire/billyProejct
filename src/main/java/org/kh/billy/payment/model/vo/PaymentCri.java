@@ -14,7 +14,7 @@ public class PaymentCri implements Serializable{
     private String searchType;
     private String keyword;
 
-	private String seller_id;
+	private String customer;
     
     public PaymentCri() {
     	this.page = 1;
@@ -43,7 +43,7 @@ public class PaymentCri implements Serializable{
     public String makeSearchUri() {
     	UriComponentsBuilder uri = UriComponentsBuilder.newInstance()
     			.queryParam("page", getPage())
-				.queryParam("pagePageNum", getPerPageNum());
+				.queryParam("perPageNum", getPerPageNum());
     	if(searchType != null) {
     		uri
     		.queryParam("searchType", this.searchType)
@@ -78,14 +78,14 @@ public class PaymentCri implements Serializable{
 
 	@Override
 	public String toString() {
-		return "PaymentCri [page=" + page + ", perPageNum=" + perPageNum + "]";
+		return "PaymentCri [page=" + page + ", perPageNum=" + perPageNum + ", customer=" + customer +"]";
 	}
 
-	public void setSeller_id(String seller_id) {
-		this.seller_id = seller_id;
+	public void setCustomer(String customer) {
+		this.customer = customer;
 	}
 	
-	public String getSeller_id() {
-		return seller_id;
+	public String getCustomer() {
+		return customer;
 	}
 }

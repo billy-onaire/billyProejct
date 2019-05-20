@@ -23,6 +23,9 @@ public interface PaymentService {
 	ArrayList<Payment> listWatingCriteria(PaymentCri payCri);
 	
 	int insertBookingList(Payment payment);
-	Payment selectBookingUser(String customer);
+	Payment selectBookingUser(Payment payment);
+	int selectPaymentNo(int payment_no);
+	int updateBookingUser(Payment payment);
+	Payment selectPaymentListOne(Payment payment);
 
 }

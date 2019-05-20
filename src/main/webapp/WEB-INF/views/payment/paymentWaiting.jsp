@@ -54,7 +54,7 @@ $(function(){
 			dataType: 'json',
 			data: data,
 			success: function() {
-				
+				alert("dk!");
 			}//success
 		});//ajax
 	});
@@ -79,7 +79,7 @@ function setSearchType() {
 	
 	$('#idSearch').click(function() {
 		console.log($('#keywordInput').val());
-		var url = 'paymentWaiting.do?page=1' + '&perPagenum=' + '${ pageMaker.cri.perPageNum }'
+		var url = 'paymentWaiting.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()
 		+ '&keyword=' + encodeURIComponent($keyword.val());
 		location.href = url;
@@ -100,7 +100,8 @@ function setSearchType() {
 						<h2><b>구매대기</b> 내역</h2><!-- bookingPage.do -->
 					</div>
 					<div class="col-sm-8">						
-						<a id='sellList' class="btn btn-primary"><iclass='material-icons'>payment</i><span>판매 내역</span></a>
+						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>판매 내역</span></a>
+						<button onclick='bb();' class="btn btn-primary"><i class='material-icons'></i><span>부트페이</span></button>
 						<!-- <i class="material-icons">&#xE863;</i>  -->
 						<!-- <a href="#" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a> -->
 					</div>
@@ -151,7 +152,8 @@ function setSearchType() {
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ payment.booking_no }</td>
+                		<td>${ payment.customer }</td>
+                		<td>${ payment.payment_no }</td>
                 		<td class='sellerId'>${ payment.seller_id }</td>
                 		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 3 }'>
