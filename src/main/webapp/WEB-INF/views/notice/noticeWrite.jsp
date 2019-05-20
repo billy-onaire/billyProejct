@@ -16,7 +16,7 @@
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
-
+	
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
     <!-- include summernote css/js-->

@@ -15,13 +15,13 @@
     <title>상품등록</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
     <!-- <link rel="stylesheet" href="/billy/resources/css/style.css"> -->
     <link  href="/billy/resources/css/datepicker.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
     <style type="text/css">
       /*datepicker에서 사용한 이미지 버튼 style적용*/
@@ -230,7 +230,9 @@
         <!-- Plugins js -->
         <script src="/billy/resources/js/plugins.js"></script>
         <!-- Active js -->
-        <!-- <script src="js/active.js"></script>
+        <!-- <script src="js/active.js"></script>-->
+        <script src="/billy/resources/js/active2.js"></script>
+        
         <!-- multi image picker.js https://www.jqueryscript.net/form/Multiple-Image-Picker-jQuery-Spartan.html-->
         <script type="text/javascript" src="/billy/resources/js/spartan-multi-image-picker.js"></script>
         
