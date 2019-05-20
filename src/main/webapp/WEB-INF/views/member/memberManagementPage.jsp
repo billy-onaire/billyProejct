@@ -30,13 +30,84 @@
 	width: 300px;
 }
 </style> 
+<script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-function deleteMember(){
-	if(confirm("회원을 정말 탈퇴 시키겠습니까?")){
-		console.log("탈퇴함.");
+function deleteMember() {
+	$("#memberTable tr").on("click",function(){
+		if(confirm("회원을 정말 탈퇴 시키겠습니까?")){
+			var tdArr = new Array();
+			
+			var tr = $(this);
+			var td = tr.children();
+			console.log("tr : " + tr.text());
+			td.each(function(i){
+				tdArr.push(td.eq(i).text);
+			});
+			
+			var userId = td.eq(0).text();
+			
+			$.ajax({
+				url: "deleteMember.do",
+				data: {userId: userId},
+				type: "get",
+				dateType: "json",
+				success: function(result){
+					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));						
+				},error: function(request, status, errorData){
+					console.log("error code : " + request.status
+							+ "\nmessage : " + request.responseText
+							+ "\nerror : " + errorData);
+				}
+			});
+		}else{
+			$("#memberTable tr").off("click");
+			return false;
+		}
+	});
+}
+
+function backMember() {
+	$("#memberTable tr").on("click",function(){
+		if(confirm("회원을 정말 복구 시키겠습니까?")){
+			var tdArr = new Array();
+			
+			var tr = $(this);
+			var td = tr.children();
+			console.log("tr : " + tr.text());
+			td.each(function(i){
+				tdArr.push(td.eq(i).text);
+			});
+			
+			var userId = td.eq(0).text();
+			
+			$.ajax({
+				url: "backMember.do",
+				data: {userId: userId},
+				type: "get",
+				dateType: "json",
+				success: function(result){
+					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));						
+				},error: function(request, status, errorData){
+					console.log("error code : " + request.status
+							+ "\nmessage : " + request.responseText
+							+ "\nerror : " + errorData);
+				}
+			});
+		}else{
+			$("#memberTable tr").off("click");
+			return false;
+		}
+	});
+}
+
+function optionValue(){
+	var select = document.getElementById("selection");
+	var deleteUser = select.options[select.selectedIndex].value;
+
+	if(deleteUser == "deleteUser"){
+		document.getElementById("search").style.display = "none";
 	}else{
-		console.log("취소함.");
-		return false;
+		document.getElementById("search").style.display = "block";
 	}
 }
 </script>
@@ -48,7 +119,7 @@ function deleteMember(){
 		<div class="amado-pro-catagory clearfix">
 		<div class="container">
 		<h1 align="center">회원 관리</h1>
-		<table class="table table-hover text-center">
+		<table class="table table-hover text-center" id="memberTable">
 			<thead>
 			<tr>
 				<th>아이디</th>
@@ -67,7 +138,10 @@ function deleteMember(){
 					<td>${member.email }</td>
 					<td>${member.user_enroll }</td>
 					<td>${member.report_count }</td>
-					<td><button type="button" class="btn btn-dark" onclick="deleteMember();">탈퇴</button></td>
+					<td>
+						<button type="button" class="btn btn-dark" onclick="deleteMember();">탈퇴</button>
+						<button type="button" class="btn btn-dark" onclick="backMember();">회원복구</button>
+					</td>
 				</tr>
 			</tbody>
 			</c:forEach>
@@ -76,24 +150,24 @@ function deleteMember(){
 			<ul class="pagination">
 			<c:if test="${paging.prev }">
 			<li class="page-item">
-				<a class="page-link" href='<c:url value="memberManagementPage.do?page=${paging.startPage - 1 }"/>'><i class="fa fa-chevron-left"></i></a>
+				<a class="page-link" href='<c:url value="mSearchList.do?page=${paging.startPage - 1 }&selection=${selection }&search=${search }"/>'><i class="fa fa-chevron-left"></i></a>
 			</li>
 			</c:if>
 			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="idx">
 			<li class="page-item">
-				<a class="page-link" href='<c:url value="memberManagementPage.do?page=${idx }"/>'>${idx }</a>
+				<a class="page-link" href='<c:url value="mSearchList.do?page=${idx }&selection=${selection }&search=${search }"/>'>${idx }</a>
 			</li>
 			</c:forEach>
 			<c:if test="${paging.next }">
 			<li class="page-item">
-				<a class="page-link" href='<c:url value="memberManagementPage.do?page=${paging.endPage + 1 }" />'><i class="fa fa-chevron-right"></i></a>
+				<a class="page-link" href='<c:url value="mSearchList.do?page=${paging.endPage + 1 }&selection=${selection }&search=${search }" />'><i class="fa fa-chevron-right"></i></a>
 			</li>
 			</c:if>
 		</ul>
 		<div class="container">
-		<form action="mSearchList.do" method="post">
+		<form action="mSearchList.do" method="get">
 		<div class="form-group">
-			<select class="form-control" id="selection" name="selection">
+			<select class="form-control" id="selection" name="selection" onChange="optionValue();">
 				<option>선택해주세요</option>
 				<option value="userId">아이디</option>
 				<option value="userName">이름</option>

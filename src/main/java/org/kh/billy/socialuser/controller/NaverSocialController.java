@@ -87,20 +87,31 @@ public class NaverSocialController {
     //네이버 로그인 유무체크
     @RequestMapping(value="naverLogin.do", method=RequestMethod.POST)
     public String naverCheckId(Model model, @RequestParam String user_name, @RequestParam String nickname, @RequestParam String email,
-    		@RequestParam String profile, @RequestParam String uid, HttpSession nSession, SessionStatus status, Member member) {
+    		@RequestParam String profile, @RequestParam String nid, HttpSession nSession, SessionStatus status, Member member) {
     	
     	member.setSocial_type("naver");
-    	member.setSocial_code(uid);
+    	member.setSocial_code(nid);
     	member.setUser_name(user_name);
     	member.setSname(nickname);
     	member.setProfile(profile);
     	
-    	String userId = socialService.selectCheckId(uid);  
+    	String userId = socialService.selectCheckId(nid);  
+    	if(socialService.selectDeleteSocial(userId) != null) {
+ 		   model.addAttribute("message", "탈퇴된 회원입니다.");
+ 		   return "member/memberError";
+    	}
  	   	member.setUser_id(userId);
  	   	nSession.setAttribute("loginMember", member);
  	   	status.setComplete();
     	
     	if(userId != null) {
+    	   member = socialService.selectUserInfo(userId);
+ 		   member.setSname(nickname);
+ 		   member.setProfile(profile);
+ 		   member.setSocial_type("naver");
+     	   member.setSocial_code(nid);
+ 		   nSession.setAttribute("loginMember", member);
+ 		   status.setComplete();
     		return "home";
     	}else {
     		System.out.println("네이버로그인 성공!");

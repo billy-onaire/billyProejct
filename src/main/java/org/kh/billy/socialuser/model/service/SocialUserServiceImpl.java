@@ -18,9 +18,20 @@ public class SocialUserServiceImpl implements SocialUserService{
 	@Autowired
 	private SocialUserDao socialDao;
 	
+	//소셜 탈퇴회원 유무체크
+	@Override
+	public String selectDeleteSocial(String userId) {
+		return socialDao.selectDeleteSocial(mSession, userId);
+	}
+	
 	@Override
 	public String selectCheckId(String uid) {
 		return socialDao.selectCheckId(mSession, uid);
+	}
+	
+	@Override
+	public Member selectUserInfo(String userId) {
+		return socialDao.selectUserInfo(mSession, userId);
 	}
 	
 	@Override
@@ -63,6 +74,4 @@ public class SocialUserServiceImpl implements SocialUserService{
 		return 0;
 	}
 
-
-	
 }

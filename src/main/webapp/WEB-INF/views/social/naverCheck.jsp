@@ -31,7 +31,7 @@ window.onload = function(){
 	<input type="hidden" name="email" id="email">
 	<input type="hidden" name="nickname" id="nickname">
 	<input type="hidden" name="profile" id="profile">
-	<input type="hidden" name="uid" id="id">
+	<input type="hidden" name="nid" id="id">
 </form>
 </body>
 </html>
