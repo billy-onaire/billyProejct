@@ -54,6 +54,11 @@ public class MemberController {
       return "member/findPage";
    }
    
+   @RequestMapping("mPageMain.do")
+   public String mPageMain() {
+	   return "common/myPageMain";
+   }
+   
    //아이디 찾기
    @RequestMapping(value = "findId.do" , method = RequestMethod.POST)
    public @ResponseBody void findingId(@ModelAttribute Member member, HttpServletResponse response)throws Exception {
