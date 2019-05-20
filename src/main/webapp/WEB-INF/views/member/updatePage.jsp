@@ -219,7 +219,7 @@ a {
 				<hr>
 				<label for="user_id"><b>아이디</b></label> 
 					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id"
-					value="${loginMember.user_id }" required>
+					value="${loginMember.user_id }" required readonly>
 					
 					<label for="user_name"><b>이름</b></label> 
 					<input type="text"placeholder="Enter Name" id="user_name" name="user_name" 

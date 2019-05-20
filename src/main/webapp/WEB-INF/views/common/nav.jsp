@@ -92,7 +92,7 @@
                     <li><a href="selectnoticelist.do" >Notice</a></li>
                     <li><a href="#" >About us</a></li>
                     <c:if test="${!empty loginMember }">
-                      <li><a href="myproductlist.do" >MyPage</a></li>
+                      <li><a href="mPageMain.do" >MyPage</a></li>
                     </c:if>
                 </ul>
             </nav>
