@@ -1,9 +1,7 @@
 package org.kh.billy.payment.model.vo;
 
 import java.io.Serializable;
-import java.net.URLEncoder;
 
-import org.kh.billy.payment.controller.PaymentController;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -40,7 +38,7 @@ public class PaymentPageMaker implements Serializable {
 	public String makeSearchUri(int page) {
 		UriComponentsBuilder uri = UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
-				.queryParam("pagePageNum", cri.getPerPageNum());
+				.queryParam("perPageNum", cri.getPerPageNum());
 		
 		if(cri.getSearchType() != null) {
 			uri

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -16,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
+import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.payment.model.service.BootpayApi;
 import org.kh.billy.payment.model.service.PaymentService;
 import org.kh.billy.payment.model.vo.Payment;
@@ -33,11 +35,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
 @Controller
+@SessionAttributes("loginMember") 
 public class PaymentController {
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
@@ -62,14 +66,19 @@ public class PaymentController {
 		return mav;
 	}
 	@RequestMapping("paymentWaiting.do")
-	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav) {
+	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav, HttpServletRequest request) {
 		//결제대기 내역
+		payCri.setCustomer(request.getSession().getId());
+		
 		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
 		pageMaker.setTotalCount(payService.searchWaitingListCount(payCri));
 		
 		mav.addObject("pmList", payService.listWatingCriteria(payCri));
 		mav.addObject("pageMaker", pageMaker);
 		mav.setViewName("payment/paymentWaiting");
+		
+		logger.info(mav.toString());
+		logger.info("customer : " + payCri.getCustomer());
 		
 		return mav;
 	}
@@ -86,15 +95,23 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="bookingPage.do")
-	public ModelAndView bookingPage(@RequestParam(name="customer") String customer, Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
+	public ModelAndView bookingPage( Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
 		//예약 영수증
-		//requestparam으로 customer 꺼내오기. 아직 로그인 못하니까 나중에
-		payment.setCustomer(customer);
+		
 		int re = payService.insertBookingList(payment);
-		System.out.println("re : " + re);
-		System.out.println("customer: " + customer);
-		payment = payService.selectBookingUser(customer);
-		System.out.println("payment : " + payment);
+		
+		logger.info("re : " + re);
+		logger.info("customer: " + payment.getCustomer());
+		logger.info("seller_id : " + payment.getSeller_id());
+		logger.info("p name : " + payment.getProduct_name());
+		logger.info("payment : " + payment);
+		
+		int payment_no = payment.getPayment_no();
+		
+		logger.info("payment_no : " + payment_no);
+		payment = payService.selectBookingUser(payment);
+		logger.info("payment2 : " + payment);
+		
 		
 		mav.addObject("payment", payment);
 		mav.setViewName("payment/bookingPage");
@@ -105,10 +122,12 @@ public class PaymentController {
 	@RequestMapping(value="resultPay.do")
 	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {
 		//영수증
-		pmList = payService.selectPaymentList();
+		/*payment = payService.selectPaymentListOne(payment);
+		logger.info("pament_no : " + payment.getPayment_no());
+		
 		logger.info("payment : " + payment);
 		
-		mav.addObject("pmList", pmList);
+		mav.addObject("pmList", payment);*/
 		mav.setViewName("payment/paymentPage");
 		logger.info("mav pay : " + mav.toString());
 		

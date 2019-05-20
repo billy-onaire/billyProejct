@@ -96,8 +96,26 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Payment selectBookingUser(String customer) {
+	public Payment selectBookingUser(Payment payment) {
 		
-		return paymentDao.selectBookingUser(mybatisSession, customer);
+		return paymentDao.selectBookingUser(mybatisSession, payment);
+	}
+
+	@Override
+	public int selectPaymentNo(int payment_no) {
+		
+		return paymentDao.selectPaymentNo(mybatisSession, payment_no);
+	}
+ 
+	@Override
+	public int updateBookingUser(Payment payment) {
+		
+		return paymentDao.updateBookingUser(mybatisSession, payment);
+	}
+	
+	@Override
+	public Payment selectPaymentListOne(Payment payment) {
+		
+		return paymentDao.selectPaymentListOne(mybatisSession, payment);
 	}
 }
