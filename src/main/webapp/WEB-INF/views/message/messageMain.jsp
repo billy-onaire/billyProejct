@@ -90,7 +90,7 @@ $(document).ready(function(){
        		</div>
        		</c:if> --%>
           
-		 <a href="mmsSocket.do">웹소켓</a>
+		  <a href="mmsSocket.do">웹소켓</a>
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
@@ -183,7 +183,7 @@ $(document).ready(function(){
                             </ul>
                         </nav>
                     </div>
-                </div>> 
+                </div> 
                           <br> 
             </div>
         </div>

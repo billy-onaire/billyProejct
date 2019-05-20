@@ -7,8 +7,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Billy - 사용자메뉴</title>
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+</script>
+<script>
+$(document).ready(function(){
+	var userid = "${loginMember.user_id}"
+	//alert(userid);
+	$.ajax({
+		type: "POST",
+		url: "unread.do",
+		data: "userid="+userid,
+		success : function(result){
+			//alert(result + ", 건 검색");
+			$("#num").html(result);
+			$(".btn btn-primary.badge badge-light").text(result);
+		}
+	});
+});
 </script>
 
 <style type="text/css">
@@ -80,6 +97,7 @@
        			<c:if test="${loginMember.social_type eq 'user' }">
        			<span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>
+       			&nbsp;<button type="button" onclick="location.href='recvList.do'" class="btn btn-primary">쪽지 <span id="num" class="badge badge-light"></span></button>
                 <a href="logout.do">로그아웃</a>
        		</div>
        		</c:if>

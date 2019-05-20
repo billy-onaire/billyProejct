@@ -122,4 +122,9 @@ public class MessageDao {
 		return mybatisSession.selectOne("messageMapper.selectDetailMessage", mms_no);
 	}
 
+	public int selectUnreadMessage(SqlSessionTemplate mybatisSession, String userid) {
+		System.out.println("dao에서 id : " + userid);
+		return mybatisSession.selectOne("messageMapper.selectUnreadMessage", userid);
+	}
+
 }

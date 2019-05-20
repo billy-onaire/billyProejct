@@ -31,13 +31,18 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		System.out.println("handleTextMessage : " + session + " : " + message);
-		//로그인한 유저의 id
-		String senderId = getId(session);
-/*		for(WebSocketSession sess: sessions) {
-			sess.sendMessage(new TextMessage(senderId + ":" + message.getPayload()));
-		}*/
+		String senderId = session.getId();
+		for(WebSocketSession sess: sessions) {
+			sess.sendMessage(new TextMessage(senderId + ": " + message.getPayload()));
+		}
 		
-		//protocol: cmd, 쪽지 보낸 사람, 쪽지 받은 사람, 상품명 (ex : mms, test01, test02, )
+		//로그인한 유저의 id
+		//String senderId = getId(session);
+		for(WebSocketSession sess: sessions) {
+			sess.sendMessage(new TextMessage(senderId + ":" + message.getPayload()));
+		}
+		
+	 //protocol: cmd, 쪽지 보낸 사람, 쪽지 받은 사람, 상품명 (ex : mms, test01, test02, )
 		String msg = message.getPayload();
 		if(StringUtils.isNotEmpty(msg)) {
 			String[] strs = msg.split(",");
@@ -55,9 +60,11 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 				}
 			}
 		}
+		
 			
 	}
-
+	
+	//session에 아이디값을 담아 준다.
 	private String getId(WebSocketSession session) {
 		// httpsession 접근
 		Map<String, Object> httpSession = session.getAttributes();

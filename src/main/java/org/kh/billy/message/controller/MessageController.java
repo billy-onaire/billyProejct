@@ -348,6 +348,20 @@ public class MessageController {
 		return mv;
 	}
 	
+	//읽지 않은 메세지 카운트
+	@RequestMapping(value="unread.do", method=RequestMethod.POST)
+	@ResponseBody
+	public int selectUnreadMessage(@RequestParam(value="userid") String userid, Message m) {
+		
+		System.out.println(userid);
+		int result = messageService.selectUnreadMessage(userid);
+		System.out.println(userid + "의 쪽지 갯수는  " + result + "개");
+		m.setRecv_id(userid);
+		System.out.println(m.toString());
+		
+		return result;
+		
+	}
 
 	
 }
