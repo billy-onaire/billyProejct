@@ -15,6 +15,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.member.model.vo.Member;
@@ -28,6 +30,8 @@ import org.kh.billy.payment.model.vo.PaymentSearchCri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -82,16 +86,34 @@ public class PaymentController {
 		
 		return mav;
 	}
-	@RequestMapping("doPayment.do")
-	public void doPayment(Payment payment, HttpServletResponse response) throws IOException {
-		JSONObject job = new JSONObject();
+	@RequestMapping(value="doPayment.do", method=RequestMethod.POST)
+	public void doPayment(@RequestBody String param, HttpServletResponse response) throws IOException, ParseException {
 		
-		job.put("price", payment.getPayment_price());
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		logger.info("obj : " + obj.toString());
 		
+		JSONObject ob = new JSONObject();
+		ob.put("price", jobj.get("price"));
+		ob.put("name", jobj.get("name"));
+		logger.info("ob : " + ob.toJSONString());
+		response.setContentType("application/json; charset=utf-8");
 		PrintWriter pw = response.getWriter();
-		pw.println(job.toJSONString());
+		pw.println(ob.toJSONString());
 		pw.flush();
 		pw.close();
+		
+		/*logger.info("jar size : " + jar.size());
+		
+		for(int i = 0; i < jar.size(); i ++) {
+			JSONObject job = (JSONObject)jar.get(i);
+			Payment payment = new Payment();
+			payment.setPayment_price(((Long) job.get("price")).intValue());
+			payment.setProduct_name(job.get("name").toString());
+		}*/
+		
+		/*return new ResponseEntity<String>("success", HttpStatus.OK);*/
 	}
 	
 	@RequestMapping(value="bookingPage.do")

@@ -8,8 +8,8 @@
 <title>PAYMENT PAGE</title>
 <!-- CSS -->
 <link rel='stylesheet' href='${ pageContext.request.contextPath }/resources/css/paymentInvoice.css'>
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/paymentConfirm.css">
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/style.css">
 </head>
 <body>
 <div class="main-content-wrapper d-flex clearfix">
