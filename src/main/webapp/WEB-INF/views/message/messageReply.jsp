@@ -48,8 +48,8 @@ function checkContent(){
 								class="form-control" name="pname" value="${m.product_name} " readonly >
 							<label for="recvid">받는 사람 : </label> <input type="text"
 								class="form-control" name="recv_id" id="recv_id" value="${m.recv_id }" readonly style="width: 100px;">
-							보내는 사람 : <input type="text" id="user_id" name="sent_id" value="${loginMember.user_id }">
-							<input type="text" id="mms_no" name="mms_no" value="${m.mms_no }">
+							보내는 사람 : <input type="hidden" id="user_id" name="sent_id" value="${loginMember.user_id }">
+							<input type="hidden" id="mms_no" name="mms_no" value="${m.mms_no }">
 						</div>
 
 						<div class="form-group">

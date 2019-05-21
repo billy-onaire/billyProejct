@@ -20,8 +20,8 @@ var socket = null;
 }); */
 
 function connectWS(){
-	var wsUri = "ws://localhost:8888/billy/mmsSocket.do";
-	var ws = new WebSocket(wsUri);
+	//var wsUri = "ws://localhost:8888/billy/mmsSocket.do";
+	var ws = new WebSocket("ws://localhost:8888/billy/mmsSocket.do");
 	socket = ws;
 	
 	ws.onopen = function () {
@@ -55,6 +55,28 @@ $('#btnSend').on('click', function(event) {
 	});
 	
 	 connectWS(); 
+	 
+/* (function poll() {
+		    $.ajax({
+		        url: '/api/',
+		        type: 'GET',
+		        dataType: 'json',
+		        success: function() {
+		            alert('확인!');
+		        },
+		        timeout: 3000,
+		        complete: setTimeout(function() { poll(); }, 6000)
+		    })
+		})(); */
+		
+		 $.ajax({
+		      dataType : 'jsonp',
+		      jsonpCallback: "callback",
+		      url: "https://code.jquery.com/jquery-latest.min.js",
+		      success: function(data) {
+		        console.log(data);
+		      }
+		    });		
 </script>
 
 </head>

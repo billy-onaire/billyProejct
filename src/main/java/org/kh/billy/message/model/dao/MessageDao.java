@@ -127,4 +127,10 @@ public class MessageDao {
 		return mybatisSession.selectOne("messageMapper.selectUnreadMessage", userid);
 	}
 
+	public ArrayList<MessagePname> selectAlertMessage(SqlSessionTemplate mybatisSession, String userid) {
+		
+		List<MessagePname> list = mybatisSession.selectList("messageMapper.selectAlertMessage", userid);
+		return (ArrayList<MessagePname>) list;
+	}
+
 }
