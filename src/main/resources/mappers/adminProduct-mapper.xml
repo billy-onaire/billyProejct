@@ -14,4 +14,38 @@
 	<select id="selectTotalProductList" resultType="int">
 		select count(*) from product
 	</select>
+	
+	<update id="deleteProduct" parameterType="int">
+		update product
+		set delete_yn = 'Y'
+		where product_no = #{pno}
+	</update>
+	
+	<update id="restoreProduct" parameterType="int">
+		update product
+		set delete_yn = 'N'
+		where product_no = #{pno}
+	</update>
+	
+	<select id="selectNormalProductList" parameterType="ReviewPaging" resultType="product">
+		select * 
+		from (select rownum rnum, p.* 
+			from (select * from product where delete_yn = 'N' order by product_no desc) p)
+		where rnum between #{start} and #{last} 
+	</select>
+	
+	<select id="selectTotalNormalProductList" resultType="int">
+		select count(*) from product where delete_yn = 'N'
+	</select>
+	
+	<select id="selectDeleteProductList" parameterType="ReviewPaging" resultType="product">
+		select * 
+		from (select rownum rnum, p.* 
+			from (select * from product where delete_yn = 'Y' order by product_no desc) p)
+		where rnum between #{start} and #{last} 
+	</select>
+	
+	<select id="selectTotalDeleteProductList" resultType="int">
+		select count(*) from product where delete_yn = 'Y'
+	</select>
 </mapper>

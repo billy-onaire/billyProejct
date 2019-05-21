@@ -22,4 +22,28 @@ public class AdminProductDao {
 		return session.selectOne("adminProductMapper.selectTotalProductList");
 	}
 
+	public int deleteProduct(int pNo) {
+		return session.update("adminProductMapper.deleteProduct", pNo);
+	}
+
+	public int restoreProduct(int pNo) {
+		return session.update("adminProductMapper.restoreProduct", pNo);
+	}
+
+	public List<Product> selectNormalProductList(ReviewPaging paging) {
+		return session.selectList("adminProductMapper.selectNormalProductList", paging);
+	}
+
+	public int selectTotalNormalProductList() {
+		return session.selectOne("adminProductMapper.selectTotalNormalProductList");
+	}
+
+	public List<Product> selectDeleteProductList(ReviewPaging paging) {
+		return session.selectList("adminProductMapper.selectDeleteProductList", paging);
+	}
+
+	public int selectTotalDeleteProductList() {
+		return session.selectOne("adminProductMapper.selectTotalDeleteProductList");
+	}
+
 }

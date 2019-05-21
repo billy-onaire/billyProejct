@@ -24,4 +24,34 @@ public class AdminProductServiceImpl implements AdminProductService{
 		return aProductDao.selectTotalProductList();
 	}
 
+	@Override
+	public int deleteProduct(int pNo) {
+		return aProductDao.deleteProduct(pNo);
+	}
+
+	@Override
+	public int restoreProduct(int pNo) {
+		return aProductDao.restoreProduct(pNo);
+	}
+
+	@Override
+	public List<Product> selectNormalProductList(ReviewPaging paging) {
+		return aProductDao.selectNormalProductList(paging);
+	}
+
+	@Override
+	public int selectTotalNormalProductList() {
+		return aProductDao.selectTotalNormalProductList();
+	}
+
+	@Override
+	public List<Product> selectDeleteProductList(ReviewPaging paging) {
+		return aProductDao.selectDeleteProductList(paging);
+	}
+
+	@Override
+	public int selectTotalDeleteProductList() {
+		return aProductDao.selectTotalDeleteProductList();
+	}
+
 }
