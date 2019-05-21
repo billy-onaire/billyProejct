@@ -142,5 +142,11 @@ public class MessageServiceImpl implements MessageService{
 		return messageDao.selectUnreadMessage(mybatisSession, userid);
 	}
 
+	@Override
+	public ArrayList<MessagePname> selectAlertMessage(String userid) {
+		// TODO Auto-generated method stub
+		return messageDao.selectAlertMessage(mybatisSession, userid);
+	}
+
 
 }

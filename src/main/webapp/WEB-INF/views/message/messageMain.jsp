@@ -90,7 +90,7 @@ $(document).ready(function(){
        		</div>
        		</c:if> --%>
           
-		  <a href="mmsSocket.do">웹소켓</a>
+		<a href="mmsSocket.do">웹소켓</a>
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
@@ -142,7 +142,7 @@ $(document).ready(function(){
                                             </td>
                                             <td class="cart_product_img">
                                             <c:if test="${mms.recv_read eq 'N'}">
-                                            	읽지 않음 
+                                            	<span style="color: red;">읽지 않음 </span>
                                             </c:if>
                                             <c:if test="${mms.recv_read eq 'Y'}">
                                             	읽음

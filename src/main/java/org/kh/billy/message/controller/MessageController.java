@@ -2,7 +2,7 @@ package org.kh.billy.message.controller;
 
 
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -353,14 +356,48 @@ public class MessageController {
 	@ResponseBody
 	public int selectUnreadMessage(@RequestParam(value="userid") String userid, Message m) {
 		
-		System.out.println(userid);
+		//System.out.println(userid);
 		int result = messageService.selectUnreadMessage(userid);
-		System.out.println(userid + "의 쪽지 갯수는  " + result + "개");
+		//System.out.println(userid + "의 쪽지 갯수는  " + result + "개");
 		m.setRecv_id(userid);
-		System.out.println(m.toString());
+		System.out.println("카운트 : " + m.toString());
 		
 		return result;
 		
+	}
+	
+	//읽지 않은 메세지 알림
+	@RequestMapping(value="alert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public JSONObject selectAlertMessage(@RequestParam(value="userid") String userid, HttpServletResponse response, ArrayList<MessagePname> list) throws IOException {
+		
+		System.out.println("알림 확인 : " + userid);
+		list = messageService.selectAlertMessage(userid);
+		System.out.println("알림창 : " + list.toString());
+		response.setContentType("application/json; charset=utf-8");
+		
+		JSONObject sendObj = new JSONObject();
+		JSONArray arrJSON = new JSONArray();
+		
+		for(MessagePname m: list) {
+			JSONObject jo = new JSONObject();
+			
+			jo.put("sent_id", m.getSent_id());
+			jo.put("pname", m.getProduct_name());
+			
+			arrJSON.add(jo);
+		}
+		
+		System.out.println(list);
+		sendObj.put("list", arrJSON);
+		response.setContentType("application/json; charset=utf-8");
+	/*	PrintWriter out = response.getWriter();
+		out.print(sendObj.toString());
+		out.flush();
+		out.close();*/
+		
+		return sendObj;
+
 	}
 
 	

@@ -12,7 +12,7 @@
 <script type="text/javascript">
 </script>
 <script>
-$(document).ready(function(){
+ $(document).ready(function(){
 	var userid = "${loginMember.user_id}"
 	//alert(userid);
 	$.ajax({
@@ -20,10 +20,36 @@ $(document).ready(function(){
 		url: "unread.do",
 		data: "userid="+userid,
 		success : function(result){
-			//alert(result + ", 건 검색");
+			if(result != 0){
 			$("#num").html(result);
+			$("#mmsalert").css("visibility", "visible");
 			$(".btn btn-primary.badge badge-light").text(result);
+			$("#alert").text(result);
+			}
 		}
+	});
+}); 
+
+$(document).ready(function(){
+	var userid = "${loginMember.user_id}"
+	//alert(userid)
+	alert(userid);
+	$.ajax({
+		type: "POST",
+		url: "alert.do",
+		dataType: "json",
+		data: userid,
+		success : function(data){
+			alert(data);
+			var jsonStr = JSON.stringify(data);
+			var obj = JSON.parse(jsonStr);
+			for(var i in obj.list){
+				list += "<tr>";
+				list += "<td>" + obj.list[i].sent_id +"</td></tr>"
+			}
+		
+		$("#mms").html(list);
+	}
 	});
 });
 </script>
@@ -97,10 +123,14 @@ $(document).ready(function(){
        			<c:if test="${loginMember.social_type eq 'user' }">
        			<span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>
-       			&nbsp;<button type="button" onclick="location.href='recvList.do'" class="btn btn-primary">쪽지 <span id="num" class="badge badge-light"></span></button>
+       			<!-- 메세지 알림 -->
+				<!-- <div id="mmsalert" style="font-size:8pt; cursor:pointer; visibility:hidden;" onclick="location.href='recvList.do'"><span id="alert" style="color:red;"></span>개의 읽지 않은 메세지가 있습니다.</div> -->
+       			<br><button id="mmsalert" type="button" style="font-size:8pt; cursor:pointer; visibility:hidden;" onclick="location.href='recvList.do'" class="btn btn-primary">쪽지 <span id="num" class="badge badge-light"></span></button>
                 <a href="logout.do">로그아웃</a>
        		</div>
        		</c:if>
+			
+			<div id="mms"></div>
 
 
             <!-- Amado Nav -->

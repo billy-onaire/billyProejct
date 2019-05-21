@@ -113,7 +113,7 @@ $(document).ready(function(){
                                             </td>
                                             <td class="cart_product_img">
                                             <c:if test="${sentmms.recv_read eq 'N'}">
-                                            	읽지 않음 
+                                            	<span style="color: red;">읽지 않음 </span>
                                             </c:if>
                                             <c:if test="${sentmms.recv_read eq 'Y'}">
                                             	읽음
