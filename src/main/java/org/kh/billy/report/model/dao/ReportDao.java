@@ -50,8 +50,12 @@ public class ReportDao {
 		return mybatisSession.update("reportMapper.updateReportApproval1", rno);
 	}
 
-	public void updateReportApproval2(SqlSessionTemplate mybatisSession, String rid) {
-		mybatisSession.update("reportMapper.updateReportApproval2", rid);
+	public int updateReportApproval2(SqlSessionTemplate mybatisSession, String rid) {
+		return mybatisSession.update("reportMapper.updateReportApproval2", rid);
+	}
+
+	public int updateReportDisapproval(SqlSessionTemplate mybatisSession, String rno) {
+		return mybatisSession.update("reportMapper.updateReportDisapproval",rno);
 	}
 
 

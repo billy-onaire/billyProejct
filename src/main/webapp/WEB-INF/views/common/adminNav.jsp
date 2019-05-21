@@ -83,7 +83,7 @@
 					<li class="active"><a href="amain.do" >Home</a></li>
 					<li><a href="#" >Notice</a></li>
 					<li><a href="adminProduct.do" >제품게시글관리</a></li>
-					<li><a href="#" >신고관리</a></li>
+					<li><a href="goReportAdmin.do" >신고관리</a></li>
 					<li><a href="#" >About us</a></li>
 					<li><a href="memberManagementPage.do" >회원관리</a></li>
 				</ul>
