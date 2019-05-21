@@ -52,7 +52,6 @@ $(document).ready(function(){
 
 </head>
 <body>
-<h1>${loginMember }</h1>
 	<!-- Mobile Nav (max width 767px)-->
          <!-- Mobile Nav (max width 767px)-->
         <div class="mobile-nav">
