@@ -94,11 +94,6 @@ public class GoogleSocialController {
            String[] tokens = ((String)responseMap.get("id_token")).split("\\.");
            
            Base64 base64 = new Base64(true);
-           for(int i =0; i < tokens.length; i++) {
-              String hi = new String(base64.decode(tokens[i]));
-              System.out.println("tokens["+i+"] : " + tokens[i]);
-              System.out.println("tokens["+i+"] : " + hi);
-           }
            String body = new String(base64.decode(tokens[1]));
            String[] bodys = body.split(",");
            for(int i =0; i<bodys.length; i++) {
@@ -172,15 +167,12 @@ public class GoogleSocialController {
        //소셜로그인 후 입력정보 받고 등록하기
        @RequestMapping(value="sinsert.do", method=RequestMethod.POST)
        public String insertSocialUser(HttpServletRequest request, HttpSession session, SocialUser social, Member member, Model model) {
-    	  System.out.println("소셜 위에부분 : " + member);
     	   String userpwd = RandomStringUtils.randomNumeric(15);
 
     	   //패스워드 암호화처리
 
     	   member.setUser_pwd(bcryptPE.encode(userpwd));
     	   member.setAuthkey(social.getSocial_code());
-    	   
-    	   System.out.println("member : " + member + "\nsocial : " + social);
     	   	   
     	   if(memberSerive.insertSmember(member) > 0) {
     		   System.out.println("회원정보등록성공!");
