@@ -41,6 +41,30 @@ $(function() {
 	var str =  $('#won').val() + '₩' + '(' + (result+1) + '일)';
 	$('#resultDate').val(str);
 	
+	var $check = $('input[type=checkbox]');
+	var no = '${ payment.payment_no }';
+	console.log(no);
+	$check.click(function() {
+		var job = new Object();
+		job.name = 'num';
+		job.num = no;
+		
+		$.ajax({
+			url: 'cancelBooking.do',
+			type: 'post',
+			data: JSON.stringify(job),
+			contentType: 'application/json; charset=utf-8',
+			cache: false,
+			success: function(result) {
+				console.log(result);
+				if(result == 'SUCCESS')
+					alert('예약이 취소되었습니다');
+				
+				location.href='main.do';
+			}
+		})//ajax
+	});
+	
 	$('#sendMsgbtn').click(function(){
 		$ajax({
 			/* url: 'bookingMsg.do',
@@ -59,6 +83,7 @@ $(function() {
 });
 </script>
 <body id='bookingBody'>
+	<input type='button' value='예약취소'/>
 	<div class="image-container set-full-height">
 	    <!--   Big container   -->
 	    <div class="container">
@@ -73,9 +98,15 @@ $(function() {
 		                        	<h3 class="wizard-title" style='position: relative; float: left;'>
 		                        	<img src='${ pageContext.request.contextPath }/resources/img/core-img/billylogo7.jpg' style='width: 50px; height: 50px;'/>
 		                        		예약 확인
-		                        	</h3><br><br>
+		                        	</h3>
 									<h5></h5>
 		                    	</div>
+		                    	<div class="checkbox" style='position: relative; left: 70%;'>
+									<label>
+										<input type="checkbox" name="optionsCheckboxes" />
+									</label>
+									 예약취소
+								</div>
 								<div class="wizard-navigation">
 									<ul>
 			                            <li><a href="#details" data-toggle="tab">예약 정보(Booking)</a></li>
@@ -194,12 +225,12 @@ $(function() {
 
 										<div class="footer-checkbox">
 											<div class="col-sm-12">
-											  <div class="checkbox">
+											  <!-- <div class="checkbox">
 												  <label>
 													  <input type="checkbox" name="optionsCheckboxes">
 												  </label>
-												  Subscribe to our newsletter
-											  </div>
+												  예약취소
+											  </div> -->
 										  </div>
 										</div>
 	                                </div>
