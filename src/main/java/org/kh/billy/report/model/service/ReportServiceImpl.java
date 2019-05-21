@@ -62,8 +62,13 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public void updateReportApproval2(String rid) {
-		rd.updateReportApproval2(mybatisSession, rid);
+	public int updateReportApproval2(String rid) {
+		return rd.updateReportApproval2(mybatisSession, rid);
+	}
+
+	@Override
+	public int updateReportDisapporval(String rno) {
+		return rd.updateReportDisapproval(mybatisSession, rno);
 	}
 
 }

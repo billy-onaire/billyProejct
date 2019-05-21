@@ -14,11 +14,14 @@
 		<param-value>classpath:root-context.xml
 			<!-- 스프링 시큐리티 설정 추가 -->
 			/WEB-INF/spring/appServlet/spring-security.xml
+			/WEB-INF/spring/appServlet/context-listener.xml
 		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
+		<listener-class>org.kh.billy.visit.action.VisitController</listener-class>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 

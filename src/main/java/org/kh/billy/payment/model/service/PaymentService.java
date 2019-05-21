@@ -27,5 +27,10 @@ public interface PaymentService {
 	int selectPaymentNo(int payment_no);
 	int updateBookingUser(Payment payment);
 	Payment selectPaymentListOne(Payment payment);
+	
+	int updatePaymentUser(int paymentNo);
+	int updateProductQuantity(Payment payment);
+	int deleteBookingInfo(int paymentNo);
+	int updateQuantityAfterCancel(Payment payment);
 
 }

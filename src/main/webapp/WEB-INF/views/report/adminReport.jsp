@@ -44,6 +44,7 @@
 	<!-- Core Style CSS -->
 	<link rel="stylesheet" href="/billy/resources/css/core-style.css">
 	<link rel="stylesheet" href="/billy/resources/css/table.css">
+	<link rel="stylesheet" href="/billy/resources/css/adminReport.css">
 </head>
 
 <body>

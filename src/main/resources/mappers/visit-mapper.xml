@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visitMapper">
+	
+	<resultMap id="resultVisit" type="Visit">
+		<id property="visit_id" column="visit_id" />
+		<result property="v_date" column="v_date" />
+	</resultMap>
+	
+	<insert id="insertVisit">
+		insert into visit
+		values (sq_vi.nextval,to_char(sysdate, 'YYYY-MM-DD'))
+	</insert>
+
+</mapper>

@@ -118,4 +118,28 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		return paymentDao.selectPaymentListOne(mybatisSession, payment);
 	}
+	
+	@Override
+	public int updatePaymentUser(int paymentNo) {
+		
+		return paymentDao.updatePaymentUser(mybatisSession, paymentNo);
+	}
+	
+	@Override
+	public int updateProductQuantity(Payment payment) {
+		
+		return paymentDao.updateProductQuantity(mybatisSession, payment);
+	}
+	
+	@Override
+	public int deleteBookingInfo(int paymentNo) {
+		
+		return paymentDao.deleteBookingInfo(mybatisSession, paymentNo);
+	}
+	
+	@Override
+	public int updateQuantityAfterCancel(Payment payment) {
+		
+		return paymentDao.updateQuantityAfterCancel(mybatisSession, payment);
+	}
 }

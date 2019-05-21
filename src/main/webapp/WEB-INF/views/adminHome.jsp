@@ -15,34 +15,17 @@
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'		
-	var sid = "${loginMember.social_code}";
 	
-	$.ajax({
-		url: "socialCheck.do",
-		data: {
-			sid: sid
-		},
-		type: "post",
-		dataType: "json",
-		success: function(result){
-			if(result.hashMap.fail == "fail"){
-				location.href="socialEnroll.do";
-			} 
-		},error: function(request, status, errorData){
-			console.log("error code : " + request.status
-					+ "\nmessage : " + request.responseText
-					+ "\nerror : " + errorData);
-		}
-	});//ajax
-	'</c:if>'
 });//ready 
 </script>
 <!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
-
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </head>
 <body>
 	<!-- Search Wrapper Area Start -->
@@ -71,94 +54,39 @@ $(function(){
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<c:import url="common/adminNav.jsp" />
-		<!-- Product Catagories Area Start -->
-		<div class="products-catagories-area clearfix">
-			<div class="amado-pro-catagory clearfix">
-				<!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=living">
-                        <img src="/billy/resources/img/bg-img/living.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>생활</p>
-                            <h4>Living</h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=clothes">
-                        <img src="/billy/resources/img/bg-img/clothes2.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>의류</p>
-                            <h4>Clothes</h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=electronics">
-                        <img src="/billy/resources/img/bg-img/electronics4.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>전자기기</p>
-                            <h4>Electronics</h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=etc">
-                        <img src="/billy/resources/img/bg-img/5.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>기타</p>
-                            <h4>ETC</h4>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=kids">
-                        <img src="/billy/resources/img/bg-img/6.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>키즈</p>
-                            <h4>Kids</h4>
-                        </div>
-                    </a>
-                </div>           
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <a href="showlist.do?pcategory_name=sports">
-                        <img src="/billy/resources/img/bg-img/sports.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>스포츠</p>
-                            <h4>Sports</h4>
-                        </div>
-                    </a>
-                </div>
-
-			</div>
-		</div>
-		<!-- Product Catagories Area End -->
+		<div id="login-chart" style="height:250px; width: 800px">로그인차트</div>
 	</div>
 	<c:import url="common/footer.jsp" />
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+	new Morris.Bar({
+		element: 'login-chart',
+		data: [
+			{x: '2011', y: 2},
+		    {x: '2011', y: 4},
+		    {x: '2011', y: 3},
+		    {x: '2011', y: 2},
+		    {x: '2012', y: 1},
+		    {x: '2012', y: 7},
+		    {x: '2012 ', y: 8},
+		    {x: '2012 ', y: 6},
+		    {x: '2013 ', y: 5}
+		],
+		xkey: 'x',
+		  ykeys: ['y'],
+		  labels: ['Y'],
+		  barColors: function (row, series, type) {
+		    if (type === 'bar') {
+		      var red = Math.ceil(255 * row.y / this.ymax);
+		      return 'rgb(' + red + ',0,0)';
+		    }
+		    else {
+		      return '#000';
+		    }
+		  }
+	});
+	</script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
 	<!-- Bootstrap js -->

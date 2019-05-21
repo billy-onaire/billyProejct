@@ -25,6 +25,7 @@
 		<result property="request_id" column="request_id" />
 		<result property="first_img" column="first_img" />
 		<result property="product_name" column="product_name" />
+		<result property="report_progress" column="report_progress" />
 	</resultMap>
 
 	<select id="insertReport" parameterType="Report">
@@ -46,7 +47,7 @@
 		P.PRODUCT_NAME,
 		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE,
 		R.PRODUCT_NO,
-		REQUEST_ID, FIRST_IMG
+		REQUEST_ID, FIRST_IMG, REPORT_PROGRESS
 		FROM TB_REPORT R
 		JOIN PRODUCT P ON
 		(R.PRODUCT_NO =
@@ -62,7 +63,7 @@
 		P.PRODUCT_NAME,
 		RCATEGORY_NO, REPORT_CONTENT, REPORT_ID, REPORT_DATE,
 		R.PRODUCT_NO,
-		REQUEST_ID, FIRST_IMG
+		REQUEST_ID, FIRST_IMG, REPORT_PROGRESS
 		FROM TB_REPORT R
 		JOIN PRODUCT P ON
 		(R.PRODUCT_NO = P.PRODUCT_NO)
@@ -83,6 +84,7 @@
 		SELECT R.REPORT_NO, R.RCATEGORY_NO, R.REPORT_CONTENT, R.REPORT_ID,
 		R.REPORT_DATE, R.PRODUCT_NO, R.REQUEST_ID
 		FROM TB_REPORT R
+		WHERE R.REPORT_PROGRESS NOT IN ('Y','N')
 		ORDER BY REPORT_NO DESC ) S
 		<![CDATA[
 			WHERE ROWNUM <= #{endList}) X
@@ -93,9 +95,23 @@
 	<select id="selectTotalListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM TB_REPORT
+		WHERE REPORT_PROGRESS NOT IN ('Y','N')
 	</select>
 	
 	<update id="updateReportApproval1" parameterType="string">
 		UPDATE TB_REPORT SET REPORT_PROGRESS = 'Y' WHERE REPORT_NO = #{rno}
+	</update>
+	
+	<update id="updateReportApproval2" parameterType="string">
+		UPDATE TB_USER SET REPORT_COUNT = (
+		SELECT REPORT_COUNT
+		FROM TB_USER
+		WHERE USER_ID = #{rid}
+		) +1 
+		WHERE USER_ID = #{rid}
+	</update>
+	
+	<update id="updateReportDisapproval" parameterType="string">
+		UPDATE TB_REPORT SET REPORT_PROGRESS = 'N' WHERE REPORT_NO = #{rno}
 	</update>
 </mapper>

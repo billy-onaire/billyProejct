@@ -94,6 +94,12 @@ public class PaymentController {
 		JSONObject jobj = (JSONObject)obj;
 		logger.info("obj : " + obj.toString());
 		
+		String no = (String)jobj.get("no");
+		int paymentNo = Integer.parseInt(no);
+				
+		int re = payService.updatePaymentUser(paymentNo);
+		logger.info("re : " + String.valueOf(re));
+		
 		JSONObject ob = new JSONObject();
 		ob.put("price", jobj.get("price"));
 		ob.put("name", jobj.get("name"));
@@ -117,9 +123,8 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="bookingPage.do")
-	public ModelAndView bookingPage( Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
+	public ModelAndView bookingPage(Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
 		//예약 영수증
-		
 		int re = payService.insertBookingList(payment);
 		
 		logger.info("re : " + re);
@@ -134,6 +139,10 @@ public class PaymentController {
 		payment = payService.selectBookingUser(payment);
 		logger.info("payment2 : " + payment);
 		
+		//product table quantity업데이트
+		int quantity = payment.getPayment_quantity();
+		logger.info("quantity1 : " + quantity);
+		int result = payService.updateProductQuantity(payment);
 		
 		mav.addObject("payment", payment);
 		mav.setViewName("payment/bookingPage");
@@ -155,6 +164,25 @@ public class PaymentController {
 		
 		return mav;
 	}
+	@RequestMapping(value="cancelBooking.do", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteBookingInfo(@RequestBody String param, Payment payment) throws ParseException {
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		
+		String pno = (String)jobj.get("num");
+		logger.info("param : " + param);
+		int paymentNo = Integer.parseInt(pno); 
+		
+		int re = payService.deleteBookingInfo(paymentNo);
+		payment = payService.selectPaymentListOne(payment);
+		int upre = payService.updateQuantityAfterCancel(payment);
+		logger.info("delete re : " + String.valueOf(re));
+		logger.info("up re : " + String.valueOf(upre));
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	} 
+	
 	@RequestMapping("bookingMsg.do")
 	public void bookingMsg() {
 		

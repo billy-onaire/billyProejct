@@ -105,7 +105,7 @@ public class MemberController {
    public String logoutMethod(HttpServletRequest request) {
       HttpSession session = request.getSession(false);
       if(session != null) {
-         session.invalidate();
+         session.removeAttribute("loginMember");
       }
       return "home";
    }

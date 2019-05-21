@@ -39,7 +39,9 @@ public interface MessageService {
 
 	int updateDelSentMessage(int mms_no);
 
-	int selectUnreadMessage(String userid); 
+	int selectUnreadMessage(String userid);
+
+	ArrayList<MessagePname> selectAlertMessage(String userid); 
 
 
 }

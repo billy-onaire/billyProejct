@@ -1,10 +1,6 @@
 let chosenPage = 1;
 const listCount = 10;
 
-
-
-
-
 function getAdminReportInfo(){
     const xhr = new XMLHttpRequest();
 
@@ -30,20 +26,31 @@ function getAdminReportInfo(){
                 td.textContent = infos[j];
                 tr.appendChild(td);
             }
+            const btd = document.createElement('td');
             const button1 = document.createElement('button');
             button1.textContent = '신고 승인';
-            tr.appendChild(button1);
-            button1.addEventListener('click',()=>{
+            btd.appendChild(button1);
+            button1.addEventListener('click',(e)=>{
+                e.stopPropagation();
                 location.href = "reportApproval.do?rno="+infos.rno+"&rid="+infos.rid;
             })
 
             const button2 = document.createElement('button');
             button2.textContent = '승인 거절';
-            tr.appendChild(button2);
-            button2.addEventListener('click',()=>{
+            btd.appendChild(button2);
+            tr.appendChild(btd);
+            button2.addEventListener('click',(e)=>{
+                e.stopPropagation();
                 location.href = 'reportDisapproval.do?rno='+infos.rno;
             })
-
+            
+            
+                tr.addEventListener('click',()=>{
+                    location.href="pdetail.do?pno="+infos.pno;
+                })
+            
+                
+            
             table.appendChild(tr);
         }
         const pagination = document.querySelector('.pagination');
