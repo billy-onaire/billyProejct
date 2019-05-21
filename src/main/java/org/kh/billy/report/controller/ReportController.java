@@ -29,12 +29,18 @@ import net.sf.json.JSONObject;
 public class ReportController {
 	@Autowired
 	private ReportService rs;
+	@RequestMapping("reportDisapproval.do")
+	public String reportDisapproval(String rno) {
+		int result = rs.updateReportDisapporval(rno);
+		return "report/adminReport";
+	}
+	
 	@RequestMapping("reportApproval.do")
 	public String reportApproval(String rno, String rid) {
 		System.out.println(rno);
 		int result = rs.updateReportApproval1(rno);
 		System.out.println(result);
-		// rs.updateReportApproval2(rid);
+		int result2 = rs.updateReportApproval2(rid);
 		return "report/adminReport";
 	}
 	@RequestMapping("goReportAdmin.do")

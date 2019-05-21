@@ -25,6 +25,8 @@ public interface ReportService {
 
 	int updateReportApproval1(String rno);
 
-	void updateReportApproval2(String rid); 
+	int updateReportApproval2(String rid);
+
+	int updateReportDisapporval(String rno); 
 	
 }

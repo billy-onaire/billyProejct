@@ -82,6 +82,7 @@
 								<th>Product Name</th>
 								<th>Category</th>
 								<th>ID</th>
+								<th>Approval</th>
 								<th width="230">Contents</th>
 							</tr>
 
@@ -101,6 +102,13 @@
 										</c:choose>
 									</td>
 									<td>${r.report_id }</td>
+									<td>
+										<c:choose>
+											<c:when test="${r.report_progress eq 'Y'}">승인 완료</c:when>
+											<c:when test="${r.report_progress }">승인 거부</c:when>
+											<c:when test="${r.report_progress }">승인 대기중</c:when>
+										</c:choose>
+									</td>
 									<td>${r.report_content}</td>
 								</tr>
 							</c:forEach>
@@ -112,6 +120,7 @@
 									<th>Product Name</th>
 									<th>Category</th>
 									<th>ID</th>
+									<th>Approval</th>
 									<th width="230">Contents</th>
 								</tr>
 	
@@ -131,6 +140,13 @@
 											</c:choose>
 										</td>
 										<td>${s.report_id }</td>
+										<td>
+											<c:choose>
+												<c:when test="${r.report_progress }.equals('Y')">승인 완료</c:when>
+												<c:when test="${r.report_progress }.equals('N')">승인 거부</c:when>
+												<c:when test="${r.report_progress }.equals('M')">승인 대기중</c:when>
+											</c:choose>
+										</td>
 										<td>${s.report_content}</td>
 									</tr>
 								</c:forEach>
@@ -147,7 +163,7 @@
 							</ul>
 						</nav>
 					</div>
-					<button onclick="goReportAdmin();">관리자 테스트</button>
+					
 				</div>
 			</div>
 		</div>

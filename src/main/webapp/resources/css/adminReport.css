@@ -1,0 +1,16 @@
+#adminTable tr:not(:first-child) td:last-child{
+    display: flex;
+    justify-content: space-around;
+}
+
+#adminTable:hover tr:not(:first-child){
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#adminTable button {
+    cursor: pointer;
+    background-color: bisque;
+    color: black;
+    font-size: 12px;
+}
