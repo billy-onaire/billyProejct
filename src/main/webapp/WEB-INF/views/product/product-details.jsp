@@ -77,8 +77,14 @@
 	    paging.ajax = ajaxList;
 	    ajaxList();
 	    
-	    //예약페이지이동
-	    
+	    //물품수량 검사
+	    var s = '${ p.product_quantity }';
+	    if(s == '0') {
+	    	alert('현재 물품의 재고가 없습니다!');
+	    	$('#goBooking').prop('disabled', true).css('background-color', 'gray');
+	    } else {
+	    	$('#goBoogking').prop('disabled', false).css('background-color', '');
+	    }
 	});
 	 
 	var ajaxList = function(){    
@@ -511,7 +517,7 @@
 							        	${p.weekday_yn }
 							        </td>
 							    </tr>
-							    <tr>
+							    <tr id='paymentQ'>
 							        <th scope="row">남은수량</th>
 							        <td>${p.product_quantity }</td>
 							    </tr>

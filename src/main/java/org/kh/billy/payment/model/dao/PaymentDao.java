@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository("paymentDao")
 public class PaymentDao {
 	private static final Logger logger = LoggerFactory.getLogger(PaymentDao.class);
+	private static final String mapper = "paymentMapper.";
 
 	public ArrayList<Payment> selectPaymentList(SqlSessionTemplate mybatisSession) {
 		List<Payment> pmList = mybatisSession.selectList("paymentMapper.selectPaymentList");
@@ -62,6 +63,22 @@ public class PaymentDao {
 	public Payment selectPaymentListOne(SqlSessionTemplate mybatisSession, Payment payment) {
 		
 		return mybatisSession.selectOne("paymentMapper.selectPaymentListOne", payment);
+	}
+	public int updatePaymentUser(SqlSessionTemplate mybatisSession, int paymentNo) {
+		
+		return mybatisSession.update(mapper + "updatePaymentUser", paymentNo);
+	}
+	public int updateProductQuantity(SqlSessionTemplate mybatisSession, Payment payment) {
+		
+		return mybatisSession.update(mapper + "updateProductQuantity", payment);
+	}
+	public int deleteBookingInfo(SqlSessionTemplate mybatisSession, int paymentNo) {
+		
+		return mybatisSession.delete(mapper + "deleteBookingInfo", paymentNo);
+	}
+	public int updateQuantityAfterCancel(SqlSessionTemplate mybatisSession, Payment payment) {
+		
+		return mybatisSession.update(mapper + "updateQuantityAfterCancel", payment);
 	}
 	
 	/*public ArrayList<Payment> searchPayment(Payment payment) {}
