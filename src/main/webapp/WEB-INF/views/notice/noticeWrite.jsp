@@ -133,7 +133,7 @@
                                 
                                     <textarea name="notice_content" id="notice_content" rows="10" cols="100"></textarea>
 
-                                  <!-- <textarea id="summernote" name="editordata"></textarea> -->
+                                  <textarea id="summernote" name="editordata"></textarea>
                                   <button class="btn btn-primary" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
                                   <!-- <button type="submit" class="btn btn-primary pull-right" onclick="return confirm('정말로 등록하시겠습니까?')">등록</button> -->
                                   <button  class="btn btn-primary pull-right" onclick="submitContents();">등록</button>
@@ -173,10 +173,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
         <script type="text/javascript" src="/billy/resources/js/summernote-ko-KR.js"></script>
         <!-- naver smart editor js-->
-        <script type="text/javascript" src="/billy/resources/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/billy/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
-       
-        <!-- <script type="text/javascript">
+        <!-- 파일 첨부 시 이름 미리 보여지기 -->
+        <script type="text/javascript">           
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function() {
+              var fileName = $(this).val().split("\\").pop();
+              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });                
+        </script>
+        <script type="text/javascript">
            $('#summernote').summernote({
             placeholder: 'Hello bootstrap 4',
             tabsize: 2,
@@ -184,8 +191,9 @@
             placeholder: '내용을 작성하세요.',
             lang: 'ko-KR',
             
-          });           
-        </script> -->
+          });
+           //$('#summernote').summernote('focus');
+        </script>
         <!-- 네이버 스마트 에디터 -->
         <script type="text/javascript">
             
@@ -193,7 +201,7 @@
             nhn.husky.EZCreator.createInIFrame({
              oAppRef: oEditors,
              elPlaceHolder: "notice_content",
-             sSkinURI: "/billy/resources/SE2/SmartEditor2Skin.html",
+             sSkinURI: "/billy/resources/se2/SmartEditor2Skin.html",
              fCreator: "createSEditor2"
             });
             
@@ -205,7 +213,6 @@
                     $('#noticefrm').submit();
                 } catch(e) {}
             }
-            
 
         </script>
         <script type="text/javascript">
