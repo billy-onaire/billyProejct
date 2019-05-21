@@ -9,4 +9,10 @@ public interface AdminProductService {
 	
 	List<Product> selectProductList(ReviewPaging paging);
 	int selectTotalProductList();
+	int deleteProduct(int pNo);
+	int restoreProduct(int pNo);
+	List<Product> selectNormalProductList(ReviewPaging paging);
+	int selectTotalNormalProductList();
+	List<Product> selectDeleteProductList(ReviewPaging paging);
+	int selectTotalDeleteProductList();
 }

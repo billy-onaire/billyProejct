@@ -27,6 +27,17 @@
 	<!-- <link rel="stylesheet" href="/billy/resources/css/reviewpaging-theme.min.css"> -->
 	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
 
+
+	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+   		/* if($("#check").val() == "all"){
+   			$("#frmPaging").attr("action", "adminProductList.do");
+   		} */
+   	});
+
+	</script>
+	
 	<style type="text/css">
 		table.type06 {
 		    border-collapse: collapse;
@@ -38,13 +49,13 @@
 		}
 		table.type06 th {
 		    /* width: 150px; */
-		    width: 250px;
+		    width: 150px;
 		    padding: 10px;
 		    font-weight: bold;
 		    vertical-align: center;
 		}
 		table.type06 td {
-		    width: 300px;
+		    width: 250px;
 		    padding: 10px;
 		    vertical-align: center;
 		}
@@ -80,11 +91,10 @@
 	<c:import url="../common/adminNav.jsp" />
 	  
 		<div>
-		<select id='listCount' name='listCount' onchange='listCnt();'>
-			<option value='5' >5</option>
-			<option value='10'>10</option>
-			<option value='15'>15</option>
-			<option value='20'>20</option>
+		<select id='listPrint' name='listPrint' onchange='listPrint();'>
+			<option value='all' >전체보기</option>
+			<option value='normal'>정상 보기</option>
+			<option value='del'>삭제 보기</option>
 		</select><br>
 		<table class="type06">
 	    	<tr>
@@ -92,12 +102,13 @@
 		        <th class="even">제품명</th>
 		        <th class="even">대여자</th>
 		        <th class="even">상태</th>
-		        <th class="even"><button>전체선택</button></th>
+		        <th class="even">삭제</th>
+		        <th class="even">복구</th>
 		    </tr>
 		    <c:forEach var="r" items="${list}">
 				<tr>
 					<td>${r.product_no }</td>
-					<td>${r.product_name}</td>
+					<td><a href="pdetail.do?pno=${r.product_no }" style="font-size:15pt; font-weight:bold">${r.product_name}</a></td>
 					<td>${r.seller_id }</td>
 					<td>
 						<c:if test="${r.delete_yn eq 'N'}">
@@ -107,7 +118,8 @@
 							비활성
 						</c:if>
 					</td>
-					<td><input type="checkbox"></td>
+					<td><a href="delProduct.do?pno=${r.product_no }&type=${type}"><button>삭제</button></a></td>
+					<td><a href="reProduct.do?pno=${r.product_no }&type=${type}"><button>복구</button></a></td>
 				</tr>						
 			</c:forEach>
 		</table>
@@ -135,11 +147,13 @@
 			</c:if>
 		</ul>
 		</center>
-		<form action="adminProduct.do" method="post" id='frmPaging'>
+		<form method="post" id='frmPaging'>
 			<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
 			<input type='hidden' name='index' id='index' value='${p.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${p.pageStartNum}'>
 			<input type='hidden' name='listCnt' id='listCnt' value='${p.listCnt}'>	
+			<!-- 페이지 출력 형식 체크(전체, 정상, 삭제) -->
+			<input type="hidden" name="check" id="check" value="${type }">
 		</form>
         </div>
         
@@ -152,8 +166,33 @@
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- 체크박스 자바스크립트 -->
+    <script type="text/javascript">
+    function allCheck() {
+	      if($(":checkbox").prop("checked")==false){
+	         $(":checkbox").prop("checked",true);
+	      }else{
+	         $(":checkbox").prop("checked",false);
+	      }
+	}
+    </script>
     <!-- Popper js -->
     <script src="/billy/resources/js/popper.min.js"></script>
+    <!-- 출력 형태 스크립트 -->
+    <script type="text/javascript">
+   	function listPrint() {
+   		if($("#listPrint option:selected").val() == "all"){
+   			location.href = "adminProductList.do";
+   		}
+   		if($("#listPrint option:selected").val() == "normal"){
+   			location.href = "normalProductList.do";
+   		}
+   		if($("#listPrint option:selected").val() == "del"){
+   			location.href = "delProductList.do";
+   		}
+   	}
+   	
+    </script>
     <!-- Bootstrap js -->
     <script src="/billy/resources/js/bootstrap.min.js"></script>
     <!-- Plugins js -->
