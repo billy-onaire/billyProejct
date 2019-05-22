@@ -28,18 +28,6 @@
         <div class="search-close">
             <i class="fa fa-close" aria-hidden="true"></i>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- Search Wrapper Area End -->
     <!-- ##### Main Content Wrapper Start ##### -->
@@ -100,13 +88,16 @@
                     <div class="col-12">
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
-                            <!-- <div class="total-products">
-                                <p>Showing 1-8 0f 25</p>
+                            <div class="total-products">
+                                <p>Search</p>
                                 <div class="view d-flex">
-                                    <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                                    <div>
+                                        <i class="fa fa-search" aria-hidden="true">&nbsp;</i>
+                                        <input type="search" name="" id="product-search-input" onkeydown="JavaScript:Enter_Check();">
+                                        <button type="submit" id="product-search-btn">SEARCH</button>
+                                    </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <!-- Sorting -->
                             <div class="product-sorting d-flex">
                                 <div class="sort-by-date d-flex align-items-center mr-15">
@@ -131,6 +122,7 @@
                                         </select>
                                     </form>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

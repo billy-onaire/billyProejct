@@ -33,7 +33,7 @@
 $(document).ready(function(){
 	var userid = "${loginMember.user_id}"
 	//alert(userid)
-	alert(userid);
+	// alert(userid);
 	$.ajax({
 		type: "POST",
 		url: "alert.do",

@@ -54,10 +54,19 @@
 		WHERE CATEGORY_CODE = 0
 		</otherwise>
 	</choose>
-	<![CDATA[	
+	<![CDATA[
 		AND PRICE >= #{minPrice}
 		AND PRICE <= #{maxPrice}
-		AND DELETE_YN = 'N'		
+	]]>
+		AND DELETE_YN = 'N'
+		AND SYSDATE BETWEEN P.PRODUCT_STARTDATE AND P.PRODUCT_ENDDATE
+	<choose>
+		<when test="keyword.length != 0">
+		AND PRODUCT_NAME LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%'
+		</when>
+	</choose>
+	<![CDATA[	
+				
 								GROUP BY  P.PRODUCT_NO, PRODUCT_NAME, PRICE, FIRST_IMG, PRODUCT_DATE
 								ORDER BY ${sort} ) S
 	  				WHERE ROWNUM <= #{endList}) X
@@ -83,7 +92,13 @@
 		AND PRICE >= #{minPrice}
 		AND PRICE <= #{maxPrice}		
 	]]>
-		AND DELETE_YN = 'N'	
+		AND DELETE_YN = 'N'
+		AND SYSDATE BETWEEN PRODUCT_STARTDATE AND PRODUCT_ENDDATE
+		<choose>
+			<when test="keyword.length != 0">
+		AND PRODUCT_NAME LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%'
+			</when>
+	</choose>	
 	</select>
 
 
