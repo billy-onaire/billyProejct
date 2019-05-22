@@ -60,32 +60,54 @@ $(function(){
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
-	new Morris.Bar({
-		element: 'login-chart',
-		data: [
-			{x: '2011', y: 2},
-		    {x: '2011', y: 4},
-		    {x: '2011', y: 3},
-		    {x: '2011', y: 2},
-		    {x: '2012', y: 1},
-		    {x: '2012', y: 7},
-		    {x: '2012 ', y: 8},
-		    {x: '2012 ', y: 6},
-		    {x: '2013 ', y: 5}
-		],
-		xkey: 'x',
-		  ykeys: ['y'],
-		  labels: ['Y'],
-		  barColors: function (row, series, type) {
-		    if (type === 'bar') {
-		      var red = Math.ceil(255 * row.y / this.ymax);
-		      return 'rgb(' + red + ',0,0)';
-		    }
-		    else {
-		      return '#000';
-		    }
-		  }
-	});
+	$(function(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1;
+		var yyyy = today.getFullYear();
+		if(dd<10){
+			dd='0'+dd
+		}
+		if(mm<10){
+			mm='0'+mm
+		}
+		today = yyyy+'/'+mm+'/'+dd;
+		console.log(today);
+		$.ajax({
+			url: "loginVisit.do",
+			data: {today : today},
+			type: "post",
+			dataType: "json",
+			success: function(result){
+				
+			},error: function(request, status, errorData){
+				console.log("error code : " + request.status
+						+ "\nmessage : " + request.responseText
+						+ "\nerror : " + errorData);
+			}
+		});//ajax
+		new Morris.Bar({
+			element: 'login-chart',
+			data: [
+				{x: '2011', y: 2, z:3},
+			    {x: '2011', y: 200, z:100},
+			    {x: '2011', y: 3, z: 150},
+			    {x: '2011', y: 2, z: 300},
+			],
+			xkey: 'x',
+			  ykeys: ['y', 'z'],
+			  labels: ['Y', 'Z'],
+			  barColors: function (row, series, type) {
+			    if (type === 'bar') {
+			      var red = Math.ceil(255 * row.y / this.ymax);
+			      return 'rgb(' + red + ',0,0)';
+			    }
+			    else {
+			      return '#000';
+			    }
+			  }
+		});
+	});//ready
 	</script>
 	<!-- Popper js -->
 	<script src="/billy/resources/js/popper.min.js"></script>
