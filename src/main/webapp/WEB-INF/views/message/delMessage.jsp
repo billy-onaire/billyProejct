@@ -69,8 +69,6 @@ $(document).ready(function(){
             <div class="container-fluid" style="padding-left: 40px;">
                 <div class="row">
                     <div class="col-12">
-                    <!-- 쪽지 보내기 팝업창 연습 -->
-                    	<a href="#" onclick="javascript:insertPopup();">쪽지보내기</a>
                         <div class="view d-flex">
                              <button class="tablinks" onclick="location.href='recvList.do'">받은쪽지함</button>
                              <button class="tablinks" onclick="location.href='sentList.do'">보낸쪽지함</button>
@@ -85,8 +83,8 @@ $(document).ready(function(){
                     <div class="container-fluid" style="padding-left: 40px;">    <!-- amado_product_area에서 컨테이너검색 -->
                         <div class="cart-table clearfix" >                         
                             <div id="tab3" class="tabcontent" >
-                                <table class="table table-responsive">
-                                    <thead style="text-align: center;">
+                                <table class="table table-striped table-hover">
+                                    <thead style="text-align:">
                                         <tr>
                                             <th>받은 사람/<br>보낸 사람</th>
                                             <th>상품명</th>                                            
