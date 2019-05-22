@@ -15,31 +15,34 @@
 
 <script>
 var socket = null;
-/* $(document).ready(function(){
+ $(document).ready(function(){
 	connectWS();
-}); */
+}); 
 
 function connectWS(){
-	//var wsUri = "ws://localhost:8888/billy/mmsSocket.do";
-	var ws = new WebSocket("ws://localhost:8888/billy/mmsSocket.do");
+	var wsUri = "ws://localhost:8888/billy/mmsSocket.do";
+	var ws = new WebSocket("wsUri");
 	socket = ws;
 	
 	ws.onopen = function () {
 	    console.log('Info: connection opened.');
 	    
+	    ws.onmessage = function (event) {
+		    console.log("ReceiveMessage : ", evt.data+'\n');
+		};
+	    
 	};
-
-
-	ws.onmessage = function (event) {
-	    console.log("ReceiveMessage : ", evt.data+'\n');
-	};
-
-
+	
 	ws.onclose = function (event) { 
 		console.log('Info: connection closed.'); 
 		/* setTimeout( function(){ connect(); }, 1000); // retry connection!! */
 	};
 	ws.onerror = function (err) { console.log('Error :', err); };
+	
+	ws.onopen = function () {
+	    console.log('Info: connection opened.');
+	    
+	};
 	
 }
 
@@ -68,15 +71,7 @@ $('#btnSend').on('click', function(event) {
 		        complete: setTimeout(function() { poll(); }, 6000)
 		    })
 		})(); */
-		
-		 $.ajax({
-		      dataType : 'jsonp',
-		      jsonpCallback: "callback",
-		      url: "https://code.jquery.com/jquery-latest.min.js",
-		      success: function(data) {
-		        console.log(data);
-		      }
-		    });		
+
 </script>
 
 </head>

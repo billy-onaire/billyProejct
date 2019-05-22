@@ -92,13 +92,13 @@
 
 	<!-- 웹소켓 -->
 	<websocket:handlers>
-        <websocket:mapping path="/mmsSocket.do" handler="myHandler"/>
+        <websocket:mapping path="/mmsSocket.do" handler="replyEchochoHandler"/>
         <websocket:handshake-interceptors>
       		<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
  		</websocket:handshake-interceptors>
         
     </websocket:handlers>
-    <bean id="myHandler" class="org.kh.billy.websocket.ReplyEchoHandler"/>
+    <bean id="replyEchochoHandler" class="org.kh.billy.websocket.ReplyEchoHandler"/>
 
 
 
