@@ -18,7 +18,7 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     
-  $(function () {
+ /*  $(function () {
       showDiv();
 
       $("input[name=item]").on("change", function () {
@@ -36,7 +36,7 @@
         $("#findId").css("display", "none");
         $("#findPwd").css("display", "block");
       }
-    }
+    } */
 
 //아이디 찾기
  $(function() {   
@@ -146,81 +146,74 @@
 </head>
 
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">
-				<div style="margin-top: 15px">
-					<div class="form-check-inline">
-						<label class="form-check-label"> <input type="radio"
-							class="form-check-input" name="item" value="findId" checked>
-							아이디 찾기
-						</label>
-					</div>
-					<div class="form-check-inline">
-						<label class="form-check-label"> <input type="radio"
-							class="form-check-input" name="item" value="findPwd">
-							비밀번호 찾기
-						</label>
-					</div>
-					<br>
-					<br>
-				</div>
-				<!-- 아이디 찾기  -->
-				<div id="findIdd">
-						<div class="form-group">
-							<label for="uname">Username:</label> <input type="text"
-								class="form-control" id="user_name" placeholder="Enter username"
-								name="user_name" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
-					
-						<div class="form-group">
-							<label for="phone">Phone:</label> <input type="text"
-								class="form-control" id="phone"
-								placeholder="Enter phone number" name="phone" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
-						<p><div id="d3"></div></p>
-						<button type="submit" class="btn btn-warning btn-block"
-							id="findId" style="color: white">확인</button>
-				</div>
-				<!-- 비밀번호 찾기  -->
-				<div id="findPwd">
-						<div class="form-group">
-							<label for="puserId">UserId :</label> <input type="text"
-								class="form-control" id="puserId" placeholder="Enter username"
-								name="user_id" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
-						<div class="form-group">
-							<label for="pphone">phone : </label> <input type="text"
-								class="form-control" id="pphone"
-								placeholder="Enter phone number" name="user_moblie" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
-							<button type="button" class="btn btn-dark" onclick="sendSms();">인증요청</button>
-						<div class="form-group">
-							<label for="phoneAuth">인증번호:</label> <input type="text"
-								class="form-control" id="phoneAuth"
-								name="authno" required>
-							<div class="valid-feedback">Valid.</div>
-							<div class="invalid-feedback">Please fill out this field.</div>
-						</div>
-						<input type="hidden" id="userId" name="user_id" >
-						<br> <br> <span id="pwdList"></span>
-						<button type="submit" class="btn btn-warning btn-block"
-							id="findpwd" style="color: white">확인</button>
-				</div>
+	 <div class="tab-content"> 
+	 
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item"><a class="nav-link active"
+				data-toggle="tab" href="#findIdd">아이디 찾기</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+				href="#findPwd">비밀번호 찾기</a></li>
+		</ul>
 
+
+		<!-- 아이디 찾기  -->
+		<div id="findIdd" class="container tab-pane active">
+			<div class="form-group"><br>
+				<label for="uname">Username:</label> <input type="text"
+					class="form-control" id="user_name" placeholder="Enter username"
+					name="user_name" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
 			</div>
+
+			<div class="form-group">
+				<label for="phone">Phone:</label> <input type="text"
+					class="form-control" id="phone" placeholder="Enter phone number"
+					name="phone" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<p>
+			<div id="d3"></div>
+			</p>
+			<button type="submit" class="btn btn-warning btn-block" id="findId"
+				style="color: white">확인</button>
 		</div>
+		<!-- 비밀번호 찾기  -->
+		<div id="findPwd" class="container tab-pane fade">
+			<div class="form-group"><br>
+				<label for="puserId">UserId :</label> <input type="text"
+					class="form-control" id="puserId" placeholder="Enter username"
+					name="user_id" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="pphone">phone : </label> <input type="text"
+					class="form-control" id="pphone" placeholder="Enter phone number"
+					name="user_moblie" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<button type="button" class="btn btn-dark" onclick="sendSms();">인증요청</button>
+			<div class="form-group">
+				<label for="phoneAuth">인증번호:</label> <input type="text"
+					class="form-control" id="phoneAuth" name="authno" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<input type="hidden" id="userId" name="user_id"> <br> <br>
+			<span id="pwdList"></span>
+			<button type="submit" class="btn btn-warning btn-block" id="findpwd"
+				style="color: white">확인</button>
+		</div>
+
 	</div>
-	
-	
+	</div>
+	</div>
+
+
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<!-- Popper js -->

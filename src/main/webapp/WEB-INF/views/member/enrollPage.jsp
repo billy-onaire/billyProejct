@@ -27,7 +27,7 @@ $(function(){
    	 
     	if(id.length > 12){
     		e.preventDefault();
-    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
+    		alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
             $(this).focus();
        } 
@@ -45,22 +45,29 @@ $(function(){
     
    	 $("#user_pwd").on('keydown', function(e){
    		var pwd = $('#user_pwd').val();
-   	 
+   	 	var uid = $('#user_id').val();
     	if(pwd.length > 20){
     		e.preventDefault();
     		alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
             $(this).focus();
        } 
-    	
+    	 	
    	}).on('blur', function(){
    		if($(this).val() == '') return;
    		var pwd = $('#user_pwd').val();
+   		var uid = $('#user_id').val();
    		if(pwd.length < 4){
    			alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
             $(this).focus();	
    		}
+   		
+   		if(pwd == uid){
+    		alert("아이디와 동일한 비밀번호는 지정할 수 없습니다.")
+    		$(this).val("");
+            $(this).focus();
+		}
    	});
    	 
    	
@@ -139,7 +146,10 @@ $(function(){
   });  
 });
 
+var idck = 0;
+
 $(function() {
+
     //idck 버튼을 클릭했을 때 
     $("#idck").click(function() {
         
@@ -168,6 +178,7 @@ $(function() {
                 	 
                 	$(".result").text("사용가능한 아이디입니다.");
                     $(".result").attr("style", "color:#00f");
+                    idck = 1;
 
                 }
             },
@@ -179,11 +190,29 @@ $(function() {
     });
     
     $("#register").click(function() {
-    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");
     	
+    	if(idck == 0){
+	    	alert('아이디 중복체크를 해주세요');
+	    	$("#user_id").focus();
+	    	return false;
+	    	
+		}else{
+	    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");	
+		}
+    	 
+    
+});
+    //처음에 아이디체크 버튼 누를때 느려서 만든거
+    $.ajax({
+    	url : "idCheck.do",
+        type : "post",
+        dataType: "json",
+        data : {userId : $("#user_id").val()},
+        
     });
     
 });
+
 </script>
 
 
@@ -272,7 +301,7 @@ a {
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-		<form action="joinPost.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+		<form action="joinPost.do" id="join" name = "join" method="post" enctype="multipart/form-data">
 				<h1>회원가입</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
@@ -280,7 +309,7 @@ a {
 					<div class="input-group mb-3">					
 					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
 						<div class="input-group-append">
-						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
+						<button id="idck" class="btn btn-dark btn-sm" type="button">아이디 중복체크</button>
 						</div>
 					</div>
 					<p class="result"></p>
@@ -383,13 +412,9 @@ a {
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 
 				<hr>
-				<p>
-					By creating an account you agree to our <a href="#">Terms &
-						Privacy</a>.
-				</p>
 
 				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange">등록하기</button>
+					style="background-color: orange" onclick="validate();">등록하기</button>
 		</form>
 		</div>
 		</div>
