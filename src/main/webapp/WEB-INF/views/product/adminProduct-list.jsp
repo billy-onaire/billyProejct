@@ -27,14 +27,19 @@
 	<!-- <link rel="stylesheet" href="/billy/resources/css/reviewpaging-theme.min.css"> -->
 	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
 
+	<!-- 검색관련 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
-	$(function(){
-   		/* if($("#check").val() == "all"){
-   			$("#frmPaging").attr("action", "adminProductList.do");
-   		} */
-   	});
+	/* $(function(){
+   		if("${type}" == "all"){
+   			alert("hi");
+   			$("#listPrint").val("del").prop("selected", "selected");
+   			//$("#listPrint option[value='del']").prop("selected", true);    			
+   		} 
+   	}); */
 
 	</script>
 	
@@ -63,6 +68,44 @@
 		    /* background: #efefef; */
 		    background: #ffe2b8;
 		}
+		
+		/* 검색관련 CSS */
+		* {
+		  box-sizing: border-box;
+		}
+		
+		form.example input[type=text] {
+		  padding: 10px;
+		  font-size: 17px;
+		  border: 1px solid grey;
+		  float: left;
+		  width: 80%;
+		  /* background: #f1f1f1; */
+		}
+		
+		form.example button {
+		  float: left;
+		  width: 20%;
+		  padding: 10px;
+		  background: #FF9F00;
+		  color: white;
+		  font-size: 17px;
+		  border: 1px solid grey;
+		  border-left: none;
+		  cursor: pointer;
+		}
+		
+		form.example button:hover {
+		  background: #0b7dda;
+		}
+		
+	/* 	form.example::after {
+		  content: "";
+		  clear: both;
+		  display: table;
+		} */
+		
+		
 	</style>
 </head>
 
@@ -112,10 +155,10 @@
 					<td>${r.seller_id }</td>
 					<td>
 						<c:if test="${r.delete_yn eq 'N'}">
-							활성
+							정상
 						</c:if>
 						<c:if test="${r.delete_yn eq 'Y'}">
-							비활성
+							삭제
 						</c:if>
 					</td>
 					<td><a href="delProduct.do?pno=${r.product_no }&type=${type}"><button>삭제</button></a></td>
@@ -152,9 +195,20 @@
 			<input type='hidden' name='index' id='index' value='${p.index}'>
 			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${p.pageStartNum}'>
 			<input type='hidden' name='listCnt' id='listCnt' value='${p.listCnt}'>	
-			<!-- 페이지 출력 형식 체크(전체, 정상, 삭제) -->
-			<input type="hidden" name="check" id="check" value="${type }">
 		</form>
+		
+		<form class="example" action="searchTitleProductList.do" style="margin:auto;max-width:300px">
+			<select id='searchType' name='searchType'>			
+				<option value='pName' >제품명</option>
+				<option value='userId'>유저ID</option>
+				<option value='pNo'>제품번호</option>
+			</select>
+				
+		  <input type="text" placeholder="Search.." name="search">
+		  <button type="submit"><i class="fa fa-search"></i></button>	  
+		  <!-- 페이지 출력 형식 체크(전체, 정상, 삭제) -->
+		  <input type="hidden" name="check" id="check" value="${type }">
+		</form> 
         </div>
         
     </div>
@@ -166,16 +220,7 @@
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- 체크박스 자바스크립트 -->
-    <script type="text/javascript">
-    function allCheck() {
-	      if($(":checkbox").prop("checked")==false){
-	         $(":checkbox").prop("checked",true);
-	      }else{
-	         $(":checkbox").prop("checked",false);
-	      }
-	}
-    </script>
+  
     <!-- Popper js -->
     <script src="/billy/resources/js/popper.min.js"></script>
     <!-- 출력 형태 스크립트 -->
@@ -192,6 +237,15 @@
    		}
    	}
    	
+   	if("${type}" == "all"){
+   		$("#listPrint").val("all").prop("selected", "selected");
+   	}
+   	if("${type}" == "normal"){
+   		$("#listPrint").val("normal").prop("selected", "selected");
+   	}
+   	if("${type}" == "del"){
+   		$("#listPrint").val("del").prop("selected", "selected");
+   	}   	
     </script>
     <!-- Bootstrap js -->
     <script src="/billy/resources/js/bootstrap.min.js"></script>
