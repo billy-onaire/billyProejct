@@ -157,6 +157,13 @@
    		update tb_user set delete_yn = 'N' where user_id = #{user_id}
    </update>
    
+   <update id="updateSocialMember" parameterType="Member" >
+      update tb_user 
+      set user_mobile = #{user_mobile}, user_name = #{user_name}, 
+      email = #{email}, address = #{address}, my_introduce = #{my_introduce}, 
+      location_area = #{location_area}, user_update = sysdate where user_id = #{user_id}
+   </update>
+   
    <!-- 신고횟수가 3회이면 우선 탈퇴시킴 delete_yn => Y로 바꿈 (정지) -->
    <delete id="deleteMember" parameterType="string" >
       update tb_user set delete_yn = 'Y' where user_id = #{user_id}

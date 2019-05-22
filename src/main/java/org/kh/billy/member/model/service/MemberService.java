@@ -33,4 +33,5 @@ public interface MemberService {
 		ArrayList<Member> selectSearchMemberList(BasePage bPage, String search, String select);
 		int updateBackMember(String userId);
 		String selectDeleteUser(String userId);
+		int updateSocialMember(Member member);
 }

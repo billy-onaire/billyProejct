@@ -101,6 +101,7 @@ $(function(){
   });  
 });
 
+var idck = 0;
 $(function(){
 	$("#idck").click(function() {
         console.log("에이작스 먹나요?");
@@ -129,7 +130,7 @@ $(function(){
                 	 
                 	$(".result").text("사용가능한 아이디입니다.");
                     $(".result").attr("style", "color:#00f");
-
+                    idck = 1;
                 }
             },
             error : function(error) {
@@ -137,8 +138,26 @@ $(function(){
                 alert("error : " + error);
             }
         });
-   	  
 	});
+
+		$("#register").click(function() {
+    	
+    	if(idck == 0){
+	    	alert('아이디 중복체크를 해주세요');
+	    	$("#user_id").focus();
+	    	return false;}
+	    
+		});	   	
+    //처음에 아이디체크 버튼 누를때 느려서 만든거
+        $.ajax({
+        	url : "idCheck.do",
+            type : "post",
+            dataType: "json",
+            data : {userId : $("#user_id").val()},
+            
+        });
+    	
+		
 });
 </script>
 
@@ -339,7 +358,7 @@ a {
 			                });
 			            }
 			        }).open();
-			    }
+			    };
 				</script>
 				
 					<label for="my_introduce"><b>본인소개</b></label>
@@ -350,7 +369,7 @@ a {
 					By creating an account you agree to our <a href="#">Terms &
 						Privacy</a>.
 				</p>
-				<button type="submit" class="registerbtn"
+				<button type="submit" id="register"  class="registerbtn"
 					style="background-color: orange">등록하기</button>
 		</form>
 		</div>

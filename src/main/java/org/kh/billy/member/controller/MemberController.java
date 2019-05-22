@@ -129,7 +129,7 @@ public class MemberController {
 			   
 			   return "home";
 		   }else {
-			   model.addAttribute("message", "로그인 실패");
+			   model.addAttribute("message", "아이디와 비밀번호를 다시 확인해주세요.");
 			   return "member/memberError";
 		   }
 	   }else{
@@ -170,18 +170,39 @@ public class MemberController {
    }
    
    @RequestMapping(value="mupdate.do", method=RequestMethod.POST)
-	public String updateMember(Member member, Model model) {
+	public String updateMember(Member member, Model model, HttpServletRequest request, 
+			SessionStatus status, HttpSession session) {
 	   	member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
   
 		int result = memberService.updateMember(member);
+		Member user = memberService.selectCheckId(member.getUser_id());
+		
 		if(result > 0) {
+			user.setSocial_type("user");
+			session.setAttribute("loginMember", user);
+			status.setComplete();
 			return "home";
 		}else {
 			model.addAttribute("message", "회원정보 수정 실패!");
 			return "member/login";
 		}
+		
+		
 	}
 	
+   @RequestMapping(value="smupdate.do", method=RequestMethod.POST)
+     public String updateSocialMember(Member member, Model model, HttpServletRequest request) {
+
+  	   int result = memberService.updateSocialMember(member);
+  		   
+  	   if(result > 0) {
+  			return "home";
+  		}else {
+  			model.addAttribute("message", "회원정보 수정 실패!");
+  			return "member/login";
+  		}
+  	}
+
    @RequestMapping(value="mdelete.do")
    public String deleteMember(Member member, HttpServletRequest request, Model model) {
       return "member/memberManagementPage";
