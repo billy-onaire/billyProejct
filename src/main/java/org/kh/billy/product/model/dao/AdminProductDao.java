@@ -1,6 +1,7 @@
 package org.kh.billy.product.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.review.model.vo.ReviewPaging;
@@ -44,6 +45,14 @@ public class AdminProductDao {
 
 	public int selectTotalDeleteProductList() {
 		return session.selectOne("adminProductMapper.selectTotalDeleteProductList");
+	}
+
+	public List<Product> selectSearchProductList(Map<String, Object> map) {
+		return session.selectList("adminProductMapper.selectSearchProductList", map);
+	}
+
+	public int selectTotalSearchProductList(Map<String, Object> map) {
+		return session.selectOne("adminProductMapper.selectTotalSearchProductList", map);
 	}
 
 }
