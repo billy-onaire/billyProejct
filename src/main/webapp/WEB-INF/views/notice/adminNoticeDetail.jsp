@@ -95,8 +95,11 @@
                             <div class="product-meta-data">
                                 <div class="line"></div>
                                 <p class="product-price">공지사항</p>
+            
                             </div>
+                            
                             <br><br><br><br>
+                                                     
                            <div class="container">
                                 <div style="width:100%; ">
                                     <ul class="list-group">               
@@ -114,7 +117,6 @@
                                         <c:if test="${!empty notice.notice_renamefile }">
                                         <li class="list-group-item list-group-item" style="">
                                              <div class="notice-filedown" style="">
-                                            
                                             <i class="material-icons">
                                                 attach_file
                                             </i>
@@ -127,7 +129,6 @@
                                             <div class="notice-file" style="width: 70%; float: left; line-height: 0px;"><h2>${notice.notice_title }</h2>
                                                  <div><span  style="font-size: 13px; color: #ccc;">${notice.notice_date}</span>
                                                 </div> 
-
                                             </div>
                                             <div class="notice-eye" style="width: 30%; float: left;">
                                                  <i class="material-icons" >
@@ -142,7 +143,8 @@
                                             <div class="notice-content" style="width: 100%; float: left;"><p>${notice.notice_content }</p></div>
                                         </li>
                                     </ul>
-                                    <button class="btn btn-warning" onclick="gonoticelist()">목록</button>
+                                    <button class="btn btn-warning" onclick="location.href='adminnoticelist.do'">목록</button>
+                                    <button class="btn btn-warning" onclick="location.href='noticeupdateview.do?notice_no=${notice.notice_no}'">수정</button>
                                 </div>
                            </div>
                         </div> 
@@ -169,9 +171,6 @@
         <script src="/billy/resources/js/bootstrap.min.js"></script>
         <!-- Plugins js -->
         <script src="/billy/resources/js/plugins.js"></script>
-        <!-- summernote js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-        <script type="text/javascript" src="/billy/resources/js/summernote-ko-KR.js"></script>
         <!-- naver smart editor js-->
         <script type="text/javascript" src="/billy/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
@@ -183,24 +182,5 @@
               $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });                
         </script>
-        <script type="text/javascript">
-           $('#summernote').summernote({
-            placeholder: 'Hello bootstrap 4',
-            tabsize: 2,
-            height: 100,
-            placeholder: '내용을 작성하세요.',
-            lang: 'ko-KR',
-            
-          });
-           //$('#summernote').summernote('focus');
-        </script>
-        <!-- 네이버 스마트 에디터 -->
-       
-        <script type="text/javascript">
-            function gonoticelist(){
-                location.href="noticelist.do";
-            }
-        </script>
         </body>
-
 </html>

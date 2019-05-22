@@ -45,7 +45,7 @@
 		<div class="mobile-nav">
 			<!-- Navbar Brand -->
 			<div class="amado-navbar-brand">
-				<a href="index.html"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
+				<a href="amain.do"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
 			</div>
 			<!-- Navbar Toggler -->
 			<div class="amado-navbar-toggler">
@@ -61,7 +61,7 @@
 			</div>
 			<!-- Logo -->
 			<div class="logo">
-				<a href="main.do" class="billya"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
+				<a href="amain.do" class="billya"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
 			</div>
 			<!-- Cart Menu -->
 			<c:if test="${empty loginAdmin}">
@@ -81,7 +81,7 @@
 			<nav class="amado-nav">
 				<ul>
 					<li class="active"><a href="amain.do" >Home</a></li>
-					<li><a href="#" >Notice</a></li>
+					<li><a href="adminnoticelist.do" >Notice</a></li>
 					<li><a href="adminProductList.do" >제품게시글관리</a></li>
 					<li><a href="goReportAdmin.do" >신고관리</a></li>
 					<li><a href="#" >About us</a></li>

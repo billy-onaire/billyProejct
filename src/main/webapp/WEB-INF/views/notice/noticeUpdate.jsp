@@ -19,41 +19,38 @@
 	
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-    <!-- include summernote css/js-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-    <!-- <link href="/billy/resources/css/summernote-bs4.css" rel="stylesheet"> -->
-    <style>
-    /*.line{
-        width: 80px;
-    height: 3px;
-    background-color: #fbb710;
-    margin-bottom: 15px;
-    display: block;
-    }
-    .product-price{
-    font-size: 24px;
-    font-weight: 400;
-    color: #fbb710;
-    line-height: 1;
-    margin-bottom: 10px;
-    }
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
-    .center {
-      margin: auto;
-      width: 90%;
-      
-      padding: 10px;
-    }
-    .centertwo {
-      margin: auto;
-      width: 60%;
-      
-      padding: 10px;
-    }*/
-    .main-content-wrapper{
-        z-index: 1050;
-    }
-    </style>
+    <style type="text/css">
+        .material-icons {
+         font-family: 'Material Icons';
+         font-weight: normal;
+         font-style: normal;
+         font-size: 17px;  /* Preferred icon size 기본 사이즈 24px*/ 
+         display: inline-block;
+         line-height: 0;
+         text-transform: none;
+         letter-spacing: normal;
+         word-wrap: normal;
+         white-space: nowrap;
+         direction: ltr;                                                      
+
+         /* Support for all WebKit browsers. */
+         -webkit-font-smoothing: antialiased;
+         /* Support for Safari and Chrome. */
+         text-rendering: optimizeLegibility;
+
+         /* Support for Firefox. */
+         -moz-osx-font-smoothing: grayscale;
+
+         /* Support for IE. */
+         font-feature-settings: 'liga';
+     }
+.btn-warning{
+        color: white;
+     }
+
+ </style>
 </head>
 
 <body>
@@ -102,31 +99,33 @@
                             <br><br><br><br>
                                                      
                            <div class="container">
-                                <!-- <div class="row">
-                                    <div class="col-sm-10">
-                                      One of three columns
-                                    </div>
-                                    <div class="col-sm-2">
-                                      One of three columns
-                                    </div>
-                                    <div class="col-sm">
-                                      One of three columns
-                                    </div>
-                                </div> -->
-
-                                <h2>공지사항 글 쓰기</h2>
+                                <h2>공지사항 수정</h2>
                                 <form method="post" action="insertnotice.do" id="noticefrm" enctype="multipart/form-data"  >
+                                <input type="hidden" name="notice_no" id="notice_no" value="${notice.notice_no }">
+                                <input type="hidden" name="notice_originalfile" id="notice_originalfile" value="${notice.notice_originalfile }">
+                                <div id="firstform">
                                 <div class="form-group">
-                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." required>
+                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요."  value="${notice.notice_title }" required>
                                 </div>
-                                <div class="custom-file mb-3">
+                                </div>
+                                <c:if test="${!empty notice.notice_originalfile  }">
+                                <div class="form-group" id="originfile">
+                                    <span>${notice.notice_originalfile } 
+                                    </span>
+									<button type="button" onclick="filedelete();">삭제</button>
+                                </div>
+                                </c:if>
+                                <c:if test="${empty notice.notice_originalfile  }">
+                                <div class="custom-file mb-3" id="newfile">
+                                
                                   <input type="file" class="custom-file-input" id="file" name="file">
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
-                                  <textarea name="notice_content" id="notice_content" rows="10" cols="100"></textarea>
-                                  <button class="btn btn-primary" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
+                                </c:if>                                  
+                                  <textarea name="notice_content" id="notice_content" rows="10" cols="100">${notice.notice_content }</textarea>
+                                  <button class="btn btn-warning" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
                                   <!-- <button type="submit" class="btn btn-primary pull-right" onclick="return confirm('정말로 등록하시겠습니까?')">등록</button> -->
-                                  <button  class="btn btn-primary pull-right" onclick="submitContents();">등록</button>
+                                  <button  class="btn btn-warning pull-right" onclick="submitContents();">수정</button>
                                   <!-- onclick="submitContents();" -->
                                 </form>
                            </div>
@@ -158,18 +157,7 @@
         <!-- naver smart editor js-->
         <script type="text/javascript" src="/billy/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
-        <!-- 파일 첨부 시 이름 미리 보여지기 -->
-        <script type="text/javascript">           
-        	$(".custom-file-input").on("load", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-          	});   
-            // Add the following code if you want the name of the file appear on select
-            $(".custom-file-input").on("change", function() {
-              var fileName = $(this).val().split("\\").pop();
-              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });                
-        </script>
+       
         
         <!-- 네이버 스마트 에디터 -->
         <script type="text/javascript">
@@ -193,7 +181,18 @@
 
         </script>
         <script type="text/javascript">
-                        
+             function filedelete(){
+            	 $('#originfile').remove();
+            	 $('#firstform').append('<div class="custom-file mb-3" id="newfile">'+
+            			 '<input type="file" class="custom-file-input" id="file" name="file">'+
+            			 '<label class="custom-file-label" for="customFile">Choose file</label></div>');
+             }
+               //아래와 같은 형식으로 해야 동적으로 자바스크립트 적용 됨.
+               //파일 첨부 시 파일 이름 보여주기
+             $(document).on("change",".custom-file-input",function(){
+            	 var fileName = $(this).val().split("\\").pop();
+                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+             });           
         </script>
         </body>
 
