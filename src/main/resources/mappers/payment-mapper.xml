@@ -15,18 +15,94 @@
 		<result property="customer" column="customer" />
 		<result property="review_status" column="review_status" />
 	</resultMap>
+	<!-- select 문  =============================================================================================== -->
+	<!-- 거래번호 조회 -->
+	<select id="selectPaymentNo" parameterType="_int" resultType="string">
+		select payment_no
+		from payment
+		where payment_no = #{ payment_no }
+	</select>
 	
-	<!-- 결제 완료 후 payment status 업데이트 -->
-	<update id="updatePaymentUser" parameterType="_int">
-		update
+	<!-- 구매완료/취소목록 조회 -->
+	<select id="listCriteria" resultMap="resultPayment">
+	<![CDATA[
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		from
 		(
-			select status from payment
-			where payment_no = #{ paymentNo }
-		)
-		set
-			status = 1
-	</update>
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			from
+			(
+				select payment_price, status, product_name, seller_id, customer, payment_no
+				from payment p, product r
+                where p.product_no = r.product_no and customer = #{ customer }
+                order by payment_no desc
+			) i
+			where rownum <= (#{ perPageNum } * #{page}) and status in (1,2)
+		) o
+		where o.rm > #{ pageStart }
+		]]>
+			<include refid="search"/>
+		<![CDATA[
+	]]>
+	</select>
 	
+	<!-- 거래대기 목록 조회 -->
+	<select id="listWaitingCriteria" resultMap="resultPayment">
+	<![CDATA[
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		from
+		(
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			from
+			(
+				select payment_price, status, product_name, seller_id, customer, payment_no
+				from payment p, product r
+                where p.product_no = r.product_no and customer = #{ customer }
+                order by payment_no desc
+			) i
+			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
+		) o
+		where o.rm > #{ pageStart }
+		]]>
+			<include refid="searchSeller"/>
+		<![CDATA[
+	]]>
+	
+	</select>
+	
+	<!-- 거래완료/취소 목록 개수 조회 -->
+	<select id="searchListCount" resultType="_int">
+		select count(*) 
+		from payment
+		where status in (1,2) and customer = #{ customer }
+		<include refid="search"/>
+	</select>
+	
+	<!-- 거래대기 목록 개수 조회 -->
+	<select id="searchWaitingListCount" resultType="_int">
+		select count(*)
+		from payment
+		where status = 3 and customer = #{ customer }
+		<include refid="searchSeller"/>
+	</select>
+	
+	<!-- payment 테이블 목록 1개 조회 -->
+	<select id="selectPaymentListOne" parameterType="payment" resultType="payment">
+		select payment_no, product_name, seller_id, customer, payment_price
+		from payment p, product r
+		where p.product_no = r.product_no and payment_no = #{ payment_no } and customer = #{ customer }
+	</select>
+	
+	<!-- 거래예약 정보 조회 -->
+	<select id="selectBookingUser" parameterType="payment" resultMap="resultPayment">
+		select payment_no, product_name, seller_id, customer, payment_price, p.product_no,
+			   payment_quantity, payment_enddate, payment_begindate
+		from payment p, product r
+		where p.product_no = r.product_no and customer = #{ customer } and rownum = 1
+		order by payment_no desc
+	</select>
+	
+	<!-- insert 문  =============================================================================================== -->
 	<!-- 거래예약 insert -->
 	<insert id="insertBookingList" parameterType="payment">
 		insert into payment values
@@ -43,22 +119,7 @@
 		 default)
 	</insert>
 	
-	<!-- 거래번호 조회 -->
-	<select id="selectPaymentNo" parameterType="_int" resultType="string">
-		select payment_no
-		from payment
-		where payment_no = #{ payment_no }
-	</select>
-	
-	<!-- 거래예약 정보 조회 -->
-	<select id="selectBookingUser" parameterType="payment" resultMap="resultPayment">
-		select payment_no, product_name, seller_id, customer, payment_price, p.product_no 
-			   payment_quantity, payment_enddate, payment_begindate
-		from payment p, product r
-		where p.product_no = r.product_no and customer = #{ customer } and rownum = 1
-		order by payment_no desc
-	</select>
-	
+	<!-- update 문 =============================================================================================== -->
 	<!-- 예약유저 업데이트 -->
 	<update id="updateBookingUser" parameterType="payment">
 		update
@@ -94,82 +155,24 @@
 		set
 			product_quantity = (product_quantity + #{ payment_quantity })
 	</update>
-	
-	<!-- 구매완료/취소목록 조회 -->
-	<select id="listCriteria" resultMap="resultPayment">
-	<![CDATA[
-		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
-		from
+	<!-- 결제 완료 후 payment status 업데이트 -->
+	<update id="updatePaymentUser" parameterType="_int">
+		update
 		(
-			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
-			from
-			(
-				select payment_price, status, product_name, seller_id, customer, payment_no
-				from payment p, product r
-                where p.product_no = r.product_no
-                order by payment_no desc
-			) i
-			where rownum <= (#{ perPageNum } * #{page}) and status in (1,2)
-		) o
-		where o.rm > #{ pageStart }
-		]]>
-			<include refid="search"/>
-		<![CDATA[
-	]]>
-	</select>
-	
-	<!-- 거래대기 목록 조회 -->
-	<select id="listWaitingCriteria" resultMap="resultPayment">
-	<![CDATA[
-		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
-		from
-		(
-			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
-			from
-			(
-				select payment_price, status, product_name, seller_id, customer, payment_no
-				from payment p, product r
-                where p.product_no = r.product_no
-                order by payment_no desc
-			) i
-			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
-		) o
-		where o.rm > #{ pageStart }
-		]]>
-			<include refid="searchSeller"/>
-		<![CDATA[
-	]]>
-	
-	</select>
-	
-	<!-- 거래완료/취소 목록 개수 조회 -->
-	<select id="searchListCount" resultType="_int">
-		select count(*) 
-		from payment
-		where status in (1,2)
-		<include refid="search"/>
-	</select>
-	
-	<!-- 거래대기 목록 개수 조회 -->
-	<select id="searchWaitingListCount" resultType="_int">
-		select count(*)
-		from payment
-		where status = 3
-	</select>
-	
-	<!-- payment 테이블 목록 1개 조회 -->
-	<select id="selectPaymentListOne" parameterType="payment" resultType="payment">
-		select payment_no, product_name, seller_id, customer, payment_price
-		from payment p, product r
-		where p.product_no = r.product_no and payment_no = #{ payment_no } and customer = #{ customer }
-	</select>
-	
+			select status from payment
+			where payment_no = #{ paymentNo }
+		)
+		set
+			status = 1
+	</update>
+	<!-- delete 문 =============================================================================================== -->
 	<!-- 예약 취소 -->
 	<delete id="deleteBookingInfo" parameterType="_int">
 		delete from payment
 		where payment_no = #{ paymentNo }
 	</delete>
 	
+	<!-- include sql 문 -->
 	<!-- 거래완료/취소 목록 검색조건 sql -->
 	<sql id="search">
 		<if test="searchType != null">

@@ -5,17 +5,6 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
-@font-face {
-  font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: OpenSans-Bold;
-  src: url('../fonts/OpenSans/OpenSans-Bold.ttf'); 
-}
-
-
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -29,12 +18,10 @@
 
 body, html {
 	height: 100%;
-	font-family: OpenSans-Regular, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: OpenSans-Regular;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -60,7 +47,6 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 p {
-	font-family: OpenSans-Regular;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
@@ -135,7 +121,6 @@ iframe {
 /*==================================================================
 [ Text ]*/
 .txt1 {
-  font-family: OpenSans-Regular;
   font-size: 13px;
   line-height: 1.4;
   color: #cccccc;

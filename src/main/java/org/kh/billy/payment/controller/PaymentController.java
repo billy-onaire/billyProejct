@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,8 +57,11 @@ public class PaymentController {
 	static BootpayApi api;
 	
 	@RequestMapping(value="paymentSearch.do")
-	public ModelAndView searchList(PaymentCri payCri, ModelAndView mav) {
+	public ModelAndView searchList(PaymentCri payCri, ModelAndView mav, HttpSession login) {
 		//거래&결제내역
+		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
+		payCri.setCustomer(customer);
+		
 		ArrayList<Payment> p = payService.listCriteria(payCri);
 		mav.addObject("pmList", p);
 		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
@@ -70,9 +75,10 @@ public class PaymentController {
 		return mav;
 	}
 	@RequestMapping("paymentWaiting.do")
-	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav, HttpServletRequest request) {
+	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav, HttpSession login) {
 		//결제대기 내역
-		payCri.setCustomer(request.getSession().getId());
+		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
+		payCri.setCustomer(customer);
 		
 		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
 		pageMaker.setTotalCount(payService.searchWaitingListCount(payCri));
@@ -86,7 +92,7 @@ public class PaymentController {
 		
 		return mav;
 	}
-	@RequestMapping(value="doPayment.do", method=RequestMethod.POST)
+	@RequestMapping(value="doPayment.do")
 	public void doPayment(@RequestBody String param, HttpServletResponse response) throws IOException, ParseException {
 		
 		JSONParser parsing = new JSONParser();
@@ -125,40 +131,57 @@ public class PaymentController {
 	@RequestMapping(value="bookingPage.do")
 	public ModelAndView bookingPage(Payment payment, ArrayList<Payment> myPmList, ModelAndView mav) {
 		//예약 영수증
-		int re = payService.insertBookingList(payment);
-		
-		logger.info("re : " + re);
 		logger.info("customer: " + payment.getCustomer());
 		logger.info("seller_id : " + payment.getSeller_id());
 		logger.info("p name : " + payment.getProduct_name());
 		logger.info("payment : " + payment);
-		
-		int payment_no = payment.getPayment_no();
-		
-		logger.info("payment_no : " + payment_no);
-		payment = payService.selectBookingUser(payment);
-		logger.info("payment2 : " + payment);
-		
-		//product table quantity업데이트
-		int quantity = payment.getPayment_quantity();
-		logger.info("quantity1 : " + quantity);
-		int result = payService.updateProductQuantity(payment);
-		
+
 		mav.addObject("payment", payment);
 		mav.setViewName("payment/bookingPage");
 		
 		return mav;
 	}
+	@RequestMapping(value="upquan.do", method=RequestMethod.POST)
+	public ResponseEntity<String>  bookingQuantity(@RequestBody String param, Payment payment) throws ParseException {
+		//product table quantity업데이트, booking insert, 결제대기 insert
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		logger.info("obj : " + obj.toString());
+		
+		int productNo = Integer.parseInt((String)jobj.get("proNo"));
+		int price = Integer.parseInt((String)jobj.get("price"));
+		String customer = (String)jobj.get("customer");
+
+		Instant instante = Instant.parse((String)jobj.get("edate"));
+		Instant instantb = Instant.parse((String)jobj.get("bdate"));		
+		java.util.Date edate = java.util.Date.from(instante);
+		java.util.Date bdate = java.util.Date.from(instantb);
+		Date endDate = new Date(edate.getTime());
+		Date beginDate = new Date(bdate.getTime());
+		
+		int quantity = Integer.parseInt((String)jobj.get("quantity"));
+		
+		payment.setProduct_no(productNo);
+		payment.setPayment_price(price);
+		payment.setCustomer(customer);
+		payment.setPayment_enddate(endDate);
+		payment.setPayment_begindate(beginDate);
+		payment.setPayment_quantity(quantity);
+		
+		int re = payService.insertBookingList(payment);
+		
+		if(re == 1) {
+			payment = payService.selectBookingUser(payment);
+		}
+		payService.updateProductQuantity(payment);
+		
+		return new ResponseEntity<String>("booking success", HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="resultPay.do")
 	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {
 		//영수증
-		/*payment = payService.selectPaymentListOne(payment);
-		logger.info("pament_no : " + payment.getPayment_no());
-		
-		logger.info("payment : " + payment);
-		
-		mav.addObject("pmList", payment);*/
 		mav.setViewName("payment/paymentPage");
 		logger.info("mav pay : " + mav.toString());
 		

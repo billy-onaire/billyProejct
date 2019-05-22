@@ -54,23 +54,25 @@ public class PaymentPageMaker implements Serializable {
 		int page = this.cri.getPage();
 		int perPageNum = this.cri.getPerPageNum();
 		
-		/*int startRow = (currentPage -1) * pageList + 1;
-		int endRow = startRow + pageList - 1;*/
+		/*int startPage = (currentPage -1) * pageList + 1;
+		int endPage = startRow + pageList - 1;*/
 		
 		endPage = (int)(Math.ceil(page/(double)displayPageNum)*displayPageNum);
 		startPage = (endPage - displayPageNum) + 1;
 		
+		logger.info("page : " + page);
+		logger.info("perPageNum : " + perPageNum);
+		logger.info("displayPageNum : " + displayPageNum);
+		
 		int tempEndPage = (int)(Math.ceil(totalCount/(double)perPageNum));
+		
+		logger.info("tempEndPage : " + tempEndPage);
 		
 		if(endPage > tempEndPage)
 			this.endPage = tempEndPage;
 		
 		prev = (startPage != 1);		
 		next = (endPage * perPageNum < totalCount);
-		
-		System.out.println("prev : " + prev);
-
-		System.out.println("next : " + next);
 	}
 
 	public int getStartPage() {

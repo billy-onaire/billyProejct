@@ -1,6 +1,7 @@
 package org.kh.billy.product.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.kh.billy.product.model.dao.AdminProductDao;
 import org.kh.billy.product.model.vo.Product;
@@ -52,6 +53,16 @@ public class AdminProductServiceImpl implements AdminProductService{
 	@Override
 	public int selectTotalDeleteProductList() {
 		return aProductDao.selectTotalDeleteProductList();
+	}
+
+	@Override
+	public List<Product> selectSearchProductList(Map<String, Object> map) {
+		return aProductDao.selectSearchProductList(map);
+	}
+
+	@Override
+	public int selectTotalSearchProductList(Map<String, Object> map) {
+		return aProductDao.selectTotalSearchProductList(map);
 	}
 
 }

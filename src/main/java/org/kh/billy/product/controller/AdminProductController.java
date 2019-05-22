@@ -1,6 +1,8 @@
 package org.kh.billy.product.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.kh.billy.product.model.service.AdminProductService;
 import org.kh.billy.product.model.vo.Product;
@@ -79,5 +81,25 @@ public class AdminProductController {
 		}else {
 			return "redirect:delProductList.do";			
 		}
+	}
+	
+	@RequestMapping("searchTitleProductList.do")
+	public String searchTitleProductList(Model model, ReviewPaging paging, @RequestParam("search") String search, 
+			@RequestParam("searchType") String searchType, @RequestParam("check") String check) {
+		System.out.println("check : " + check);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("paging", paging);
+		map.put("type", searchType);
+		map.put("check", check);
+		
+		paging.setListCnt(10);  // 한페이지 출력할 갯수 10
+		List<Product> list = aProductService.selectSearchProductList(map);
+		paging.setTotal(aProductService.selectTotalSearchProductList(map));
+		
+		model.addAttribute("list", list);
+		model.addAttribute("p", paging);
+		model.addAttribute("type", check);
+		return "product/adminProduct-list";
 	}
 }

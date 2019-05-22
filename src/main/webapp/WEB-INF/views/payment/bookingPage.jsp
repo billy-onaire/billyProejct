@@ -45,7 +45,13 @@ $(function() {
 	var no = '${ payment.payment_no }';
 	console.log(no);
 	$check.click(function() {
-		var job = new Object();
+		var re = confirm('예약을 취소하시겠습니까?');
+		if(re) {
+			alert('메인으로 돌아갑니다');
+			location.replace('main.do');
+		}
+			
+		/* var job = new Object();
 		job.name = 'num';
 		job.num = no;
 		
@@ -62,7 +68,7 @@ $(function() {
 				
 				location.href='main.do';
 			}
-		})//ajax
+		}) */ //ajax
 	});
 	
 	$('#sendMsgbtn').click(function(){
@@ -77,10 +83,39 @@ $(function() {
 		})//ajax
 	})//쪽지보내기
 	
-	$('#bookingfinish').click(function(){
-		location.href='main.do';
+	//예약하기
+	$('.pull-right input:nth-child(2)').click(function() {
+		var quantity = '${ payment.payment_quantity}';
+		var price = $('#won').val();
+		var customer = '${ payment.customer }';
+		var productNo = '${ payment.product_no }';
+
+		var job = new Object();
+		job.price = price;
+		job.quantity = quantity;
+		job.edate = endDate;
+		job.bdate = beginDate;
+		job.customer = customer;
+		job.proNo = productNo;
+
+			$.ajax({
+				url: 'upquan.do',
+				type: 'post',
+				contentType: 'application/json; charset=utf-8',
+				data: JSON.stringify(job),
+				cache: false,
+				success: function(result) {
+					alert('예약에 성공하였습니다!');
+					location.href='main.do';
+				}//success
+			})
 	})//click
 });
+function finishPay() {
+	
+	
+	
+}
 </script>
 <body id='bookingBody'>
 	<input type='button' value='예약취소'/>

@@ -48,4 +48,70 @@
 	<select id="selectTotalDeleteProductList" resultType="int">
 		select count(*) from product where delete_yn = 'Y'
 	</select>
+	
+	<select id="selectSearchProductList" parameterType="map" resultType="product">
+		select * 
+		from (select rownum rnum, p.* 
+			from (select * from product where 
+			<if test='type == "pName"'>
+				product_name like '%' || #{search} || '%'
+				<if test='check == "normal"'>
+					and delete_yn = 'N' 
+				</if>
+				<if test='check == "del"'>
+					and delete_yn = 'Y' 
+				</if> 
+			</if>
+			<if test='type == "userId"'>
+				seller_id like '%' || #{search} || '%'
+				<if test='check == "normal"'>
+					and delete_yn = 'N' 
+				</if>
+				<if test='check == "del"'>
+					and delete_yn = 'Y' 
+				</if> 
+			</if>
+			<if test='type == "pNo"'>
+				product_no like '%' || #{search} || '%'
+				<if test='check == "normal"'>
+					and delete_yn = 'N' 
+				</if>
+				<if test='check == "del"'>
+					and delete_yn = 'Y' 
+				</if> 
+			</if>
+			order by product_no desc) p)
+		where rnum between #{paging.start} and #{paging.last} 
+	</select>
+	
+	<select id="selectTotalSearchProductList" parameterType="map" resultType="int">
+		select count(*) from product where 
+		<if test='type == "pName"'>
+			product_name like '%' || #{search} || '%' 
+			<if test='check == "normal"'>
+				and delete_yn = 'N' 
+			</if>
+			<if test='check == "del"'>
+				and delete_yn = 'Y' 
+			</if> 
+		</if>
+		<if test='type == "userId"'>
+			seller_id like '%' || #{search} || '%'
+			<if test='check == "normal"'>
+				and delete_yn = 'N' 
+			</if>
+			<if test='check == "del"'>
+				and delete_yn = 'Y' 
+			</if> 
+		</if>
+		<if test='type == "pNo"'>
+			product_no like '%' || #{search} || '%' 
+			<if test='check == "normal"'>
+				and delete_yn = 'N' 
+			</if>
+			<if test='check == "del"'>
+				and delete_yn = 'Y' 
+			</if>
+		</if>
+	</select>
 </mapper>
