@@ -1,7 +1,7 @@
 /*
     상품 리스트 출력 페이지 자바스크립트
     작성자 : 윤석호
-    최종 수정일 : 2019/05/14
+    최종 수정일 : 2019/05/22
 */
 
 let chosenPage = 1; // 페이징 선택 값
@@ -11,6 +11,26 @@ let maxPrice = 100000; // 최대 가격 설정
 let subCategories = []; // 하위 카테고리 배열
 let mainCategory = ""; // 상위 카테고리
 let sortby = "1 DESC NULLS LAST";
+let keyword = "";
+
+// 검색 버튼 클릭 시 이벤트
+const keywordBtn = document.querySelector('#product-search-btn');
+const keywordBox = document.querySelector('#product-search-input');
+
+
+function Enter_Check(){
+    // 엔터키의 코드는 13입니다.
+if(event.keyCode == 13){
+    keyword = keywordBox.value;
+    requestProductListAjax();
+}
+}
+keywordBtn.addEventListener('click',()=>{
+    keyword = keywordBox.value;
+    requestProductListAjax();
+})
+
+
 
 // 정렬 및 갯수 출력 방식 선택
 const listTabs = document.querySelectorAll('.nice-select ul');
@@ -66,7 +86,8 @@ for (let i = 0; i < catagoryRadios.length; i++) {
             sub_pcategory_no: subCategories,
             minPrice: minPrice,
             maxPrice: maxPrice,
-            sort: sortby
+            sort: sortby,
+            keyword: keyword
         }
         history.pushState(pushData, 'page', 'showlist.do#category='+mainCategory);
 
@@ -212,7 +233,8 @@ function requestProductListAjax(data) {
                     sub_pcategory_no: subCategories,
                     minPrice: minPrice,
                     maxPrice: maxPrice,
-                    sort: sortby
+                    sort: sortby,
+                    keyword: keyword
                 }
                 history.pushState(pushData, 'page', 'showlist.do#page='+i);
                 requestProductListAjax();
@@ -228,7 +250,8 @@ function requestProductListAjax(data) {
         sub_pcategory_no: subCategories,
         minPrice: minPrice,
         maxPrice: maxPrice,
-        sort: sortby
+        sort: sortby,
+        keyword: keyword
     }
     xhr.open('POST', 'getProductList.do');
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -249,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (tempUrl) {
         const cv = tempUrl.split('=');
-        console.log(cv[1]);
+        
         switch (cv[1]) {
             case 'living': document.querySelector('#living').click(); break;
             case 'sports': document.querySelector('#sports').click(); break;
@@ -267,16 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#living').click();
         }
     }
-    let pushData = {
-        pcategory_name: mainCategory,
-        page: chosenPage,
-        listCount: listCount,
-        sub_pcategory_no: subCategories,
-        minPrice: minPrice,
-        maxPrice: maxPrice,
-        sort: sortby
-    }
-    history.pushState(pushData, 'page', 'showlist.do#page=1');
+    keywordBox.focus();
 })
 
 window.onpopstate = ()=>{
