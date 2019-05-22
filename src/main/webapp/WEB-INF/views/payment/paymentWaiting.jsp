@@ -53,12 +53,14 @@ $(function(){
 	setSearchType();
 	
 	//prev btn
+	/* !== 'true' */
 	var showPrev = '${ pageMaker.prev }';
-	if(showPrev !== 'true')
+	console.log(showPrev);
+	if(showPrev)
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(showNext !== 'true')
+	if(showNext)
 		$('#page-next').addClass('disabled');
 	
 	var nowPage = '${ pageMaker.cri.page }';
@@ -263,6 +265,7 @@ function setSearchType() {
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                    	<th></th>
                         <th>no</th>
                         <th>판매자</th>
 						<th>제목</th>				
@@ -274,7 +277,7 @@ function setSearchType() {
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ payment.customer }</td>
+                		<td>${ (status.index + 1) }</td>
                 		<td>${ payment.payment_no }</td>
                 		<td class='sellerId'>${ payment.seller_id }</td>
                 		<td class='productName-Je'>${ payment.product_name }</td>

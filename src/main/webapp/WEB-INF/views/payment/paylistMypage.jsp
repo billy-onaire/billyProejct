@@ -31,11 +31,11 @@ $(function(){
 	setSearchType();
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
-	if(!showPrev)
+	if(showPrev)
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(!showNext)
+	if(showNext)
 		$('#page-next').addClass('disabled');
 	
 	console.log("prev : " + showPrev);
@@ -145,7 +145,7 @@ function setSearchType() {
                 <tbody id='pList'>
                 <c:forEach items='${ pmList }' var='payment' varStatus='status'>
                 	<tr>
-                		<td>${ status.index }</td>
+                		<td>${ (status.index + 1) }</td>
                 		<td>${ payment.payment_no }</td>
                 		<td>${ payment.seller_id }</td>
                 		<td>${ payment.product_name }</td>
