@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class NoticeController {
@@ -66,6 +67,29 @@ public class NoticeController {
 		System.out.println(notice);
 		mv.addAttribute("notice", notice);
 		return "notice/noticeDetail";
+	}
+	
+	@RequestMapping("adminnoticedetail.do")
+	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
+		System.out.println(noticeNo);
+		Notice notice = noticeService.selectNotice(noticeNo);
+		System.out.println(notice);
+		mv.addAttribute("notice", notice);
+		return "notice/adminNoticeDetail";
+	}
+	
+	@RequestMapping("adminnoticelist.do")
+	public String selectAdminNoticeList(Criteria cri, Notice notice, Model mv) {
+		
+		int count = noticeService.selectNoticeCount();
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		
+		ArrayList<Notice> list = noticeService.selectNoticeList(cri);
+		mv.addAttribute("list", list);
+		mv.addAttribute("pageMaker", pageMaker);
+		return "notice/adminNoticeList";
 	}
 	
 	@RequestMapping("noticelist.do")
@@ -141,10 +165,21 @@ public class NoticeController {
 			System.out.println("공지글 작성 완료");
 		else
 			System.out.println("공지글 작성 실패");
-		return "home";
+		return "notice/adminNoticeList";
 	}
 	
-	@RequestMapping(value="updatenotice.do", method=RequestMethod.POST)
+	@RequestMapping("noticeupdateview.do")
+	public ModelAndView selectNoticeUpdateView(@RequestParam("notice_no") int noticeNo, ModelAndView mv ) {
+		//그냥 Notice를 받아오게되면 뒤로가기나 다른 동작들로 인해 꼬일 확률이 높음 그냥 noticeNo를 받아 DB 다녀 옴
+		System.out.println("공지사항 글 번호 확인 : " + noticeNo);
+		Notice notice = noticeService.selectNotice(noticeNo);
+		
+		mv.addObject("notice", notice);
+		mv.setViewName("notice/noticeUpdate");
+		return mv;
+	}
+	
+	@RequestMapping(value="noticeupdate.do", method=RequestMethod.POST)
 	public String updateNotice(Notice notice) {
 		int result = noticeService.updateNotice(notice);
 		return null;
