@@ -28,7 +28,9 @@
          <typeAlias type="org.kh.billy.report.model.vo.Report" alias="Report"/>
          <typeAlias type="org.kh.billy.report.model.vo.ReportList" alias="ReportList"/>
          <typeAlias type="org.kh.billy.notice.model.vo.Notice" alias="Notice"/>
-         <typeAlias type="org.kh.billy.visit.model.vo.Visit" alias="Visit"/>
+         <typeAlias type="org.kh.billy.statistics.model.vo.Visit" alias="Visit"/>
+         <typeAlias type="org.kh.billy.statistics.model.vo.SignUp" alias="SignUp"/>
+         <typeAlias type="org.kh.billy.statistics.model.vo.Deal" alias="Deal"/>
    </typeAliases>
    <mappers>
    	  <mapper resource="mappers/adminProduct-mapper.xml" />
@@ -44,6 +46,6 @@
       <mapper resource="mappers/member-mapper.xml" />
       <mapper resource="mappers/report-mapper.xml" />
       <mapper resource="mappers/notice-mapper.xml" />
-      <mapper resource="mappers/visit-mapper.xml" />
+      <mapper resource="mappers/statistics-mapper.xml" />
    </mappers>
 </configuration>

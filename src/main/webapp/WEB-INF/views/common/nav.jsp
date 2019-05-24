@@ -92,7 +92,7 @@ function abc(){
 
 #pname {
 	font-family: 'DXSeNB-KSCpc-EUC-H';
-	font-size: 20pt;
+	font-size: 16pt;
 }
 
 .mb-100{
