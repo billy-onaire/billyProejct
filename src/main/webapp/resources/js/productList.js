@@ -208,10 +208,40 @@ function requestProductListAjax(data) {
 
         // 페이징 처리 섹션
         const pagination = document.querySelector('.pagination');
+        const startPage = products.page.start;
+        const endPage = products.page.end;
+        const currentPage = products.page.currentPage;
+        const totalPage = products.page.totalPage;
+
         while (pagination.firstChild) {
             pagination.removeChild(pagination.firstChild);
         }
+        if (startPage > 1) {
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
 
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+            pageLink.textContent = '<<';
+            pagination.appendChild(pageItem).appendChild(pageLink);
+            pageItem.onclick = () => {
+                    chosenPage = 1;
+                    requestProductListAjax();
+                }
+            }
+        if (currentPage > 1) {
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
+
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+            pageLink.textContent = '<';
+            pagination.appendChild(pageItem).appendChild(pageLink);
+            pageItem.onclick = () => {
+                    chosenPage = currentPage - 1;
+                    requestProductListAjax();
+                }
+        }
         for (let i = products.page.start; i <= products.page.end; i++) {
 
             const pageItem = document.createElement('li');
@@ -239,6 +269,34 @@ function requestProductListAjax(data) {
                 history.pushState(pushData, 'page', 'showlist.do#page='+i);
                 requestProductListAjax();
             })
+        }
+        if (currentPage < totalPage) {
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
+
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+
+            pageLink.textContent = '>';
+            pagination.appendChild(pageItem).appendChild(pageLink);
+            pageItem.onclick = () => {
+                chosenPage = currentPage + 1;
+                requestProductListAjax();
+            }
+        }
+        if (endPage < totalPage) {
+            const pageItem = document.createElement('li');
+            const pageLink = document.createElement('a');
+
+            pageItem.classList = "page-item";
+            pageLink.classList = "page-link";
+
+            pageLink.textContent = '>>';
+            pagination.appendChild(pageItem).appendChild(pageLink);
+            pageItem.onclick = () => {
+                chosenPage = totalPage;
+                requestProductListAjax();
+            }
         }
 
     }
