@@ -76,7 +76,7 @@
 
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-    <c:import url="../common/nav.jsp" />
+    <c:import url="../common/adminNav.jsp" />
 
         <!-- Product Details Area Start -->
         <div class="single-product-area section-padding-100 clearfix">
@@ -100,9 +100,10 @@
                                                      
                            <div class="container">
                                 <h2>공지사항 수정</h2>
-                                <form method="post" action="insertnotice.do" id="noticefrm" enctype="multipart/form-data"  >
+                                <form method="post" action="noticeupdate.do" id="noticefrm" enctype="multipart/form-data"  >
                                 <input type="hidden" name="notice_no" id="notice_no" value="${notice.notice_no }">
                                 <input type="hidden" name="notice_originalfile" id="notice_originalfile" value="${notice.notice_originalfile }">
+                                
                                 <div id="firstform">
                                 <div class="form-group">
                                     <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요."  value="${notice.notice_title }" required>
@@ -115,6 +116,8 @@
 									<button type="button" onclick="filedelete();">삭제</button>
                                 </div>
                                 </c:if>
+                                
+                                
                                 <c:if test="${empty notice.notice_originalfile  }">
                                 <div class="custom-file mb-3" id="newfile">
                                 
@@ -172,7 +175,7 @@
             
             function submitContents() {
                 oEditors.getById["notice_content"].exec("UPDATE_CONTENTS_FIELD", []);
-                alert(document.getElementById("notice_content").value);   
+                //alert(document.getElementById("notice_content").value);   
 
                 try {
                     $('#noticefrm').submit();
@@ -183,6 +186,8 @@
         <script type="text/javascript">
              function filedelete(){
             	 $('#originfile').remove();
+            	 //$('#notice_originalfile').remove();
+            	 $('file').remove();
             	 $('#firstform').append('<div class="custom-file mb-3" id="newfile">'+
             			 '<input type="file" class="custom-file-input" id="file" name="file">'+
             			 '<label class="custom-file-label" for="customFile">Choose file</label></div>');
