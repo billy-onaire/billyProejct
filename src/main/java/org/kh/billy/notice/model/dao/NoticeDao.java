@@ -22,7 +22,6 @@ public class NoticeDao {
 	}
 
 	public int updateNotice(Notice notice) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

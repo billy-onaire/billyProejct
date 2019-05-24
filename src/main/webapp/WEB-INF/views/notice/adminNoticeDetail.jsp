@@ -78,7 +78,7 @@
 
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-    <c:import url="../common/nav.jsp" />
+    <c:import url="../common/adminNav.jsp" />
 
         <!-- Product Details Area Start -->
         <div class="single-product-area section-padding-100 clearfix">

@@ -51,11 +51,6 @@ $(function(){
 	$('.view i').click(function() {
 		location.href = 'resultPay.do';
 	});
-	
-	//판매내역 이동
-	$('#sellList').click(function() {
-		location.href = 'chargeList.do';
-	});//click
 });//ready
 function setPageEntry(){
 	var perPageNum = '${ pageMaker.cri.perPageNum }';
@@ -96,10 +91,10 @@ function setSearchType() {
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2><b>구매</b> 내역</h2><!-- bookingPage.do -->
+						<h2><b>판매</b> 내역</h2><!-- bookingPage.do -->
 					</div>
 					<div class="col-sm-8">						
-						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>판매 내역</span></a>
+						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>구매 내역</span></a>
 						<!-- <i class="material-icons">&#xE863;</i>  -->
 						<!-- <a href="#" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a> -->
 					</div>
@@ -132,6 +127,8 @@ function setSearchType() {
 								<option value=''>거래상태</option>
 								<option value='1'>구매완료</option>
 								<option value='2'>취소</option>
+								<option value='3'>거래중</option>
+								<option value='4'>판매완료</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -143,7 +140,7 @@ function setSearchType() {
                     <tr>
                     	<th></th>
                         <th>no</th>
-                        <th>판매자</th>
+                        <th>구매자</th>
 						<th>제목</th>				
                         <th>거래상태</th>						
 						<th>영수증</th>
@@ -154,10 +151,10 @@ function setSearchType() {
                 	<tr>
                 		<td>${ (status.index + 1) }</td>
                 		<td>${ payment.payment_no }</td>
-                		<td>${ payment.seller_id }</td>
+                		<td>${ payment.customer }</td>
                 		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 1 }'>
-                			<td><span class="status text-success">&bull;</span> 구매완료</td>
+                			<td><span class="status text-info">&bull;</span> 판매완료</td>
                 			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
                 		</c:if>
                 		<c:if test='${ payment.status eq 2 }'>

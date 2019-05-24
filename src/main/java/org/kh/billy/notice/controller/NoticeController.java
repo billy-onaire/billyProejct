@@ -62,9 +62,7 @@ public class NoticeController {
 	}
 	@RequestMapping("noticedetail.do")
 	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
-		System.out.println(noticeNo);
 		Notice notice = noticeService.selectNotice(noticeNo);
-		System.out.println(notice);
 		mv.addAttribute("notice", notice);
 		return "notice/noticeDetail";
 	}
@@ -95,12 +93,10 @@ public class NoticeController {
 	@RequestMapping("noticelist.do")
 	public String selectNoticeList(Criteria cri, Notice notice, Model mv) {
 		//ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
-		System.out.println("공지 리스트 확인용");
 		
 		//String userId = ((Member) session.getAttribute("loginMember")).getUser_id();
 		
 		int count = noticeService.selectNoticeCount();
-		System.out.println("공지사항 갯수 : " + count);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
@@ -165,13 +161,12 @@ public class NoticeController {
 			System.out.println("공지글 작성 완료");
 		else
 			System.out.println("공지글 작성 실패");
-		return "notice/adminNoticeList";
+		return "redirect:adminnoticelist.do";
 	}
 	
 	@RequestMapping("noticeupdateview.do")
 	public ModelAndView selectNoticeUpdateView(@RequestParam("notice_no") int noticeNo, ModelAndView mv ) {
 		//그냥 Notice를 받아오게되면 뒤로가기나 다른 동작들로 인해 꼬일 확률이 높음 그냥 noticeNo를 받아 DB 다녀 옴
-		System.out.println("공지사항 글 번호 확인 : " + noticeNo);
 		Notice notice = noticeService.selectNotice(noticeNo);
 		
 		mv.addObject("notice", notice);
@@ -180,9 +175,55 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="noticeupdate.do", method=RequestMethod.POST)
-	public String updateNotice(Notice notice) {
-		int result = noticeService.updateNotice(notice);
-		return null;
+	public String updateNotice(Notice notice, @RequestParam(name="file")MultipartFile file, HttpServletRequest request) {
+		System.out.println(notice);
+		//System.out.println("이름 확인 : " + request.getParameter("file"));
+		System.out.println("파일 확인 : "+request.getParameter("notice_originalfile"));
+		System.out.println("request 파일 확인 : "+request.getParameter("file"));
+		System.out.println("업로드할 파일 이름 : " + file.getOriginalFilename());
+		System.out.println("기존 파일 확인 ; " + notice.getNotice_originalfile()); 
+		//기존파일 있는지 없는지
+		//if(!notice.getNotice_originalfile().equals("")) {
+		/*MultipartFile file = (MultipartFile)request.getAttribute("file");*/
+		//1.파일을 삭제만 한 경우
+		//2.파일을 삭제하고 새 파일을 업로드한 경우
+		//3.파일이 없었는데 새로 업로드한 경우
+		//4.기존 파일 그대로 냅두는 경우
+		//2,3번은 퉁 칠 수 있음.
+			
+			//제일 쉬운건 그냥 파일이 있든 없든 삭제하고 그 후에 파일 추가 
+		//System.out.println("파일 유무 : " + file.getOriginalFilename());
+		//System.out.println("파일 유무2 : " + file);
+		//	if(file.getOriginalFilename().equals("")) {
+		//		System.out.println("파일유무3 이름 없음");
+	//		}
+		//}else {//기존 파일을 삭제하거나 없으면
+			
+		//}
+		
+		if(!notice.getNotice_originalfile().equals("")) {//기존 파일이 있는 경우
+			//파일을 삭제하고 새 파일을 업로드
+			if(file.getOriginalFilename().equals("")) {
+				System.out.println("파일을 삭제하지 않고 기존 파일 그대로 사용");
+			}else {
+				System.out.println("파일을 삭제하고 새 파일을 업로드");
+			}
+			//파일을 삭제하지 않고 기존파일 그대로 사용
+		}else {//기존 파일이 없는 경우
+			//새 파일 등록
+			if(!file.getOriginalFilename().equals("")) {
+				System.out.println("기존 파일이 없으며 새 파일을 등록한 경우");
+			}else {
+				System.out.println("기존 파일이 없고 새 파일을 업로드 하지 않은 경우");
+			}
+			//파일을 등록하지 않는 경우
+		}
+		if(noticeService.updateNotice(notice) > 0)
+			System.out.println("수정 성공");
+		else
+			System.out.println("수정 실패");
+		
+		return "redirect:adminnoticelist.do";
 	}
 	
 	@RequestMapping(value="deletenotice.do", method=RequestMethod.POST)

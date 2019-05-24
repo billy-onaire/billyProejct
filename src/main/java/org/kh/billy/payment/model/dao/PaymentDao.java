@@ -45,24 +45,24 @@ public class PaymentDao {
 		return (ArrayList<Payment>)pmList;
 	}
 	public int insertBookingList(SqlSessionTemplate mybatisSession, Payment payment) {
-		return mybatisSession.insert("paymentMapper.insertBookingList", payment);
+		return mybatisSession.insert(mapper + "insertBookingList", payment);
 	}
 	public Payment selectBookingUser(SqlSessionTemplate mybatisSession, Payment payment) {
 		
-		return mybatisSession.selectOne("paymentMapper.selectBookingUser", payment);
+		return mybatisSession.selectOne(mapper + "selectBookingUser", payment);
 	}
 	public int selectPaymentNo(SqlSessionTemplate mybatisSession, int payment_no) {
 		
-		return mybatisSession.selectOne("paymentMapper.selectPaymentNo", payment_no);
+		return mybatisSession.selectOne(mapper + "selectPaymentNo", payment_no);
 	}
 	public int updateBookingUser(SqlSessionTemplate mybatisSession, Payment payment) {
 		
-		return mybatisSession.update("paymentMapper.updateBookingUser", payment);
+		return mybatisSession.update(mapper + "updateBookingUser", payment);
 	}
 	
 	public Payment selectPaymentListOne(SqlSessionTemplate mybatisSession, Payment payment) {
 		
-		return mybatisSession.selectOne("paymentMapper.selectPaymentListOne", payment);
+		return mybatisSession.selectOne(mapper + "selectPaymentListOne", payment);
 	}
 	public int updatePaymentUser(SqlSessionTemplate mybatisSession, int paymentNo) {
 		
@@ -79,6 +79,16 @@ public class PaymentDao {
 	public int updateQuantityAfterCancel(SqlSessionTemplate mybatisSession, Payment payment) {
 		
 		return mybatisSession.update(mapper + "updateQuantityAfterCancel", payment);
+	}
+	public ArrayList<Payment> chargeListCriteria(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
+		List<Payment> pmList = mybatisSession.selectList(mapper + "chargeListCriteria", payCri);
+		
+		return (ArrayList<Payment>)pmList;
+	}
+	public List<Payment> chargeWaitingListCriteria(SqlSessionTemplate mybatisSession, PaymentCri payCri) {
+		List<Payment> pmList = mybatisSession.selectList(mapper + "chargeWaitingListCriteria", payCri);
+		
+		return (ArrayList<Payment>)pmList;
 	}
 	
 	/*public ArrayList<Payment> searchPayment(Payment payment) {}

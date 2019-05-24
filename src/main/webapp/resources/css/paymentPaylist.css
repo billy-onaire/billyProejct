@@ -148,6 +148,38 @@
 		margin: 2px 0 0 1px;
 		cursor: pointer;
     }   
+	#ok-je {        
+		width: 30px;
+		height: 30px;
+		color: #fab336;
+		text-align: center;
+    }
+    #ok-je i::before {
+    	font-size: 30px;
+     	content: 'trip_origin';
+		margin: 2px 0 0 1px;
+		cursor: pointer;
+    }
+    #ok-je i:hover::before {
+    	content: 'sentiment_very_satisfied';
+    }
+    
+    #cancel-je {        
+		width: 30px;
+		height: 30px;
+		color: #fab336;
+		text-align: center;
+    }
+    #cancel-je i::before {
+    	font-size: 30px;
+    	content: 'cancel';
+		margin: 2px 0 0 1px;
+		cursor: pointer;
+    }
+    #cancel-je i:hover::before {
+    	content: 'sentiment_very_dissatisfied';
+    }
+    
 	table.table .avatar {
 		border-radius: 50%;
 		vertical-align: middle;

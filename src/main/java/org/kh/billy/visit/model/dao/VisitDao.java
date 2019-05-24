@@ -5,7 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 public class VisitDao	 {
 	
 	public int insertVisit(SqlSessionTemplate vSession){
-		return vSession.insert("visitMapper.insertVisit");
+		return vSession.insert("statisticsMapper.insertVisit");
 	}
 
 }
