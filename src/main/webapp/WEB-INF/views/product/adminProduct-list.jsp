@@ -105,7 +105,10 @@
 		  display: table;
 		} */
 		
-		
+		/* 버튼 CSS */
+		.btn-warning{
+		        color: white;
+		}
 	</style>
 </head>
 
@@ -161,8 +164,8 @@
 							삭제
 						</c:if>
 					</td>
-					<td><a href="delProduct.do?pno=${r.product_no }&type=${type}"><button>삭제</button></a></td>
-					<td><a href="reProduct.do?pno=${r.product_no }&type=${type}"><button>복구</button></a></td>
+					<td><a href="delProduct.do?pno=${r.product_no }&type=${type}"><button class="btn btn-warning">삭제</button></a></td>
+					<td><a href="reProduct.do?pno=${r.product_no }&type=${type}"><button class="btn btn-warning">복구</button></a></td>
 				</tr>						
 			</c:forEach>
 		</table>
@@ -197,20 +200,24 @@
 			<input type='hidden' name='listCnt' id='listCnt' value='${p.listCnt}'>	
 		</form>
 		
-		<form class="example" action="searchTitleProductList.do" style="margin:auto;max-width:300px">
+		<div style="width:100%; text-align: center;">
+		<form class="example" action="searchTitleProductList.do" style="margin:auto;">
+		<div style=" display:inline-block; ">
 			<select id='searchType' name='searchType'>			
 				<option value='pName' >제품명</option>
 				<option value='userId'>유저ID</option>
 				<option value='pNo'>제품번호</option>
 			</select>
-				
+		</div>	
+		<div style="display:inline-block; height:42px;">
 		  <input type="text" placeholder="Search.." name="search">
 		  <button type="submit"><i class="fa fa-search"></i></button>	  
+		</div>
 		  <!-- 페이지 출력 형식 체크(전체, 정상, 삭제) -->
 		  <input type="hidden" name="check" id="check" value="${type }">
 		</form> 
+		  </div>
         </div>
-        
     </div>
  
     <!-- ##### Main Content Wrapper End ##### -->
