@@ -18,15 +18,6 @@
 <script src="/billy/resources/js/messageList.js"></script>
 <script type="text/javascript">
 
-/* function checkContent(){
-	var mms_content = $("#mms_content").val();
-	if(!(mms_content.length >= 1)){
-		alert("반드시 내용을 입력 해주세요.");
-		$("#mms_content").select();
-		return false;
-	}
-} */
-
 function popupClose(form) {
 	
 	var mms_content = $("#mms_content").val();
