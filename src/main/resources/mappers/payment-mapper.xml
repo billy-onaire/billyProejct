@@ -70,6 +70,52 @@
 	
 	</select>
 	
+	<!-- 판매완료 리스트 조회 -->
+	<select id="chargeListCriteria" resultMap="resultPayment">
+	<![CDATA[
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		from
+		(
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			from
+			(
+				select payment_price, status, product_name, seller_id, customer, payment_no
+				from payment p, product r
+                where p.product_no = r.product_no and seller_id = #{ customer }
+                order by payment_no desc
+			) i
+			where rownum <= (#{ perPageNum } * #{page}) and status in (1,2)
+		) o
+		where o.rm > #{ pageStart }
+		]]>
+			<include refid="search"/>
+		<![CDATA[
+	]]>
+	</select>
+	
+	<!-- 판매(결제)대기 목록 조회 -->
+	<select id="chargeWaitingListCriteria" resultMap="resultPayment">
+	<![CDATA[
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		from
+		(
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			from
+			(
+				select payment_price, status, product_name, seller_id, customer, payment_no
+				from payment p, product r
+                where p.product_no = r.product_no and seller_id = #{ customer }
+                order by payment_no desc
+			) i
+			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
+		) o
+		where o.rm > #{ pageStart }
+		]]>
+			<include refid="searchSeller"/>
+		<![CDATA[
+	]]>
+	</select>
+	
 	<!-- 거래완료/취소 목록 개수 조회 -->
 	<select id="searchListCount" resultType="_int">
 		select count(*) 

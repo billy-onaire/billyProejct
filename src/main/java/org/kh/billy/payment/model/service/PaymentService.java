@@ -32,5 +32,7 @@ public interface PaymentService {
 	int updateProductQuantity(Payment payment);
 	int deleteBookingInfo(int paymentNo);
 	int updateQuantityAfterCancel(Payment payment);
+	ArrayList<Payment> chargeListCriteria(PaymentCri payCri);
+	ArrayList<Payment> chargeWaitingListCriteria(PaymentCri payCri);
 
 }
