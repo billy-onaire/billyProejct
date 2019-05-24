@@ -18,6 +18,7 @@ import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.AuthInfo;
 import org.kh.billy.socialuser.model.vo.SocialUser;
+import org.kh.billy.statistics.model.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class GoogleSocialController {
-	   @Autowired
+		private static final Logger logger = LoggerFactory.getLogger(GoogleSocialController.class);
+	   
+		@Autowired
 	   private SocialUserService socialService;
 	   
 	   @Autowired
 	   private MemberService memberSerive;
 	   
-	   private static final Logger logger = LoggerFactory.getLogger(GoogleSocialController.class);
+	   @Autowired
+	   private StatisticsService stService;
    
        @Inject
        private AuthInfo authInfo;
@@ -179,6 +183,8 @@ public class GoogleSocialController {
     		   if(socialService.insertSocial(social) > 0) {
     			   System.out.println("소셜회원정보등록성공!");
     			   session.setAttribute("loginMember", member);
+    			   stService.insertSignUp();
+    			   
     			   return "home";
     		   }else {
     			   model.addAttribute("message", "소셜회원등록실패!");

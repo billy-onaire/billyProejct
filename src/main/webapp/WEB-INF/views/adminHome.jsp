@@ -54,13 +54,15 @@ $(function(){
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<c:import url="common/adminNav.jsp" />
-		<div id="login-chart" style="height:250px; width: 800px">로그인차트</div>
+		<div id="login-chart" style="height:250px; width: 600px; float:left;">로그인차트</div>
 	</div>
+	<p id="pp"></p>
 	<c:import url="common/footer.jsp" />
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		var morrisData = [];
 		var today = new Date();
 		var dd = today.getDate();
 		var mm = today.getMonth()+1;
@@ -78,35 +80,30 @@ $(function(){
 			data: {today : today},
 			type: "post",
 			dataType: "json",
-			success: function(result){
+			success: function(obj){
+				console.log("obj값 : " + obj);
+				var objStr = JSON.stringify(obj);
+				var jsonObj = JSON.parse(objStr);
+				console.log("jsonObj : " + jsonObj);
 				
+				for(var i in jsonObj.list){
+					morrisData.push({'날짜':jsonObj.list[i].date,'방문자':jsonObj.list[i].count,'회원가입수':jsonObj.list[i].scount});					
+				}
+				new Morris.Bar({
+					element: 'login-chart',
+					data: 	morrisData,
+					  xkey: '날짜',
+					  ykeys: ['방문자','회원가입수'],
+					  labels: ['방문자','회원가입수']			  
+				}).on('click', function(i, row){
+					console.log(i, row);
+				});
 			},error: function(request, status, errorData){
 				console.log("error code : " + request.status
 						+ "\nmessage : " + request.responseText
 						+ "\nerror : " + errorData);
 			}
 		});//ajax
-		new Morris.Bar({
-			element: 'login-chart',
-			data: [
-				{x: '2011', y: 2, z:3},
-			    {x: '2011', y: 200, z:100},
-			    {x: '2011', y: 3, z: 150},
-			    {x: '2011', y: 2, z: 300},
-			],
-			xkey: 'x',
-			  ykeys: ['y', 'z'],
-			  labels: ['Y', 'Z'],
-			  barColors: function (row, series, type) {
-			    if (type === 'bar') {
-			      var red = Math.ceil(255 * row.y / this.ymax);
-			      return 'rgb(' + red + ',0,0)';
-			    }
-			    else {
-			      return '#000';
-			    }
-			  }
-		});
 	});//ready
 	</script>
 	<!-- Popper js -->

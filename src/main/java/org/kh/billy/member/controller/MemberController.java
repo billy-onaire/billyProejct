@@ -20,6 +20,7 @@ import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
+import org.kh.billy.statistics.model.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class MemberController {
    @Autowired
    private MemberService memberService;
 
+   @Autowired
+   private StatisticsService stService;
+   
    @Autowired
    private BCryptPasswordEncoder bcryptPE;
    
@@ -216,9 +220,10 @@ public class MemberController {
       int result = memberService.create(member);
       /*"redirect:/"*/
       
-      if(result > 0)
+      if(result > 0) {
+    	  	stService.insertSignUp();
 			return "home";
-		else {
+      }else {
 			model.addAttribute("message", "회원 가입 실패!");
 			return "common/error";
 		}
