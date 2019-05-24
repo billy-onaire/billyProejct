@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Billy - 사용자메뉴</title>
 <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 </script>
@@ -22,7 +23,7 @@
 		success : function(result){
 			if(result != 0){
 			$("#num").html(result);
-			$("#mmsalert").css("visibility", "visible");
+			//$("#mmsalert").css("visibility", "visible");
 			$(".btn btn-primary.badge badge-light").text(result);
 			$("#alert").text(result);
 			}
@@ -53,9 +54,31 @@ $(document).ready(function(){
 	}
 	});
 });
+
+//<![CDATA[
+// 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('fbadc90fdfd0a397c43e051918cc2a0d');
+function plusFriendChat() {
+  Kakao.PlusFriend.chat({
+    plusFriendId: '_KXxaYj' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+  });
+}
+//]]>
+
+function abc(){
+	var aIframe = document.createElement("iframe");
+
+	aIframe.style.width = "200px";
+	aIframe.style.height = "100px";
+	aIframe.src = "https://app.closer.ai/webchat/Bdo33r";
+
+	document.body.appendChild(aIframe);
+	}
+
 </script>
 
 <style type="text/css">
+
 @font-face {
 	font-family: 'DXSeNB-KSCpc-EUC-H';
 	src: url(/billy/resources/fonts/DXSeNB-KSCpc-EUC-H.ttf) format('truetype');
@@ -75,6 +98,18 @@ $(document).ready(function(){
 .mb-100{
 	margin-bottom: 50px;
 }
+#chatbot a{
+float: left;
+}
+#chatbot a img:hover{
+cursor: pointer;
+-webkit-filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+-moz-filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+-ms-filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+-o-filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
+}
+
 </style>
 
 </head>
@@ -92,6 +127,7 @@ $(document).ready(function(){
             </div>
         </div>
 
+
         <!-- Header Area Start -->
         <header class="header-area clearfix">
             <!-- Close Icon -->
@@ -106,6 +142,10 @@ $(document).ready(function(){
             <c:if test="${empty loginMember}">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
+	            <div id="chatbot" align="right"><a href="javascript:void plusFriendChat()" style="align:left;">
+	  			<img src="/billy/resources/img/core-img/kakaologo.png" style="width: 40px;"/></a>
+	  			<a href="javascript:window.open('https://app.closer.ai/webchat/Bdo33r','name','width=400px, height=500px,scrollbars=yes,resizable=no');"><img src="/billy/resources/img/core-img/chat.png" style="width: 40px;"></a>
+				</div>
             </div>
        		</c:if>
        		<%-- <c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}"> --%>
@@ -125,13 +165,14 @@ $(document).ready(function(){
        			</c:if>
        			<!-- 메세지 알림 -->
 				<!-- <div id="mmsalert" style="font-size:8pt; cursor:pointer; visibility:hidden;" onclick="location.href='recvList.do'"><span id="alert" style="color:red;"></span>개의 읽지 않은 메세지가 있습니다.</div> -->
-       			<br><button id="mmsalert" type="button" style="font-size:8pt; cursor:pointer; visibility:hidden;" onclick="location.href='recvList.do'" class="btn btn-primary">쪽지 <span id="num" class="badge badge-light"></span></button>
+       			<br><button id="mmsalert" type="button" style="font-size:8pt; cursor:pointer;" onclick="location.href='recvList.do'" class="btn btn-primary"><img src="/billy/resources/img/core-img/mail.png" style="width: 18px;">&nbsp;<span id="num" class="badge badge-light"></span></button>
                 <a href="logout.do">로그아웃</a>
+            <div id="chatbot" align="right"><a href="javascript:void plusFriendChat()" style="align:left;">
+  			<img src="/billy/resources/img/core-img/kakaologo.png" style="width: 40px;"/></a>
+			<a href="javascript:window.open('https://app.closer.ai/webchat/Bdo33r','name','width=400px, height=500px,scrollbars=yes,resizable=no');"><img src="/billy/resources/img/core-img/chat.png" style="width: 40px;"></a>
+			</div>
        		</div>
        		</c:if>
-			
-			<div id="mms"></div>
-
 
             <!-- Amado Nav -->
             <nav class="amado-nav">
