@@ -51,9 +51,9 @@ $(document).ready(function(){
 $(function(){
 	setPageEntry();
 	setSearchType();
-	
+	var sss = '${check}';
+	console.log('check : ' + sss);
 	//prev btn
-	/* !== 'true' */
 	var showPrev = '${ pageMaker.prev }';
 	console.log(showPrev);
 	if(showPrev)
@@ -65,6 +65,11 @@ $(function(){
 	
 	var nowPage = '${ pageMaker.cri.page }';
 	$('#page'+nowPage).addClass('active');
+	
+	//판매중내역 이동
+	$('#sellList').click(function() {
+		location.href = 'chargeWating.do';
+	});//click
 		
 	//결제확인창 띄우는 js
 	$('#pList tr').click(function() {
@@ -221,20 +226,17 @@ function setSearchType() {
 						<h2><b>구매대기</b> 내역</h2><!-- bookingPage.do -->
 					</div>
 					<div class="col-sm-8">						
-						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>판매 내역</span></a>
+						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>판매중 내역</span></a>
 						<!-- <i class="material-icons">&#xE863;</i>  -->
 						<!-- <a href="#" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a> -->
 					</div>
                 </div>
             </div>
-            
-            
-
 
 			<div class="table-filter">
 				<div class="row">
                     <div class="col-sm-3">
-						<div class="show-entries">
+						<div class="view-product d-flex align-items-center">
 							<span>Show</span>
 							<select class="form-control" name='entries' id='entries'>
 								<option value='5'>5</option>
@@ -282,9 +284,14 @@ function setSearchType() {
                 		<td class='sellerId'>${ payment.seller_id }</td>
                 		<td class='productName-Je'>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 3 }'>
-                			<td><span class="status text-info">&bull;</span> 구매중</td>
+                			<td><span class="status text-warning">&bull;</span> 구매중</td>
                 			<td class='goPriceJe'>${ payment.payment_price }₩</td>
-                			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
+                			<c:if test='${ check eq "ok" }'>
+                				<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
+                			</c:if>
+                			<c:if test='${ check eq "cancel" }'>
+                				<td>&nbsp;</td>
+                			</c:if>
                 		</c:if>
                 	</tr>
                 </c:forEach>
@@ -295,7 +302,7 @@ function setSearchType() {
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
                             		<li class='page-item' id='page-prev'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i></a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i></a>
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>

@@ -75,8 +75,23 @@ public class PaymentController {
 		return mav;
 	}
 	@RequestMapping("paymentWaiting.do")
-	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav, HttpSession login) {
+	public ModelAndView paymentWaiting(@RequestBody(required=false) String param, PaymentCri payCri, ModelAndView mav, HttpSession login) throws ParseException {
 		//결제대기 내역
+		
+		if(param != null) {
+			logger.info("confirmPay : " + param);
+			JSONParser parsing = new JSONParser();
+			Object obj = parsing.parse(param);
+			JSONObject jobj = (JSONObject)obj;
+			logger.info("canPay : " + obj.toString());
+			
+			String check = (String)(jobj.get("confirmPay"));
+			logger.info("check : " + check);
+			mav.addObject("check", check);
+		} else {
+			System.out.println("널이 아님");
+		}
+		
 		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
 		payCri.setCustomer(customer);
 		
@@ -115,7 +130,6 @@ public class PaymentController {
 		pw.println(ob.toJSONString());
 		pw.flush();
 		pw.close();
-		
 		/*logger.info("jar size : " + jar.size());
 		
 		for(int i = 0; i < jar.size(); i ++) {
@@ -211,6 +225,73 @@ public class PaymentController {
 		
 	}
 	 
+	@RequestMapping("chargeList.do")
+	public ModelAndView chargeListCriteria(PaymentCri payCri, ModelAndView mav, HttpSession login) {
+		//판매완료 목록 조회
+		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
+		payCri.setCustomer(customer);
+		
+		ArrayList<Payment> p = payService.chargeListCriteria(payCri);
+		
+		countSellList(p.size());
+		
+		mav.addObject("pmList", p);
+		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
+		
+		int totalCount = payService.searchListCount(payCri);
+		pageMaker.setTotalCount(totalCount);
+		
+		mav.addObject("pageMaker", pageMaker);
+		mav.setViewName("payment/chargelistMypage");
+		
+		return mav;
+	}
+	
+	@RequestMapping("chargeWating.do")
+	public ModelAndView chargeWaitingListCriteria(PaymentCri payCri, ModelAndView mav, HttpSession login) {
+		//판매대기중 목록
+		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
+		payCri.setCustomer(customer);
+		
+		PaymentPageMaker pageMaker = new PaymentPageMaker(payCri);
+		pageMaker.setTotalCount(payService.searchWaitingListCount(payCri));
+		
+		mav.addObject("pmList", payService.chargeWaitingListCriteria(payCri));
+		mav.addObject("pageMaker", pageMaker);
+		mav.setViewName("payment/chargeWaiting");
+		
+		logger.info(mav.toString());
+		logger.info("customer : " + payCri.getCustomer());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="confimPay.do", method=RequestMethod.POST)
+	public ModelAndView confirmPay(@RequestBody String param, ModelAndView model) throws ParseException {
+		//결제수락용
+		logger.info("confirmPay : " + param);
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		model.addObject("DoCharge", (String)jobj.get("canCharge"));
+		model.setViewName("payment/paymentPage");
+		return model;
+	}
+	//구매완료 횟수
+	public ModelAndView countBuyList(int buyList) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	//판매완료 횟수
+	public ModelAndView countSellList(int sellList) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	
+	
+	
+	
+	// 부트페이 관련 메소드 =======================================================================================
 	@RequestMapping("goPayPage.do")
 	public String paymentPage() {
 		api = new BootpayApi("5cc01b9c396fa67735bd0668", "rUqf5N0F42iUbj8SSNLCF7Rqyc/pPxa7HLkqq2k/5m4=");

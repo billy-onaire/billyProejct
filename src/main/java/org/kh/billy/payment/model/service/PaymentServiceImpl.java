@@ -142,4 +142,17 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		return paymentDao.updateQuantityAfterCancel(mybatisSession, payment);
 	}
+
+	@Override
+	public ArrayList<Payment> chargeListCriteria(PaymentCri payCri) {
+		List<Payment> pmList = paymentDao.chargeListCriteria(mybatisSession, payCri); 
+		
+		return (ArrayList<Payment>)pmList;
+	}
+	@Override
+	public ArrayList<Payment >chargeWaitingListCriteria(PaymentCri payCri) {
+		List<Payment> pmList = paymentDao.chargeWaitingListCriteria(mybatisSession, payCri);
+		
+		return (ArrayList<Payment>)pmList;
+	}
 }
