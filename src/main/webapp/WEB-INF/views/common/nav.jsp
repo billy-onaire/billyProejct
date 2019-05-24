@@ -55,6 +55,7 @@ $(document).ready(function(){
 	});
 });
 
+
 //<![CDATA[
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('fbadc90fdfd0a397c43e051918cc2a0d');
@@ -187,6 +188,7 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
+            	<a href="javascript:popupOpen();" class="btn amado-btn mb-15">Chatting</a>
                 <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
@@ -201,4 +203,16 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
         </header>
         <!-- Header Area End -->
 </body>
+
+<script type="text/javascript">
+function popupOpen(){
+
+	var popUrl = "chat.do";	//팝업창에 출력될 페이지 URL
+
+	var popOption = "width=450, height=660, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+
+		window.open(popUrl,"",popOption);
+
+	}
+</script>
 </html>
