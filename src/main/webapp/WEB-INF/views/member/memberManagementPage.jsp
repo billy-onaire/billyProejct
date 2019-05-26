@@ -164,7 +164,7 @@ function optionValue(){
 			</li>
 			</c:if>
 		</ul>
-		<div class="container">
+		<div class="container"> 
 		<form action="mSearchList.do" method="get">
 		<div class="form-group">
 			<select class="form-control" id="selection" name="selection" onChange="optionValue();">

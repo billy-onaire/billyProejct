@@ -17,12 +17,6 @@
 	src: url(/billy/resources/fonts/DXSeNB-KSCpc-EUC-H.ttf) format('truetype');
 }
 
-#google_img{
-	width: 50px;
-	height: 50px;
-	border-radius: 50px;
-}
-
 #pname {
 	font-family: 'DXSeNB-KSCpc-EUC-H';
 	font-size: 30pt;
@@ -64,16 +58,15 @@
 				<a href="amain.do" class="billya"><img src="/billy/resources/img/core-img/billylogo3.png" alt=""></a>
 			</div>
 			<!-- Cart Menu -->
-			<c:if test="${empty loginAdmin}">
+			<c:if test="${empty admin}">
 			<div class="cart-fav-search mb-100">
-				<a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
-				<a href="recvList.do">쪽지 확인용</a>
+				<a href="alogin.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
 			</div>
 			</c:if>
-			<c:if test="${!empty loginAdmin}">
+			<c:if test="${!empty admin}">
 			<div class="cart-fav-search mb-100" id="socialLogin">
-				<img id="google_img"  src="${googleLogin.profile }">&nbsp; <span id="pname">${googleLogin.name }님</span>
-				<a href="logout.do">로그아웃</a>
+				<i class="fas fa-user-tie" style="font-size:30px;"></i><span id="pname">관리자님</span>
+				<a href="alogout.do">로그아웃</a>
 			</div>
 			</c:if>
 
