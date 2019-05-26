@@ -50,25 +50,6 @@ $(function() {
 			alert('메인으로 돌아갑니다');
 			location.replace('main.do');
 		}
-			
-		/* var job = new Object();
-		job.name = 'num';
-		job.num = no;
-		
-		$.ajax({
-			url: 'cancelBooking.do',
-			type: 'post',
-			data: JSON.stringify(job),
-			contentType: 'application/json; charset=utf-8',
-			cache: false,
-			success: function(result) {
-				console.log(result);
-				if(result == 'SUCCESS')
-					alert('예약이 취소되었습니다');
-				
-				location.href='main.do';
-			}
-		}) */ //ajax
 	});
 	
 	$('#sendMsgbtn').click(function(){
@@ -111,11 +92,6 @@ $(function() {
 			})
 	})//click
 });
-function finishPay() {
-	
-	
-	
-}
 </script>
 <body id='bookingBody'>
 	<input type='button' value='예약취소'/>

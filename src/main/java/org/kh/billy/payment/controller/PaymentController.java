@@ -77,7 +77,6 @@ public class PaymentController {
 	@RequestMapping("paymentWaiting.do")
 	public ModelAndView paymentWaiting(@RequestBody(required=false) String param, PaymentCri payCri, ModelAndView mav, HttpSession login) throws ParseException {
 		//결제대기 내역
-		
 		if(param != null) {
 			logger.info("confirmPay : " + param);
 			JSONParser parsing = new JSONParser();
@@ -109,7 +108,6 @@ public class PaymentController {
 	}
 	@RequestMapping(value="doPayment.do")
 	public void doPayment(@RequestBody String param, HttpServletResponse response) throws IOException, ParseException {
-		
 		JSONParser parsing = new JSONParser();
 		Object obj = parsing.parse(param);
 		JSONObject jobj = (JSONObject)obj;
@@ -130,16 +128,6 @@ public class PaymentController {
 		pw.println(ob.toJSONString());
 		pw.flush();
 		pw.close();
-		/*logger.info("jar size : " + jar.size());
-		
-		for(int i = 0; i < jar.size(); i ++) {
-			JSONObject job = (JSONObject)jar.get(i);
-			Payment payment = new Payment();
-			payment.setPayment_price(((Long) job.get("price")).intValue());
-			payment.setProduct_name(job.get("name").toString());
-		}*/
-		
-		/*return new ResponseEntity<String>("success", HttpStatus.OK);*/
 	}
 	
 	@RequestMapping(value="bookingPage.do")
@@ -194,31 +182,16 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="resultPay.do")
-	public ModelAndView resultList(Payment payment, ModelAndView mav, ArrayList<Payment> pmList) {
+	public ModelAndView resultList(@RequestParam(name="pno") int paymentNo, HttpServletResponse response, ModelAndView mav) throws ParseException, IOException {
 		//영수증
+		Payment payment = payService.selectPaymentListOne(paymentNo);
+		logger.info("invoice payment : " + payment);
+		
+		mav.addObject("payment", payment);
 		mav.setViewName("payment/paymentPage");
-		logger.info("mav pay : " + mav.toString());
 		
 		return mav;
 	}
-	@RequestMapping(value="cancelBooking.do", method=RequestMethod.POST)
-	public ResponseEntity<String> deleteBookingInfo(@RequestBody String param, Payment payment) throws ParseException {
-		JSONParser parsing = new JSONParser();
-		Object obj = parsing.parse(param);
-		JSONObject jobj = (JSONObject)obj;
-		
-		String pno = (String)jobj.get("num");
-		logger.info("param : " + param);
-		int paymentNo = Integer.parseInt(pno); 
-		
-		int re = payService.deleteBookingInfo(paymentNo);
-		payment = payService.selectPaymentListOne(payment);
-		int upre = payService.updateQuantityAfterCancel(payment);
-		logger.info("delete re : " + String.valueOf(re));
-		logger.info("up re : " + String.valueOf(upre));
-		
-		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-	} 
 	
 	@RequestMapping("bookingMsg.do")
 	public void bookingMsg() {
@@ -267,15 +240,24 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value="confimPay.do", method=RequestMethod.POST)
-	public ModelAndView confirmPay(@RequestBody String param, ModelAndView model) throws ParseException {
+	public ResponseEntity<String> confirmPay(@RequestBody String param, ModelAndView model) throws ParseException {
 		//결제수락용
 		logger.info("confirmPay : " + param);
 		JSONParser parsing = new JSONParser();
 		Object obj = parsing.parse(param);
 		JSONObject jobj = (JSONObject)obj;
-		model.addObject("DoCharge", (String)jobj.get("canCharge"));
-		model.setViewName("payment/paymentPage");
-		return model;
+		
+		String status = (String)jobj.get("confirmPay");
+		int paymentNo = Integer.parseInt((String)jobj.get("paymentNo"));
+		if(status.equals("ok")) {
+			int re = payService.updateAdmitCharge(paymentNo);
+			logger.info("charge ok : " + String.valueOf(re));
+		} else if(status.equals("cancel")) {
+			int re = payService.updateRejectCharge(paymentNo);
+			logger.info("charge cancel : " + String.valueOf(re));
+		}
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 	//구매완료 횟수
 	public ModelAndView countBuyList(int buyList) {

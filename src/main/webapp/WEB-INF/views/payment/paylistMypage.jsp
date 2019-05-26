@@ -48,10 +48,6 @@ $(function(){
 	var nowPage = '${ pageMaker.cri.page }';
 	$('#page'+nowPage).addClass('active');
 	
-	$('.view i').click(function() {
-		location.href = 'resultPay.do';
-	});
-	
 	//판매내역 이동
 	$('#sellList').click(function() {
 		location.href = 'chargeList.do';
@@ -145,7 +141,8 @@ function setSearchType() {
                         <th>no</th>
                         <th>판매자</th>
 						<th>제목</th>				
-                        <th>거래상태</th>						
+                        <th>거래상태</th>
+                        <th>가격</th>						
 						<th>영수증</th>
                     </tr>
                 </thead>
@@ -158,54 +155,16 @@ function setSearchType() {
                 		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 1 }'>
                 			<td><span class="status text-success">&bull;</span> 구매완료</td>
-                			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
+                			<td>${ payment.payment_price }₩</td>
+                			<td><div class="view" title="View Details" data-toggle="tooltip"  onclick="location.href='resultPay.do?pno=${ payment.payment_no }' "><i class="material-icons">&#xE5C8;</i></div></td>
                 		</c:if>
                 		<c:if test='${ payment.status eq 2 }'>
                 			<td><span class="status text-danger">&bull;</span> 취소</td>
+                			<td>${ payment.payment_price }₩</td>
                 			<td> </td>
                 		</c:if>
                 	</tr>
                 </c:forEach>
-                </tbody>
-                <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td><img src="/examples/images/avatar/1.jpg" class="avatar" alt="Avatar"> Michael Holz</td>
-						<td><a href="#">더러운 신발 팝니다~</a></td>                   
-						<td><span class="status text-success">&bull;</span> 구매완료</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-					<tr>
-                        <td>2</td>
-                        <td><img src="#" class="avatar" alt="Avatar"> Paula Wilson</td>
-                        <td><a href="#">fdfdfdfdfdfdfdf</a></td>                       
-						<td><span class="status text-info">&bull;</span> 거래중</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr> -->
-					<!-- <tr>
-                        <td>3</td>
-                        <td><a href="#"><img src="/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"> Antonio Moreno</a></td>
-						<td>Berlin</td>
-                        <td>Jul 04, 2017</td>
-                        <td><span class="status text-danger">&bull;</span> 취소</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>                        
-                    </tr>
-					<tr>
-                        <td>4</td>
-                        <td><a href="#"><img src="/examples/images/avatar/4.jpg" class="avatar" alt="Avatar"> Mary Saveley</a></td>
-						<td>New York</td>
-                        <td>Jul 16, 2017</td>						
-						<td><span class="status text-warning">&bull;</span> 결제대기</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr>
-					<tr>
-                        <td>5</td>
-                        <td><a href="#"><img src="/examples/images/avatar/5.jpg" class="avatar" alt="Avatar"> Martin Sommer</a></td>
-						<td>Paris</td>
-                        <td>Aug 04, 2017</td>
-						<td><span class="status text-success">&bull;</span> 거래완료</td>
-						<td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-                    </tr> -->
                 </tbody>
             </table>
              <div class="row">
@@ -222,32 +181,14 @@ function setSearchType() {
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
                             		<li class='page-item' id='page-next'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
-                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
-			<!-- <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">6</a></li>
-					<li class="page-item"><a href="#" class="page-link">7</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div> -->
         </div>
     </div>     
 </div>

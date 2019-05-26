@@ -50,29 +50,39 @@ $(function(){
 	
 	//구매중내역 이동
 	$('#sellList').click(function() {
-		
+		location.href='paymentWaiting.do';
 	});//click
 	
-	$('#ok-je').click(function() {
+	$('.ok-je').click(function() {
+	    console.log(".ok-je click function is started");
+		var td = $(this).closest('tr').find('td:nth-child(2)');
+		
+		console.log("paymentNo : " + td.html());
 		var job = new Object();
 		job.confirmPay = 'ok';
+		job.paymentNo = td.html();
 		$.ajax({
-			url: 'paymentWaiting.do',
+			url: 'confimPay.do',
 			type: 'post',
 			cache: 'false',
 			data: JSON.stringify(job),
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
 				console.log('success');
+				$('.ok-je').hide();
 			}
 		})//ajax
 	});//click
 	//판매거부
-	$('#cancel-je').click(function() {
+	$('.cancel-je').click(function() {
+		console.log(".cancel-je click function is started");
+		var td =  $(this).closest('tr').find('td:nth-child(2)');
+		
 		var job = new Object();
 		job.confirmPay = 'cancel';
+		job.paymentNo = td.html();
 		$.ajax({
-			url: 'paymentWaiting.do',
+			url: 'confimPay.do',
 			type: 'post',
 			cache: 'false',
 			data: JSON.stringify(job),
@@ -122,12 +132,10 @@ function setSearchType() {
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-4">
-						<h2><b>구매대기</b> 내역</h2><!-- bookingPage.do -->
+						<h2><b>판매대기</b> 내역</h2>
 					</div>
 					<div class="col-sm-8">						
-						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>판매중 내역</span></a>
-						<!-- <i class="material-icons">&#xE863;</i>  -->
-						<!-- <a href="#" class="btn btn-info"><i class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a> -->
+						<a id='sellList' class="btn btn-primary"><i class='material-icons'>payment</i><span>구매중 내역</span></a>
 					</div>
                 </div>
             </div>
@@ -186,9 +194,14 @@ function setSearchType() {
                 			<td><span class="status text-warning">&bull;</span> 결제요청</td>
                 			<td class='goPriceJe'>${ payment.payment_price }₩</td>
                 			<td>
-                				<div id='ok-je' data-toggle='tooltip' title='ok'><i class="material-icons"></i></div>
-                				<div id='cancel-je' data-toggle='tooltip' title='cancel'><i class="material-icons"></i></div>
+                				<div class='ok-je' data-toggle='tooltip' title='ok'><i class="material-icons"></i></div>
+                				<div class='cancel-je' data-toggle='tooltip' title='cancel'><i class="material-icons"></i></div>
                 			</td>
+                		</c:if>
+                		<c:if test='${ payment.status eq 4 }'>
+                			<td><span class="status text-info">&bull;</span> 결제중</td>
+                			<td class='goPriceJe'>${ payment.payment_price }₩</td>
+                			<td>&nbsp;</td>
                 		</c:if>
                 	</tr>
                 </c:forEach>
@@ -211,10 +224,6 @@ function setSearchType() {
                             			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
-                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
                         </nav>
                     </div>
