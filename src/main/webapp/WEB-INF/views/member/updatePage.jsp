@@ -141,7 +141,7 @@ $(function(){
 			var userId = td.eq(0).text();
 			
 			$.ajax({
-				url: "deleteMember.do",
+				url: "deleteUser.do",
 				data: {userId: $("#user_id").val()},
 				type: "get",
 				dateType: "json",

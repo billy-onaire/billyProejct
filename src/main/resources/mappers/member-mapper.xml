@@ -52,6 +52,7 @@
    
    <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
       select user_id from tb_user left join socialuser using (user_id) where user_id = #{user_id}
+      and verify = 'y'
    </select>
    
    <select id="selectCheckANo" parameterType="String" resultType="String">
@@ -66,6 +67,10 @@
       select * from tb_user where authkey not in (select social_code from socialuser) 
       and user_mobile = #{user_mobile} and user_name = #{user_name}     
    </select>
+   
+   <select id="selectSocialMember" parameterType="Member" resultMap="resultMember" useCache="true">
+      select * from tb_user where authkey in (select social_code from socialuser) and user_id = #{user_id}    
+   </select>	
    
    <!-- 회원관리 총 게시물수 체크 -->
    <select id="selectTotalCount" resultType="int">
@@ -162,6 +167,11 @@
       set user_mobile = #{user_mobile}, user_name = #{user_name}, 
       email = #{email}, address = #{address}, my_introduce = #{my_introduce}, 
       location_area = #{location_area}, user_update = sysdate where user_id = #{user_id}
+   </update>
+   
+   <!-- 자진탈퇴 -->
+   <update id="deleteUser" parameterType="string">
+   		update tb_user set delete_yn = 'Y', verify = 'n' where user_id = #{userId}
    </update>
    
    <!-- 신고횟수가 3회이면 우선 탈퇴시킴 delete_yn => Y로 바꿈 (정지) -->

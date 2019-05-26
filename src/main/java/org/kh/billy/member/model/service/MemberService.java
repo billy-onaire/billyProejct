@@ -34,4 +34,6 @@ public interface MemberService {
 		int updateBackMember(String userId);
 		String selectDeleteUser(String userId);
 		int updateSocialMember(Member member);
+		Member selectSocialMember(Member member);
+		int deleteUser(String userId);
 }

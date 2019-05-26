@@ -20,6 +20,7 @@ import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
 import org.kh.billy.sms.model.vo.Sms;
+import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.statistics.model.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,9 @@ public class MemberController {
    
    private static final Logger logger = 
          LoggerFactory.getLogger(MemberController.class);
+   
+   @Autowired
+   private SocialUserService socialService;
    
    @Autowired
    private MemberService memberService;
@@ -117,31 +121,44 @@ public class MemberController {
    //로그인 아이디 체크
    @RequestMapping(value="loginCheck.do", method=RequestMethod.POST)
    public String selectCheckId(Model model,HttpServletRequest request, HttpSession session, SessionStatus status, Member member) {
-	   if(memberService.selectDeleteUser(member.getUser_id()) != null){
+	   /*if(memberService.selectDeleteUser(member.getUser_id()) != null){
 		   model.addAttribute("message", "탈퇴된 회원입니다.");
 		   return "member/memberError";
-	   }
+	   }*/
 	   
 	   Member user = memberService.selectCheckId(member.getUser_id());
 	   
 	   if(user != null) {
-		   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
+		   
+		   if(user.getVerify().equals("y") && user.getDelete_yn().equals("N")) {
+			   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
 			   user.setSocial_type("user");
 			   session.setAttribute("loginMember", user);
 			   status.setComplete();
-			   System.out.println(user.getUser_id() + "님 로그인 성공!!");
-			   
+			   System.out.println(user.getUser_id() + "님 로그인 성공!!");			   
 			   return "home";
-		   }else {
-			   model.addAttribute("message", "아이디와 비밀번호를 다시 확인해주세요.");
+			   }else {
+				   model.addAttribute("message", "아이디와 비밀번호를 다시 확인해주세요.");
 			   return "member/memberError";
-		   }
-	   }else{
-		   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
-		   return "member/memberError";
-	   }
-	   
+			   }
+		   }else if(user.getVerify().equals("n") && user.getDelete_yn().equals("N")){
+			   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
+			   return "member/memberError";		   
+		   }else if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
+			   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
+		   	   return "member/memberError";	
+	   	   }else if(user.getVerify().equals("n") && user.getDelete_yn().equals("Y"))  
+	   		model.addAttribute("message", "탈퇴한 회원입니다.");
+		   	   return "member/memberError";
+	   	   	   
+	   }else {
+			   model.addAttribute("message", "로그인에 실패하였습니다 다시 로그인 해주세요.");
+			   return "member/memberError";
+	   }	   
+	
    }
+   
+   
    
    //아이디 중복검사 체크
    @RequestMapping(value="idCheck.do", method=RequestMethod.POST)
@@ -195,11 +212,29 @@ public class MemberController {
 	}
 	
    @RequestMapping(value="smupdate.do", method=RequestMethod.POST)
-     public String updateSocialMember(Member member, Model model, HttpServletRequest request) {
+     public String updateSocialMember(Member member, Model model, HttpServletRequest request
+    		 ,SessionStatus status, HttpSession session) {
 
   	   int result = memberService.updateSocialMember(member);
-  		   
+  	   Member sumember = memberService.selectSocialMember(member);
+  	   System.out.println("sumember : " + sumember);
+  	   String userId = sumember.getUser_id();
+  	   System.out.println("sumember userid : " + userId);
+  	   Member suuser = socialService.selectSocialUser(userId);
+  	   
   	   if(result > 0) {
+  		   if(suuser.getSocial_type().equals("kakao")) {
+  			sumember.setSocial_type("kakao"); 			   
+  		   }else if(suuser.getSocial_type().equals("naver")) {
+  			sumember.setSocial_type("naver");   
+  		   }else if(suuser.getSocial_type().equals("google")) {
+  			sumember.setSocial_type("google");   
+  		   }else if(suuser.getSocial_type().equals("facebook")) {
+  			sumember.setSocial_type("facebook");
+  		   }
+  		   	sumember.setUser_id(userId);
+			session.setAttribute("loginMember", sumember);
+			status.setComplete();
   			return "home";
   		}else {
   			model.addAttribute("message", "회원정보 수정 실패!");
@@ -211,6 +246,25 @@ public class MemberController {
    public String deleteMember(Member member, HttpServletRequest request, Model model) {
       return "member/memberManagementPage";
    }
+   
+   
+   //회원탈퇴
+   @RequestMapping(value="deleteUser.do")
+   public ModelAndView deleteUser(ModelAndView mv, @RequestParam String userId)throws UnsupportedEncodingException {
+	   int result = memberService.deleteUser(userId);
+	   Map<String, String> map = new HashMap<>();
+	   
+	   if(result > 0) {
+		   map.put("message", URLEncoder.encode("회원 탈퇴되었습니다.", "UTF-8"));
+	   }else {
+		   map.put("message", URLEncoder.encode("회원 탈퇴실패","UTF-8"));
+	   }
+	   mv.addObject(map);
+	   mv.setViewName("jsonView");
+	   return mv;
+   }
+   
+  
    
    @RequestMapping(value = "joinPost.do", method = RequestMethod.POST)
    public String RegisterPost(Member member, Model model, HttpServletRequest request, HttpSession session) throws Exception {
@@ -238,7 +292,7 @@ public class MemberController {
       
       model.addAttribute("verify", "y");
       
-      return "member/login";
+      return "home";
    }
    
    //비밀번호 찾기시 휴대폰인증번호 보내기

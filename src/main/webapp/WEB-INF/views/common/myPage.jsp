@@ -32,8 +32,7 @@
                 <!--  Catagories  -->
                 <div class="catagories-menu">
                     <ul>
-                    	<c:if test="${!empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty googleLogin
-                    	or !empty facebookLogin }">
+                    	<c:if test="${loginMember.social_type eq 'user' }">
                         <li><a href="mupage.do"><span class="catagories-menu-radios">내 정보 수정</span></a></li>
                         </c:if>
                         <li><a href="myproductlist.do"><span class="catagories-menu-radios">내 상품 </span></a></li>

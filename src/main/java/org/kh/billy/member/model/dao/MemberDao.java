@@ -119,5 +119,13 @@ public class MemberDao {
 	
 	public int updateSocialMember(SqlSessionTemplate session, Member member) {
 		return session.update("memberMapper.updateSocialMember", member);
+	}
+
+	public Member selectSocialMember(SqlSessionTemplate session, Member member) {
+		return session.selectOne("memberMapper.selectSocialMember", member);
+	}
+
+	public int deleteUser(SqlSessionTemplate session, String userId) {
+		return session.update("memberMapper.deleteUser", userId);
 	}	
 }

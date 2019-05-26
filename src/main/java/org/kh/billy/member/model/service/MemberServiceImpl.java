@@ -166,6 +166,16 @@ public class MemberServiceImpl implements MemberService{
 	public int updateSocialMember(Member member) {
 		return memberDao.updateSocialMember(mybatisSession, member);
 	}
+
+	@Override
+	public Member selectSocialMember(Member member) {
+		return memberDao.selectSocialMember(mybatisSession, member);
+	}
+
+	@Override
+	public int deleteUser(String userId) {
+		return memberDao.deleteUser(mybatisSession, userId);
+	}
 	
 	
 }

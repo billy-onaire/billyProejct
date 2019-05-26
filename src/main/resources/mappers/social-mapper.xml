@@ -30,6 +30,11 @@
 		where user_id = #{userId}
 	</select>
 	
+	<select id="selectSocialUser" parameterType="String" resultType="Member">
+		select * from socialuser
+		where user_id = #{userId}
+	</select>
+	
 	<select id="selectSocialCheck" parameterType="String" resultType="int">
 		select count(user_id) from socialuser
 		join tb_user using(user_id)
