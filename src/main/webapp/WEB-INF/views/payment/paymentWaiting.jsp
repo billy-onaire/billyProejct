@@ -72,14 +72,22 @@ $(function(){
 	});//click
 		
 	//결제확인창 띄우는 js
-	$('#pList tr').click(function() {
-		var tr = $(this);
+	$('.view').click(function() {
+		console.log('.view cilck function is started');
+		var tr = $('#pList');
 		var td = tr.children();
+		
+		var payNno = tr.find('td:nth-child(2)').html();
+		var seller = tr.find('td:nth-child(3)').html();
+		var goods = tr.find('td:nth-child(4)').html();
+		var cost = tr.find('td:nth-child(6)').html();
+		console.log('payno : ' + payNno + ', seller : ' + seller + ', goods : ' + goods + ', cost : ' + cost);
+		
 		console.log('text : ' + tr.text());
-		$('input[name=payment_no]').val(td.eq(1).html());
-		$('input[name=seller_id]').val(td.eq(2).html());
-		$('input[name=product_name]').val(td.eq(3).html());
-		$('input[name=payment_price]').val(td.eq(5).html());
+		$('input[name=payment_no]').val(payNno);
+		$('input[name=seller_id]').val(seller);
+		$('input[name=product_name]').val(goods);
+		$('input[name=payment_price]').val(cost);
 		
 		$('.limiter').show();
 		
@@ -99,9 +107,10 @@ $(function(){
 			contentType: 'application/json; charset=utf-8',
 			cache: 'false',
 			type: 'post',
-			success: function(result) {
+			success: function() {
 				console.log('성공!');
 				$('#doPayment').click(function() {
+					console.log('그냥 되는거야?');
 					BootPay.request({
 						price: payPrice[0], //실제 결제되는 가격
 						application_id: "5cc01b9c396fa67735bd0665",
@@ -169,22 +178,6 @@ $(function(){
 		});
 		
 	});
-
-		/* td.each(function(i){
-			payNoArr.push(td.eq(i).text());
-		});
-		console.log("payNoArr : " + payNoArr); */
-		/* $.ajax({
-			url: 'resultPay.do',
-			type: 'post',
-			cache: 'false',
-			dataType: 'json',
-			data: jsonPayInfo,
-			success: function() {
-				alert("dk!");
-			}//success
-		}); */ //ajax
-	
 });//ready
 function setPageEntry(){
 	var perPageNum = '${ pageMaker.cri.perPageNum }';
@@ -286,12 +279,12 @@ function setSearchType() {
                 		<c:if test='${ payment.status eq 3 }'>
                 			<td><span class="status text-warning">&bull;</span> 구매중</td>
                 			<td class='goPriceJe'>${ payment.payment_price }₩</td>
-                			<c:if test='${ check eq "ok" }'>
-                				<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
-                			</c:if>
-                			<c:if test='${ check eq "cancel" }'>
-                				<td>&nbsp;</td>
-                			</c:if>
+                			<td>&nbsp;</td>
+                		</c:if>
+                		<c:if test='${ payment.status eq 4 }'>
+                			<td><span class="status text-warning">&bull;</span> 구매중</td>
+                			<td class='goPriceJe'>${ payment.payment_price }₩</td>
+                			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
                 		</c:if>
                 	</tr>
                 </c:forEach>
@@ -314,10 +307,6 @@ function setSearchType() {
                             			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
-                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
                         </nav>
                     </div>

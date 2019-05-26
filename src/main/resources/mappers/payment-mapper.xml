@@ -60,7 +60,7 @@
                 where p.product_no = r.product_no and customer = #{ customer }
                 order by payment_no desc
 			) i
-			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
+			where rownum <= (#{ perPageNum } * #{ page }) and status in (3,4)
 		) o
 		where o.rm > #{ pageStart }
 		]]>
@@ -107,7 +107,7 @@
                 where p.product_no = r.product_no and seller_id = #{ customer }
                 order by payment_no desc
 			) i
-			where rownum <= (#{ perPageNum } * #{ page }) and status = 3
+			where rownum <= (#{ perPageNum } * #{ page }) and status in (3,4)
 		) o
 		where o.rm > #{ pageStart }
 		]]>
@@ -128,15 +128,15 @@
 	<select id="searchWaitingListCount" resultType="_int">
 		select count(*)
 		from payment
-		where status = 3 and customer = #{ customer }
+		where status in (3,4) and customer = #{ customer }
 		<include refid="searchSeller"/>
 	</select>
 	
 	<!-- payment 테이블 목록 1개 조회 -->
-	<select id="selectPaymentListOne" parameterType="payment" resultType="payment">
-		select payment_no, product_name, seller_id, customer, payment_price
+	<select id="selectPaymentListOne" parameterType="_int" resultType="payment">
+		select *
 		from payment p, product r
-		where p.product_no = r.product_no and payment_no = #{ payment_no } and customer = #{ customer }
+		where p.product_no = r.product_no and payment_no = #{ paymentNo }
 	</select>
 	
 	<!-- 거래예약 정보 조회 -->
@@ -211,6 +211,29 @@
 		set
 			status = 1
 	</update>
+	
+	<!-- 결제수락 payment status 업데이트 -->
+	<update id="updateAdmitCharge" parameterType="_int">
+		update
+		(
+			select status from payment
+			where payment_no = #{ paymentNo }
+		)
+		set
+			status = 4
+	</update>
+	
+	<!-- 결제거부 payment status 업데이트 -->
+	<update id="updateRejectCharge" parameterType="_int">
+		update
+		(
+			select status from payment
+			where payment_no = #{ paymentNo }
+		)
+		set
+			status = 2
+	</update>
+	
 	<!-- delete 문 =============================================================================================== -->
 	<!-- 예약 취소 -->
 	<delete id="deleteBookingInfo" parameterType="_int">

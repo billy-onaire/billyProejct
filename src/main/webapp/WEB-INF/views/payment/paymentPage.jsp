@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 <!DOCTYPE html>
 <html>
@@ -10,6 +9,10 @@
 <link rel='stylesheet' href='${ pageContext.request.contextPath }/resources/css/paymentInvoice.css'>
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/paymentConfirm.css">
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+<!-- jquery -->
+<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+</script>
 </head>
 <body>
 <div class="main-content-wrapper d-flex clearfix">
@@ -27,8 +30,8 @@
                             </td>
                             
                             <td>
-                                Invoice #: 123<br>
-                                Created: 2019. 05월 10일<br>
+                                Invoice #: ${ payment.payment_no }<br>
+                                <!-- Created: 2019. 05월 10일<br> -->
                             </td>
                         </tr>
                     </table>
@@ -71,7 +74,7 @@
                 </td>
                 
                 <td>
-                    	1000
+                    	${ payment.payment_price }₩
                 </td>
             </tr>
             
@@ -81,37 +84,37 @@
                 </td>
                 
                 <td>
-                    Price
+                    Info.
                 </td>
             </tr>
             
             <tr class="item">
                 <td>
-                    Website design
+                    ${ payment.product_name }
                 </td>
                 
-                <td>
-                    $300.00
+                <td id='costperday'>
+                    ${ payment.payment_price }₩
                 </td>
             </tr>
             
             <tr class="item">
                 <td>
-                    Hosting (3 months)
+                   판매자
                 </td>
                 
                 <td>
-                    $75.00
+                    ${ payment.seller_id }님
                 </td>
             </tr>
             
             <tr class="item last">
                 <td>
-                    Domain name (1 year)Domain name (1 year)Domain name (1 year)
+                    구매자
                 </td>
                 
                 <td>
-                    $10.00
+                    ${ payment.customer }님
                 </td>
             </tr>
             
@@ -119,7 +122,7 @@
                 <td></td>
                 
                 <td>
-                   Total: $385.00
+                   Total: ${ payment.payment_price }원
                 </td>
             </tr>
         </table>

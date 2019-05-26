@@ -21,49 +21,6 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentDao paymentDao;
-	
-	@Override
-	public ArrayList<Payment> selectPaymentList() {
-		List<Payment> pmList = paymentDao.selectPaymentList(mybatisSession);
-		return (ArrayList<Payment>)pmList;
-	}
-
-	@Override
-	public ArrayList<Payment> searchPayment(Payment payment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Payment selectPayment(String payment_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insertPayment(Payment payment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updatePayment(Payment payment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deletePayment(String payment_no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
-	public ArrayList<Payment> selectPaymentMyList() {
-		List<Payment> pmList = paymentDao.selectPaymentMyList(mybatisSession);
-		return (ArrayList<Payment>)pmList;
-	}
 
 	@Override
 	public ArrayList<Payment> listCriteria(PaymentCri payCri) {
@@ -114,9 +71,9 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public Payment selectPaymentListOne(Payment payment) {
+	public Payment selectPaymentListOne(int paymentNo) {
 		
-		return paymentDao.selectPaymentListOne(mybatisSession, payment);
+		return paymentDao.selectPaymentListOne(mybatisSession, paymentNo);
 	}
 	
 	@Override
@@ -154,5 +111,17 @@ public class PaymentServiceImpl implements PaymentService {
 		List<Payment> pmList = paymentDao.chargeWaitingListCriteria(mybatisSession, payCri);
 		
 		return (ArrayList<Payment>)pmList;
+	}
+
+	@Override
+	public int updateAdmitCharge(int paymentNo) {
+		
+		return paymentDao.updateAdmitCharge(mybatisSession, paymentNo);
+	}
+
+	@Override
+	public int updateRejectCharge(int paymentNo) {
+		
+		return paymentDao.updateRejectCharge(mybatisSession, paymentNo);
 	}
 }
