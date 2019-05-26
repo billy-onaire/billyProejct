@@ -74,4 +74,9 @@ public class SocialUserServiceImpl implements SocialUserService{
 		return 0;
 	}
 
+	@Override
+	public Member selectSocialUser(String userId) {
+		return socialDao.selectSocialUser(mSession, userId);
+	}
+
 }

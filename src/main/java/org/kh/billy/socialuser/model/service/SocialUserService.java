@@ -17,4 +17,5 @@ public interface SocialUserService {
 	int selectSocialCheck(String sid);
 	Member selectUserInfo(String userId);
 	String selectDeleteSocial(String userId);
+	Member selectSocialUser(String userId);
 }
