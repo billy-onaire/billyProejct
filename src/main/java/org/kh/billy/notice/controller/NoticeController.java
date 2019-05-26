@@ -62,6 +62,10 @@ public class NoticeController {
 	}
 	@RequestMapping("noticedetail.do")
 	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
+		if(noticeService.updateNoticeReadCount(noticeNo) > 0)
+			System.out.println("조회수 1증가");
+		else
+			System.out.println("조회수 증가 실패");
 		Notice notice = noticeService.selectNotice(noticeNo);
 		mv.addAttribute("notice", notice);
 		return "notice/noticeDetail";
@@ -69,9 +73,13 @@ public class NoticeController {
 	
 	@RequestMapping("adminnoticedetail.do")
 	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
-		System.out.println(noticeNo);
+		//관리자가 상세 조회시 조회수 증가를 시키지 않음
+		/*if(noticeService.updateNoticeReadCount(noticeNo) > 0)
+			System.out.println("조회수 1증가");
+		else
+			System.out.println("조회수 증가 실패");*/
+		
 		Notice notice = noticeService.selectNotice(noticeNo);
-		System.out.println(notice);
 		mv.addAttribute("notice", notice);
 		return "notice/adminNoticeDetail";
 	}
@@ -178,13 +186,13 @@ public class NoticeController {
 	public String updateNotice(Notice notice, @RequestParam(name="file")MultipartFile file, HttpServletRequest request) {
 		System.out.println(notice);
 		//System.out.println("이름 확인 : " + request.getParameter("file"));
-		System.out.println("파일 확인 : "+request.getParameter("notice_originalfile"));
-		System.out.println("request 파일 확인 : "+request.getParameter("file"));
-		System.out.println("업로드할 파일 이름 : " + file.getOriginalFilename());
-		System.out.println("기존 파일 확인 ; " + notice.getNotice_originalfile()); 
+		System.out.println("기존 파일 확인 : " + notice.getNotice_originalfile()); 
+		System.out.println("기존 파일의 이름 : " + notice.getNotice_renamefile());
+		System.out.println("새로 업로드할 파일 이름 : " + file.getOriginalFilename());
 		//기존파일 있는지 없는지
 		//if(!notice.getNotice_originalfile().equals("")) {
 		/*MultipartFile file = (MultipartFile)request.getAttribute("file");*/
+		//*RequestParam을 해야 하기 때문에 file을 넘겨받아야 함
 		//1.파일을 삭제만 한 경우
 		//2.파일을 삭제하고 새 파일을 업로드한 경우
 		//3.파일이 없었는데 새로 업로드한 경우
@@ -192,45 +200,74 @@ public class NoticeController {
 		//2,3번은 퉁 칠 수 있음.
 			
 			//제일 쉬운건 그냥 파일이 있든 없든 삭제하고 그 후에 파일 추가 
-		//System.out.println("파일 유무 : " + file.getOriginalFilename());
-		//System.out.println("파일 유무2 : " + file);
-		//	if(file.getOriginalFilename().equals("")) {
-		//		System.out.println("파일유무3 이름 없음");
-	//		}
-		//}else {//기존 파일을 삭제하거나 없으면
-			
-		//}
-		
+		File realFile = new File("resources/files/noticefile");
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
 		if(!notice.getNotice_originalfile().equals("")) {//기존 파일이 있는 경우
-			//파일을 삭제하고 새 파일을 업로드
-			if(file.getOriginalFilename().equals("")) {
-				System.out.println("파일을 삭제하지 않고 기존 파일 그대로 사용");
-			}else {
-				System.out.println("파일을 삭제하고 새 파일을 업로드");
-			}
+			System.out.println("기존 파일이 있는 경우");
 			//파일을 삭제하지 않고 기존파일 그대로 사용
-		}else {//기존 파일이 없는 경우
-			//새 파일 등록
-			if(!file.getOriginalFilename().equals("")) {
-				System.out.println("기존 파일이 없으며 새 파일을 등록한 경우");
-			}else {
-				System.out.println("기존 파일이 없고 새 파일을 업로드 하지 않은 경우");
-			}
-			//파일을 등록하지 않는 경우
+		}else if(file.getOriginalFilename().equals("")) {
+			//파일 삭제
+			System.out.println("기존 파일이 없고 새 사진도 등록 안한 경우");
+			realFile = new File(savePath + "\\" + notice.getNotice_renamefile());
+			if(realFile.delete())
+				System.out.println("삭제 성공");
+			else
+				System.out.println("삭제 실패");
+			//삭제 후에 DB값 삭제
+			notice.setNotice_originalfile(null);
+			notice.setNotice_renamefile(null);
 		}
+		else {//기존 파일이 없는 경우 새 파일 등록
+			
+			realFile = new File(savePath + "\\" + notice.getNotice_renamefile());
+			if(realFile.delete())
+				System.out.println("삭제 성공");
+			else
+				System.out.println("삭제 실패");
+			notice.setNotice_originalfile(null);
+			notice.setNotice_renamefile(null);
+			
+			System.out.println("새 파일 등록한 경우");
+			
+			try {
+				//UUID적용
+				String reFileName = uploadFile(file.getOriginalFilename()/*, file.getBytes()*/);
+				notice.setNotice_originalfile(file.getOriginalFilename());
+				notice.setNotice_renamefile(reFileName);
+				
+				file.transferTo(new File(savePath + "\\" + reFileName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		//기존 파일 삭제
+		//새 파일 업로드 try-catch문
+		//새 파일 업로드 할 경우 새롭게 originfile, renamefile set 해줌
+		//기존파일 그대로 사용할 경우 originfile, renamefile 그대로 사용
+		//파일 삭제할 경우나 기존 파일이 없을 경우 그대로 냅둠
+		
 		if(noticeService.updateNotice(notice) > 0)
 			System.out.println("수정 성공");
 		else
 			System.out.println("수정 실패");
 		
-		return "redirect:adminnoticelist.do";
+		
+		System.out.println("업데이트 전 notice 확인 : " + notice);
+		return "redirect:adminnoticedetail.do?notice_no=" + notice.getNotice_no();
 	}
 	
-	@RequestMapping(value="deletenotice.do", method=RequestMethod.POST)
-	public String deleteNotice(Notice notice) {
-		int noticeNo = notice.getNotice_no();
-		int result = noticeService.deleteNotice(noticeNo);
-		return null;
+	@RequestMapping("deletenotice.do")
+	public String deleteNotice(@RequestParam int notice_no) {
+		//첨부파일 삭제
+		System.out.println("삭제 확인 : " + notice_no);
+		if(noticeService.deleteNotice(notice_no) > 0)
+			System.out.println("삭제 성공");
+		else
+			System.out.println("삭제 실패");
+		return "redirect:adminnoticelist.do";
 	}
 	
 	private String uploadFile(String originalName/*, byte[] fileData*/) throws IOException {

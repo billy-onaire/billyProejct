@@ -20,4 +20,6 @@ public interface NoticeService {
 
 	Notice selectNotice(int noticeNo);
 
+	int updateNoticeReadCount(int noticeNo);
+
 }

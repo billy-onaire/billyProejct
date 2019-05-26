@@ -53,6 +53,9 @@
     .main-content-wrapper{
         z-index: 1050;
     }
+    .btn-warning{
+        color: white;
+     }
     </style>
 </head>
 
@@ -124,9 +127,9 @@
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                   <textarea name="notice_content" id="notice_content" rows="10" cols="100"></textarea>
-                                  <button class="btn btn-primary" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
+                                  <button class="btn btn-warning" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
                                   <!-- <button type="submit" class="btn btn-primary pull-right" onclick="return confirm('정말로 등록하시겠습니까?')">등록</button> -->
-                                  <button  class="btn btn-primary pull-right" onclick="submitContents();">등록</button>
+                                  <button  class="btn btn-warning pull-right" onclick="submitContents();">등록</button>
                                   <!-- onclick="submitContents();" -->
                                 </form>
                            </div>

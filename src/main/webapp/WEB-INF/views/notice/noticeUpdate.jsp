@@ -103,9 +103,10 @@
                                 <form method="post" action="noticeupdate.do" id="noticefrm" enctype="multipart/form-data"  >
                                 <input type="hidden" name="notice_no" id="notice_no" value="${notice.notice_no }">
                                 <input type="hidden" name="notice_originalfile" id="notice_originalfile" value="${notice.notice_originalfile }">
+                                <input type="hidden" name="notice_renamefile" id="notice_renamefile" value="${notice.notice_renamefile }">
                                 
                                 <div id="firstform">
-                                <div class="form-group">
+                                <div class="form-group" id="form-group1">
                                     <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요."  value="${notice.notice_title }" required>
                                 </div>
                                 </div>
@@ -114,9 +115,11 @@
                                     <span>${notice.notice_originalfile } 
                                     </span>
 									<button type="button" onclick="filedelete();">삭제</button>
+                                    <input type="file" class="custom-file-input" id="file" name="file"><!-- 기존파일이 있는 확인용 컨트롤러에서 param file이 없다고 오류 남-->
                                 </div>
                                 </c:if>
                                 
+
                                 
                                 <c:if test="${empty notice.notice_originalfile  }">
                                 <div class="custom-file mb-3" id="newfile">
@@ -186,11 +189,16 @@
         <script type="text/javascript">
              function filedelete(){
             	 $('#originfile').remove();
-            	 //$('#notice_originalfile').remove();
+            	 //$('#notice_originalfile').remove();//안에 있는 val을 비우기
+            	 $('#notice_originalfile').val('');
             	 $('file').remove();
             	 $('#firstform').append('<div class="custom-file mb-3" id="newfile">'+
             			 '<input type="file" class="custom-file-input" id="file" name="file">'+
             			 '<label class="custom-file-label" for="customFile">Choose file</label></div>');
+
+                         /*$('#form-group1').append(
+                         '<input type="file" class="custom-file-input" id="file" name="file">'+
+                         '<label class="custom-file-label" for="customFile">Choose file</label>');*/
              }
                //아래와 같은 형식으로 해야 동적으로 자바스크립트 적용 됨.
                //파일 첨부 시 파일 이름 보여주기
