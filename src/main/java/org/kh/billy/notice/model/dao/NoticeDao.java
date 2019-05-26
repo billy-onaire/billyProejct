@@ -21,13 +21,12 @@ public class NoticeDao {
 		return session.insert("noticeMapper.insertNotice", notice);
 	}
 
-	public int updateNotice(Notice notice) {
-		return 0;
+	public int updateNotice(SqlSessionTemplate session, Notice notice) {
+		return session.update("noticeMapper.updateNotice", notice);
 	}
 
-	public int deleteNotice(int noticeNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteNotice(SqlSessionTemplate session, int noticeNo) {
+		return session.delete("noticeMapper.deleteNotice", noticeNo);
 	}
 
 	public int selectNoticeCount(SqlSessionTemplate session) {
@@ -38,4 +37,7 @@ public class NoticeDao {
 		return session.selectOne("noticeMapper.selectNotice", noticeNo);
 	}
 
+	public int updateNoticeReadCount(SqlSessionTemplate session, int noticeNo) {
+		return session.update("noticeMapper.updateNoticeReadCount", noticeNo);
+	}
 }

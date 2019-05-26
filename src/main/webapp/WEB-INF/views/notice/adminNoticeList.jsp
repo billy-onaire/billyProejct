@@ -109,7 +109,7 @@ pageEncoding="UTF-8"%>
                             <i class="material-icons" >
                                 remove_red_eye                                    
                             </i>
-                            <span style="font-size: 15px;">1234</span>
+                            <span style="font-size: 15px;">${list.notice_readcount }</span>
                         </div>
                     </div>
                     <div class="notice-file" style="width: 5%; float: left;">

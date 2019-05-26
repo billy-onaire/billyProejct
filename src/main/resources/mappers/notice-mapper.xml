@@ -12,29 +12,42 @@
 		<result property="notice_originalfile" column="notice_originalfile" />
 		<result property="notice_renamefile" column="notice_renamefile" />
 		<result property="notice_date" column="notice_date" />
+		<result property="notice_modifydate" column="notice_modifydate" />
+		<result property="notice_readcount" column="notice_readcount" />
 		
 	</resultMap>
 	
 	<insert id="insertNotice" parameterType="Notice" useGeneratedKeys="true">
-	insert into notice values(SQ_NTNO.nextval, #{admin_id}, #{notice_title}, #{notice_content}, #{notice_originalfile}, #{notice_renamefile}, sysdate)
+	insert into notice values(SQ_NTNO.nextval, #{admin_id}, #{notice_title}, #{notice_content}, #{notice_originalfile}, #{notice_renamefile}, sysdate, null, 0)
 	</insert>	
 	<select id="selectNoticeCount" resultType="int">
 	select count(*) from notice
 	</select>
 	<select id="selectNoticeList" resultMap="resultNotice" parameterType="hashmap">
 	<![CDATA[
-        select X.NOTICE_NO, X.ADMIN_ID, X.NOTICE_TITLE, X.NOTICE_CONTENT, X.NOTICE_ORIGINALFILE, X.NOTICE_RENAMEFILE, X.NOTICE_DATE        
+        select X.NOTICE_NO, X.ADMIN_ID, X.NOTICE_TITLE, X.NOTICE_CONTENT, X.NOTICE_ORIGINALFILE, X.NOTICE_RENAMEFILE, X.NOTICE_DATE, X.NOTICE_MODIFYDATE, X.NOTICE_READCOUNT        
 		from ( 
-		    select rownum as rnum, A.NOTICE_NO, A.ADMIN_ID, A.NOTICE_TITLE, A.NOTICE_CONTENT, A.NOTICE_ORIGINALFILE, A.NOTICE_RENAMEFILE, A.NOTICE_DATE
+		    select rownum as rnum, A.NOTICE_NO, A.ADMIN_ID, A.NOTICE_TITLE, A.NOTICE_CONTENT, A.NOTICE_ORIGINALFILE, A.NOTICE_RENAMEFILE, A.NOTICE_DATE, A.NOTICE_MODIFYDATE, A.NOTICE_READCOUNT
 		    from (
-		        select NOTICE_NO, ADMIN_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ORIGINALFILE, NOTICE_RENAMEFILE, NOTICE_DATE
+		        select NOTICE_NO, ADMIN_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ORIGINALFILE, NOTICE_RENAMEFILE, NOTICE_DATE, NOTICE_MODIFYDATE, NOTICE_READCOUNT
 		        from NOTICE
 		        order by NOTICE_NO desc) A
 		    where rownum <= (#{perPageNum} * #{page})) X
 		where X.rnum > #{pageStart}
 	]]>
 	</select>
+	<update id="updateNoticeReadCount" parameterType="int">
+	update notice set notice_readcount = notice_readcount + 1 where notice_no = #{noticeNo}
+	</update>
 	<select id="selectNotice" resultMap="resultNotice" parameterType="int">
 		select * from notice where notice_no = #{noticeNo}
 	</select>
+	<update id="updateNotice" parameterType="Notice">
+	update notice set notice_title = #{notice_title}, notice_content = #{notice_content}, notice_originalfile = #{notice_originalfile},
+						notice_renamefile = #{notice_renamefile}, notice_modifydate = sysdate
+						where notice_no = #{notice_no}
+	</update>
+	<delete id="deleteNotice" parameterType="int">
+	delete from notice where notice_no = #{noticeNo} 
+	</delete>
 </mapper>

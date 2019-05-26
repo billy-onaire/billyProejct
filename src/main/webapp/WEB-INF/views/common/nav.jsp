@@ -190,7 +190,9 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             <div class="amado-btn-group mt-30 mb-100">
             	<a href="javascript:popupOpen();" class="btn amado-btn mb-15">Chatting</a>
                 <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
+                <c:if test="${!empty loginMember }">
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
+               	</c:if>
                 <!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
             </div>
             <!-- Social Button -->

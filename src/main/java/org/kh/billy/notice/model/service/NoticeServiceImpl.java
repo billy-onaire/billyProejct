@@ -34,13 +34,13 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int updateNotice(Notice notice) {
 
-		return noticeDao.updateNotice(notice);
+		return noticeDao.updateNotice(mybatisSession, notice);
 	}
 
 	@Override
 	public int deleteNotice(int noticeNo) {
 
-		return noticeDao.deleteNotice(noticeNo);
+		return noticeDao.deleteNotice(mybatisSession, noticeNo);
 	}
 
 	@Override
@@ -53,4 +53,8 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNotice(mybatisSession, noticeNo);
 	}
 
+	@Override
+	public int updateNoticeReadCount(int noticeNo) {
+		return noticeDao.updateNoticeReadCount(mybatisSession, noticeNo);
+	}
 }

@@ -16,11 +16,14 @@ public class Notice implements Serializable{
 	private String notice_originalfile;
 	private String notice_renamefile;
 	private Date notice_date;
+	private Date notice_modifydate;
+	private int notice_readcount;
 	
 	public Notice() {}
 
 	public Notice(int notice_no, String admin_id, String notice_title, String notice_content,
-			String notice_originalfile, String notice_renamefile, Date notice_date) {
+			String notice_originalfile, String notice_renamefile, Date notice_date, Date notice_modifydate,
+			int notice_readcount) {
 		super();
 		this.notice_no = notice_no;
 		this.admin_id = admin_id;
@@ -29,6 +32,8 @@ public class Notice implements Serializable{
 		this.notice_originalfile = notice_originalfile;
 		this.notice_renamefile = notice_renamefile;
 		this.notice_date = notice_date;
+		this.notice_modifydate = notice_modifydate;
+		this.notice_readcount = notice_readcount;
 	}
 
 	public int getNotice_no() {
@@ -87,6 +92,22 @@ public class Notice implements Serializable{
 		this.notice_date = notice_date;
 	}
 
+	public Date getNotice_modifydate() {
+		return notice_modifydate;
+	}
+
+	public void setNotice_modifydate(Date notice_modifydate) {
+		this.notice_modifydate = notice_modifydate;
+	}
+
+	public int getNotice_readcount() {
+		return notice_readcount;
+	}
+
+	public void setNotice_readcount(int notice_readcount) {
+		this.notice_readcount = notice_readcount;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -95,12 +116,9 @@ public class Notice implements Serializable{
 	public String toString() {
 		return "Notice [notice_no=" + notice_no + ", admin_id=" + admin_id + ", notice_title=" + notice_title
 				+ ", notice_content=" + notice_content + ", notice_originalfile=" + notice_originalfile
-				+ ", notice_renamefile=" + notice_renamefile + ", notice_date=" + notice_date + "]";
+				+ ", notice_renamefile=" + notice_renamefile + ", notice_date=" + notice_date + ", notice_modifydate="
+				+ notice_modifydate + ", notice_readcount=" + notice_readcount + "]";
 	}
 
-	
-	
-	
-	
 	
 }

@@ -104,17 +104,20 @@
                                 <div style="width:100%; ">
                                     <ul class="list-group">               
                                         <li class="list-group-item list-group-item" style="">
-                                            <div class="notice-title" style="width: 70%; float: left;">관리자</div>
+                                            <div class="notice-file" style="width: 70%; float: left; line-height: 0px;"><h2>${notice.notice_title }</h2>
+                                                 <div><span  style="font-size: 13px; color: #ccc;"></span>
+                                                </div> 
+                                            </div>
                                             <div class="notice-eye" style="width: 30%; float: left;">
                                                  <i class="material-icons" >
                                                     remove_red_eye                                    
                                                 </i>
-                                                <span style="font-size: 15px;">1234</span>                                                
-                                            </div>
-                                            <div><span  style="font-size: 13px; color: #ccc;">${notice.notice_date}</span>
+                                                <span style="font-size: 15px;">${notice.notice_readcount }</span>
+                                                 <div><span  style="font-size: 13px; color: #ccc;">${notice.notice_date}</span>
+                                                </div>                                               
                                             </div>
                                         </li>
-                                        <c:if test="${!empty notice.notice_renamefile }">
+                                         <c:if test="${!empty notice.notice_renamefile }">
                                         <li class="list-group-item list-group-item" style="">
                                              <div class="notice-filedown" style="">
                                             <i class="material-icons">
@@ -126,25 +129,12 @@
                                         </li>
                                         </c:if>
                                         <li class="list-group-item list-group-item" style="">
-                                            <div class="notice-file" style="width: 70%; float: left; line-height: 0px;"><h2>${notice.notice_title }</h2>
-                                                 <div><span  style="font-size: 13px; color: #ccc;">${notice.notice_date}</span>
-                                                </div> 
-                                            </div>
-                                            <div class="notice-eye" style="width: 30%; float: left;">
-                                                 <i class="material-icons" >
-                                                    remove_red_eye                                    
-                                                </i>
-                                                <span style="font-size: 15px;">1234</span>
-                                                 <div><span  style="font-size: 13px; color: #ccc;">${notice.notice_date}</span>
-                                                </div>                                               
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item list-group-item" style="">
                                             <div class="notice-content" style="width: 100%; float: left;"><p>${notice.notice_content }</p></div>
                                         </li>
                                     </ul>
                                     <button class="btn btn-warning" onclick="location.href='adminnoticelist.do'">목록</button>
                                     <button class="btn btn-warning" onclick="location.href='noticeupdateview.do?notice_no=${notice.notice_no}'">수정</button>
+                                    <button class="btn btn-warning" onclick="location.href='deletenotice.do?notice_no=${notice.notice_no}'">삭제</button>
                                 </div>
                            </div>
                         </div> 
