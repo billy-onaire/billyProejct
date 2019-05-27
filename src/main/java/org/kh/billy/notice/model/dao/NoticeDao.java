@@ -1,10 +1,10 @@
 package org.kh.billy.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.kh.billy.notice.model.vo.Notice;
-import org.kh.billy.notice.model.vo.NoticePage;
 import org.kh.billy.product.model.vo.Criteria;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,5 +39,17 @@ public class NoticeDao {
 
 	public int updateNoticeReadCount(SqlSessionTemplate session, int noticeNo) {
 		return session.update("noticeMapper.updateNoticeReadCount", noticeNo);
+	}
+
+	public int selectSearchNoticeCount(SqlSessionTemplate session, String select, String keyword) {
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("select", select);
+		map.put("keyword", keyword);
+		return session.selectOne("noticeMapper.selectSearchNoticeCount", map);
+	}
+
+	public ArrayList<Notice> selectSearchNoticeList(SqlSessionTemplate session, Criteria cri) {
+		List<Notice> list =  session.selectList("noticeMapper.selectSearchNoticeList", cri);
+		return (ArrayList<Notice>)list;
 	}
 }

@@ -36,6 +36,47 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@RequestMapping("adminnoticelist.do")
+	public String selectAdminNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, Criteria cri, Notice notice, Model mv) {
+		System.out.println("확인 : "+select);
+		System.out.println("키워드 : " + keyword);
+		int count = noticeService.selectSearchNoticeCount(select, keyword);
+		System.out.println("카운트 확인 : " + count);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		cri.setKeyword(keyword);
+		cri.setSelect(select);
+		ArrayList<Notice> list = noticeService.selectSearchNoticeList(cri);
+		mv.addAttribute("list", list);
+		mv.addAttribute("pageMaker", pageMaker);
+		mv.addAttribute("keyword", keyword);
+		mv.addAttribute("select", select);
+		
+		return "notice/adminNoticeList";
+	}
+	
+	@RequestMapping("noticelist.do")
+	public String selectNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, Criteria cri, Notice notice, Model mv) {
+		//defaultValue로 처리하면 select나 keyword가 없어도 에러가 뜨지 않음
+		System.out.println("확인 : "+select);
+		System.out.println("키워드 : " + keyword);
+		int count = noticeService.selectSearchNoticeCount(select, keyword);
+		System.out.println("카운트 확인 : " + count);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		cri.setKeyword(keyword);
+		cri.setSelect(select);
+		ArrayList<Notice> list = noticeService.selectSearchNoticeList(cri);
+		mv.addAttribute("list", list);
+		mv.addAttribute("pageMaker", pageMaker);
+		mv.addAttribute("keyword", keyword);
+		mv.addAttribute("select", select);
+		
+		return "notice/noticeList";
+	}
+	
 	@RequestMapping("noticefiledown.do")
 	public void noticeFileDownload(HttpServletRequest request, HttpServletResponse response, @RequestParam("of") String originalFile, @RequestParam("rf") String renameFile) throws IOException {
 		//공지사항 첨부파일 다운로드 
@@ -61,18 +102,20 @@ public class NoticeController {
 		bin.close();
 	}
 	@RequestMapping("noticedetail.do")
-	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
+	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv, @RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword) {
 		if(noticeService.updateNoticeReadCount(noticeNo) > 0)
 			System.out.println("조회수 1증가");
 		else
 			System.out.println("조회수 증가 실패");
 		Notice notice = noticeService.selectNotice(noticeNo);
 		mv.addAttribute("notice", notice);
+		mv.addAttribute("select", select);
+		mv.addAttribute("keyword", keyword);
 		return "notice/noticeDetail";
 	}
 	
 	@RequestMapping("adminnoticedetail.do")
-	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv) {
+	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv, @RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword) {
 		//관리자가 상세 조회시 조회수 증가를 시키지 않음
 		/*if(noticeService.updateNoticeReadCount(noticeNo) > 0)
 			System.out.println("조회수 1증가");
@@ -81,10 +124,12 @@ public class NoticeController {
 		
 		Notice notice = noticeService.selectNotice(noticeNo);
 		mv.addAttribute("notice", notice);
+		mv.addAttribute("select", select);
+		mv.addAttribute("keyword", keyword);
 		return "notice/adminNoticeDetail";
 	}
 	
-	@RequestMapping("adminnoticelist.do")
+	/*@RequestMapping("adminnoticelist.do")
 	public String selectAdminNoticeList(Criteria cri, Notice notice, Model mv) {
 		
 		int count = noticeService.selectNoticeCount();
@@ -96,32 +141,20 @@ public class NoticeController {
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		return "notice/adminNoticeList";
-	}
+	}*/
 	
-	@RequestMapping("noticelist.do")
+	/*@RequestMapping("noticelist.do")
 	public String selectNoticeList(Criteria cri, Notice notice, Model mv) {
-		//ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
-		
-		//String userId = ((Member) session.getAttribute("loginMember")).getUser_id();
-		
 		int count = noticeService.selectNoticeCount();
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
-		//cri.setSeller_id(userId);
-		//System.out.println(cri);
-		//System.out.println(pageMaker);
-		/*System.out.println(member);*/
-		/*String userId = member.getUser_id();*/
-		
-		//System.out.println("메스드는 들어가지는지?");
 		
 		ArrayList<Notice> list = noticeService.selectNoticeList(cri);
-		//System.out.println("리스트 확인 : " + list);
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		return "notice/noticeList";
-	}
+	}*/
 	
 	@RequestMapping("noticewriteview.do")
 	public String noticeWriteView(Notice notice) {
@@ -260,13 +293,19 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("deletenotice.do")
-	public String deleteNotice(@RequestParam int notice_no) {
+	public String deleteNotice(@RequestParam int notice_no, @RequestParam("re") String renameFile,HttpServletRequest request) {
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
+		File realFile = new File(savePath + "\\" + renameFile);
+		if(realFile.delete())
+			System.out.println("파일 삭제 성공");
+		else
+			System.out.println("파일 삭제 실패");
 		//첨부파일 삭제
 		System.out.println("삭제 확인 : " + notice_no);
 		if(noticeService.deleteNotice(notice_no) > 0)
-			System.out.println("삭제 성공");
+			System.out.println("글 삭제 성공");
 		else
-			System.out.println("삭제 실패");
+			System.out.println("글 삭제 실패");
 		return "redirect:adminnoticelist.do";
 	}
 	

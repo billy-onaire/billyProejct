@@ -30,6 +30,7 @@ pageEncoding="UTF-8"%>
          display: inline-block;
          line-height: 1;
          text-transform: none;
+         
          letter-spacing: normal;
          word-wrap: normal;
          white-space: nowrap;
@@ -47,6 +48,50 @@ pageEncoding="UTF-8"%>
          font-feature-settings: 'liga';
      }
 
+
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #fbb710;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+		
+.nice-select{
+	height: 47px;
+}
+		
+		.pagination {
+   justify-content: center;
+}
  </style>
 </head>
 
@@ -96,43 +141,26 @@ pageEncoding="UTF-8"%>
                     <br><br><br><br>
 
                     <div class="container">
-
-                       <!-- <h2>내용이 span</h2>
-                       <ul class="list-group">
-                        <c:forEach items="${list }" var="list">
-                        <li class="list-group-item list-group-item-light">
-                            <span class="notice-title" style="width: 50%; height: 35px; display: inline-block;">${list.notice_content }</span>
-                            <span class="notice-eye" style="width: 10%; display: inline-block;">
-                                <i class="material-icons">
-                                   remove_red_eye
-                               </i>
-                           </span>
-                           <span class="notice-file" style="width: 10%; display: inline-block;">
-                               <i class="material-icons">
-                                   attach_file
-                               </i>
-                           </span>
-
-                           <span class="notice-date" style="width: 10%;  display: inline-block;">
-                            2019.01.02
-                        </span>
-                        <span class="notice-date" style="width: 10%;  display: inline-block;">
-                            관리자
-                        </span>
-                    </li>
-                </c:forEach>
-                <li class="list-summary-wrapper">aaa</li>
-            </ul> -->
-
-
+                    <form class="example" action="noticelist.do" style="margin:auto;" onsubmit="return validate();">
+		<div style=" ">
+		  <select class="form-control" id="select" name="select" style="height:47px;">
+    			<option value='title' >제목</option>
+				<option value='content'>내용</option>
+				<option value='title_content'>제목+내용</option>
+		  </select>
+  		</div>
+  		<div style=" display:inline-block; ">
+		  <input type="text" placeholder="Search.." name="keyword" id="keyword">
+		  <button type="submit"><i class="fa fa-search"></i></button>
+		</div>
+		</form>
             <!-- <h2>내용이 div</h2> -->
             <ul class="list-group">
                 <c:forEach items="${list }" var="list">
                 <li class="list-group-item list-group-item-action" style="height: 45px;  ">
-                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }" style="font-size: 20px;">${list.notice_title }</a></div>
+                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}" style="font-size: 20px;">${list.notice_title }</a></div>
                     <div class="notice-eye" style="width: 15%; float: left;">
                         <div>
-
                             <i class="material-icons" >
                                 remove_red_eye                                    
                             </i>
@@ -146,54 +174,34 @@ pageEncoding="UTF-8"%>
                         </i>
                         </c:if>
                     </div>
-
                     <div class="notice-date clearfix" style="width: 10%;  float: right;">
-
                         <div style="display: inline-block; line-height: 13px;">
                             <div>
                             <span style="font-size: 12px;">관리자</span>
                             </div>
-
                             <span style="font-size: 10px;">${list.notice_date }</span>
-
                         </div>
-
                     </div>                                    
                 </li>
             </c:forEach>            
         </ul>
-                        <ul class="pagination" style="margin-left: auto;  margin-right: auto; width:100%;">
-                                <c:if test="${pageMaker.prev }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
+        <div class="text-xs-center" style="">
+                        <ul class="pagination" style="width:100%;">
+                            	<c:if test="${pageMaker.prev }">
+                                	<li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.startPage-1 }&select=${select }&keyword=${keyword }"/>"><i class="fa fa-chevron-left"></i></a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${idx }"/>">${idx }</a></li>
+                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${idx }&select=${select }&keyword=${keyword }"/>">${idx }</a></li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
-                            </c:if>
+                                	<li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.endPage+1 }&select=${select }&keyword=${keyword }"/>"><i class="fa fa-chevron-right"></i></a></li>
+                            	</c:if>
                         </ul>
-        
-
-                    <div>
                     </div>
+                        
+		
                 </div>
-
-
-
-                <!-- <div class="centertwo">
-                  <ul class="pagination">
-                                <c:if test="${pageMaker.prev }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
-                                </c:if>
-                                <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${idx }"/>">${idx }</a></li>
-                                </c:forEach>
-                                <c:if test="${pageMaker.next }">
-                                <li class="page-item"><a class="page-link" href="<c:url value="noticelist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
-                            </c:if>
-                        </ul>
-                    </div>  -->
+              
                     <br>                          
                 </div> 
             </div>
@@ -219,7 +227,20 @@ pageEncoding="UTF-8"%>
 <script src="/billy/resources/js/bootstrap.min.js"></script>
 <!-- Plugins js -->
 <script src="/billy/resources/js/plugins.js"></script>
+<script src="/billy/resources/js/active.js"></script>
 
+<script type="text/javascript">
+	console.log('확인용 : '+'${keyword}' + '${select}' );
+	function validate(){
+		console.log($('#keyword').val());
+		console.log($('#keyword').val().length);
+		if($('#keyword').val().length < 2){
+			alert('검색어를 두 글자 이상 입력하세요.');
+			$('#keyword').focus();
+			return false;
+		}
+	}
+</script>
 </body>
 
 </html>

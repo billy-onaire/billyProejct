@@ -185,7 +185,7 @@
        
         <script type="text/javascript">
             function gonoticelist(){
-                location.href="noticelist.do";
+                location.href="noticelist.do?select=${select}&keyword=${keyword}";
             }
         </script>
         </body>
