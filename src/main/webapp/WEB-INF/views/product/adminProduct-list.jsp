@@ -113,44 +113,28 @@
 </head>
 
 <body>
-   <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Wrapper Area End -->
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/adminNav.jsp" />
 	  
-		<div>
+		<div class="amado_product_area section-padding-100">
 		<select id='listPrint' name='listPrint' onchange='listPrint();'>
 			<option value='all' >전체보기</option>
 			<option value='normal'>정상 보기</option>
 			<option value='del'>삭제 보기</option>
 		</select><br>
-		<table class="type06">
+		<table class="table table-striped table-hover">
+		<thead>
 	    	<tr>
-		        <th class="even">제품번호</th>
-		        <th class="even">제품명</th>
-		        <th class="even">대여자</th>
-		        <th class="even">상태</th>
-		        <th class="even">삭제</th>
-		        <th class="even">복구</th>
+		        <th>제품번호</th>
+		        <th>제품명</th>
+		        <th>대여자</th>
+		        <th>상태</th>
+		        <th>삭제</th>
+		        <th>복구</th>
 		    </tr>
+		</thead>
+		<tbody>
 		    <c:forEach var="r" items="${list}">
 				<tr>
 					<td>${r.product_no }</td>
@@ -168,6 +152,7 @@
 					<td><a href="reProduct.do?pno=${r.product_no }&type=${type}"><button class="btn btn-warning">복구</button></a></td>
 				</tr>						
 			</c:forEach>
+		</tbody>
 		</table>
 		
 		<!-- 5. paging view -->

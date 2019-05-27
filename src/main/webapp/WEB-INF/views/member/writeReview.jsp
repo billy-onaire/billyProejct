@@ -58,30 +58,13 @@
 </head>
 
 <body>
-   <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
     <!-- Search Wrapper Area End -->
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
-	
+	<div class="amado_product_area section-padding-100">
 	<h1>Review</h1>
 		<form id="form" class="cart clearfix" method="post" enctype="multipart/form-data" action="insertReview.do">
                    <br><br>       	
@@ -121,10 +104,8 @@
         	<input type="hidden" name="product_no" value="${pNo }">
         	<input type="hidden" name="payment_no" value="${payNo }">
         </form>
-       
-        
     </div>
- 
+ 	</div>
     <!-- ##### Main Content Wrapper End ##### -->
 	<c:import url="../common/footer.jsp" />
    

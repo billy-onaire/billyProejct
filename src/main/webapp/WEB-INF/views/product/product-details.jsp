@@ -150,7 +150,7 @@
 	            	 }else{
 	            		list +="<td></td>";
 	            	 }
-	            	 "<c:if test='${!empty session.admin}'>"
+	            	 "<c:if test='${!empty sessionScope.admin}'>"
 		            	 list +="<td><a href='delReview.do?rno="+obj.list[i].review_no+"&pno=${p.product_no}'><button>삭제</button></a></td>";		               
 		             "</c:if>"
 		             list += "</tr>"
