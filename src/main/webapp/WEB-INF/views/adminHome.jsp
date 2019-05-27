@@ -7,12 +7,12 @@
 <meta name="description" content="">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-dontent="width=device-width, initial-scale=1, shrink-to-fit=no">
+content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title  -->
-<title>Billy - main</title>
+<title>Billy - adminMain</title>
 <style type="text/css">
 #logoimg{
 }
@@ -33,36 +33,16 @@ $(function(){
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </head>
 <body>
-	<!-- Search Wrapper Area Start -->
-	<div class="search-wrapper section-padding-100">
-		<div class="search-close">
-			<i class="fa fa-close" aria-hidden="true"></i>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="search-content">
-						<form action="#" method="get">
-							<input type="search" name="search" id="search"
-								placeholder="Type your keyword...">
-							<button type="submit">
-								<img src="/billy/resources/img/core-img/search.png" alt="">
-							</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Search Wrapper Area End -->
 
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<c:import url="common/adminNav.jsp" />
+		<div class="amado_product_area section-padding-100">
 		<div class="container text-center">
 			<div><img src="${ pageContext.request.contextPath }/resources/img/core-img/admin.PNG" id="logoimg" width="300" height="200"></div>
 			<div id="login-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>방문자수</div>
 			<div id="signup-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>회원가입수</div>
+		</div>
 		</div>
 	</div>
 	<c:import url="common/footer.jsp" />

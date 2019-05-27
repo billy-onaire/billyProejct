@@ -50,5 +50,38 @@
 		class="org.kh.billy.socialuser.model.vo.NaverLoginBO">
 	</beans:bean>
 	
+	<!-- 인터셉터 객체 생성 -->
+	<beans:bean id="commonInterceptor"
+		class="org.kh.billy.session.CommonInterceptor">
+	</beans:bean>
+	<!-- Interceptor 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/*.do"/>
+			<exclude-mapping path="/mfind.do"/>
+			<exclude-mapping path="/findId.do"/>
+			<exclude-mapping path="/changePwdPage.do"/>
+			<exclude-mapping path="/enroll.do"/>
+			<exclude-mapping path="/main.do"/>
+			<exclude-mapping path="/login.do"/>
+			<exclude-mapping path="/idCheck.do"/>
+			<exclude-mapping path="/loginCheck.do"/>
+			<exclude-mapping path="/googleCheck.do"/>
+			<exclude-mapping path="/googleLogin.do"/>
+			<exclude-mapping path="/token.do"/>
+			<exclude-mapping path="/kakaoLogin.do"/>
+			<exclude-mapping path="/naverCheck.do"/>
+			<exclude-mapping path="/naverLogin.do"/>
+			<exclude-mapping path="/facebookLogin.do"/>
+			<exclude-mapping path="/logout.do"/>
+			<exclude-mapping path="/alogout.do"/>
+			<exclude-mapping path="/alogin.do"/>
+			<exclude-mapping path="/adminLogin.do"/>
+			<exclude-mapping path="/loginVisit.do"/>
+			<beans:ref bean="commonInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+			
 	<context:component-scan base-package="org.kh.billy" />
 </beans:beans>

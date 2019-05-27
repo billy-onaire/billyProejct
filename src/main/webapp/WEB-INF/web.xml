@@ -7,7 +7,13 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	<session-config>
+    	<session-timeout>30</session-timeout>
+	</session-config>
 
+
+출처: https://blog.whitelife.co.kr/221 [White Life Story]
+	
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

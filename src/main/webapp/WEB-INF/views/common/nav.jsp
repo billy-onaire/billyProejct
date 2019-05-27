@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Billy - 사용자메뉴</title>
 <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -188,7 +189,7 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-            	<a href="javascript:popupOpen();" class="btn amado-btn mb-15">Chatting</a>
+            	<!-- <a href="javascript:popupOpen();" class="btn amado-btn mb-15">Chatting</a> -->
                 <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
                 <c:if test="${!empty loginMember }">
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>
@@ -197,10 +198,10 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             </div>
             <!-- Social Button -->
             <div class="social-info d-flex justify-content-between">
-                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://github.com/billy-onaire/billyProejct"><i class="fab fa-git" aria-hidden="true"></i></a>
+                <a href="https://github.com/billy-onaire/billyProejct"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://github.com/billy-onaire/billyProejct"><i class="fab fa-github-square" aria-hidden="true"></i></a>
+                <a href="https://github.com/billy-onaire/billyProejct"><i class="fab fa-git-square" aria-hidden="true"></i></a>
             </div>
         </header>
         <!-- Header Area End -->
