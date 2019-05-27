@@ -28,66 +28,28 @@
 	<script type="text/javascript" src="/billy/resources/js/paging.js"></script>
 
 	<style type="text/css">
-		table.type06 {
-		    border-collapse: collapse;
-		    text-align: left;
-		    line-height: 1.5;
-		    border-top: 1px solid #ccc;
-		    border-bottom: 1px solid #ccc;
-		    margin: 20px 10px;
-		}
-		table.type06 th {
-		    /* width: 150px; */
-		    width: 250px;
-		    padding: 10px;
-		    font-weight: bold;
-		    vertical-align: center;
-		}
-		table.type06 td {
-		    width: 300px;
-		    padding: 10px;
-		    vertical-align: center;
-		}
-		table.type06 .even {
-		    /* background: #efefef; */
-		    background: #ffe2b8;
-		}
+	
 	</style>
 </head>
 
 <body>
-   <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="/billy/resources/img/core-img/search.png" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Wrapper Area End -->
+  
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
 	  
-		<div>
-		<table class="type06">
+		<div class="amado_product_area section-padding-100">
+		<table class="table table-striped table-hover">
+		<thead>
 	    	<tr>
-		        <th class="even">이미지</th>
-		        <th class="even">제품명</th>
-		        <th class="even">대여기간</th>
-		        <th class="even">후기작성</th>
+		        <th width="300px">이미지</th>
+		        <th>제품명</th>
+		        <th>대여기간</th>
+		        <th>후기작성</th>
 		    </tr>
+		</thead>
+		<tbody>
 		    <c:forEach var="r" items="${lists}">
 				<tr>
 					<td><img src="/billy/resources/files/product/${r.first_img}"></td>
@@ -98,8 +60,7 @@
 						${begindate } ~ ${enddate }
 					</td>
 					<td>
-						<c:if test="${r.review_status eq 'N'}">
-							<div class="cart-btn mt-100">
+						<c:if test="${r.review_status eq 'N'}">							
 							<c:url var="insertReview" value="writeReview.do">
 			        		<c:param name="name" value="${r.product_name }" />
 			        		<c:param name="img" value="${r.first_img }" />
@@ -108,8 +69,7 @@
 			        		<c:param name="pno" value="${r.product_no }" />
 			        		<c:param name="payno" value="${r.payment_no }" />
 				        	</c:url>			       
-			                	<a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>		                		               
-			             	</div>
+			                	<a href="${insertReview }" class="btn amado-btn w-100">대여후기 쓰기</a>		                		               			             	
 		             	</c:if>
 		             	<c:if test="${r.review_status eq 'Y' }">
 		                	작성완료
@@ -117,6 +77,7 @@
 		            </td>
 				</tr>						
 			</c:forEach>
+			</tbody>
 		</table>
 		
 		<!-- 5. paging view -->
