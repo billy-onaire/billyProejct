@@ -143,16 +143,20 @@ public class GoogleSocialController {
     	   member.setProfile(profile);
     	   
     	   String userId = socialService.selectCheckId(uid);
-    	   if(socialService.selectDeleteSocial(userId) != null) {
-    		   model.addAttribute("message", "탈퇴된 회원입니다.");
-    		   return "member/memberError";
-    	   }
-    	   
+    	   Member user = socialService.selectDeleteSocial(userId);
+	        System.out.println("구글 user : " + user);
+
     	   member.setUser_id(userId);
     	   gSession.setAttribute("loginMember", member);
     	   status.setComplete();
     	   
     	   if (userId != null) {
+    		   
+    		   if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
+				   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
+			   	   return "member/memberError";	
+		   	   }
+    		   
     		   member = socialService.selectUserInfo(userId);
     		   member.setSname(name);
     		   member.setProfile(profile);
@@ -177,11 +181,12 @@ public class GoogleSocialController {
 
     	   member.setUser_pwd(bcryptPE.encode(userpwd));
     	   member.setAuthkey(social.getSocial_code());
-    	   	   
+    	   member.setSocial_code(social.getSocial_code());
     	   if(memberSerive.insertSmember(member) > 0) {
     		   System.out.println("회원정보등록성공!");
     		   if(socialService.insertSocial(social) > 0) {
     			   System.out.println("소셜회원정보등록성공!");
+    			   
     			   session.setAttribute("loginMember", member);
     			   stService.insertSignUp();
     			   

@@ -126,40 +126,24 @@ $(function(){
   });  
 });
 
-$(function(){
-	$("#deletea").on("click",function(){
-		if(confirm("정말 탈퇴 하시겠습니까?")){
-			var tdArr = new Array();
-			
-			var tr = $(this);
-			var td = tr.children();
-			console.log("tr : " + tr.text());
-			td.each(function(i){
-				tdArr.push(td.eq(i).text);
-			});
-			
-			var userId = td.eq(0).text();
-			
-			$.ajax({
-				url: "deleteUser.do",
-				data: {userId: $("#user_id").val()},
-				type: "get",
-				dateType: "json",
-				success: function(result){
-					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));						
-				},error: function(request, status, errorData){
-					console.log("error code : " + request.status
-							+ "\nmessage : " + request.responseText
-							+ "\nerror : " + errorData);
-				}
-			});
-		}else{
-			$("#memberTable tr").off("click");
-			return false;
-		}
-	});
-	
+$(document).ready( function(){
+    $("#deletea").click( function() {
+        if(confirm("탈퇴하시겠습니까?")) {
+            $(this).parent().click();
+        } else {
+            return false;
+        }
+    });
 });
+
+$(document).ready( function(){
+    $("#register1").click( function() {
+       alert("다시 로그인 해주세요");
+        
+    });
+});
+
+
 </script>
 
 
@@ -366,7 +350,10 @@ a {
 				<button id="register" type="submit" class="registerbtn"
 					style="background-color: orange">수정하기</button>
 		</form>
-		<p id="deletea">billy를 더 이상 이용하고 싶지 않는다면<a href="#" id= "deletea"><font size="3px">  회원탈퇴하기</font></a></p>
+		<form action="deleteUser.do" method="post">
+		<input type="text" id="userId" name="userId" value="${loginMember.user_id }">
+		billy를 더 이상 이용하고 싶지 않는다면 <button id= "deletea" class="btn btn-success btn-sm" type="submit"> 회원탈퇴하기</button>
+		</form>
 		</div>
 		</div>
 	</div>
@@ -383,6 +370,7 @@ a {
 				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
+					<input type="hidden" name="profile" value="${loginMember.profile }">
 					<label for="user_id"><b>아이디</b></label> 
 					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id"
 					value="${loginMember.user_id }" required readonly>
@@ -482,11 +470,14 @@ a {
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 
 				<hr>
-				<button id="register" type="submit" class="registerbtn"
+				<button id="register1" type="submit" class="registerbtn"
 					style="background-color: orange">수정하기</button>
 				 
 		</form>
-				<p id="deletea">billy를 더 이상 이용하고 싶지 않는다면<a href="#" id= "deletea"><font size="3px">  회원탈퇴하기</font></a></p>
+		<form action="deleteSuser.do" method="post">
+		<input type="text" id="userId" name="userId" value="${loginMember.user_id }">
+		billy를 더 이상 이용하고 싶지 않는다면 <button id= "deletea" class="btn btn-success btn-sm" type="submit"> 회원탈퇴하기</button>
+		</form>
 		</div>
 		</div>
 	</div>

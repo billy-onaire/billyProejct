@@ -28,7 +28,7 @@ public class SocialUserDao {
 		return mSession.selectOne("socialMapper.selectUserInfo", userId);
 	}
 
-	public String selectDeleteSocial(SqlSessionTemplate mSession, String userId) {
+	public Member selectDeleteSocial(SqlSessionTemplate mSession, String userId) {
 		return mSession.selectOne("socialMapper.selectDeleteSocial",userId);
 	}
 

@@ -39,7 +39,7 @@
    </select>
    
    <select id="selectCheckId" parameterType="String" resultMap="resultMember">
-      select * from tb_user where user_id = #{userId} and verify = 'y'
+      select * from tb_user where user_id = #{userId}
    </select>
    
    <select id="selectLogin" parameterType="String" resultMap="resultMember">
@@ -50,9 +50,9 @@
       select * from tb_user where user_name = #{user_name} and phone = #{phone}
    </select>	
    
+   <!-- 아이디 중복확인 -->
    <select id="selectIdCheck" parameterType="string" resultMap="resultMember">
       select user_id from tb_user left join socialuser using (user_id) where user_id = #{user_id}
-      and verify = 'y'
    </select>
    
    <select id="selectCheckANo" parameterType="String" resultType="String">
@@ -178,6 +178,11 @@
    <delete id="deleteMember" parameterType="string" >
       update tb_user set delete_yn = 'Y' where user_id = #{user_id}
    </delete>
+   
+   <delete id="deleteSuser" parameterType="string">
+   	  delete socialuser where user_id = #{userId} 
+   </delete>
+   
    
    <delete id="deleteAutoNo" parameterType="String">
      delete from tb_sms where user_id = #{userId}

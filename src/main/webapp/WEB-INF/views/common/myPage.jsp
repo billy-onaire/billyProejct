@@ -32,7 +32,7 @@
                 <!--  Catagories  -->
                 <div class="catagories-menu">
                     <ul>
-                    	<c:if test="${loginMember.social_type eq 'user' }">
+                    	<c:if test="${!empty loginMember }">
                         <li><a href="mupage.do"><span class="catagories-menu-radios">내 정보 수정</span></a></li>
                         </c:if>
                         <li><a href="myproductlist.do"><span class="catagories-menu-radios">내 상품 </span></a></li>

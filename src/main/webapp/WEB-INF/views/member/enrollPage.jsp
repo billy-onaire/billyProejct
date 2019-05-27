@@ -191,16 +191,8 @@ $(function() {
     
     $("#register").click(function() {
     	
-    	if(idck == 0){
-	    	alert('아이디 중복체크를 해주세요');
-	    	$("#user_id").focus();
-	    	return false;
-	    	
-		}else{
-	    	alert("입력하신 메일로 보내드린 링크 인증시에만 로그인이 가능합니다.");	
-		}
-    	 
-    
+    	
+    	
 });
     //처음에 아이디체크 버튼 누를때 느려서 만든거
     $.ajax({
@@ -212,6 +204,35 @@ $(function() {
     });
     
 });
+
+function goSubmit() {
+	
+	if(idck == 0){
+    	alert('아이디 중복체크를 해주세요');
+    	$("#user_id").focus();
+    	return false;
+    	
+	}
+	
+	if($('#user_name').val() == ''){
+		alert("이름을 입력해주세요");
+	}else if($('#user_pwd').val() == ''){
+		alert("비밀번호를 입력해주세요");
+	}else if($('#user_pwd2').val() == ''){
+		alert("비밀번호를 입력해주세요");
+	}else if($('#user_mobile').val() == ''){
+		alert("핸드폰번호를 입력해주세요");
+	}else if($('#email').val() == ''){
+		alert("이메일을 입력해주세요");
+	}else if($('#address').val() == ''){
+		alert("주소를 입력해주세요");
+	}else if($('#location_area').val() == ''){
+		alert("거래 가능지역을 입력해주세요");
+	}else{
+	    $("#join").submit();
+	    alert("입력하신 이메일로 인증해야 로그인이 가능합니다")
+	}
+}
 
 </script>
 
@@ -412,10 +433,10 @@ a {
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 
 				<hr>
-
-				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange" onclick="validate();">등록하기</button>
+				
 		</form>
+				<button id="register" type="button" class="registerbtn"
+					style="background-color: orange" onclick="goSubmit();">등록하기</button>	
 		</div>
 		</div>
 	</div>

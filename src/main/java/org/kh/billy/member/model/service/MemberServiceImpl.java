@@ -87,7 +87,7 @@ public class MemberServiceImpl implements MemberService{
 		sendMail.setSubject("billy 서비스 이메일 인증");
 		sendMail.setText(new StringBuffer().append("<h3>billy 서비스 메일인증</h3><br>").append("<p>아래 링크를 클릭하여 인증을 완료해주세요</p>")
 				.append("<a href='http://localhost:8888/billy/joinConfirm.do?user_id=").append(member.getUser_id())
-				.append("&email=").append(member.getEmail()).append("&key=").append(member.getAuthkey()).append("' target='_blenk'><h3>링크 클릭시 인증이 완료되고 로그인 페이지로 이동합니다.<h3></a>").toString());
+				.append("&email=").append(member.getEmail()).append("&key=").append(member.getAuthkey()).append("' target='_blenk'><h3>링크 클릭시 인증이 완료되고 홈페이지로 이동합니다.<h3></a>").toString());
 		sendMail.setFrom("billy", "billy");
 		sendMail.setTo(member.getEmail());
 		sendMail.send();
@@ -175,6 +175,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int deleteUser(String userId) {
 		return memberDao.deleteUser(mybatisSession, userId);
+	}
+
+	@Override
+	public int deleteSuser(String userId) {
+		return memberDao.deleteSuser(mybatisSession, userId);
 	}
 	
 	
