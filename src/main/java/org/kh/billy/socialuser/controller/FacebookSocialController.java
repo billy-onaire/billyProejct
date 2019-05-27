@@ -62,6 +62,7 @@ public class FacebookSocialController {
     	String fid = "";
     	String email="";
     	String userId = "";
+        Member user = null;
         try {
              String redirectUri = oAuth2Parameters.getRedirectUri();
             System.out.println("Redirect URI : " + redirectUri);
@@ -101,11 +102,9 @@ public class FacebookSocialController {
                 System.out.println("Facebook email: " + email);
                 System.out.println("Facebook name: " + name);
                 userId = socialService.selectCheckId(fid);
-                if(socialService.selectDeleteSocial(userId) != null) {
-         		   model.addAttribute("message", "탈퇴된 회원입니다.");
-         		   return "member/memberError";
-         	   }
-                
+                user = socialService.selectDeleteSocial(userId);
+    	        System.out.println("페이스북 user : " + user);
+               
                 member.setUser_id(userId);
   	            fSession.setAttribute("loginMember", member);
   	            status.setComplete(); 
@@ -120,6 +119,12 @@ public class FacebookSocialController {
         }
          
         if (userId != null) {
+        	
+        	if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
+				   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
+			   	   return "member/memberError";	
+		   	   }
+        	
            member = socialService.selectUserInfo(userId);
  		   member.setSocial_type("facebook");
      	   member.setSocial_code(fid);

@@ -132,7 +132,7 @@ public class MemberController {
 		   
 		   if(user.getVerify().equals("y") && user.getDelete_yn().equals("N")) {
 			   if(bcryptPE.matches(member.getUser_pwd(), user.getUser_pwd())) {
-			   user.setSocial_type("user");
+			   user.setSocial_type("user");	
 			   session.setAttribute("loginMember", user);
 			   status.setComplete();
 			   System.out.println(user.getUser_id() + "님 로그인 성공!!");			   
@@ -148,7 +148,7 @@ public class MemberController {
 			   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
 		   	   return "member/memberError";	
 	   	   }else if(user.getVerify().equals("n") && user.getDelete_yn().equals("Y"))  
-	   		model.addAttribute("message", "탈퇴한 회원입니다.");
+	   		   model.addAttribute("message", "탈퇴한 회원입니다.");
 		   	   return "member/memberError";
 	   	   	   
 	   }else {
@@ -214,27 +214,37 @@ public class MemberController {
    @RequestMapping(value="smupdate.do", method=RequestMethod.POST)
      public String updateSocialMember(Member member, Model model, HttpServletRequest request
     		 ,SessionStatus status, HttpSession session) {
-
+	   System.out.println("member : " + member);
   	   int result = memberService.updateSocialMember(member);
   	   Member sumember = memberService.selectSocialMember(member);
   	   System.out.println("sumember : " + sumember);
   	   String userId = sumember.getUser_id();
   	   System.out.println("sumember userid : " + userId);
   	   Member suuser = socialService.selectSocialUser(userId);
-  	   
+  	   System.out.println("suuser : " + suuser);
   	   if(result > 0) {
   		   if(suuser.getSocial_type().equals("kakao")) {
-  			sumember.setSocial_type("kakao"); 			   
+  			sumember.setSocial_type("kakao"); 
+  			sumember.setSocial_code(suuser.getSocial_code());
+  			sumember.setProfile(member.getProfile());
   		   }else if(suuser.getSocial_type().equals("naver")) {
-  			sumember.setSocial_type("naver");   
+  			sumember.setSocial_type("naver");
+  			sumember.setSocial_code(suuser.getSocial_code());
+  			sumember.setProfile(member.getProfile());
   		   }else if(suuser.getSocial_type().equals("google")) {
   			sumember.setSocial_type("google");   
+  			sumember.setSocial_code(suuser.getSocial_code());
+  			sumember.setProfile(member.getProfile());
   		   }else if(suuser.getSocial_type().equals("facebook")) {
   			sumember.setSocial_type("facebook");
+  			sumember.setSocial_code(suuser.getSocial_code());
+  			sumember.setProfile(member.getProfile());
   		   }
   		   	sumember.setUser_id(userId);
 			session.setAttribute("loginMember", sumember);
 			status.setComplete();
+			
+			
   			return "home";
   		}else {
   			model.addAttribute("message", "회원정보 수정 실패!");
@@ -248,22 +258,40 @@ public class MemberController {
    }
    
    
-   //회원탈퇴
-   @RequestMapping(value="deleteUser.do")
-   public ModelAndView deleteUser(ModelAndView mv, @RequestParam String userId)throws UnsupportedEncodingException {
-	   int result = memberService.deleteUser(userId);
-	   Map<String, String> map = new HashMap<>();
-	   
-	   if(result > 0) {
-		   map.put("message", URLEncoder.encode("회원 탈퇴되었습니다.", "UTF-8"));
-	   }else {
-		   map.put("message", URLEncoder.encode("회원 탈퇴실패","UTF-8"));
-	   }
-	   mv.addObject(map);
-	   mv.setViewName("jsonView");
-	   return mv;
-   }
-   
+	// 회원탈퇴
+	@RequestMapping(value = "deleteUser.do")
+	public String deleteUser(@RequestParam String userId, HttpServletRequest request, Model model) {
+		int result = memberService.deleteUser(userId);
+
+		if (result > 0) {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				session.removeAttribute("loginMember");
+			}
+			return "home";
+		} else {
+			model.addAttribute("message", "회원 탈퇴 실패!");
+			return "common/error";
+		}
+
+	}
+	
+	@RequestMapping(value = "deleteSuser.do")
+	public String deleteSuser(@RequestParam String userId, HttpServletRequest request, Model model) {
+		int result = memberService.deleteSuser(userId);
+
+		if (result > 0) {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				session.removeAttribute("loginMember");
+			}
+			return "home";
+		} else {
+			model.addAttribute("message", "회원 탈퇴 실패!");
+			return "common/error";
+		}
+
+	}
   
    
    @RequestMapping(value = "joinPost.do", method = RequestMethod.POST)

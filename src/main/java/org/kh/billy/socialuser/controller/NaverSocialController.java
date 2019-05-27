@@ -95,16 +95,21 @@ public class NaverSocialController {
     	member.setSname(nickname);
     	member.setProfile(profile);
     	
-    	String userId = socialService.selectCheckId(nid);  
-    	if(socialService.selectDeleteSocial(userId) != null) {
- 		   model.addAttribute("message", "탈퇴된 회원입니다.");
- 		   return "member/memberError";
-    	}
+    	String userId = socialService.selectCheckId(nid);
+    	Member user = socialService.selectDeleteSocial(userId);
+        System.out.println("네이버 user : " + user);
+        
  	   	member.setUser_id(userId);
  	   	nSession.setAttribute("loginMember", member);
  	   	status.setComplete();
     	
     	if(userId != null) {
+    	   
+    		if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
+				   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
+			   	   return "member/memberError";	
+		   	   }
+    		
     	   member = socialService.selectUserInfo(userId);
  		   member.setSname(nickname);
  		   member.setProfile(profile);

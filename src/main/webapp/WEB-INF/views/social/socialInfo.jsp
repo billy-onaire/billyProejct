@@ -141,11 +141,6 @@ $(function(){
 	});
 
 		$("#register").click(function() {
-    	
-    	if(idck == 0){
-	    	alert('아이디 중복체크를 해주세요');
-	    	$("#user_id").focus();
-	    	return false;}
 	    
 		});	   	
     //처음에 아이디체크 버튼 누를때 느려서 만든거
@@ -159,6 +154,31 @@ $(function(){
     	
 		
 });
+
+function goSubmit() {
+	
+	if(idck == 0){
+    	alert('아이디 중복체크를 해주세요');
+    	$("#user_id").focus();
+    	return false;
+    	
+	}
+	
+	if($('#user_name').val() == ''){
+		alert("이름을 입력해주세요");
+	}else if($('#user_mobile').val() == ''){
+		alert("핸드폰번호를 입력해주세요");
+	}else if($('#email').val() == ''){
+		alert("이메일을 입력해주세요");
+	}else if($('#address').val() == ''){
+		alert("주소를 입력해주세요");
+	}else if($('#location_area').val() == ''){
+		alert("거래 가능지역을 입력해주세요");
+	}else{
+	    $("#join").submit();
+	    alert("회원가입이 완료되었습니다")
+	}
+}
 </script>
 
 <!-- Favicon  -->
@@ -245,7 +265,7 @@ a {
 		<!-- 회원가입 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container" >
-		<form action="sinsert.do" name = "join" onsubmit="return validate();" method="post" enctype="multipart/form-data">
+		<form action="sinsert.do" id="join" name = "join" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="social_code" value="${loginMember.social_code }">
 				<input type="hidden" name="social_type" value="${loginMember.social_type }">
 				<input type="hidden" name="profile" value="${loginMember.profile }">
@@ -368,10 +388,10 @@ a {
 				<p>
 					By creating an account you agree to our <a href="#">Terms &
 						Privacy</a>.
-				</p>
-				<button type="submit" id="register"  class="registerbtn"
-					style="background-color: orange">등록하기</button>
+				</p>				
 		</form>
+				<button type="button" id="register"  class="registerbtn"
+					style="background-color: orange" onclick="goSubmit();">등록하기</button>
 		</div>
 		</div>
 	</div>

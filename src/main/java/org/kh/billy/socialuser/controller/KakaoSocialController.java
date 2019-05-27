@@ -21,12 +21,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.kh.billy.member.controller.MemberController;
+import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.socialuser.model.vo.SocialUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.codec.multipart.SynchronossPartHttpMessageReader;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +46,9 @@ public class KakaoSocialController {
 	 
 	 @Autowired
 	 private SocialUserService socialService;
+	 
+	 @Autowired
+	 private MemberService memberService;
 	
 	 @RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	   public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession kSession,
@@ -76,18 +81,23 @@ public class KakaoSocialController {
 	        member.setProfile(profile);
 	        member.setSocial_code(kid);
 	        member.setSocial_type("kakao");
-	        String userId = socialService.selectCheckId(kid);
-	        if(socialService.selectDeleteSocial(userId) != null) {
-	    		   model.addAttribute("message", "탈퇴된 회원입니다.");
-	    		   return "member/memberError";
-	    	}
+	        String userId = socialService.selectCheckId(kid);   
+	        Member user = socialService.selectDeleteSocial(userId);
+	        System.out.println("카카오 소셜 user : " + user);
 	        
 	        member.setUser_id(userId);
 	        kSession.setAttribute("loginMember", member);
-	        status.setComplete();
+ 		    status.setComplete();
+
+	        
 	        		        
 	        if (userId != null) {
-	        		member = socialService.selectUserInfo(userId);
+	        		
+	        	   if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
+					   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
+				   	   return "member/memberError";	
+			   	   }
+		 		   member = socialService.selectUserInfo(userId);
 	    		   member.setSname(name);
 	    		   member.setProfile(profile);
 	    		   member.setSocial_type("kakao");

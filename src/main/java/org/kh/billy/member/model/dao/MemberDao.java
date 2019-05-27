@@ -127,5 +127,9 @@ public class MemberDao {
 
 	public int deleteUser(SqlSessionTemplate session, String userId) {
 		return session.update("memberMapper.deleteUser", userId);
+	}
+
+	public int deleteSuser(SqlSessionTemplate session, String userId) {
+		return session.update("memberMapper.deleteSuser", userId);
 	}	
 }

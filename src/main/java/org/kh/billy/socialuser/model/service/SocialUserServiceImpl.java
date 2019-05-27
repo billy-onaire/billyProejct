@@ -20,7 +20,7 @@ public class SocialUserServiceImpl implements SocialUserService{
 	
 	//소셜 탈퇴회원 유무체크
 	@Override
-	public String selectDeleteSocial(String userId) {
+	public Member selectDeleteSocial(String userId) {
 		return socialDao.selectDeleteSocial(mSession, userId);
 	}
 	
