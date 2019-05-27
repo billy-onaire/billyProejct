@@ -17,6 +17,7 @@ public class VisitController implements HttpSessionListener{
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
 		HttpSession session = se.getSession();
+		System.out.println("session 생성 : " + session.getId());
         WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
         //등록되어있는 빈을 사용할수 있도록 설정해준다
         VisitDao visitDao = (VisitDao)wac.getBean("visitDao");
@@ -30,6 +31,8 @@ public class VisitController implements HttpSessionListener{
 	
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
+		HttpSession session = se.getSession();
+		System.out.println("session 만료 : " + session.getId());
 	}
 	
 }

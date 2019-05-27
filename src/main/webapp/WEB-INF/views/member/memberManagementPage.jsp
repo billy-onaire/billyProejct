@@ -24,7 +24,8 @@
 }
 .form-control{
 	width: 200px;
-	float:left;
+	display: inline-block;
+	float: left;
 }
 .input-group{
 	width: 300px;
@@ -115,11 +116,10 @@ function optionValue(){
 <body>
 <div class="main-content-wrapper d-flex clearfix">
 <c:import url="../common/adminNav.jsp" />
-	<div class="products-catagories-area clearfix">
-		<div class="amado-pro-catagory clearfix">
-		<div class="container">
+	<div class="amado_product_area section-padding-100">
+		<div class="container text-center">
 		<h1 align="center">회원 관리</h1>
-		<table class="table table-hover text-center" id="memberTable">
+		<table class="table table-striped table-hover" id="memberTable">
 			<thead>
 			<tr>
 				<th>아이디</th>
@@ -130,8 +130,8 @@ function optionValue(){
 				<th>회원탈퇴여부</th>
 			</tr>
 			</thead>
-			<c:forEach var="member" items="${mList }" >
 			<tbody>
+			<c:forEach var="member" items="${mList }" >
 				<tr>
 					<td>${member.user_id }</td>
 					<td>${member.user_name }</td>
@@ -143,8 +143,8 @@ function optionValue(){
 						<button type="button" class="btn btn-dark" onclick="backMember();">회원복구</button>
 					</td>
 				</tr>
-			</tbody>
 			</c:forEach>
+			</tbody>
 		</table>
 		</div>
 			<ul class="pagination">
@@ -164,9 +164,9 @@ function optionValue(){
 			</li>
 			</c:if>
 		</ul>
-		<div class="container"> 
-		<form action="mSearchList.do" method="get">
-		<div class="form-group">
+		<div class="container">
+		<form action="mSearchList.do" method="get" class="text-center">
+		<div class="form-group ">
 			<select class="form-control" id="selection" name="selection" onChange="optionValue();">
 				<option>선택해주세요</option>
 				<option value="userId">아이디</option>
@@ -182,8 +182,8 @@ function optionValue(){
 		</div>
 		</form>
 		</div>
-	</div>
-	</div>
 </div>
+</div>
+<c:import url="../common/footer.jsp" />
 </body>
 </html>
