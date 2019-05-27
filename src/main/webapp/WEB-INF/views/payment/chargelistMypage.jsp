@@ -51,6 +51,10 @@ $(function(){
 	$('.view i').click(function() {
 		location.href = 'resultPay.do';
 	});
+	
+	$('#sellList').click(function() {
+		location.href= 'paymentSearch.do';
+	});
 });//ready
 function setPageEntry(){
 	var perPageNum = '${ pageMaker.cri.perPageNum }';
@@ -127,8 +131,6 @@ function setSearchType() {
 								<option value=''>거래상태</option>
 								<option value='1'>구매완료</option>
 								<option value='2'>취소</option>
-								<option value='3'>거래중</option>
-								<option value='4'>판매완료</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>

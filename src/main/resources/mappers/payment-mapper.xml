@@ -129,7 +129,7 @@
 		select count(*)
 		from payment
 		where status in (3,4) and customer = #{ customer }
-		<include refid="searchSeller"/>
+		<include refid="searchSellerId"/>
 	</select>
 	
 	<!-- payment 테이블 목록 1개 조회 -->
@@ -264,6 +264,13 @@
 	<sql id="searchSeller">
 		<if test="searchType != null">
 			and o.seller_id like #{ keyword } 
+		</if>
+	</sql>
+	
+	<!-- 거래중 목록 검색조건  sql2 -->
+	<sql id="searchSellerId">
+		<if test="searchType != null">
+			and seller_id like #{ keyword }
 		</if>
 	</sql>
 </mapper>

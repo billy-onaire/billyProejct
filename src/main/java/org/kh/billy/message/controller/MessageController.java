@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.message.model.service.MessageService;
 import org.kh.billy.message.model.vo.CriteriaMms;
@@ -20,6 +22,8 @@ import org.kh.billy.message.model.vo.PageMakerMms;
 import org.kh.billy.product.model.service.ProductDetailService;
 import org.kh.billy.product.model.vo.ProductDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -398,6 +402,33 @@ public class MessageController {
 		
 		return sendObj;
 
+	}
+	
+	@RequestMapping(value="bookingMsg.do", method=RequestMethod.POST)
+	public ResponseEntity<String> bookingMsg(@RequestBody String param, MessagePname msg) throws ParseException {
+		//예약페이지에서 쪽지 보내기
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		org.json.simple.JSONObject jobj = (org.json.simple.JSONObject)obj;
+		//logger.info("obj : " + obj.toString());
+		
+		StringBuffer buffer = new StringBuffer()
+				.append((String)jobj.get("pno"))
+				.append("번 물품 예약문의합니다");
+		
+		msg.setProduct_name((String)jobj.get("pname"));
+		msg.setMms_title(buffer.toString());
+		
+		int pno = Integer.parseInt((String)jobj.get("pno"));
+		msg.setProduct_no(pno);
+		msg.setRecv_id((String)jobj.get("seller"));
+		msg.setSent_id((String)jobj.get("customer"));
+		msg.setMms_content((String)jobj.get("content"));
+		
+		int re = messageService.insertMessage(msg);
+		//logger.info("re : " + String.valueOf(re));
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
 
 	

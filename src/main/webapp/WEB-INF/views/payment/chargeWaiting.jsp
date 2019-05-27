@@ -68,8 +68,10 @@ $(function(){
 			data: JSON.stringify(job),
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
+				alert('결제를 수락하였습니다.');
+				$('.ok-je').html('');
+				$('.cancel-je').html('');
 				console.log('success');
-				$('.ok-je').hide();
 			}
 		})//ajax
 	});//click
