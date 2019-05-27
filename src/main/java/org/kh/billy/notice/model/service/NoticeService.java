@@ -22,4 +22,8 @@ public interface NoticeService {
 
 	int updateNoticeReadCount(int noticeNo);
 
+	int selectSearchNoticeCount(String keyword, String keyword2);
+
+	ArrayList<Notice> selectSearchNoticeList(Criteria cri);
+
 }

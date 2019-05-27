@@ -57,4 +57,14 @@ public class NoticeServiceImpl implements NoticeService{
 	public int updateNoticeReadCount(int noticeNo) {
 		return noticeDao.updateNoticeReadCount(mybatisSession, noticeNo);
 	}
+
+	@Override
+	public int selectSearchNoticeCount(String select, String keyword) {
+		return noticeDao.selectSearchNoticeCount(mybatisSession, select, keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchNoticeList(Criteria cri) {
+		return noticeDao.selectSearchNoticeList(mybatisSession, cri);
+	}
 }

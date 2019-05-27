@@ -12,8 +12,28 @@ public class Criteria implements java.io.Serializable{
 	private int page;
     private int perPageNum;
     private String seller_id;
+    private String keyword;
+    private String select;
     
-    public String getSeller_id() {
+    
+    
+    public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getSelect() {
+		return select;
+	}
+
+	public void setSelect(String select) {
+		this.select = select;
+	}
+
+	public String getSeller_id() {
 		return seller_id;
 	}
 
@@ -64,7 +84,10 @@ public class Criteria implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", seller_id=" + seller_id + "]";
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", seller_id=" + seller_id + ", keyword="
+				+ keyword + ", select=" + select + "]";
 	}
+
+	
     
 }

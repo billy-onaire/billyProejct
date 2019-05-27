@@ -50,4 +50,42 @@
 	<delete id="deleteNotice" parameterType="int">
 	delete from notice where notice_no = #{noticeNo} 
 	</delete>
+	<select id="selectSearchNoticeCount" parameterType="map" resultType="int">
+	<!-- select한 방식을 구분해야 함  -->
+	select count(*) from notice  
+	<if test="select == 'title'">
+	 where notice_title like '%' || #{keyword} || '%'	
+	</if>
+	<if test="select == 'content'">
+	 where notice_content like '%' || #{keyword} || '%'
+	</if>
+	<if test="select == 'title_content'">
+	 where notice_title like '%' || #{keyword} || '%' or
+	notice_content like '%' || #{keyword} || '%'
+	</if>
+	</select>
+	<select id="selectSearchNoticeList" parameterType="map" resultMap="resultNotice">
+        select X.NOTICE_NO, X.ADMIN_ID, X.NOTICE_TITLE, X.NOTICE_CONTENT, X.NOTICE_ORIGINALFILE, X.NOTICE_RENAMEFILE, X.NOTICE_DATE, X.NOTICE_MODIFYDATE, X.NOTICE_READCOUNT        
+		from ( 
+		    select rownum as rnum, A.NOTICE_NO, A.ADMIN_ID, A.NOTICE_TITLE, A.NOTICE_CONTENT, A.NOTICE_ORIGINALFILE, A.NOTICE_RENAMEFILE, A.NOTICE_DATE, A.NOTICE_MODIFYDATE, A.NOTICE_READCOUNT
+		    from (
+		        select NOTICE_NO, ADMIN_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ORIGINALFILE, NOTICE_RENAMEFILE, NOTICE_DATE, NOTICE_MODIFYDATE, NOTICE_READCOUNT
+		        from NOTICE
+		        
+		        <if test="select == 'title'">
+				where notice_title like '%' || #{keyword} || '%'	
+				</if>
+				<if test="select == 'content'">
+				where notice_content like '%' || #{keyword} || '%'
+				</if>
+				<if test="select == 'title_content'">
+				where notice_title like '%' || #{keyword} || '%' or
+				notice_content like '%' || #{keyword} || '%'
+				</if>
+		        order by NOTICE_NO desc) A
+		    <![CDATA[
+		    where rownum <= (#{perPageNum} * #{page})) X
+		where X.rnum > #{pageStart}
+	]]>
+	</select>
 </mapper>

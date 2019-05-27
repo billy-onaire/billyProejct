@@ -132,9 +132,9 @@
                                             <div class="notice-content" style="width: 100%; float: left;"><p>${notice.notice_content }</p></div>
                                         </li>
                                     </ul>
-                                    <button class="btn btn-warning" onclick="location.href='adminnoticelist.do'">목록</button>
+                                    <button class="btn btn-warning" onclick="location.href='adminnoticelist.do?select=${select}&keyword=${keyword}'">목록</button>
                                     <button class="btn btn-warning" onclick="location.href='noticeupdateview.do?notice_no=${notice.notice_no}'">수정</button>
-                                    <button class="btn btn-warning" onclick="location.href='deletenotice.do?notice_no=${notice.notice_no}'">삭제</button>
+                                    <button class="btn btn-warning" onclick="noticedelete()">삭제</button>
                                 </div>
                            </div>
                         </div> 
@@ -170,7 +170,18 @@
             $(".custom-file-input").on("change", function() {
               var fileName = $(this).val().split("\\").pop();
               $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });                
+            });           
+            
+            function noticedelete(){
+            	if(confirm('정말로 삭제하시겠습니까?')){
+            		location.href=location.href='deletenotice.do?notice_no=${notice.notice_no}&re=${notice.notice_renamefile }';
+            		alert('글이 삭제 되었습니다.');
+            		return true;
+            	}else{
+            		return false;
+            	}
+            	
+            }
         </script>
         </body>
 </html>
