@@ -90,4 +90,8 @@ public class ProductController {
 			out.flush();
 			out.close();
 	}
+	@RequestMapping("aboutUs.do")
+	public String GoaboutUs() {
+		return "common/aboutUs";
+	}
 }

@@ -180,7 +180,7 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
                 <ul>
                     <li class="active"><a href="main.do" >Home</a></li>
                     <li><a href="noticelist.do" >Notice</a></li>
-                    <li><a href="#" >About us</a></li>
+                    <li><a href="aboutUs.do" >About us</a></li>
                     <c:if test="${!empty loginMember }">
                       <li><a href="mPageMain.do" >MyPage</a></li>
                     </c:if>
