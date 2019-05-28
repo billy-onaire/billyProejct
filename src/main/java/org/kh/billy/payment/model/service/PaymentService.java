@@ -42,7 +42,10 @@ public interface PaymentService {
 
 	int updateRejectCharge(int paymentNo);
 
+	int selectCountMyPay(String userId);
+
 	int updateRejectChargeCustomer(Payment payment);
+
 	
 	/*
 	int searchWaitingListCount(PaymentCri payCri);

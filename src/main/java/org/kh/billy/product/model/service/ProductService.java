@@ -10,4 +10,6 @@ public interface ProductService {
 	ArrayList<ProductForList> selectProductList(SettingList setting);
 
 	int selectTotalListCount(SettingList setting);
+
+	int selectCountMyProduct(String userId);
 }

@@ -8,4 +8,5 @@ public interface ProductDetailService {
 	String selectAddress(String sellerId);
 
 	Double selectAvgReview(int pNo);
+
 }

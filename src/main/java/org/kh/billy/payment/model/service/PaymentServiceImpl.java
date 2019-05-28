@@ -123,8 +123,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
+	public int selectCountMyPay(String userId) {	
+		return paymentDao.selectCountMyPay(mybatisSession, userId);
+  }
+  
+  @Override
 	public int updateRejectChargeCustomer(Payment payment) {
-		
 		return paymentDao.updateRejectChargeCustomer(mybatisSession, payment);
 	}
 }

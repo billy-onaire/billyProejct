@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -295,6 +298,22 @@ public class PaymentController {
 		return mav;
 	}
 	
+	@RequestMapping(value="paCount.do", method=RequestMethod.POST)
+	public ModelAndView selectCountMyPay(Model model, ModelAndView mv, @RequestParam(name="userId") String userId) {
+		
+		int paCount = payService.selectCountMyPay(userId);
+		Map<String, Integer> map1 = new HashMap<>();
+		
+		if(userId != null) {
+	    	   map1.put("pant", paCount);
+	    	   mv.addObject(map1);
+	    	   mv.setViewName("jsonView");
+	       }
+	    	   
+	       System.out.println("ajax체크 받기" + map1);     
+	       return mv;
+	}
+	
 	
 	
 	
@@ -366,5 +385,6 @@ public class PaymentController {
 			e.printStackTrace();
 		}
 	}
+
 
 }

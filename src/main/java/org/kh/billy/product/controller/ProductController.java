@@ -4,17 +4,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.kh.billy.product.model.service.ProductService;
+import org.kh.billy.product.model.vo.ProductDetail;
 import org.kh.billy.product.model.vo.ProductForList;
 import org.kh.billy.product.model.vo.SettingList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -93,5 +99,21 @@ public class ProductController {
 	@RequestMapping("aboutUs.do")
 	public String GoaboutUs() {
 		return "common/aboutUs";
+	}
+	
+	@RequestMapping(value="pCount.do", method=RequestMethod.POST)
+	public ModelAndView productCount(Model model, ModelAndView mv, @RequestParam(name="userId") String userId) {
+		
+		int pCount = ps.selectCountMyProduct(userId);
+		Map<String, Integer> map = new HashMap<>();
+		
+		if(userId != null) {
+	    	   map.put("pnt", pCount);
+	    	   mv.addObject(map);
+	    	   mv.setViewName("jsonView");
+	       }
+	    	   
+	       System.out.println("ajax체크 받기" + map);     
+	       return mv;
 	}
 }
