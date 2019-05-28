@@ -411,24 +411,6 @@ public class MemberController {
 	   return mv;
    }
    
-   //회원관리 페이지 이동
-   @RequestMapping(value="memberManagementPage.do")
-   public String memberBoardList(Model model, BasePage bPage) {
-	   Paging paging = new Paging();
-	   paging.setBpage(bPage);
-	   paging.setTotalCount(memberService.selectTotalCount());	//DB에 저장된 회원 총 인원수체크
-	   ArrayList<Member> mList = memberService.selectMemberList(bPage);	//DB에 저장된 회원 총 리스트 (이메일 인증한 회원만)
-
-	   if(mList != null) {
-		   model.addAttribute("mList",mList);
-		   model.addAttribute("paging", paging);
-		   return "member/memberManagementPage";
-	   }else {
-		   model.addAttribute("message", "조회할 게시글이 없습니다.");
-		   return "member/memberError";
-	   }
-   }
-   
    //회원관리 아이디,이름,탈퇴회원으로 검색 리스트 
    @RequestMapping(value="mSearchList.do")
    public String memberSearchList(@RequestParam(value="selection", required=false, defaultValue="") String selection,@RequestParam(value="search", required=false, defaultValue="") String search,
@@ -468,7 +450,13 @@ public class MemberController {
    
    //신고횟수 3회시 탈퇴시키는 메소드
    @RequestMapping(value="deleteMember.do")
-   public ModelAndView deleteMember(ModelAndView mv, @RequestParam String userId) throws UnsupportedEncodingException {
+   public ModelAndView deleteMember(ModelAndView mv, @RequestParam String userId,HttpServletRequest request) throws UnsupportedEncodingException {
+	   HttpSession session = request.getSession(false);
+	   if(session.getAttribute("admin") == null) {
+		   mv.setViewName("redirect:alogin.do");
+		   return mv;
+	   }
+	   
 	   Map<String, String> map = new HashMap<>();
 	   if(memberService.deleteMember(userId) > 0) {
 		   map.put("message", URLEncoder.encode("회원 탈퇴되었습니다.", "UTF-8"));
@@ -482,7 +470,13 @@ public class MemberController {
    
    //회원복구 시키는 메소드
    @RequestMapping(value="backMember.do")
-   public ModelAndView backMember(ModelAndView mv, @RequestParam String userId) throws UnsupportedEncodingException {
+   public ModelAndView backMember(ModelAndView mv, @RequestParam String userId,HttpServletRequest request) throws UnsupportedEncodingException {
+	   HttpSession session = request.getSession(false);
+	   if(session == null) {
+		   mv.setViewName("redirect:alogin.do");
+		   return mv;
+	   }
+	   
 	   Map<String, String> map = new HashMap<>();
 	   if(memberService.updateBackMember(userId) > 0) {
 		   map.put("message", URLEncoder.encode("회원 복구되었습니다.", "UTF-8"));

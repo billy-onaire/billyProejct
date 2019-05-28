@@ -53,7 +53,8 @@ function deleteMember() {
 				type: "get",
 				dateType: "json",
 				success: function(result){
-					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));						
+					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));
+					$("#memberTable tr").off("click");
 				},error: function(request, status, errorData){
 					console.log("error code : " + request.status
 							+ "\nmessage : " + request.responseText
@@ -87,7 +88,8 @@ function backMember() {
 				type: "get",
 				dateType: "json",
 				success: function(result){
-					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));						
+					alert(decodeURIComponent(result.hashMap.message.replace(/\+/gi," ")));
+					$("#memberTable tr").off("click");
 				},error: function(request, status, errorData){
 					console.log("error code : " + request.status
 							+ "\nmessage : " + request.responseText

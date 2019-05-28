@@ -14,8 +14,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("loginMember");
-		Object obj2 = session.getAttribute("admin");
-		if(obj == null && obj2 == null) {
+		if(obj == null) {
 			response.sendRedirect("login.do");
 			return false;
 		}
