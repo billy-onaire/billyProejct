@@ -22,7 +22,7 @@
   border: none;
   color: white;
   padding: 15px 32px;
-  margin-left: 40px;
+  
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -140,13 +140,21 @@
 					
 					<br> 
 					<c:if test="${list.sent_id eq  loginMember.user_id  }">		
+					<div style="width: 100%; text-align:center;">
+					<div style="display: inline-block; width:65%">
 						<input type="submit" class="button" id="back" value="뒤로가기" onclick="self.close();"> 	
 						<input type="button" class="button" id="delete" value="삭제하기">
+					</div>
+					</div>
 					</c:if>
 					
 					<c:if test="${list.recv_id eq  loginMember.user_id  }">
-						<input type="submit" class="button" id="reply" value="답장하기" > 
+					<div style="width: 100%; text-align:center;">
+					<div style="display: inline-block; width:65%">
+						<input type="submit" class="button" id="reply" value="답장하기" style="margin-right: 15px;"> 
 						<input type="button" class="button" id="delete" value="삭제하기" >
+					</div>
+					</div>
 					</c:if>					
 						</form>
 					

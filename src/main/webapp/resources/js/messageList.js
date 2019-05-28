@@ -18,7 +18,7 @@ function insertPopup() {
     
     // window.open("자식창 이름", "불러올 자식 창의 닉네임", "팝업창 옵션");
     window.open("mmsWrite.do?pno=${p.product_no}", "insert",
-    		"width=450, height=500, menubar=no, status=no, toolbar=no, left=700, top=200");
+    		"width=450, height=650, menubar=no, status=no, toolbar=no, left=700, top=200");
 }
 
 

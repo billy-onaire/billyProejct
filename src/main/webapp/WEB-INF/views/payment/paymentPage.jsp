@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>PAYMENT PAGE</title>
+<!-- Favicon  -->
+<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <!-- CSS -->
 <link rel='stylesheet' href='${ pageContext.request.contextPath }/resources/css/paymentInvoice.css'>
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/paymentConfirm.css">

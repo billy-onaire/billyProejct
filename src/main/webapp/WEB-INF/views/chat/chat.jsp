@@ -42,18 +42,22 @@
     </div>
 </body>
 <script type="text/javascript">
-var webSocket = new WebSocket('ws://billy-onaire.shop/billy/echo.do');
+var webSocket = new WebSocket('ws://localhost:8888/billy/echo.do');
 webSocket.onerror = onError
 webSocket.onopen = onOpen
 webSocket.onmessage = onMessage
 
+console.log("확인");
+
 function onMessage(event) {
   var $div = $('<div/>', {"class": "container darker", text: event.data })
     $("#chatArea").append($div);
+  console.log("recieved message : " + event.data + '\n');
 }
 function onOpen(event) {
   var $div = $('<div/>', {"class": "msg msg-connect", text: "연결성공"})
     $("#chatArea").append($div);
+  console.log("connect");
 }
 function onError(event) {
   var $div = $('<div/>', {"class": "msg msg-error", text: "연결이 끊겼습니다."})
@@ -83,5 +87,6 @@ $("#inputMessage").keypress(function(e) {
 $("#send").click(function() {
     send();
 })
+
 </script>
 </html>
