@@ -77,8 +77,7 @@
 					<li><a href="adminnoticelist.do" >Notice</a></li>
 					<li><a href="adminProductList.do" >제품게시글관리</a></li>
 					<li><a href="goReportAdmin.do" >신고관리</a></li>
-					<li><a href="#" >About us</a></li>
-					<li><a href="memberManagementPage.do" >회원관리</a></li>
+					<li><a href="mSearchList.do" >회원관리</a></li>
 				</ul>
 			</nav>
 			<!-- Button Group -->
