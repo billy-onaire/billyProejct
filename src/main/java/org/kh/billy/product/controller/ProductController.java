@@ -44,7 +44,7 @@ public class ProductController {
 		if(currentPage > totalPage)
 			setting.setPage(totalPage); // url 변경으로인해 현재페이지가 총 페이지 보다 높을 경우
 		
-		int startPage = ((currentPage - 1) / 10) * countPage + 1; // 페이징 박스 시작 부분
+		int startPage = ((currentPage - 1) / countPage) * countPage + 1; // 페이징 박스 시작 부분
 		int endPage = startPage + countPage - 1; // 페이징 박스 끝 부분
 		
 		if(endPage > totalPage)

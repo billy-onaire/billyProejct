@@ -51,7 +51,7 @@
 			</foreach>
 		</when>
 		<otherwise>
-		WHERE CATEGORY_CODE = 0
+		WHERE 1 = 1 
 		</otherwise>
 	</choose>
 	<![CDATA[
@@ -85,7 +85,7 @@
 			</foreach>
 		</when>
 		<otherwise>
-		WHERE CATEGORY_CODE = 0
+		WHERE 1 = 1 
 		</otherwise>
 	</choose>
 	<![CDATA[	

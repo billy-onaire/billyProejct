@@ -15,7 +15,7 @@
 	<title>Billy 빌리</title>
 
 	<!-- Favicon  -->
-	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
 	<!-- Core Style CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">

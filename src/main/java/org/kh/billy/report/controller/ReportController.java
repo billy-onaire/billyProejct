@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.service.ReportService;
 import org.kh.billy.report.model.vo.Report;
+import org.kh.billy.report.model.vo.ReportCheck;
 import org.kh.billy.report.model.vo.ReportList;
 import org.kh.billy.report.model.vo.ReportSetting;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,17 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="getAdminReportInfo.do", method=RequestMethod.POST)
-	public void getAdminReportInfo(@RequestBody ReportSetting setting, HttpServletResponse response) throws IOException {
+	public void getAdminReportInfo(@RequestBody ReportSetting setting, HttpServletResponse response,HttpServletRequest request) throws IOException {
+		
+		HttpSession session = request.getSession(false);
+	      if(session.getAttribute("admin") == null) {
+	    	  PrintWriter out = response.getWriter();
+	  			out.print("no");
+	  			out.flush();
+	  			out.close();
+	  			return;
+	      }
+		
 		int currentPage = setting.getPage(); // 현재 페이지
 		int listCount =  setting.getListCount(); // 한 페이지에 표시되는 게시물 수
 		int totalCount = rs.selectTotalListCount(setting); // 총 게시물 갯수
@@ -61,7 +73,7 @@ public class ReportController {
 		if(currentPage > totalPage)
 			setting.setPage(totalPage); // url 변경으로인해 현재페이지가 총 페이지 보다 높을 경우
 		
-		int startPage = ((currentPage - 1) / 10) * countPage + 1; // 페이징 박스 시작 부분
+		int startPage = ((currentPage - 1) / countPage) * countPage + 1; // 페이징 박스 시작 부분
 		int endPage = startPage + countPage - 1; // 페이징 박스 끝 부분
 		
 		if(endPage > totalPage)
@@ -132,10 +144,10 @@ public class ReportController {
 		mv.setViewName("report/goReport");
 		return mv;
 	}
-	@RequestMapping("checkReport.do")
-	public void selectCheckReport(String request_id, HttpServletResponse response) throws IOException{
-		System.out.println("신고자 아이디 : "+ request_id);
-		int result = rs.selectCheckReport(request_id);
+	@RequestMapping(value="checkReport.do", method = RequestMethod.POST)
+	public void selectCheckReport(@RequestBody ReportCheck r, HttpServletResponse response) throws IOException{
+		System.out.println("신고자 아이디 : "+ r);
+		int result = rs.selectCheckReport(r);
 		System.out.println(result);
 		if(result == 0) {
 			PrintWriter out = response.getWriter();
@@ -149,7 +161,6 @@ public class ReportController {
 		
 		int result = rs.insertReport(r);
 		if (result > 0) {
-			System.out.println("저장 테스트 성공");
 			PrintWriter out = response.getWriter();
 			out.append("ok");
 			out.flush();
