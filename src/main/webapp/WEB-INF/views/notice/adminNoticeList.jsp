@@ -160,7 +160,7 @@ form.example::after {
             <ul class="list-group">
                 <c:forEach items="${list }" var="list">
                 <li class="list-group-item list-group-item-action" style="height: 45px;  ">
-                    <div class="notice-title" style="width: 70%; float: left;"><a href="adminnoticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}" style="font-size: 20px;">${list.notice_title }</a></div>
+                    <div class="notice-title" style="width: 70%; float: left;"><a href="adminnoticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;">${list.notice_title }</a></div>
                     <div class="notice-eye" style="width: 15%; float: left;">
                         <div>
                             <i class="material-icons" >
@@ -198,14 +198,10 @@ form.example::after {
                                 	<li class="page-item"><a class="page-link" href="<c:url value="adminnoticelist.do?page=${pageMaker.endPage+1 }&select=${select }&keyword=${keyword }"/>"><i class="fa fa-chevron-right"></i></a></li>
                             	</c:if>
                         </ul>
-        				
-        				
                     <div>
                     </div>
 		  <button class="btn btn-warning" onclick="location.href='noticewriteview.do' ">작성</button>                    
-                    
                 </div>
-                
                     <br>                          
                 </div> 
             </div>
