@@ -28,8 +28,9 @@ comment.addEventListener('keyup', () => {
 const reportBtn = document.querySelector('#reportBtn');
 
 function goAddReport(){
-    if(rContent == ""){
-        rContent = "no contents";
+    if(rContent.length < 10){
+        comment.focus();
+        return;
     }
 
     const requestData = {
@@ -88,9 +89,14 @@ document.addEventListener('DOMContentLoaded',()=>{
             document.querySelector('.cart-btn').appendChild(newBtn);
         }
     }
-    xhr.open('GET', "checkReport.do?request_id="+requestId);// 신청인 아이디 업데이트 필요
-    xhr.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
-    xhr.send();
+    const requestData = {
+        report_id : id,
+        request_id : requestId
+    }
+    console.log(requestData);
+    xhr.open('POST', "checkReport.do");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(requestData));
 })
 
 

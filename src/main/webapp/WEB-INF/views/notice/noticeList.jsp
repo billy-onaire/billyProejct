@@ -89,7 +89,7 @@ form.example::after {
 	height: 47px;
 }
 		
-		.pagination {
+.pagination {
    justify-content: center;
 }
  </style>
@@ -158,7 +158,7 @@ form.example::after {
             <ul class="list-group">
                 <c:forEach items="${list }" var="list">
                 <li class="list-group-item list-group-item-action" style="height: 45px;  ">
-                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}" style="font-size: 20px;">${list.notice_title }</a></div>
+                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;">${list.notice_title }</a></div>
                     <div class="notice-eye" style="width: 15%; float: left;">
                         <div>
                             <i class="material-icons" >
@@ -230,7 +230,6 @@ form.example::after {
 <script src="/billy/resources/js/active.js"></script>
 
 <script type="text/javascript">
-	console.log('확인용 : '+'${keyword}' + '${select}' );
 	function validate(){
 		console.log($('#keyword').val());
 		console.log($('#keyword').val().length);

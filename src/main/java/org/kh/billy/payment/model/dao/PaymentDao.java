@@ -3,17 +3,11 @@ package org.kh.billy.payment.model.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.kh.billy.payment.controller.PaymentController;
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
-import org.kh.billy.payment.model.vo.PaymentPaging;
-import org.kh.billy.payment.model.vo.PaymentSearchCri;
-import org.kh.billy.product.model.vo.SettingList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository("paymentDao")
@@ -114,5 +108,14 @@ public class PaymentDao {
 	public int updateRejectCharge(SqlSessionTemplate mybatisSession, int paymentNo) {
 		
 		return mybatisSession.update(mapper + "updateRejectCharge", paymentNo);
+	}
+
+
+	public int selectCountMyPay(SqlSessionTemplate mybatisSession, String userId) {	
+		return mybatisSession.update(mapper + "selectCountMyPay", userId);
+  }
+
+	public int updateRejectChargeCustomer(SqlSessionTemplate mybatisSession, Payment payment) {		
+		return mybatisSession.update(mapper + "updateRejectChargeCustomer", payment);
 	}
 }

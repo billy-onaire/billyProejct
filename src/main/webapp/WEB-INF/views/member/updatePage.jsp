@@ -15,65 +15,56 @@
 
 <!-- Title  -->
 <title>회원정보 수정</title>
-
+<!-- Favicon  -->
+<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){
-    var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+    var checkPwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/ // 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-    
-   	 $("#user_pwd").on('keydown', function(e){
-   		var pwd = $('#user_pwd').val();
-   	 
-    	if(pwd.length > 20){
-    		e.preventDefault();
-    		alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();
-       } 
-    	
-   	}).on('blur', function(){
-   		if($(this).val() == '') return;
-   		var pwd = $('#user_pwd').val();
-   		var uid = $('#user_id').val();
-   		if(pwd.length < 4){
-   			alert("비밀번호는 4~20자의 영문 대소문자와 숫자로만 입력.");
-            $(this).val("");
-            $(this).focus();	
-   		}
-   		
-   		if(pwd == uid){
-    		alert("아이디와 동일한 비밀번호는 지정할 수 없습니다.")
-    		$(this).val("");
-            $(this).focus();
-		}
-   	});
-   	 
-   	
-   	$("#user_pwd2").on('blur', function(){
-   		if($(this).val() == '') return;
-   		var pwd = $('#user_pwd').val();
-   		var pwd2 = $('#user_pwd2').val();
-   		
-   		if(pwd != pwd2){
-   			alert("입력하신 비밀번호와 다릅니다. ");
-            $(this).val("");
-            $(this).focus();	   		
-   		}
+       
  
-   		
-   	});
+       $("#user_pwd").on('blur', function(){
+    	  if($(this).val() == '') return;
+          var pwd = $('#user_pwd').val();
+          var uid = $('#user_id').val();
+     	  if(!checkPwd.test(pwd)){
+          alert("숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다");
+            $(this).val("");
+            $(this).focus();
+       	  }     
+     	 if(pwd == uid){
+             alert("아이디와 동일한 비밀번호는 지정할 수 없습니다.")
+             $(this).val("");
+               $(this).focus();
+     	 }
+      });
+    
+       
+      
+      $("#user_pwd2").on('blur', function(){
+         if($(this).val() == '') return;
+         var pwd = $('#user_pwd').val();
+         var pwd2 = $('#user_pwd2').val();
+         
+         if(pwd != pwd2){
+            alert("입력하신 비밀번호와 다릅니다. ");
+            $(this).val("");
+            $(this).focus();            
+         }
+         
+      });
 
-   	 
-   	  $("#email").on('blur', function(e){
-   		 if($(this).val() == '') return;
-  		 	if(!getMail.test($("#email").val())){
-	        alert("이메일형식에 맞게 입력해주세요")
-	        $('#email').val("");
+       
+        $("#email").on('blur', function(e){
+          if($(this).val() == '') return;
+            if(!getMail.test($("#email").val())){
+           alert("이메일형식에 맞게 입력해주세요")
+           $('#email').val("");
             $('#email').focus();
-	   		
-  		 	}  
- 	  	});
+            
+            }  
+         });
     
 });
  
@@ -136,13 +127,27 @@ $(document).ready( function(){
     });
 });
 
-$(document).ready( function(){
-    $("#register1").click( function() {
-       alert("다시 로그인 해주세요");
-        
-    });
-});
-
+function goSubmit() {
+	   	   
+	   if($('#user_name').val() == ''){
+	      alert("이름을 입력해주세요");
+	   }else if($('#user_pwd').val() == ''){
+	      alert("비밀번호를 입력해주세요");
+	   }else if($('#user_pwd2').val() == ''){	
+	      alert("비밀번호를 입력해주세요");
+	   }else if($('#user_mobile').val() == ''){
+	      alert("핸드폰번호를 입력해주세요");
+	   }else if($('#email').val() == ''){
+	      alert("이메일을 입력해주세요");
+	   }else if($('#address').val() == ''){
+	      alert("주소를 입력해주세요");
+	   }else if($('#location_area').val() == ''){
+	      alert("거래 가능지역을 입력해주세요");
+	   }else{
+	       $("#join").submit();
+	       alert("회원정보 수정 완료")
+	   }
+	}
 
 </script>
 
@@ -239,7 +244,7 @@ a {
 		<!-- 회원수정 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-				<form action="mupdate.do" method="post" enctype="multipart/form-data">
+				<form action="mupdate.do" id="join" name="join" method="post" enctype="multipart/form-data">
 				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
@@ -257,7 +262,7 @@ a {
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
 					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
 					<label for="email"><b>이메일</b></label> 
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					<input type="text" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" required>
 			
 			
 				<label for="address"><b>주소</b></label> 
@@ -345,13 +350,12 @@ a {
 				<textarea style="background-color: #f1f1f1" class="form-control"
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 
-				<hr>
-
-				<button id="register" type="submit" class="registerbtn"
-					style="background-color: orange">수정하기</button>
+				<hr>			
 		</form>
+			<button id="register" type="button" class="registerbtn"
+               style="background-color: orange" onclick="goSubmit();">수정하기</button>   
 		<form action="deleteUser.do" method="post">
-		<input type="text" id="userId" name="userId" value="${loginMember.user_id }">
+		<input type="hidden" id="userId" name="userId" value="${loginMember.user_id }">
 		billy를 더 이상 이용하고 싶지 않는다면 <button id= "deletea" class="btn btn-success btn-sm" type="submit"> 회원탈퇴하기</button>
 		</form>
 		</div>
@@ -366,7 +370,7 @@ a {
 		<!-- 회원수정 폼 -->
 		<div class="login-enroll-form clearfix">
 		<div class="container">
-				<form action="smupdate.do" method="post" enctype="multipart/form-data">
+				<form action="smupdate.do" method="post" id="join" name="join" enctype="multipart/form-data">
 				<h1>회원정보 수정</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
@@ -469,13 +473,13 @@ a {
 				<textarea style="background-color: #f1f1f1" class="form-control"
 					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
 
-				<hr>
-				<button id="register1" type="submit" class="registerbtn"
-					style="background-color: orange">수정하기</button>
-				 
+				<hr>	 
 		</form>
+			<button id="register" type="button" class="registerbtn"
+               style="background-color: orange" onclick="goSubmit();">수정하기</button>
+			
 		<form action="deleteSuser.do" method="post">
-		<input type="text" id="userId" name="userId" value="${loginMember.user_id }">
+		<input type="hidden" id="userId" name="userId" value="${loginMember.user_id }">
 		billy를 더 이상 이용하고 싶지 않는다면 <button id= "deletea" class="btn btn-success btn-sm" type="submit"> 회원탈퇴하기</button>
 		</form>
 		</div>

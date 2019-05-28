@@ -28,4 +28,7 @@ public class ProductDetailController{
 		model.addAttribute("point", point);
 		return "product/product-details";
 	}
+	
+	
+	
 }

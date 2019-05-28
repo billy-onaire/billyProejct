@@ -38,9 +38,6 @@ public class ReviewController {
 	public String reviewListPage(Model model, ReviewPaging paging, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		
-		if(session.getAttribute("loginMember") == null) {
-			return "redirect:login.do";
-		}else {
 			Member member = (Member)session.getAttribute("loginMember");
 			System.out.println("userid : " + member.getUser_id());
 			paging.setUserId(member.getUser_id());
@@ -51,8 +48,7 @@ public class ReviewController {
 	        model.addAttribute("p", paging);
 
 			return "member/reviewList";			
-		}	
-		
+				
 	}
 	
 	@RequestMapping("writeReview.do")

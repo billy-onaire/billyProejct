@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -127,7 +126,7 @@ function setSearchType() {
 							<select class="form-control" name='searchType' id='searchType'>
 								<option value=''>거래상태</option>
 								<option value='1'>구매완료</option>
-								<option value='2'>취소</option>
+								<option value='2'>판매거절</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -159,7 +158,7 @@ function setSearchType() {
                 			<td><div class="view" title="View Details" data-toggle="tooltip"  onclick="location.href='resultPay.do?pno=${ payment.payment_no }' "><i class="material-icons">&#xE5C8;</i></div></td>
                 		</c:if>
                 		<c:if test='${ payment.status eq 2 }'>
-                			<td><span class="status text-danger">&bull;</span> 취소</td>
+                			<td><span class="status text-danger">&bull;</span> 판매거절</td>
                 			<td>${ payment.payment_price }₩</td>
                 			<td> </td>
                 		</c:if>
@@ -191,7 +190,6 @@ function setSearchType() {
             </div>
         </div>
     </div>     
-</div>
 </div>
 <c:import url="../common/footer.jsp" />
 </body>                  		             

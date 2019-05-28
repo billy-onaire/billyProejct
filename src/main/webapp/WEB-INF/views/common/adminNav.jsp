@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Billy - 관리자메뉴</title>
+<!-- Favicon  -->
+<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 

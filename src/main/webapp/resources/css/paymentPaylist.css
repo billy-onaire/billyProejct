@@ -128,12 +128,13 @@
     }	
 	table.table td a {
 		font-weight: bold;
+		font-size: 15px;
 		color: #566787;
 		display: inline-block;
 		text-decoration: none;
 	}
 	table.table td a:hover {
-		color: #2196F3;
+		color: #fab336;
 	}
 	table.table td div.view {        
 		width: 30px;

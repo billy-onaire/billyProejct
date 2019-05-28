@@ -109,8 +109,8 @@ public class ProductManipulationController {
 			if(i == 3)
 				productImg.setFourth_img(fileRename);
 			
-			String savePath = request.getSession().getServletContext().getRealPath("resources/files/product");
-			file[i].transferTo(new File(savePath + "\\" + fileRename));
+			String savePath = request.getSession().getServletContext().getRealPath("resources/files/product/");
+			file[i].transferTo(new File(savePath +  fileRename));
 			/* + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1)*/
 			/*String savePath = request.getSession().getServletContext().getRealPath("/resources/files/test");
 			file[i].transferTo(new File(savePath + "\\" + file[i].getOriginalFilename()));*/

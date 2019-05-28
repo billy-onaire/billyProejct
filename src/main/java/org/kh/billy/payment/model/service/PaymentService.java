@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
-import org.kh.billy.payment.model.vo.PaymentPaging;
 import org.kh.billy.payment.model.vo.PaymentSearchCri;
 
 public interface PaymentService {
@@ -42,6 +41,11 @@ public interface PaymentService {
 	int updateAdmitCharge(int paymentNo);
 
 	int updateRejectCharge(int paymentNo);
+
+	int selectCountMyPay(String userId);
+
+	int updateRejectChargeCustomer(Payment payment);
+
 	
 	/*
 	int searchWaitingListCount(PaymentCri payCri);

@@ -27,4 +27,9 @@ public class ProductServiceImpl implements ProductService{
 		return pd.selectTotalListCount(mybatisSession, setting);
 	}
 
+	@Override
+	public int selectCountMyProduct(String userId) {
+		return pd.selectCountMyProduct(mybatisSession, userId);
+	}
+
 }

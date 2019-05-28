@@ -18,4 +18,8 @@ public class ProductDao {
 		return mybatisSession.selectOne("productListMapper.selectTotalListCount", setting);
 	}
 
+	public int selectCountMyProduct(SqlSessionTemplate mybatisSession, String userId) {
+		return mybatisSession.selectOne("productListMapper.selectCountMyProduct", userId);
+	}
+
 }

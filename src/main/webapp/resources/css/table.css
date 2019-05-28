@@ -1,7 +1,7 @@
 
 
 .header {
-  background-color: tomato;
+  background-color: #fab336;
   color: white;
   font-size: 1.5em;
   padding: 1rem;
@@ -42,7 +42,7 @@ table td:last-child {
   text-align: left;
 }
 table th {
-  background-color: tomato;
+  background-color: #fab336;
   color: white;
   font-weight: 300;
 }
@@ -103,7 +103,7 @@ table tr:nth-child(2n+1) {
 @media screen and (max-width: 500px) {
   .header {
     background-color: transparent;
-    color: tomato;
+    color: #fab336;
     font-size: 2em;
     font-weight: 700;
     padding: 0;

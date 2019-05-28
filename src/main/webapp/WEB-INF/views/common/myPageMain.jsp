@@ -17,7 +17,59 @@
 <title>회원정보 수정</title>
 
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+
+        $.ajax({
+           url : "pCount.do",
+            type : "post",
+            dataType: "json",
+            data : {userId : $("#user_id").val()},
+            success : function(data) {
+               console.log("ajax pcount success 확인 : " + data.hashMap.pnt);
+                 
+                   $(".result").text(data.hashMap.pnt + '개');
+               
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });               
+        
+        
+        $.ajax({
+            url : "paCount.do",
+            type : "post",
+            dataType: "json",
+            data : {userId : $("#user_id").val()},
+            success : function(data1) {
+               console.log("ajax pacount success 확인 : " + data1.hashMap.pant);
+                 
+               if(data1.hashMap.pant > 0){
+                   $(".result1").text(data1.hashMap.pant + '건');
+      			}else{
+      				$(".result1").text('0 건');	
+      			}
+               
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });    
+});
+
+$(function() {
+	
+  	  
+     
+	
+	
+});
+
+
+</script>
 
 
 <!-- Favicon  -->
@@ -25,6 +77,7 @@
 
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
+
 
 <style>
 
@@ -71,9 +124,59 @@
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
-	
+	<div class="amado_product_area section-padding-100">
 	<div class="container" style="margin-top:30px">
+			<div class="row">
+				<div class="col-sm-8 flex-column d-flex stretch-card">
+					<div class="row">
+						<div class="col-lg-4 grid-margin stretch-card">
+							<div class="card sale-diffrence-border">
+								<div class="card-body">
+									<h4 class="text-dark mb-2 font-weight-bold">거래완료</h4>
+									<p class="result1"></p>
+									<small class="text-muted">APRIL 2019</small>
+									<div class="progress mb-3">
+									<div class="progress-bar  bg-warning" role="progressbar"
+											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
+											aria-valuemax="120"></div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 grid-margin stretch-card">
+							<div class="card sale-diffrence-border">
+								<div class="card-body">
+									<h4 class="text-dark mb-2 font-weight-bold">거래대기</h4>
+									<h4 class="card-title mb-2">Sales Difference</h4>
+									<small class="text-muted">APRIL 2019</small>
+									<div class="progress mb-3">
+									<div class="progress-bar  bg-primary" role="progressbar"
+											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
+											aria-valuemax="120"></div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 grid-margin stretch-card">
+							<div class="card sale-diffrence-border">
+								<div class="card-body">
+									<h4 class="text-dark mb-2 font-weight-bold">등록물품수</h4>
+									<p class="result"></p>
+									<small class="text-muted">APRIL 2019</small>
+									<div class="progress mb-3">
+									<div class="progress-bar  bg-success" role="progressbar"
+											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
+											aria-valuemax="120"></div>
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
         <div class="row">
+        <input type="hidden" id="user_id" name="user_id" value="${loginMember.user_id }">
           <div class="col-sm-4">
             <label for="comment">Profile:</label>
             <div class="card" style="width: 350px; height: 300px;">
@@ -119,10 +222,9 @@
  				 <textarea class="form-control" rows="5" id="comment">${loginMember.my_introduce }
  				 </textarea>
 			</div>
- 
-            <hr class="d-sm-none">
+
              </div>
-        
+        	
             <div class="col-sm-8">
             <label for="comment">Possible transaction area:</label>
             <div class="card" style="width: 350px; height: 300px;">
@@ -197,8 +299,8 @@
           </div>
         </div>
       </div>
-    </div>
-	
+    </div>	
+	</div>
 	
 	<c:import url="../common/footer.jsp" />
 	
