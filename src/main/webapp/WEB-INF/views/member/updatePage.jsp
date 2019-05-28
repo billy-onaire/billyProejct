@@ -15,7 +15,8 @@
 
 <!-- Title  -->
 <title>회원정보 수정</title>
-
+<!-- Favicon  -->
+<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 $(function(){

@@ -144,14 +144,19 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             <c:if test="${empty loginMember}">
             <div class="cart-fav-search mb-100">
                 <a href="login.do" class=""><img src="/billy/resources/img/core-img/search.png" alt=""> Login</a>
-	            <div id="chatbot" align="right"><a href="javascript:void plusFriendChat()" style="align:left;">
-	  			<img src="/billy/resources/img/core-img/kakaologo.png" style="width: 40px;"/></a>
-	  			<a href="javascript:window.open('https://app.closer.ai/webchat/Bdo33r','name','width=400px, height=500px,scrollbars=yes,resizable=no');"><img src="/billy/resources/img/core-img/chat.png" style="width: 40px;"></a>
-				</div>
             </div>
        		</c:if>
        		<%-- <c:if test="${!empty googleLogin or !empty loginMember or !empty naverLogin or !empty kakaoLogin or !empty facebookLogin}"> --%>
        		<c:if test="${!empty loginMember}">
+       		<!-- 메세지 알림 -->
+       		<br>
+       		<button id="mmsalert" type="button" style="font-size:8pt; width: 60px; cursor:pointer;" onclick="location.href='recvList.do'" class="btn btn-primary">
+       		<img src="/billy/resources/img/core-img/mail.png" style="width: 18px;">
+       		&nbsp;<span id="num" class="badge badge-light">
+       		</span>
+       		</button>
+       		<br>
+       		<br>
        			<div class="cart-fav-search mb-100" id="socialLogin">
        			<c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'kakao'}">
        			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
@@ -164,15 +169,9 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
        			</c:if>		
        			<c:if test="${loginMember.social_type eq 'user' }">
        			<span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
+
        			</c:if>
-       			<!-- 메세지 알림 -->
-				<!-- <div id="mmsalert" style="font-size:8pt; cursor:pointer; visibility:hidden;" onclick="location.href='recvList.do'"><span id="alert" style="color:red;"></span>개의 읽지 않은 메세지가 있습니다.</div> -->
-       			<br><button id="mmsalert" type="button" style="font-size:8pt; cursor:pointer;" onclick="location.href='recvList.do'" class="btn btn-primary"><img src="/billy/resources/img/core-img/mail.png" style="width: 18px;">&nbsp;<span id="num" class="badge badge-light"></span></button>
                 <a href="logout.do">로그아웃</a>
-            <div id="chatbot" align="right"><a href="javascript:void plusFriendChat()" style="align:left;">
-  			<img src="/billy/resources/img/core-img/kakaologo.png" style="width: 40px;"/></a>
-			<a href="javascript:window.open('https://app.closer.ai/webchat/Bdo33r','name','width=400px, height=500px,scrollbars=yes,resizable=no');"><img src="/billy/resources/img/core-img/chat.png" style="width: 40px;"></a>
-			</div>
        		</div>
        		</c:if>
 
@@ -189,7 +188,15 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
             </nav>
             <!-- Button Group -->
             <div class="amado-btn-group mt-30 mb-100">
-            	<!-- <a href="javascript:popupOpen();" class="btn amado-btn mb-15">Chatting</a> -->
+            <!-- 챗봇 -->
+            <div id="chatbot" align="right"><a href="javascript:void plusFriendChat()" style="align:left;">
+  			<img src="/billy/resources/img/core-img/kakaologo.png" style="width: 40px;"/>
+  			</a>
+			<a href="javascript:window.open('https://app.closer.ai/webchat/Bdo33r','name','width=400px, height=500px,scrollbars=yes,resizable=no');">
+			<img src="/billy/resources/img/core-img/chat.png" style="width: 40px;">
+			</a>
+			</div>
+            	<a href="#" class="btn amado-btn mb-15">Chatting</a>
                 <a href="showlist.do" class="btn amado-btn mb-15" >Product List</a>
                 <c:if test="${!empty loginMember }">
                	<a href="productinsertmain.do" class="btn amado-btn mb-15" >Add a Product</a>

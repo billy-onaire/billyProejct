@@ -52,7 +52,9 @@ $(document).ready(function(){
       width: 60%;     
       padding: 10px;
     }
-
+.pagination {
+   justify-content: center;
+}
 </style>
 
 <body>

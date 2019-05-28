@@ -43,7 +43,9 @@ $(document).ready(function(){
 	background-color: #fab336;
 	color: white;
 
-
+.pagination {
+   justify-content: center;
+}
 </style>
 
 <body>
