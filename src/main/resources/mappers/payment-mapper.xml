@@ -49,13 +49,13 @@
 	<!-- 거래대기 목록 조회 -->
 	<select id="listWaitingCriteria" resultMap="resultPayment">
 	<![CDATA[
-		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no, o.product_no
 		from
 		(
-			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no, i.product_no
 			from
 			(
-				select payment_price, status, product_name, seller_id, customer, payment_no
+				select payment_price, status, product_name, seller_id, customer, payment_no, p.product_no
 				from payment p, product r
                 where p.product_no = r.product_no and customer = #{ customer }
                 order by payment_no desc
@@ -96,13 +96,13 @@
 	<!-- 판매(결제)대기 목록 조회 -->
 	<select id="chargeWaitingListCriteria" resultMap="resultPayment">
 	<![CDATA[
-		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no
+		select o.rm, o.payment_price, o.status, o.product_name, o.seller_id, o.customer, o.payment_no, o.product_no
 		from
 		(
-			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no
+			select rownum as rm, i.payment_price, i.status, i.product_name, i.seller_id, i.customer, i.payment_no, i.product_no
 			from
 			(
-				select payment_price, status, product_name, seller_id, customer, payment_no
+				select payment_price, status, product_name, seller_id, customer, payment_no, p.product_no
 				from payment p, product r
                 where p.product_no = r.product_no and seller_id = #{ customer }
                 order by payment_no desc
@@ -127,8 +127,8 @@
 	<!-- 거래대기 목록 개수 조회 -->
 	<select id="searchWaitingListCount" resultType="_int">
 		select count(*)
-		from payment
-		where status in (3,4) and customer = #{ customer }
+		from payment p, product r
+		where p.product_no = r.product_no and status in (3,4) and customer = #{ customer }
 		<include refid="searchSellerId"/>
 	</select>
 	
@@ -180,27 +180,37 @@
 	
 	<!-- 물품 재고 업데이트 -->
 	<update id="updateProductQuantity" parameterType="payment">
-		update
-		(
+		update product 
+		set
+			product_quantity = (product_quantity - #{ payment_quantity })
+		where
+			product_no = (
+				select product_no
+				from product
+				join payment using (product_no)
+				where payment_no = #{ payment_no }
+			)
+		<!-- (
 			select product_quantity
 			from product p, payment y
 			where p.product_no = y.product_no and payment_no = #{ payment_no }
 		)
 		set
-			product_quantity = (product_quantity - #{ payment_quantity })
+			product_quantity = (product_quantity - #{ payment_quantity }) -->
 	</update>
 	
-	<!-- 예약 취소 후 물품 재고 업데이트 [미완]-->
-	<update id="updateQuantityAfterCancel" parameterType="payment">
+	<!-- 결제 취소 후 물품 상태 재고 업데이트 -->
+	<update id="updateRejectChargeCustomer" parameterType="payment">
 		update
 		(
 			select product_quantity
-			from product p, payment y
-			where p.product_no = y.product_no and p.product = #{ product_no }
+			from product
+			where product_no = #{ product_no }
 		)
 		set
 			product_quantity = (product_quantity + #{ payment_quantity })
 	</update>
+	
 	<!-- 결제 완료 후 payment status 업데이트 -->
 	<update id="updatePaymentUser" parameterType="_int">
 		update
@@ -270,7 +280,7 @@
 	<!-- 거래중 목록 검색조건  sql2 -->
 	<sql id="searchSellerId">
 		<if test="searchType != null">
-			and seller_id like #{ keyword }
+			and seller_id like '%'||#{ keyword }||'%'
 		</if>
 	</sql>
 </mapper>

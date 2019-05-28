@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -71,16 +70,18 @@ $(function(){
 		location.href = 'chargeWating.do';
 	});//click
 		
+	// 결제정보 전역변수로 뽑기
+	var tr = $('#pList');
+	var td = tr.children();
+	
+	var payNno = tr.find('td:nth-child(2)').html();
+	var seller = tr.find('td:nth-child(3)').html();
+	var goods = tr.find('td:nth-child(4)').html();
+	var cost = tr.find('td:nth-child(6)').html();
+	
 	//결제확인창 띄우는 js
 	$('.view').click(function() {
 		console.log('.view cilck function is started');
-		var tr = $('#pList');
-		var td = tr.children();
-		
-		var payNno = tr.find('td:nth-child(2)').html();
-		var seller = tr.find('td:nth-child(3)').html();
-		var goods = tr.find('td:nth-child(4)').html();
-		var cost = tr.find('td:nth-child(6)').html();
 		console.log('payno : ' + payNno + ', seller : ' + seller + ', goods : ' + goods + ', cost : ' + cost);
 		
 		console.log('text : ' + tr.text());
@@ -88,15 +89,18 @@ $(function(){
 		$('input[name=seller_id]').val(seller);
 		$('input[name=product_name]').val(goods);
 		$('input[name=payment_price]').val(cost);
-		
 		$('.limiter').show();
+	});
+	//부트페이 실행
+	$('#doPayment').click(function() {
+		console.log('#doPayment cilck function is started');
+		console.log('payno : ' + payNno + ', seller : ' + seller + ', goods : ' + goods + ', cost : ' + cost);
 		
 		var payNoArr = {
 			price: $('input[name=payment_price]').val(),
 			name: $('input[name=product_name]').val(),
 			item_name: $('input[name=product_name]').val(),
 			no: $('input[name=payment_no]').val()
-			
 		}
 		var jsonPayInfo = JSON.stringify(payNoArr);
 		var payPrice = payNoArr.price.split('₩'); //₩ 제거
@@ -109,7 +113,6 @@ $(function(){
 			type: 'post',
 			success: function() {
 				console.log('성공!');
-				$('#doPayment').click(function() {
 					console.log('그냥 되는거야?');
 					BootPay.request({
 						price: payPrice[0], //실제 결제되는 가격
@@ -149,6 +152,20 @@ $(function(){
 						console.log(data);
 					}).cancel(function (data) {
 						//결제가 취소되면 수행됩니다.
+						var no = $('input[name=payment_no]').val();
+						var job = new Object();
+						job.no = no;
+						$.ajax({
+							url: 'dontwantpay.do',
+							data: JSON.stringify(job),
+							contentType: 'application/json; charset=utf-8',
+							type: 'post',
+							cache: false,
+							success: function(result) {
+								alert('결제가 취소되었습니다');
+							}
+						});//ajax
+						$('.limiter').hide();
 						console.log(data);
 					}).ready(function (data) {
 						// 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
@@ -165,13 +182,33 @@ $(function(){
 						}
 					}).close(function (data) {
 					    // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+					    $('.limiter').hide();
 					    console.log(data);
 					}).done(function (data) {
 						//결제가 정상적으로 완료되면 수행됩니다
 						//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
+						console.log('done 함수');
+						var email = '${ loginMember.email }';
+						var pname = $('input[name=product_name]').val();
+						var price = $('input[name=payment_price]').val();
+						var job = new Object();
+						job.email = email;
+						job.pname = pname;
+						job.price = price;
+						$.ajax({
+							url: 'sendInvoiceEmail.do',
+							data: JSON.stringify(job),
+							contentType: 'application/json; charset=utf-8',
+							type: 'post',
+							cache: false,
+							success: function(result) {
+								alert('결제가 완료되었습니다');
+							}
+						});//ajax
+						$('.limiter').hide();
 						console.log(data);
 					});
-				})//click
+				
 				/* } */
 				
 			}
@@ -204,6 +241,9 @@ function setSearchType() {
 		location.href = url;
 	})//click
 }//search function
+function closeWindow() {
+	$('.limiter').hide();
+}
 </script>
 </head>
 <body id='paylistbody'>
@@ -353,8 +393,8 @@ function setSearchType() {
 					</div>
 					
 					<div class="text-center w-full p-t-23">
-						<a href="#" class="txt1">
-							홈으로
+						<a href='javascript:void(0)' onclick='closeWindow();'class="txt1">
+							창 닫기
 						</a>
 					</div>
 				</div>

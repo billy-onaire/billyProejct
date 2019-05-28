@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -191,7 +190,7 @@ function setSearchType() {
                 		<td>${ (status.index + 1) }</td>
                 		<td>${ payment.payment_no }</td>
                 		<td class='sellerId'>${ payment.customer }</td>
-                		<td class='productName-Je'>${ payment.product_name }</td>
+                		<td class='productName-Je'><a href="pdetail.do?pno=${payment.product_no}">${ payment.product_name }</a></td>
                 		<c:if test='${ payment.status eq 3 }'>
                 			<td><span class="status text-warning">&bull;</span> 결제요청</td>
                 			<td class='goPriceJe'>${ payment.payment_price }₩</td>
@@ -233,53 +232,6 @@ function setSearchType() {
             </div>
         </div>
     </div>     
-</div>
-<!-- 결제확인 div -->
-<div id='paymentConfirm-Je'>
-<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-b-160 p-t-50">
-				<div class="login100-form validate-form">
-					<span class="login100-form-title p-b-43">
-						CHECKOUT
-					</span>
-					
-					<div class="wrap-input100 rs1 validate-input" data-validate = "Username is required">
-						<input class="input100" type="text" name="payment_no" readonly>
-						<span class="label-input100">No.</span>
-					</div>
-					
-					
-					<div class="wrap-input100 rs2 validate-input" data-validate="Password is required">
-						<input class="input100" type="text" name="seller_id" readonly>
-						<span class="label-input100">판매자</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="text" name="product_name" readonly>
-						<span class="label-input100">물품</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="text" name="payment_price" readonly>
-						<span class="label-input100">가격</span>
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" id='doPayment'>
-							결제
-						</button>
-					</div>
-					
-					<div class="text-center w-full p-t-23">
-						<a href="#" class="txt1">
-							홈으로
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 <c:import url="../common/footer.jsp" />
 </body>                  		             
