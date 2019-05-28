@@ -15,7 +15,7 @@
     <title>공지사항 글 쓰기</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 	
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -23,33 +23,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
     <!-- <link href="/billy/resources/css/summernote-bs4.css" rel="stylesheet"> -->
     <style>
-    /*.line{
-        width: 80px;
-    height: 3px;
-    background-color: #fbb710;
-    margin-bottom: 15px;
-    display: block;
-    }
-    .product-price{
-    font-size: 24px;
-    font-weight: 400;
-    color: #fbb710;
-    line-height: 1;
-    margin-bottom: 10px;
-    }
-    
-    .center {
-      margin: auto;
-      width: 90%;
-      
-      padding: 10px;
-    }
-    .centertwo {
-      margin: auto;
-      width: 60%;
-      
-      padding: 10px;
-    }*/
+   
     .main-content-wrapper{
         z-index: 1050;
     }
@@ -105,32 +79,19 @@
                             <br><br><br><br>
                                                      
                            <div class="container">
-                                <!-- <div class="row">
-                                    <div class="col-sm-10">
-                                      One of three columns
-                                    </div>
-                                    <div class="col-sm-2">
-                                      One of three columns
-                                    </div>
-                                    <div class="col-sm">
-                                      One of three columns
-                                    </div>
-                                </div> -->
-
                                 <h2>공지사항 글 쓰기</h2>
                                 <form method="post" action="insertnotice.do" id="noticefrm" enctype="multipart/form-data"  >
                                 <div class="form-group">
-                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." required>
+                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." maxlength="20" required>
                                 </div>
                                 <div class="custom-file mb-3">
                                   <input type="file" class="custom-file-input" id="file" name="file">
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
-                                  <textarea name="notice_content" id="notice_content" rows="10" cols="100"></textarea>
+                                  <textarea name="notice_content" id="notice_content" rows="10" cols="100" ></textarea>
                                   <button class="btn btn-warning" onclick="return confirm('정말로 취소하시겠습니까?')">취소</button>
                                   <!-- <button type="submit" class="btn btn-primary pull-right" onclick="return confirm('정말로 등록하시겠습니까?')">등록</button> -->
-                                  <button  class="btn btn-warning pull-right" onclick="submitContents();">등록</button>
-                                  <!-- onclick="submitContents();" -->
+                                  <button  class="btn btn-warning pull-right" onclick="return submitContents();">등록</button>
                                 </form>
                            </div>
                         </div> 
@@ -187,11 +148,18 @@
             
             function submitContents() {
                 oEditors.getById["notice_content"].exec("UPDATE_CONTENTS_FIELD", []);
-                alert(document.getElementById("notice_content").value);   
-
                 try {
+                	if($('#notice_title').val().length < 4){
+                		alert('공지 제목은 4글자 이상 입력해주세요.');
+                		return false;
+                	}else if(document.getElementById("notice_content").value.length < 15){
+                		alert('최소한의 내용을 입력해주세요.');
+                		return false;
+                	}else{
                     $('#noticefrm').submit();
+                	}
                 } catch(e) {}
+                
             }
 
         </script>

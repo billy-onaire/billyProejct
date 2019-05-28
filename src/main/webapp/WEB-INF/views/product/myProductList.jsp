@@ -33,20 +33,15 @@
     color: #fbb710;
     line-height: 1;
     margin-bottom: 10px;
+    }   
+    
+    .pagination {
+     justify-content: center;
     }
     
-    .center {
-      margin: auto;
-      width: 90%;
-      
-      padding: 10px;
-    }
-    .centertwo {
-      margin: auto;
-      width: 60%;
-      
-      padding: 10px;
-    }
+    .btn-warning{
+        color: white;
+     }
     </style>
 </head>
 
@@ -98,27 +93,24 @@
 	                        
 	                        <br><br><br><br>
                        		                         
-                          <div class="center" >
-                            <table class="table" style="width:800px; text-align: center;" id="productList">
+                          <div class="container" >
+                            <table class="table table-hover " style="width:100%; text-align: center;" id="productList">
                               <tr>
-                                  <th width="45%">상품명</th>
+                                  <th width="42.5%">상품명</th>
                                   <th width="7.5%">수량</th>
-
-                                  <th width="10%">가격</th>
+                                  <th width="12.5%">가격</th>
                                   <th width="15%">최근수정일자</th>                                  
                                   <th width="17.5%">수정/삭제</th>
                               </tr>
                               <c:forEach items="${list }" var="list">
                                 <tr><td><a href="pdetail.do?pno=${list.product_no}" style="font-size: 15px; color: #2a6496;">${list.product_name}</a></td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
-                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post"><button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;<button type="submit" class="btn btn-warning btn-sm" onclick="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">삭제</button></form></td></tr>
-                                
-                              
+                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post" onsubmit="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">
+                                <button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;
+                                <button type="submit" class="btn btn-warning btn-sm" onclick="">삭제</button>
+                                </form></td></tr>
                               </c:forEach>
                             </table>                                          
-                            
-                          </div>  
-                          <div class="centertwo">
-                          <ul class="pagination">
+                            <ul class="pagination" style="width:100%;">
                                 <c:if test="${pageMaker.prev }">
                                 <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.startPage-1 }"/>"><i class="fa fa-chevron-left"></i></a></li>
                                 </c:if>
@@ -127,9 +119,9 @@
                                 </c:forEach>
                                 <c:if test="${pageMaker.next }">
                                 <li class="page-item"><a class="page-link" href="<c:url value="myproductlist.do?page=${pageMaker.endPage+1 }"/>"><i class="fa fa-chevron-right"></i></a></li>
-                            	</c:if>
+                              </c:if>
                             </ul>
-                            </div> 
+                          </div>  
                           <br>                          
                     	</div> 
                 	</div>

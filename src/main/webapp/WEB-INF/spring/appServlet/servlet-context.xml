@@ -80,7 +80,6 @@
 			<exclude-mapping path="/loginVisit.do"/>
 			<exclude-mapping path="/joinPost.do"/>
 			<exclude-mapping path="/joinConfirm.do"/>
-
 			<beans:ref bean="commonInterceptor"/>
 		</interceptor>
 	</interceptors>

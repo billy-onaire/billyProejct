@@ -2,12 +2,14 @@ package org.kh.billy.payment.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import org.apache.http.HttpResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.kh.billy.common.MailHandler;
 import org.kh.billy.javaApache.model.request.Cancel;
 import org.kh.billy.javaApache.model.request.SubscribeBilling;
 import org.kh.billy.member.model.vo.Member;
@@ -24,11 +27,13 @@ import org.kh.billy.payment.model.service.PaymentService;
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
 import org.kh.billy.payment.model.vo.PaymentPageMaker;
+import org.kh.billy.payment.model.vo.sendInvoice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +52,9 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService payService;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	static BootpayApi api;
 	
@@ -69,22 +77,7 @@ public class PaymentController {
 		return mav;
 	}
 	@RequestMapping("paymentWaiting.do")
-	public ModelAndView paymentWaiting(@RequestBody(required=false) String param, PaymentCri payCri, ModelAndView mav, HttpSession login) throws ParseException {
-		//결제대기 내역
-		if(param != null) {
-			logger.info("confirmPay : " + param);
-			JSONParser parsing = new JSONParser();
-			Object obj = parsing.parse(param);
-			JSONObject jobj = (JSONObject)obj;
-			logger.info("canPay : " + obj.toString());
-			
-			String check = (String)(jobj.get("confirmPay"));
-			logger.info("check : " + check);
-			mav.addObject("check", check);
-		} else {
-			System.out.println("널이 아님");
-		}
-		
+	public ModelAndView paymentWaiting(PaymentCri payCri, ModelAndView mav, HttpSession login) throws ParseException {
 		String customer = ((Member)login.getAttribute("loginMember")).getUser_id();
 		payCri.setCustomer(customer);
 		
@@ -186,6 +179,31 @@ public class PaymentController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value="sendInvoiceEmail.do", method=RequestMethod.POST)
+	public ResponseEntity<String> sendInvoiceEmail(@RequestBody String param) throws ParseException, UnsupportedEncodingException, MessagingException {
+		//결제가 성공적으로 완료되면 이메일로 영수증 보내기
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		logger.info("email : " + obj.toString());
+		logger.info("<pre>"+(String)jobj.get("pname")+"</pre>");
+		String email = (String)jobj.get("email");
+		String pname = (String)jobj.get("pname");
+		String price = (String)jobj.get("price");
+		
+		String content = new sendInvoice().sendInvoiceMail(email, pname, price);
+		
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("billy 결제완료 이메일입니다");
+		sendMail.setText(new StringBuffer().append(content).toString());
+		sendMail.setFrom("billy", "billy");
+		sendMail.setTo((String)jobj.get("email"));
+		sendMail.send();
+		
+		
+		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
 	 
 	@RequestMapping("chargeList.do")
 	public ModelAndView chargeListCriteria(PaymentCri payCri, ModelAndView mav, HttpSession login) {
@@ -247,6 +265,27 @@ public class PaymentController {
 		}
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="dontwantpay.do", method=RequestMethod.POST)
+	public ResponseEntity<String> dontWantPay(@RequestBody String param) throws ParseException {
+		JSONParser parsing = new JSONParser();
+		Object obj = parsing.parse(param);
+		JSONObject jobj = (JSONObject)obj;
+		
+		int paymentNo = Integer.parseInt((String)jobj.get("no"));
+		Payment payment = payService.selectPaymentListOne(paymentNo);
+		
+		int re = payService.updateRejectChargeCustomer(payment);
+		int statusre = payService.updateRejectCharge(paymentNo);
+		
+		logger.info("결제 취소 재고업데이트 여부  : " + String.valueOf(re));
+		logger.info("결제 취소 상태 여부  : " + String.valueOf(statusre));
+		
+		if(re == 1 && statusre == 1)
+			return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		else
+			return new ResponseEntity<String>("SUCCESS", HttpStatus.NO_CONTENT);
 	}
 	//구매완료 횟수
 	public ModelAndView countBuyList(int buyList) {

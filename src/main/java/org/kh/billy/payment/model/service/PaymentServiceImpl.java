@@ -6,9 +6,6 @@ import java.util.List;
 import org.kh.billy.payment.model.dao.PaymentDao;
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
-import org.kh.billy.payment.model.vo.PaymentPaging;
-import org.kh.billy.payment.model.vo.PaymentSearchCri;
-import org.kh.billy.product.model.vo.Criteria;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,8 +123,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int selectCountMyPay(String userId) {
-		
+	public int selectCountMyPay(String userId) {	
 		return paymentDao.selectCountMyPay(mybatisSession, userId);
+  }
+  
+  @Override
+	public int updateRejectChargeCustomer(Payment payment) {
+		return paymentDao.updateRejectChargeCustomer(mybatisSession, payment);
 	}
 }

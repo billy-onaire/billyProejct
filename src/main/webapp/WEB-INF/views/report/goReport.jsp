@@ -15,7 +15,7 @@
     <title>Billy</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -66,7 +66,8 @@
 
                                     <div class="col-12 mb-3">
                                         <p>신고자 아이디</p>
-                                        <input type="text" class="form-control mb-3" id="rid" value="${prod.seller_id}">
+                                        <input type="text" class="form-control mb-3" id="rid" value="${prod.seller_id}" readonly>
+                                        
                                     </div>
 
                                     <div class="col-12 mb-3">
@@ -82,7 +83,7 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <textarea name="comment" class="form-control w-100" id="comment" cols="30"
-                                            rows="10" placeholder="상세 신고 내용을 입력해주세요"></textarea>
+                                            rows="10" placeholder="상세 신고 내용을 입력해주세요 10자 이상"></textarea>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <p>신고 날짜</p>

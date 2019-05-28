@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.vo.Report;
+import org.kh.billy.report.model.vo.ReportCheck;
 import org.kh.billy.report.model.vo.ReportList;
 import org.kh.billy.report.model.vo.ReportSetting;
 
@@ -13,7 +14,7 @@ public interface ReportService {
 
 	int insertReport(Report r);
 
-	int selectCheckReport(String request_id);
+	int selectCheckReport(ReportCheck r);
 
 	ArrayList<ReportList> selectWhatIReport(String id);
 

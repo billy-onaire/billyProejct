@@ -6,7 +6,9 @@ function getAdminReportInfo(){
 
     xhr.onload = ()=>{
         const report = JSON.parse(xhr.responseText);
-
+        if(xhr.responseText === 'no'){
+            location.href = "main.do";
+        }
         const table = document.querySelector('#adminTable');
         console.log(report.list);
         for(let i = 0; i < report.list.length; i++){

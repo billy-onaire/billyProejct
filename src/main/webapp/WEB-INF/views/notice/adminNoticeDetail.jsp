@@ -132,7 +132,7 @@
                                             <div class="notice-content" style="width: 100%; float: left;"><p>${notice.notice_content }</p></div>
                                         </li>
                                     </ul>
-                                    <button class="btn btn-warning" onclick="location.href='adminnoticelist.do?select=${select}&keyword=${keyword}'">목록</button>
+                                    <button class="btn btn-warning" onclick="location.href='adminnoticelist.do?select=${select}&keyword=${keyword}&curpage=${curpage }'">목록</button>
                                     <button class="btn btn-warning" onclick="location.href='noticeupdateview.do?notice_no=${notice.notice_no}'">수정</button>
                                     <button class="btn btn-warning" onclick="noticedelete()">삭제</button>
                                 </div>

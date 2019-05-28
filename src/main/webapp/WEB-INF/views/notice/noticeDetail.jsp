@@ -184,8 +184,9 @@
         <!-- 네이버 스마트 에디터 -->
        
         <script type="text/javascript">
+        alert('${curpage}');
             function gonoticelist(){
-                location.href="noticelist.do?select=${select}&keyword=${keyword}";
+                location.href="noticelist.do?select=${select}&keyword=${keyword}&curpage=${curpage}";
             }
         </script>
         </body>

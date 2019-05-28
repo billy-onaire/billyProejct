@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -64,7 +63,7 @@ function setPageEntry(){
 	console.log(perPageNum);
 	$entries.val(perPageNum).prop('selected', true);
 	$entries.on('change', function(){
-		location.href = 'paymentSearch.do?page=' + nowPage + '&perPageNum=' + $entries.val();
+		location.href = 'chargeList.do?page=' + nowPage + '&perPageNum=' + $entries.val();
 	})//change
 }// paging function
 function setSearchType() {
@@ -77,7 +76,7 @@ function setSearchType() {
 		var $inputVal = $('#searchType option:selected').val();
 		$keyword.val($inputVal);
 		console.log($('#keywordInput').val());
-		var url = 'paymentSearch.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
+		var url = 'chargeList.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()
 		+ '&keyword=' + encodeURIComponent($keyword.val());
 		location.href = url;
@@ -129,8 +128,8 @@ function setSearchType() {
 							<label></label>
 							<select class="form-control" name='searchType' id='searchType'>
 								<option value=''>거래상태</option>
-								<option value='1'>구매완료</option>
-								<option value='2'>취소</option>
+								<option value='1'>판매완료</option>
+								<option value='2'>구매취소</option>
 							</select>
 						</div>
 						<span class="filter-icon"><i class="fa fa-filter"></i></span>
@@ -157,10 +156,10 @@ function setSearchType() {
                 		<td>${ payment.product_name }</td>
                 		<c:if test='${ payment.status eq 1 }'>
                 			<td><span class="status text-info">&bull;</span> 판매완료</td>
-                			<td><div class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></div></td>
+                			<td><div class="view" title="View Details" data-toggle="tooltip"  onclick="location.href='resultPay.do?pno=${ payment.payment_no }' "><i class="material-icons">&#xE5C8;</i></div></td>
                 		</c:if>
                 		<c:if test='${ payment.status eq 2 }'>
-                			<td><span class="status text-danger">&bull;</span> 취소</td>
+                			<td><span class="status text-danger">&bull;</span> 구매취소</td>
                 			<td> </td>
                 		</c:if>
                 	</tr>

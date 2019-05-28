@@ -708,6 +708,8 @@
               $('#sel2').focus();
               return false;
             }
+            
+            
             /*if($('._img').val() == null){
               alert('사진을 등록해주세요.');
               $('#coba').focus();
@@ -724,6 +726,12 @@
               alert('상품에 대한 설명을 30자 이상 작성해주세요.');
               $('#product_content').focus();
               return false;
+            }
+            
+            if($('#price').val() >100000){
+            	alert('상품은 10만원 이하만 가능합니다.');
+            	$('#price').focus();
+            	return false;
             }
             if($('#product_startdate').val() == null){
               alert('대여가능시작일 입력하세요');

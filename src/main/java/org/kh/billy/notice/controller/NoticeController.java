@@ -37,43 +37,46 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@RequestMapping("adminnoticelist.do")
-	public String selectAdminNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, Criteria cri, Notice notice, Model mv) {
-		System.out.println("확인 : "+select);
-		System.out.println("키워드 : " + keyword);
+	public String selectAdminNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, 
+			@RequestParam(defaultValue="1") int curpage, Criteria cri, Notice notice, Model mv) {
+		System.out.println("현재 페이지 확인 : " + curpage);
 		int count = noticeService.selectSearchNoticeCount(select, keyword);
-		System.out.println("카운트 확인 : " + count);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
 		cri.setKeyword(keyword);
 		cri.setSelect(select);
+		if(curpage > 1) {//이 조건이 없으면 현재 page가 계속 1로 고정됨
+			cri.setPage(curpage);
+		}
 		ArrayList<Notice> list = noticeService.selectSearchNoticeList(cri);
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		mv.addAttribute("keyword", keyword);
 		mv.addAttribute("select", select);
-		
+		mv.addAttribute("curpage", cri.getPage());
 		return "notice/adminNoticeList";
 	}
 	
 	@RequestMapping("noticelist.do")
-	public String selectNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, Criteria cri, Notice notice, Model mv) {
+	public String selectNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="1") int curpage, Criteria cri, Notice notice, Model mv) {
 		//defaultValue로 처리하면 select나 keyword가 없어도 에러가 뜨지 않음
-		System.out.println("확인 : "+select);
-		System.out.println("키워드 : " + keyword);
 		int count = noticeService.selectSearchNoticeCount(select, keyword);
-		System.out.println("카운트 확인 : " + count);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(count);
 		cri.setKeyword(keyword);
 		cri.setSelect(select);
+		if(curpage > 1) {//이 조건이 없으면 현재 page가 계속 1로 고정됨
+			cri.setPage(curpage);
+		}
 		ArrayList<Notice> list = noticeService.selectSearchNoticeList(cri);
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		mv.addAttribute("keyword", keyword);
 		mv.addAttribute("select", select);
-		
+		mv.addAttribute("curpage", cri.getPage());
 		return "notice/noticeList";
 	}
 	
@@ -102,7 +105,8 @@ public class NoticeController {
 		bin.close();
 	}
 	@RequestMapping("noticedetail.do")
-	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv, @RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword) {
+	public String selectNotice(@RequestParam("notice_no") int noticeNo, Model mv, 
+			@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int curpage) {
 		if(noticeService.updateNoticeReadCount(noticeNo) > 0)
 			System.out.println("조회수 1증가");
 		else
@@ -111,21 +115,21 @@ public class NoticeController {
 		mv.addAttribute("notice", notice);
 		mv.addAttribute("select", select);
 		mv.addAttribute("keyword", keyword);
+		mv.addAttribute("curpage", curpage);
 		return "notice/noticeDetail";
 	}
 	
 	@RequestMapping("adminnoticedetail.do")
-	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv, @RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword) {
+	public String selectAdminNotice(@RequestParam("notice_no") int noticeNo, Model mv,
+			@RequestParam(defaultValue="1") int curpage, @RequestParam(defaultValue="") String select, 
+			@RequestParam(defaultValue="") String keyword) {
 		//관리자가 상세 조회시 조회수 증가를 시키지 않음
-		/*if(noticeService.updateNoticeReadCount(noticeNo) > 0)
-			System.out.println("조회수 1증가");
-		else
-			System.out.println("조회수 증가 실패");*/
 		
 		Notice notice = noticeService.selectNotice(noticeNo);
 		mv.addAttribute("notice", notice);
 		mv.addAttribute("select", select);
 		mv.addAttribute("keyword", keyword);
+		mv.addAttribute("curpage", curpage);
 		return "notice/adminNoticeDetail";
 	}
 	

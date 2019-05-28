@@ -15,7 +15,7 @@
     <title>공지사항 글 쓰기</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 	
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -119,8 +119,6 @@
                                 </div>
                                 </c:if>
                                 
-
-                                
                                 <c:if test="${empty notice.notice_originalfile  }">
                                 <div class="custom-file mb-3" id="newfile">
                                 
@@ -144,8 +142,6 @@
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
-
-
     <c:import url="../common/footer.jsp" />
 
         <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
@@ -162,8 +158,6 @@
         <script src="/billy/resources/js/active2.js"></script>
         <!-- naver smart editor js-->
         <script type="text/javascript" src="/billy/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-
-       
         
         <!-- 네이버 스마트 에디터 -->
         <script type="text/javascript">
@@ -178,10 +172,16 @@
             
             function submitContents() {
                 oEditors.getById["notice_content"].exec("UPDATE_CONTENTS_FIELD", []);
-                //alert(document.getElementById("notice_content").value);   
-
-                try {
+                 try {
+                	if($('#notice_title').val().length < 4){
+                		alert('공지 제목은 4글자 이상 입력해주세요.');
+                		return false;
+                	}else if(document.getElementById("notice_content").value.length < 15){
+                		alert('최소한의 내용을 입력해주세요.');
+                		return false;
+                	}else{
                     $('#noticefrm').submit();
+                	}
                 } catch(e) {}
             }
 

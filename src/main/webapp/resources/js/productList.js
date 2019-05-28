@@ -5,7 +5,7 @@
 */
 
 let chosenPage = 1; // 페이징 선택 값
-let listCount = 6; // 한 페이지에 보여질 게시물 수
+let listCount = 2; // 한 페이지에 보여질 게시물 수
 let minPrice = 0; // 최소 가격 설정
 let maxPrice = 100000; // 최대 가격 설정
 let subCategories = []; // 하위 카테고리 배열
@@ -76,7 +76,9 @@ for (let i = 0; i < catagoryRadios.length; i++) {
             sub = [{ cno: 41, cname: "출산/돌 기념품" }, { cno: 42, cname: "장난감" }, { cno: 43, cname: "아동의류" }, { cno: 44, cname: "임부복/소품" }, { cno: 45, cname: "유아안전/실내용품" }, { cno: 46, cname: "수유용품" }];
         else if (catagoryRadios[i].value === 'etc')
             sub = [{ cno: 50, cname: "기타" }]
-
+        else if (catagoryRadios[i].value === 'all')
+            sub = [];
+        
         createSubMenus(sub);
 
         let pushData = {
@@ -212,7 +214,7 @@ function requestProductListAjax(data) {
         const endPage = products.page.end;
         const currentPage = products.page.currentPage;
         const totalPage = products.page.totalPage;
-
+        
         while (pagination.firstChild) {
             pagination.removeChild(pagination.firstChild);
         }
@@ -298,7 +300,7 @@ function requestProductListAjax(data) {
                 requestProductListAjax();
             }
         }
-
+        console.log(products.page);
     }
 
     const requestData = {
