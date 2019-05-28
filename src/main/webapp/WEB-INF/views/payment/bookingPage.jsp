@@ -25,7 +25,8 @@
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="${ pageContext.request.contextPath }/resources/js/bookf/demo.css" rel="stylesheet" />
 	<style type="text/css">
-		.modal {display: none; /* Hidden by default */
+		.modal {
+			display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
             left: 0;
@@ -368,7 +369,7 @@ function close_pop(flag) {
 													</span>
 													<div class="form-group label-floating">
 			                                          	<label class="control-label">Your Email</label>
-			                                          	<input name="name2" type="text" class="form-control" value='이메일!'>
+			                                          	<input name="name2" type="text" class="form-control" value='${ loginMember.email }'>
 			                                        </div>
 												</div>
 
