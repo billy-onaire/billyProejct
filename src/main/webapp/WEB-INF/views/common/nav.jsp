@@ -121,7 +121,7 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
+                <a href="main.do"><img src="/billy/resources/img/core-img/billylogo4.png" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
