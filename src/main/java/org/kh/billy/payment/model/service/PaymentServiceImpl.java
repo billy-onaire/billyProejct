@@ -124,4 +124,10 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		return paymentDao.updateRejectCharge(mybatisSession, paymentNo);
 	}
+
+	@Override
+	public int selectCountMyPay(String userId) {
+		
+		return paymentDao.selectCountMyPay(mybatisSession, userId);
+	}
 }

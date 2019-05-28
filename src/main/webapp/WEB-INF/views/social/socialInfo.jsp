@@ -179,6 +179,37 @@ function goSubmit() {
 	    alert("회원가입이 완료되었습니다")
 	}
 }
+
+function goSubmit() {
+	   
+	   if(idck == 0){
+	       alert('아이디 중복체크를 해주세요');
+	       $("#user_id").focus();
+	       return false;
+	       
+	   }
+	   
+	   if($('#user_name').val() == ''){
+	      alert("이름을 입력해주세요");
+	   }else if($('#user_pwd').val() == ''){
+	      alert("비밀번호를 입력해주세요");
+	   }else if($('#user_pwd2').val() == ''){	
+	      alert("비밀번호를 입력해주세요");
+	   }else if($('#user_mobile').val() == ''){
+	      alert("핸드폰번호를 입력해주세요");
+	   }else if($('#email').val() == ''){
+	      alert("이메일을 입력해주세요");
+	   }else if($('#address').val() == ''){
+	      alert("주소를 입력해주세요");
+	   }else if($('#location_area').val() == ''){
+	      alert("거래 가능지역을 입력해주세요");
+	   }else{
+	       $("#join").submit();
+	       alert("회원가입이 완료되었습니다")
+	   }
+	}
+
+
 </script>
 
 <!-- Favicon  -->
@@ -298,7 +329,7 @@ a {
 				
 				<!-- 이메일 -->
 				<label for="email"><b>이메일</b></label>
-				<input type="text" placeholder="Enter Email" id="email" name="email" required>
+				<input type="text" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" required>
 		
 				<!-- 나머지 -->
 				<label for="address"><b>주소</b></label> 
@@ -384,11 +415,7 @@ a {
 					<label for="my_introduce"><b>본인소개</b></label>
 					<textarea style="background-color: #f1f1f1" class="form-control"
 						rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
-				<hr>
-				<p>
-					By creating an account you agree to our <a href="#">Terms &
-						Privacy</a>.
-				</p>				
+				<hr>			
 		</form>
 				<button type="button" id="register"  class="registerbtn"
 					style="background-color: orange" onclick="goSubmit();">등록하기</button>

@@ -100,6 +100,9 @@
 			</when>
 	</choose>	
 	</select>
-
+	
+	<select id="selectCountMyProduct" parameterType="string" resultType="_int">
+	  select count(*) from product join tb_user on (seller_id = user_id) where user_id = #{userId}
+	</select>
 
 </mapper>

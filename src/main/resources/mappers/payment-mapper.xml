@@ -148,6 +148,12 @@
 		order by payment_no desc
 	</select>
 	
+	<select id="selectCountMyPay" parameterType="string" resultType="_int">
+		select count(*) from payment where customer = #{userId} and status = 1	
+	</select>
+	
+	
+	
 	<!-- insert 문  =============================================================================================== -->
 	<!-- 거래예약 insert -->
 	<insert id="insertBookingList" parameterType="payment">
