@@ -468,9 +468,15 @@
               return false;
             }
 
+            if($('#price').val() >100000){
+            	alert('상품은 10만원 이하만 가능합니다.');
+            	$('#price').focus();
+            	return false;
+            }
+            
             if($('.img_').attr('src') == undefined){
               alert('사진을 등록해주세요.');
-              $('#coba').focus();
+              //$('#coba').focus();
               return false;
             }
             if($('#product_startdate').val() == null || $('#product_startdate').val() == ""){
