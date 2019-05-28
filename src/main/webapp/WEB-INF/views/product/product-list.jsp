@@ -15,7 +15,7 @@
     <title>Billy 빌리</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -49,6 +49,7 @@
                         <li><input type="radio" name="item" id="clothes" value="clothes" hidden><label for="clothes"><span class="catagories-menu-radios">CLOTHES</span></label></li>
                         <li><input type="radio" name="item" id="kids" value="kids" hidden><label for="kids"><span class="catagories-menu-radios">KIDS</span></label></li>
                         <li><input type="radio" name="item" id="etc" value="etc" hidden><label for="etc"><span class="catagories-menu-radios">ETC</span></label></li>
+                        <li><input type="radio" name="item" id="all" value="all" hidden><label for="all"><span class="catagories-menu-radios">ALL</span></label></li>
                     </ul>
                 </div>
             </div>

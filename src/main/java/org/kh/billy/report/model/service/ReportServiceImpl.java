@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.kh.billy.product.model.vo.Product;
 import org.kh.billy.report.model.dao.ReportDao;
 import org.kh.billy.report.model.vo.Report;
+import org.kh.billy.report.model.vo.ReportCheck;
 import org.kh.billy.report.model.vo.ReportList;
 import org.kh.billy.report.model.vo.ReportSetting;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -31,8 +32,8 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public int selectCheckReport(String id) {
-		return rd.selectCheckReport(mybatisSession, id);
+	public int selectCheckReport(ReportCheck r) {
+		return rd.selectCheckReport(mybatisSession, r);
 	}
 
 	@Override
