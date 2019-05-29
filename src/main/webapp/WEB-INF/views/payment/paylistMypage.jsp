@@ -103,15 +103,16 @@ function setSearchType() {
 			<div class="table-filter">
 				<div class="row">
                     <div class="col-sm-3">
-						<div class="show-entries">
-							<span>Show</span>
+						<!-- <div class="show-entries"> -->
+						<div class="view-product d-flex align-items-center">
+							<span class="filter-icon"><i class="fa fa-filter"></i></span>&nbsp;&nbsp;
 							<select class="form-control" name='entries' id='entries'>
 								<option value='5'>5</option>
 								<option value='10'>10</option>
 								<option value='15'>15</option>
 								<option value='20'>20</option>
 							</select>
-							<span>entries</span>
+							<span></span>
 						</div>
 					</div>
                     <div class="col-sm-9">
@@ -129,7 +130,6 @@ function setSearchType() {
 								<option value='2'>판매거절</option>
 							</select>
 						</div>
-						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
                 </div>
 			</div>

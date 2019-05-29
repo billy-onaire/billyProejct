@@ -210,9 +210,7 @@ $(function(){
 						$('.limiter').hide();
 						console.log(data);
 					});
-				
 				/* } */
-				
 			}
 		});
 		
@@ -272,14 +270,14 @@ function closeWindow() {
 				<div class="row">
                     <div class="col-sm-3">
 						<div class="view-product d-flex align-items-center">
-							<span>Show</span>
+							<span class="filter-icon"><i class="fa fa-filter"></i></span>&nbsp;&nbsp;
 							<select class="form-control" name='entries' id='entries'>
 								<option value='5'>5</option>
 								<option value='10'>10</option>
 								<option value='15'>15</option>
 								<option value='20'>20</option>
 							</select>
-							<span>entries</span>
+							<span></span>
 						</div>
 					</div>
                     <div class="col-sm-9">
@@ -295,7 +293,6 @@ function closeWindow() {
 								<option value='seller_id'>ID</option>
 							</select>
 						</div>
-						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
                 </div>
 			</div>
@@ -346,7 +343,7 @@ function closeWindow() {
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
                             		<li class='page-item' id='page-next'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
                             </ul>

@@ -89,6 +89,9 @@ $(function(){
 			data: JSON.stringify(job),
 			contentType: 'application/json; charset=utf-8',
 			success: function(result) {
+				alert('취소가 완료되었습니다');
+				$('.ok-je').html('');
+				$('.cancel-je').html('');
 				console.log('success');
 			}
 		})//ajax
@@ -145,14 +148,14 @@ function setSearchType() {
 				<div class="row">
                     <div class="col-sm-3">
 						<div class="view-product d-flex align-items-center">
-							<span>Show</span>
+							<span class="filter-icon"><i class="fa fa-filter"></i></span>&nbsp;&nbsp;
 							<select class="form-control" name='entries' id='entries'>
 								<option value='5'>5</option>
 								<option value='10'>10</option>
 								<option value='15'>15</option>
 								<option value='20'>20</option>
 							</select>
-							<span>entries</span>
+							<span></span>
 						</div>
 					</div>
                     <div class="col-sm-9">
@@ -168,7 +171,6 @@ function setSearchType() {
 								<option value='seller_id'>ID</option>
 							</select>
 						</div>
-						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
                 </div>
 			</div>

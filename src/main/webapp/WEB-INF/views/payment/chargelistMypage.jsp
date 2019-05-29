@@ -106,15 +106,15 @@ function setSearchType() {
 			<div class="table-filter">
 				<div class="row">
                     <div class="col-sm-3">
-						<div class="show-entries">
-							<span>Show</span>
+						<div class="view-product d-flex align-items-center">
+							<span class="filter-icon"><i class="fa fa-filter"></i></span>&nbsp;&nbsp;
 							<select class="form-control" name='entries' id='entries'>
 								<option value='5'>5</option>
 								<option value='10'>10</option>
 								<option value='15'>15</option>
 								<option value='20'>20</option>
 							</select>
-							<span>entries</span>
+							<span></span>
 						</div>
 					</div>
                     <div class="col-sm-9">
@@ -132,7 +132,6 @@ function setSearchType() {
 								<option value='2'>구매취소</option>
 							</select>
 						</div>
-						<span class="filter-icon"><i class="fa fa-filter"></i></span>
                     </div>
                 </div>
 			</div>
@@ -211,44 +210,25 @@ function setSearchType() {
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
                             		<li class='page-item' id='page-prev'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i></a>
+                            			<a class='page-link' href='chargeList.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i></a>
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
+                            			<a class='page-link' href='chargeList.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
                             		<li class='page-item' id='page-next'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            			<a class='page-link' href='chargeList.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
-                                <!-- <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li> -->
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
-			<!-- <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-					<li class="page-item"><a href="#" class="page-link">6</a></li>
-					<li class="page-item"><a href="#" class="page-link">7</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                </ul>
-            </div> -->
         </div>
     </div>     
-</div>
 </div>
 <c:import url="../common/footer.jsp" />
 </body>                  		             

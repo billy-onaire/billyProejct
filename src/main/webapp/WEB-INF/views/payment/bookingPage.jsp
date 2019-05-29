@@ -140,66 +140,54 @@ $(function() {
 		$('#myModal-a').show();
 	});//click
 	
+	
+	
 	//모달창 각각 동의
 	$('#button-a-je').click(function(){
 		$('#weekend-a-je').prop('checked', true).change();
+		$('#checkone').val('1');
+		console.log($('#checkone').val());
 	});
+	console.log("checkone : " + $('#checkone').val());
 	$('#button-b-je').click(function(){
 		$('#home-b-je').prop('checked', true).change();
+		$('#checktwo').val('2');
+		console.log($('#checktwo').val());
 	});
 	$('#button-c-je').click(function(){
 		$('#business-c-je').prop('checked', true).change();;
+		$('#checkthree').val('3');
+		console.log($('#checkthree').val());
 	});
 	
-	var weekendbox = $('#weekend-a-je').is(':checked');
-	var homebox = $('#home-a-je').is(':checked');
-	var businessbox = $('#business-a-je').is(':checked');
 	
 	
-		$('#weekend-a-je').change(function() {
-			if($(this).is(':checked')){
-				alert('됨!');
-				$('input[name=next]').prop('disabled', false).css('background-color', ' ');
-				return;
-			} else {
-				alert('안됨!');
-				
-			}	
-		});
+	$('#checkone').change(function(){
+		console.log('확인요');
+	});
+	
+	$('input[name=next]').click(function(){
+		var inputone = $('#checkone').val();
+		var inputtwo = $('#checktwo').val();
+		var inputthree = $('#checkthree').val();
 		
-		$('#gotonext').click(function() {
-			if(weekendbox && homebox && businessbox)
-				alert('모두 체크!');
-		})
-	
-	
-	/* if(weekendbox)
-		alert('아');
-	else
-		alert('아아'); */
-	
-	
-	/* $(test1).prop("checked"); */
-	
-	/* $('input[name=next]').click(function(){
-		if(!$('#weekend-a-je').is(':checked')) {
-			alert('모든 항목에 동의하셔야 예약이 완료됩니다.');
-			$('input[name=next]').prop('disabled', true).css('background-color', 'gray');
-			$('input[name=next]').prop('disabled', false).css('background-color', ' ');
-		} else if(!$('#home-b-je').is(':checked')) {
-			alert('모든 항목에 동의하셔야 예약이 완료됩니다.');
-			$('input[name=next]').prop('disabled', true).css('background-color', 'gray');
-			$('input[name=next]').prop('disabled', false).css('background-color', ' ');
-		} else if(!$('business-c-je').is(':checked')) {
-			alert('모든 항목에 동의하셔야 예약이 완료됩니다.');
-			$('input[name=next]').prop('disabled', true).css('background-color', 'gray');
-			$('input[name=next]').prop('disabled', false).css('background-color', ' ');
+		if(!inputone) {
+			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			alert('모든 약관을 읽고 동의하셔야 합니다');
+			console.log("inputone1 :  " + inputone);
+		}
+		else if(!inputtwo) {
+			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			alert('모든 약관을 읽고 동의하셔야 합니다');
+		}
+		else if(!inputthree) {
+			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			alert('모든 약관을 읽고 동의하셔야 합니다');
 		} else {
-			alert('절차를 계속 진행하십시오');
-			$('input[name=next]').prop('disabled', false).css('background-color', ' ');
-		} */
-	//});//
-});
+			$('input[name=finish]').prop('disabled', false).css('background-color', '');
+		}
+	});//click
+});//ready
 function close_pop(flag) {
 	//모달창 닫기
     $('#myModal-a').hide();
@@ -208,6 +196,9 @@ function close_pop(flag) {
 };
 </script>
 <body id='bookingBody'>
+<input type='text' id='checkone'/>
+<input type='hidden' id='checktwo'/>
+<input type='hidden' id='checkthree'/>
 	<div class="image-container set-full-height">
 	    <!--   Big container   -->
 	    <div class="container">
