@@ -19,6 +19,8 @@ import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
+import org.kh.billy.payment.model.service.PaymentService;
+import org.kh.billy.product.model.service.ProductService;
 import org.kh.billy.sms.model.vo.Sms;
 import org.kh.billy.socialuser.model.service.SocialUserService;
 import org.kh.billy.statistics.model.service.StatisticsService;
@@ -56,7 +58,12 @@ public class MemberController {
    @Autowired
    private BCryptPasswordEncoder bcryptPE;
    
+   @Autowired
+   private PaymentService payService;
    
+   @Autowired
+   private ProductService ps;
+ 
    @RequestMapping("mfind.do")
    public String findPage() {
       return "member/findPage";
@@ -487,4 +494,30 @@ public class MemberController {
 	   mv.setViewName("jsonView");
 	   return mv;
    }
+   
+   
+ 
+   @SuppressWarnings("unchecked")
+   @RequestMapping(value="pCount.do", method=RequestMethod.POST)
+   @ResponseBody
+	public String MyCount(@RequestParam(name="userId") String userId, HttpServletResponse response) throws UnsupportedEncodingException {
+		System.out.println("카운트 유저 : " + userId);
+	    int pCount = ps.selectCountMyProduct(userId);
+	    System.out.println("카운트 유저1 : " + userId);
+		int paCount = payService.selectCountMyPay(userId);
+		System.out.println("카운트 유저2 : " + userId);
+		int pawCount = payService.selectCountMyPayWait(userId);
+		
+		System.out.println("프로덕트 카운트 : " + pCount);
+		System.out.println("거래완료 카운트 : " + paCount);
+		System.out.println("거래대기 카운트 : " + pawCount);
+		
+		JSONObject count = new JSONObject();
+		count.put("procnt", pCount);
+		count.put("paycnt", paCount);
+		count.put("paywcnt", pawCount);
+		
+		return count.toJSONString();
+
+  }
 }

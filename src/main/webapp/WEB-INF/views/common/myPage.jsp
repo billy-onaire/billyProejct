@@ -11,7 +11,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Shop</title>
+    <title>My Page</title>
 
     <!-- Favicon  -->
 	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
@@ -33,9 +33,7 @@
                 <!--  Catagories  -->
                 <div class="catagories-menu">
                     <ul>
-                    	<c:if test="${!empty loginMember }">
-                        <li><a href="mupage.do"><span class="catagories-menu-radios">내 정보 수정</span></a></li>
-                        </c:if>
+                    	<li><a href="mPageMain.do"><span class="catagories-menu-radios">내 정보 </span></a></li>
                         <li><a href="myproductlist.do"><span class="catagories-menu-radios">내 상품 </span></a></li>
                         <li><a href="reviewList.do"><span class="catagories-menu-radios">내가 작성한 후기 </span></a></li>
                         <li><a href="paymentSearch.do"><span class="catagories-menu-radios">거래/결제 내역 </span></a></li>

@@ -110,12 +110,17 @@ public class PaymentDao {
 		return mybatisSession.update(mapper + "updateRejectCharge", paymentNo);
 	}
 
-
-	public int selectCountMyPay(SqlSessionTemplate mybatisSession, String userId) {	
-		return mybatisSession.update(mapper + "selectCountMyPay", userId);
-  }
+	public int selectCountMyPay(SqlSessionTemplate mybatisSession, String customer) {
+		return mybatisSession.selectOne(mapper + "selectCountMyPay", customer);
+		
+    }
 
 	public int updateRejectChargeCustomer(SqlSessionTemplate mybatisSession, Payment payment) {		
 		return mybatisSession.update(mapper + "updateRejectChargeCustomer", payment);
+	}
+
+	public int selectCountMyPayWait(SqlSessionTemplate mybatisSession, String customer) {
+		return mybatisSession.selectOne(mapper + "selectCountMyPayWait", customer);
+
 	}
 }

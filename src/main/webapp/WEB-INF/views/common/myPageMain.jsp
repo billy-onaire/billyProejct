@@ -25,10 +25,25 @@ $(function() {
             type : "post",
             dataType: "json",
             data : {userId : $("#user_id").val()},
-            success : function(data) {
-               console.log("ajax pcount success 확인 : " + data.hashMap.pnt);
+            success : function(jsonData) {
+               console.log("ajax procnt success 확인 : " + jsonData.procnt);
+               console.log("ajax paycnt success 확인 : " + jsonData.paycnt);
+               console.log("ajax paycnt success 확인 : " + jsonData.paywcnt);
+               
                  
-                   $(".result").text(data.hashMap.pnt + '개');
+                   $(".result").text(jsonData.procnt + ' 개');
+                   
+                   if(jsonData.paycnt > 0){
+                   $(".result1").text(jsonData.paycnt + '건');
+                   }else{
+                   $(".result1").text('0 건');	   
+                   }
+                   
+                   if(jsonData.paywcnt > 0){
+                   $(".result2").text(jsonData.paywcnt + '건');
+                   }else{
+                   $(".result2").text('0 건');   
+                   }
                
             },
             error : function(error) {
@@ -36,38 +51,17 @@ $(function() {
                 alert("error : " + error);
             }
         });               
-        
-        
-        $.ajax({
-            url : "paCount.do",
-            type : "post",
-            dataType: "json",
-            data : {userId : $("#user_id").val()},
-            success : function(data1) {
-               console.log("ajax pacount success 확인 : " + data1.hashMap.pant);
-                 
-               if(data1.hashMap.pant > 0){
-                   $(".result1").text(data1.hashMap.pant + '건');
-      			}else{
-      				$(".result1").text('0 건');	
-      			}
-               
-            },
-            error : function(error) {
-                
-                alert("error : " + error);
-            }
-        });    
+          
 });
 
 $(function() {
-	
-  	  
-     
-	
+
+	$("#idck").click(function() {
+		
+		
+	});
 	
 });
-
 
 </script>
 
@@ -87,7 +81,7 @@ $(function() {
 	width: 80px;
     height: 80px;
     border-radius: 80px;
-    margin-top: 30px;
+    margin-top: 0px;
     margin-left: 138px;
 }
 #myname{
@@ -124,6 +118,7 @@ $(function() {
     <div class="main-content-wrapper d-flex clearfix">
 	<c:import url="../common/nav.jsp" />
 	<c:import url="../common/myPage.jsp" />
+	
 	<div class="amado_product_area section-padding-100">
 	<div class="container" style="margin-top:30px">
 			<div class="row">
@@ -132,23 +127,22 @@ $(function() {
 						<div class="col-lg-4 grid-margin stretch-card">
 							<div class="card sale-diffrence-border">
 								<div class="card-body">
-									<h4 class="text-dark mb-2 font-weight-bold">거래완료</h4>
-									<p class="result1"></p>
-									<small class="text-muted">APRIL 2019</small>
+									<h5 class="text-dark mb-2">거래완료/취소</h5>
+									<p class="result1" onclick="location.href='paymentSearch.do'"></p>
 									<div class="progress mb-3">
 									<div class="progress-bar  bg-warning" role="progressbar"
 											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
-											aria-valuemax="120"></div>
+											aria-valuemax="100"></div>									
 								    </div>
+								     
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-4 grid-margin stretch-card">
 							<div class="card sale-diffrence-border">
 								<div class="card-body">
-									<h4 class="text-dark mb-2 font-weight-bold">거래대기</h4>
-									<h4 class="card-title mb-2">Sales Difference</h4>
-									<small class="text-muted">APRIL 2019</small>
+									<h5 class="text-dark mb-2">거래대기</h5>
+									<p class="result2" onclick="location.href='paymentWaiting.do'"></p>
 									<div class="progress mb-3">
 									<div class="progress-bar  bg-primary" role="progressbar"
 											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
@@ -160,9 +154,8 @@ $(function() {
 						<div class="col-lg-4 grid-margin stretch-card">
 							<div class="card sale-diffrence-border">
 								<div class="card-body">
-									<h4 class="text-dark mb-2 font-weight-bold">등록물품수</h4>
-									<p class="result"></p>
-									<small class="text-muted">APRIL 2019</small>
+									<h5 class="text-dark mb-2">등록물품수</h5>
+									<p class="result" onclick="location.href='myproductlist.do'"></p>
 									<div class="progress mb-3">
 									<div class="progress-bar  bg-success" role="progressbar"
 											style="width: 100%" aria-valuenow="0" aria-valuemin="0"
@@ -181,6 +174,14 @@ $(function() {
             <label for="comment">Profile:</label>
             <div class="card" style="width: 350px; height: 300px;">
             <c:if test="${!empty loginMember}">
+							<div class="d-flex justify-content-md">
+								<div class="pr-1 mb-3 mb-xl-0">
+										<button type="button" id="edit" name="edit" class="btn btn-outline-inverse-info btn-icon-text btn-sm text-white bg-info" onclick="location.href='mupage.do'">
+											수정하기
+											<i class="fas fa-edit"></i>                           
+										</button>
+								</div>
+							</div>
        			<div class="cart-fav-search mb-100" id="socialLogin">
        			<c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'kakao'}">
        			<img id="profile_img"  src="${loginMember.profile }">&nbsp;<br> <span id="myname">이름: ${fn:replace(loginMember.user_name, "+", " ") }</span>
@@ -218,9 +219,11 @@ $(function() {
 			
 			<!-- 자기소개 -->
             <div class="form-group">
- 				 <label for="comment">Comment:</label>
- 				 <textarea class="form-control" rows="5" id="comment">${loginMember.my_introduce }
- 				 </textarea>
+ 				 <label for="comment">My Comment:</label>
+ 				 <div class="card" style="width: 730px; height: 250px;">
+ 				<p>${loginMember.my_introduce }</p>
+ 				</div>
+ 				 
 			</div>
 
              </div>

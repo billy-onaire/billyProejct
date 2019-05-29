@@ -148,11 +148,17 @@
 		order by payment_no desc
 	</select>
 	
-	<select id="selectCountMyPay" parameterType="string" resultType="_int">
-		select count(*) from payment where customer = #{userId} and status = 1	
+	<!-- 마이페이지 거래완료 조회 -->
+	<select id="selectCountMyPay" parameterType="string" resultType="_int">	
+		select count(*) from payment where status in (1,2) and customer = #{customer }
 	</select>
 	
-	
+	<!-- 마이페이지 거래대기 조회 -->
+	<select id="selectCountMyPayWait" parameterType="string" resultType="_int">	
+		select count(*)
+		from payment p, product r
+		where p.product_no = r.product_no and status in (3,4) and customer = #{customer }
+	</select>
 	
 	<!-- insert 문  =============================================================================================== -->
 	<!-- 거래예약 insert -->
