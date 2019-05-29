@@ -85,11 +85,11 @@ public class NoticeController {
 		//공지사항 첨부파일 다운로드 
 		request.setCharacterEncoding("utf-8");
 		
-		String path = request.getSession().getServletContext().getRealPath("/resources/files/noticefile");
+		String path = request.getSession().getServletContext().getRealPath("/resources/files/noticefile/");
 		
 		ServletOutputStream downOut = response.getOutputStream();
 		
-		File downFile = new File(path + "/" + renameFile);
+		File downFile = new File(path + renameFile);
 		
 		response.setContentType("text/plain; charset=utf-8");
 		response.addHeader("Content-Disposition", "attachment; filename=\"" + new String(originalFile.getBytes("UTF-8"), "ISO-8859-1") + "\"");
@@ -178,7 +178,7 @@ public class NoticeController {
 		
 		//String reFileName = noticefile.getOriginalFilename();
 		//System.out.println("파일이름 확인 : " + reFileName);
-		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile/");
 		//noticefile.transferTo(new File(savePath + "\\" + reFileName));
 		//noticefile.transferTo(new File("\\billy\\resources\\files\\notice" + "\\" + reFileName));
 		
@@ -195,7 +195,7 @@ public class NoticeController {
 				String reFileName = uploadFile(file.getOriginalFilename()/*, file.getBytes()*/);
 				notice.setNotice_renamefile(reFileName);
 				
-				file.transferTo(new File(savePath + "\\" + reFileName));
+				file.transferTo(new File(savePath + reFileName));
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -238,14 +238,14 @@ public class NoticeController {
 			
 			//제일 쉬운건 그냥 파일이 있든 없든 삭제하고 그 후에 파일 추가 
 		File realFile = new File("resources/files/noticefile");
-		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile/");
 		if(!notice.getNotice_originalfile().equals("")) {//기존 파일이 있는 경우
 			System.out.println("기존 파일이 있는 경우");
 			//파일을 삭제하지 않고 기존파일 그대로 사용
 		}else if(file.getOriginalFilename().equals("")) {
 			//파일 삭제
 			System.out.println("기존 파일이 없고 새 사진도 등록 안한 경우");
-			realFile = new File(savePath + "\\" + notice.getNotice_renamefile());
+			realFile = new File(savePath + notice.getNotice_renamefile());
 			if(realFile.delete())
 				System.out.println("삭제 성공");
 			else
@@ -298,8 +298,8 @@ public class NoticeController {
 	
 	@RequestMapping("deletenotice.do")
 	public String deleteNotice(@RequestParam int notice_no, @RequestParam("re") String renameFile,HttpServletRequest request) {
-		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile");
-		File realFile = new File(savePath + "\\" + renameFile);
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/noticefile/");
+		File realFile = new File(savePath + renameFile);
 		if(realFile.delete())
 			System.out.println("파일 삭제 성공");
 		else

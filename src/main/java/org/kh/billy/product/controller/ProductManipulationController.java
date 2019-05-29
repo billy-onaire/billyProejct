@@ -128,7 +128,7 @@ public class ProductManipulationController {
 			System.out.println("상품등록 성공");
 		else
 			System.out.println("상품등록 실패");*/
-		return "home";
+		return "redirect:main.do";
 		//파일명 rename 처리 진행
 		//새로운 파일명 만들기 : "년월일시분초.확장자"
 		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -203,7 +203,7 @@ public class ProductManipulationController {
 		//사진을 수정, 추가, 삭제
 		ProductImg productImg = new ProductImg();
 		File file = new File("resources/files/product");
-		String savePath = request.getSession().getServletContext().getRealPath("resources/files/product");
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/product/");
 		file.delete();
 		if(!img[0].equals("")) {
 			System.out.println("기존 사진 그대로 사용 - > 1번째 사진 확인 : " + img[0]);
@@ -218,9 +218,9 @@ public class ProductManipulationController {
 			productImg.setFirst_img(fileRename);
 			
 			//새로운 사진 저장
-			file1.transferTo(new File(savePath + "\\" + fileRename));
+			file1.transferTo(new File(savePath +  fileRename));
 			System.out.println("바뀐 1번 사진 이름 확인 : " + fileRename);
-			file = new File(savePath + "\\" + product.getFirst_img());
+			file = new File(savePath +  product.getFirst_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 1번 사진 이름 확인 : " + product.getFirst_img());
 			
@@ -240,7 +240,7 @@ public class ProductManipulationController {
 			//product.setSecond_img(img[1]);
 		}else if(file2.getOriginalFilename().equals("")) {//새로운 사진 없고 기존의 사진 삭제한 경우
 			System.out.println("새로운 2번 사진 없음");
-			file = new File(savePath + "\\" + product.getSecond_img());
+			file = new File(savePath + product.getSecond_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 2번 사진 이름 확인 : " + product.getSecond_img());
 			if(file.delete()){
@@ -254,10 +254,10 @@ public class ProductManipulationController {
 			System.out.println("새로운 2번 사진 사용 : " + file2.getOriginalFilename());
 			String fileRename = String.valueOf(System.nanoTime()) + "." + file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf(".") + 1);
 			
-			file2.transferTo(new File(savePath + "\\" + fileRename));
+			file2.transferTo(new File(savePath + fileRename));
 			System.out.println("바뀐 2번 사진 이름 확인 : " + fileRename);
 			System.out.println("바뀐 2번 사진 이름 확인2 : " + fileRename);
-			file = new File(savePath + "\\" + product.getSecond_img());
+			file = new File(savePath + product.getSecond_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 2번 사진 이름 확인 : " + product.getSecond_img());
 			if(file.delete()){
@@ -277,7 +277,7 @@ public class ProductManipulationController {
 			System.out.println("3번 사진 없음");
 			
 			//실제 경로에 있는 사진 파일 삭제
-			file = new File(savePath + "\\" + product.getThird_img());
+			file = new File(savePath + product.getThird_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 3번 사진 이름 확인 : " + product.getThird_img());
 			if(file.delete()){
@@ -291,9 +291,9 @@ public class ProductManipulationController {
 			System.out.println("새로운 3번 사진 사용 : " + file3.getOriginalFilename());
 			String fileRename = String.valueOf(System.nanoTime()) + "." + file3.getOriginalFilename().substring(file3.getOriginalFilename().lastIndexOf(".") + 1);
 			productImg.setThird_img(fileRename);
-			file3.transferTo(new File(savePath + "\\" + fileRename));
+			file3.transferTo(new File(savePath + fileRename));
 			System.out.println("바뀐 3번 사진 이름 확인 : " + fileRename);
-			file = new File(savePath + "\\" + product.getThird_img());
+			file = new File(savePath + product.getThird_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 3번 사진 이름 확인 : " + product.getThird_img());
 			if(file.delete()){
@@ -309,7 +309,7 @@ public class ProductManipulationController {
 			System.out.println("4번 사진 없음");
 			
 			//실제 경로에 있는 사진 파일 삭제
-			file = new File(savePath + "\\" + product.getFourth_img());
+			file = new File(savePath + product.getFourth_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 4번 사진 이름 확인 : " + product.getFourth_img());
 			if(file.delete()){
@@ -323,11 +323,11 @@ public class ProductManipulationController {
 			System.out.println("새로운 4번 사진 사용 : " + file4.getOriginalFilename());
 			String fileRename = String.valueOf(System.nanoTime()) + "." + file4.getOriginalFilename().substring(file4.getOriginalFilename().lastIndexOf(".") + 1);
 			productImg.setFourth_img(fileRename);
-			file4.transferTo(new File(savePath + "\\" + fileRename));
+			file4.transferTo(new File(savePath + fileRename));
 			System.out.println("바뀐 4번 사진 이름 확인 : " + fileRename);
 			
 			//4번 파일 삭제
-			file = new File(savePath + "\\" + product.getFourth_img());
+			file = new File(savePath + product.getFourth_img());
 			System.out.println("사진 경로 : " + savePath);
 			System.out.println("바뀌기전 4번 사진 이름 확인 : " + product.getFourth_img());
 			if(file.delete()){

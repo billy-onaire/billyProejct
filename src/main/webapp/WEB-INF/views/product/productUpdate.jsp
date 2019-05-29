@@ -181,7 +181,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" value="${product.price }" required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="10만원 이하 입력" value="${product.price }" required style="width: 50%">
                               </div>
                               
                             <!-- <div class="container">
@@ -582,7 +582,7 @@
                 onClose: function( selectedDate ) { 
                   // 시작일(fromDate) datepicker가 닫힐때
                   // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                  $("#product_enddate").datepicker( "option", "minDate", selectedDate );
+                  $("#product_enddate").datepicker( "option", "+1d", selectedDate );
                 }       
               });
 
@@ -594,7 +594,7 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
-                minDate : 0,
+                minDate : 1,
                 maxDate : 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가

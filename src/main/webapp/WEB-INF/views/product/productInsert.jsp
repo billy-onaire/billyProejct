@@ -123,7 +123,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="10만원 이하 입력" required style="width: 50%">
                               </div>
                                                           
                                   <div class="form-horizontal">
@@ -287,7 +287,7 @@
                 onClose: function( selectedDate ) { 
                   // 시작일(fromDate) datepicker가 닫힐때
                   // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                  $("#product_enddate").datepicker( "option", "minDate", selectedDate );
+                  $("#product_enddate").datepicker( "option", "+1d", selectedDate);
                 }       
               });
 
@@ -299,7 +299,7 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
-                minDate: 0,
+                minDate: 1,
                 maxDate: 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가
@@ -307,32 +307,47 @@
                   // 종료일(toDate) datepicker가 닫힐때
                   // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
                   $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
+                  
+                  //console.log(today.format('yyyy-MM-dd'));
+                  //날짜 설정
+                  //엔드 데이트가 오늘 포함 오늘보다 작으면 alert 나오게
+                  
+					/* var secDate = $("#product_enddate").val();
+                 	console.log('날짜확인 : '+$("#product_enddate").val());
+                 	 var year = secDate.substr(0,4);
+                 	 var month = secDate.substr(5,2);
+                  	var day = secDate.substr(8,2);
+                 	 var date = new Date(year, month, day);
+			         var today = new Date();
+			         console.log(today.getTime());
+			         console.log(date.getTime());
+			         console.log(year);
+			         console.log(month);
+			         console.log(day);
+			        if(today.getTime() > date.getTime()) {
+			             
+			            alert("시작날짜와 종료날짜를 확인해 주세요.");
+			             $("#product_enddate").val('');
+			            return;
+			        } */
+			        
+			        
+			        
+                 // var secDate = $("#product_enddate").val();
+                 // console.log('날짜확인 : '+$("#product_enddate").val());
+                 // var year = secDate.substr(0,4);
+                 // var month = secDate.substr(6,7);
+                  //var day = secDate.substr(9,10);
+                 // var date = new Date(year, month, day);
+                  
+                  //console.log('날짜 확인2 ; '+date.getDate);
+				  
+                  //if("#product_enddate").val()
                 }       
               });
             });
 
-        /*$(function(){
-        	$('#product_startdate').datepicker({ 
-        		format: 'yyyy-mm-dd',
-        		dateFormat: 'yyyy-mm-dd',
-            onClose: function( selectedDate ) {    
-                        // 시작일(fromDate) datepicker가 닫힐때
-                        // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                        $("#product_enddate").datepicker( "option", "minDate", selectedDate );
-            }  
-            
-        	});
-            $('#product_enddate').datepicker({ 
-            	format: 'yyyy-mm-dd',
-            	dateFormat: 'yyyy-mm-dd',
-              onClose: function( selectedDate ) {
-                        // 종료일(toDate) datepicker가 닫힐때
-                        // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-                        $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
-                    }
-              
-            });
-        });*/
+        
         </script>
         <script type="text/javascript">
         $(function(){
@@ -369,11 +384,6 @@
                 }
             });
         });
-        </script>
-        <script type="text/javascript">
-          $("#coba").find('img').each(function(){
-            console.log($(this).attr('src'));
-          });
         </script>
 
         <script type="text/javascript">
@@ -434,8 +444,6 @@
               $(this).val($(this).val().substring(0, 500));
 
             }
-            //컨솔 확인용
-            console.log($('#product_startdate').val());
             $("#datepicker").datepicker("getDate");
           });
 
@@ -453,14 +461,6 @@
               $('#sel2').focus();
               return false;
             }
-            /*if($('._img').val() == null){
-              alert('사진을 등록해주세요.');
-              $('#coba').focus();
-              return false;
-            }*/
-            
-            /*if($('._img').attr('src') == null){*/
-
 
             if($('#product_content').val().length < 30 ){
               alert('상품에 대한 설명을 30자 이상 작성해주세요.');
@@ -489,20 +489,18 @@
               $('#product_enddate').focus();
               return false;
             }
+            
+            /* if($('#product_enddate').val() > $('#product_startdate')){
+            	alert('대여일자가 잘 못 설정되었습니다.');
+            	return false;
+            } */
 
-
-             if(confirm("등록 하시겠습니까?")) {
-                
+            if(confirm("등록 하시겠습니까?")) {
+                alert('상품이 등록되었습니다.');
             } else {
             return false;
             }
-
-            /* alert($('#price').val()); */
-            /* $('#price').val() = $('#price').val().replace(',' , ''); */
-            /* ($('#price').val()).replace(/,/g, '');
-            alert($('#price').val()); */
           }
         </script>
 </body>
-
 </html>
