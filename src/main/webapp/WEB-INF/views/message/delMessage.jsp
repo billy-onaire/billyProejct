@@ -98,10 +98,10 @@ $(document).ready(function(){
                                             ${delmms.sent_id }
                                             </c:if>
                                             </td>
-                                             <td class="cart_product_img">
+                                             <td class="cart_product_img" style="text-overflow: ellipsis;">
                                             	${delmms.product_name }
                                             </td>
-                                            <td class="cart_product_desc" id="${delmms.mms_no }" >
+                                            <td class="cart_product_desc" id="${delmms.mms_no }" style="cursor:pointer;">
                                                 ${delmms.mms_title}
                                             </td>
                                             <td class="price">
@@ -166,8 +166,7 @@ $(document).ready(function(){
 	<script src="/billy/resources/js/plugins.js"></script>
 	<!-- Active js -->
 	<script src="/billy/resources/js/active.js"></script>
-    <!-- Product List js -->
-    <script src="/billy/resources/js/productList.js"></script>
+
 
 </body>
 

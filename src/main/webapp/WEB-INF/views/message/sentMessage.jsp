@@ -97,10 +97,10 @@ $(document).ready(function(){
                                             <td class="cart_product_img">
                                                ${sentmms.recv_id }
                                             </td>
-                                            <td class="cart_product_img">
+                                            <td class="cart_product_img" style="text-overflow: ellipsis;">
                                                 	${sentmms.product_name }
                                             </td>
-                                            <td class="cart_product_desc" id="${sentmms.mms_no }" >
+                                            <td class="cart_product_desc" id="${sentmms.mms_no }" style="cursor:pointer;">
                                                 ${sentmms.mms_title }
                                             </td>
                                             <td class="price">
@@ -166,8 +166,6 @@ $(document).ready(function(){
 	<script src="/billy/resources/js/plugins.js"></script>
 	<!-- Active js -->
 	<script src="/billy/resources/js/active.js"></script>
-    <!-- Product List js -->
-    <script src="/billy/resources/js/productList.js"></script>
 
 </body>
 

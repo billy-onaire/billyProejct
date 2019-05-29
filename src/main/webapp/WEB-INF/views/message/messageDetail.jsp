@@ -112,11 +112,11 @@
 				<tr></tr>
 				<tr> 
 				<th scope="row">작성일</th> 
-				<td><fmt:formatDate value="${list.sent_date }" pattern="yyyy-MM-dd KK:mm:ss "/>&nbsp;&nbsp;</td> 
+				<td><fmt:formatDate value="${list.sent_date }" pattern="yy-MM-dd KK:mm:ss "/>&nbsp;&nbsp;</td> 
 				<th scope="row">읽음여부</th> 
 				<td>
 				<c:if test="${list.recv_read eq 'Y'}">
-                       	<fmt:formatDate value="${list.read_date }" pattern="yyyy-MM-dd KK:mm:ss"/>
+                       	<fmt:formatDate value="${list.read_date }" pattern="yy-MM-dd KK:mm:ss"/>
                  </c:if> 
                 <c:if test="${list.recv_read eq 'N'}">
                  	읽지 않음
@@ -142,7 +142,7 @@
 					<c:if test="${list.sent_id eq  loginMember.user_id  }">		
 					<div style="width: 100%; text-align:center;">
 					<div style="display: inline-block; width:65%">
-						<input type="submit" class="button" id="back" value="뒤로가기" onclick="self.close();"> 	
+						<input type="submit" class="button" id="back" value="뒤로가기" onclick="self.close();" style="margin-right: 15px;"> 	
 						<input type="button" class="button" id="delete" value="삭제하기">
 					</div>
 					</div>
@@ -161,15 +161,6 @@
 	
 					<br>
 <script>
-/* $(function(){
-	var session = "${loginMember.user_id}" //로그인한 사람
-	var sid = "${list.sent_id}";
-	if(session == sid){
-		$("#reply").hide();
-		$("#delete").css('margin-left', '130px');
-	}
-});
- */
 $(function(){
 	 $('#delete').on('click',function(){ 
 		var session = "${loginMember.user_id}" //로그인한 사람
