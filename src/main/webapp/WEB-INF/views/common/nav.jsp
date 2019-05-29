@@ -32,31 +32,6 @@
 	});
 }); 
 
-$(document).ready(function(){
-	var userid = "${loginMember.user_id}"
-	//alert(userid)
-	//alert(userid);
-
-	$.ajax({
-		type: "POST",
-		url: "alert.do",
-		dataType: "json",
-		data: userid,
-		success : function(data){
-			alert(data);
-			var jsonStr = JSON.stringify(data);
-			var obj = JSON.parse(jsonStr);
-			for(var i in obj.list){
-				list += "<tr>";
-				list += "<td>" + obj.list[i].sent_id +"</td></tr>"
-			}
-		
-		$("#mms").html(list);
-	}
-	});
-});
-
-
 //<![CDATA[
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('fbadc90fdfd0a397c43e051918cc2a0d');
