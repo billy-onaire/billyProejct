@@ -298,24 +298,6 @@ public class PaymentController {
 		return mav;
 	}
 	
-	@RequestMapping(value="paCount.do", method=RequestMethod.POST)
-	public ModelAndView selectCountMyPay(Model model, ModelAndView mv, @RequestParam(name="userId") String userId) {
-		
-		int paCount = payService.selectCountMyPay(userId);
-		Map<String, Integer> map1 = new HashMap<>();
-		
-		if(userId != null) {
-	    	   map1.put("pant", paCount);
-	    	   mv.addObject(map1);
-	    	   mv.setViewName("jsonView");
-	       }
-	    	   
-	       System.out.println("ajax체크 받기" + map1);     
-	       return mv;
-	}
-	
-	
-	
 	
 	// 부트페이 관련 메소드 =======================================================================================
 	@RequestMapping("goPayPage.do")

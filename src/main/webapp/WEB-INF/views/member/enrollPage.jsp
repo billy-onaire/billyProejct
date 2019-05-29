@@ -84,6 +84,17 @@ $(function(){
             
             }  
          });
+         
+        $("#my_introduce").on('keyup', function(e){
+        	if($(this).val() == '') return;	
+      	   var my = $("#my_introduce").val();
+      	   if(my.length > 500){
+      		   alert("500자 이내로 입력하세요");
+      		   $(this).val($(this).val().substring(0,500));
+      	   }
+      	   
+         });
+        
     
 });
  
@@ -194,6 +205,9 @@ $(function() {
 
 function goSubmit() {
    
+   var loca = $('#location_area').val();
+   var findStr = "서울";	
+	
    if(idck == 0){
        alert('아이디 중복체크를 해주세요');
        $("#user_id").focus();
@@ -215,10 +229,15 @@ function goSubmit() {
       alert("주소를 입력해주세요");
    }else if($('#location_area').val() == ''){
       alert("거래 가능지역을 입력해주세요");
+   }else if(loca.indexOf(findStr) == -1){
+   	  alert("주 거래가능 지역은 서울만 가능합니다")
    }else{
        $("#join").submit();
        alert("입력하신 이메일로 인증해야 로그인이 가능합니다")
    }
+   
+   
+ 
 }
 
 </script>
@@ -231,7 +250,7 @@ function goSubmit() {
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 
 <style>
-body {
+#mainv {
    font-family: Arial, Helvetica, sans-serif;
    background-color: white;
 }
@@ -307,6 +326,8 @@ a {
    <div class="main-content-wrapper d-flex clearfix">
       <c:import url="../common/nav.jsp" />
       <!-- 회원가입 폼 -->
+      
+      <div class="amado_product_area section-padding-100" id="mainv">
       <div class="login-enroll-form clearfix">
       <div class="container">
       <form action="joinPost.do" id="join" name = "join" method="post" enctype="multipart/form-data">
@@ -364,7 +385,8 @@ a {
                <div class="input-group-append">
                <input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
                </div>
-            </div>         
+            </div>
+            <p id="pp" style="color: orange">서울 지역만 등록 가능합니다</p>         
              <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
             <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9e2688930bfd694b41af56058fd0928e&libraries=services"></script>
@@ -426,6 +448,7 @@ a {
                style="background-color: orange" onclick="goSubmit();">등록하기</button>   
       </div>
       </div>
+   </div>
    </div>
 
    <c:import url="../common/footer.jsp" />

@@ -101,19 +101,5 @@ public class ProductController {
 		return "common/aboutUs";
 	}
 	
-	@RequestMapping(value="pCount.do", method=RequestMethod.POST)
-	public ModelAndView productCount(Model model, ModelAndView mv, @RequestParam(name="userId") String userId) {
-		
-		int pCount = ps.selectCountMyProduct(userId);
-		Map<String, Integer> map = new HashMap<>();
-		
-		if(userId != null) {
-	    	   map.put("pnt", pCount);
-	    	   mv.addObject(map);
-	    	   mv.setViewName("jsonView");
-	       }
-	    	   
-	       System.out.println("ajax체크 받기" + map);     
-	       return mv;
-	}
+
 }
