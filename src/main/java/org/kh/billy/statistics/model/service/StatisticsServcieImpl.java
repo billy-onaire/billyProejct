@@ -1,8 +1,7 @@
 package org.kh.billy.statistics.model.service;
 
-import java.util.ArrayList;
-
 import org.kh.billy.statistics.model.dao.StatisticsDao;
+import org.kh.billy.statistics.model.vo.Deal;
 import org.kh.billy.statistics.model.vo.SignUp;
 import org.kh.billy.statistics.model.vo.Visit;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -37,6 +36,11 @@ public class StatisticsServcieImpl implements StatisticsService{
 	@Override
 	public SignUp selectSignUpCount(String today) {
 		return sdao.selectSignUpCount(stSession, today);
+	}
+
+	@Override
+	public Deal selectDealCount(String today) {
+		return sdao.selectDealCount(stSession, today);
 	}
 
 	

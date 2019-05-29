@@ -28,6 +28,7 @@ import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
 import org.kh.billy.payment.model.vo.PaymentPageMaker;
 import org.kh.billy.payment.model.vo.sendInvoice;
+import org.kh.billy.statistics.model.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService payService;
+	
+	@Autowired
+	private StatisticsService stService;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -201,6 +205,7 @@ public class PaymentController {
 		sendMail.setTo((String)jobj.get("email"));
 		sendMail.send();
 		
+		stService.insertDeal();
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}
