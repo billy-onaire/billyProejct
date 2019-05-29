@@ -5,7 +5,7 @@ table2.style.display = "none";
 
 const listTabs = document.querySelector('.nice-select ul');
 listTabs.addEventListener('click', (e) => {
-    console.log(e.target.getAttribute('data-value'));
+    
     if(e.target.getAttribute('data-value') === '1'){
         table2.style.display = "none";
         table1.style.display = "table";

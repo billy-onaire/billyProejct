@@ -5,7 +5,7 @@
 */
 
 let chosenPage = 1; // 페이징 선택 값
-let listCount = 2; // 한 페이지에 보여질 게시물 수
+let listCount = 6; // 한 페이지에 보여질 게시물 수
 let minPrice = 0; // 최소 가격 설정
 let maxPrice = 100000; // 최대 가격 설정
 let subCategories = []; // 하위 카테고리 배열
@@ -57,7 +57,8 @@ const subCatagory = document.querySelector('.widget-desc');
 for (let i = 0; i < catagoryRadios.length; i++) {
     catagoryRadios[i].addEventListener('change', () => {
         chosenPage = 1; // 현재 페이지 초기화
-        
+        keyword = ""; // 검색어 초기화
+        keywordBox.value = "";
         while (subCatagory.firstChild) {
             subCatagory.removeChild(subCatagory.firstChild);
         }
@@ -300,7 +301,7 @@ function requestProductListAjax(data) {
                 requestProductListAjax();
             }
         }
-        console.log(products.page);
+        
     }
 
     const requestData = {
@@ -340,14 +341,15 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'clothes': document.querySelector('#clothes').click(); break;
             case 'kids': document.querySelector('#kids').click(); break;
             case 'etc': document.querySelector('#etc').click(); break;
+            case 'all': document.querySelector('#all').click(); break;
         }
     } else {
-        const dBtn = document.querySelector('#living');
+        const dBtn = document.querySelector('#all');
         if(!dBtn.checked){
-            document.querySelector('#living').click();
+            document.querySelector('#all').click();
         } else {
             document.querySelector('#etc').click();
-            document.querySelector('#living').click();
+            document.querySelector('#all').click();
         }
     }
     keywordBox.focus();
