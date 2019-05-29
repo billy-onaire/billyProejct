@@ -74,16 +74,16 @@
 				<!-- Single Products-->
 				<div>
 					<div class="table-users">
-						<div class="header">REPORT</div>
+						<div class="header">신고 내역</div>
 
 						<table cellspacing="0" id="table_report1">
 							<tr>
-								<th>Picture</th>
-								<th>Product Name</th>
-								<th>Category</th>
-								<th>ID</th>
-								<th>Approval</th>
-								<th width="230">Contents</th>
+								<th>상품</th>
+								<th>상품 명</th>
+								<th>카테고리</th>
+								<th>아이디</th>
+								<th>관리자 승인여부</th>
+								<th width="230">내용</th>
 							</tr>
 
 							
@@ -105,8 +105,8 @@
 									<td>
 										<c:choose>
 											<c:when test="${r.report_progress eq 'Y'}">승인 완료</c:when>
-											<c:when test="${r.report_progress }">승인 거부</c:when>
-											<c:when test="${r.report_progress }">승인 대기중</c:when>
+											<c:when test="${r.report_progress eq 'N'}">승인 거부</c:when>
+											<c:when test="${r.report_progress eq 'M'}">승인 대기중</c:when>
 										</c:choose>
 									</td>
 									<td>${r.report_content}</td>
@@ -115,14 +115,14 @@
 						</table>
 
 						<table cellspacing="0" id="table_report2">
-								<tr>
-									<th>Picture</th>
-									<th>Product Name</th>
-									<th>Category</th>
-									<th>ID</th>
-									<th>Approval</th>
-									<th width="230">Contents</th>
-								</tr>
+							<tr>
+								<th>상품</th>
+								<th>상품 명</th>
+								<th>카테고리</th>
+								<th>아이디</th>
+								<th>관리자 승인여부</th>
+								<th width="230">내용</th>
+							</tr>
 	
 								
 								<c:forEach var="s" items="${slist}">
@@ -142,9 +142,9 @@
 										<td>${s.report_id }</td>
 										<td>
 											<c:choose>
-												<c:when test="${r.report_progress }.equals('Y')">승인 완료</c:when>
-												<c:when test="${r.report_progress }.equals('N')">승인 거부</c:when>
-												<c:when test="${r.report_progress }.equals('M')">승인 대기중</c:when>
+												<c:when test="${r.report_progress eq 'Y'}">승인 완료</c:when>
+												<c:when test="${r.report_progress eq 'N'}">승인 거부</c:when>
+												<c:when test="${r.report_progress eq 'M'}">승인 대기중</c:when>
 											</c:choose>
 										</td>
 										<td>${s.report_content}</td>

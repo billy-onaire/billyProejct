@@ -10,7 +10,7 @@ function getAdminReportInfo(){
             location.href = "main.do";
         }
         const table = document.querySelector('#adminTable');
-        console.log(report.list);
+        
         for(let i = 0; i < report.list.length; i++){
             const tr = document.createElement('tr');
             const infos = {
