@@ -256,12 +256,18 @@ public class PaymentController {
 		
 		String status = (String)jobj.get("confirmPay");
 		int paymentNo = Integer.parseInt((String)jobj.get("paymentNo"));
+		
+		Payment payment = payService.selectPaymentListOne(paymentNo);
+		
 		if(status.equals("ok")) {
 			int re = payService.updateAdmitCharge(paymentNo);
 			logger.info("charge ok : " + String.valueOf(re));
 		} else if(status.equals("cancel")) {
 			int re = payService.updateRejectCharge(paymentNo);
+			int reCancel = payService.updateRejectChargeCustomer(payment);
+			
 			logger.info("charge cancel : " + String.valueOf(re));
+			logger.info("charge cancel : " + String.valueOf(reCancel));
 		}
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
