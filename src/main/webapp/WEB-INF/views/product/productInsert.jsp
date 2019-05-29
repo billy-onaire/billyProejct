@@ -287,7 +287,7 @@
                 onClose: function( selectedDate ) { 
                   // 시작일(fromDate) datepicker가 닫힐때
                   // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                  $("#product_enddate").datepicker( "option", "minDate", selectedDate );
+                  $("#product_enddate").datepicker( "option", "+1d", selectedDate);
                 }       
               });
 
@@ -299,7 +299,7 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
-                minDate: 0,
+                minDate: 1,
                 maxDate: 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가
