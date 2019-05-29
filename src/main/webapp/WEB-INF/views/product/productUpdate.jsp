@@ -181,7 +181,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="100만원 이하 입력" value="${product.price }" required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="10만원 이하 입력" value="${product.price }" required style="width: 50%">
                               </div>
                               
                             <!-- <div class="container">
