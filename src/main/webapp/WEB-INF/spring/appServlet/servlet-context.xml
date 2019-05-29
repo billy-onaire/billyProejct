@@ -125,6 +125,10 @@
 		</interceptor>
 	</interceptors>
 	
-			
+	<!-- 검색엔진 노출 robots.txt 설정 -->
+	<beans:bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	<resources mapping="/robots.txt" location="/robots.txt" order="0"/>
+
+		
 	<context:component-scan base-package="org.kh.billy" />
 </beans:beans>
