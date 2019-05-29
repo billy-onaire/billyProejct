@@ -83,5 +83,5 @@ public class Deal implements java.io.Serializable{
 		return "Deal [deal_no=" + deal_no + ", deal_date=" + deal_date + ", firstCount=" + firstCount + ", secondCount="
 				+ secondCount + ", thridCount=" + thridCount + ", fourthCount=" + fourthCount + "]";
 	}
-	
+
 }

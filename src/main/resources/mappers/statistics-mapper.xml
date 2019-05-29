@@ -17,6 +17,7 @@
 		count(decode (v_date, to_date(#{today}, 'YYYY/MM/DD'),1 )) as fourthCount
 		from visit
 	</select>
+	
 	<!-- 회원가입 수 당일 조회(총 4일) -->
 	<select id="selectSignUpCount" parameterType="String" resultType="org.kh.billy.statistics.model.vo.SignUp">
 		select count(decode (signup_date, to_date(#{today}, 'YYYY/MM/DD')-3,1 )) as firstCount,
@@ -24,6 +25,16 @@
 		count(decode (signup_date, to_date(#{today}, 'YYYY/MM/DD')-1,1 )) as thridCount,
 		count(decode (signup_date, to_date(#{today}, 'YYYY/MM/DD'),1 )) as fourthCount
 		from sign_up
+	</select>
+	
+	<!-- 거래량 당일 조회 (총4일) -->
+	<select id="selectDealCount" parameterType="String" resultType="org.kh.billy.statistics.model.vo.Deal">
+		select
+		count(decode (deal_date, to_date(#{today}, 'YYYY/MM/DD')-3,1 )) as firstCount,
+		count(decode (deal_date, to_date(#{today}, 'YYYY/MM/DD')-2,1 )) as secondCount,
+		count(decode (deal_date, to_date(#{today}, 'YYYY/MM/DD')-1,1 )) as thridCount,
+		count(decode (deal_date, to_date(#{today}, 'YYYY/MM/DD'),1 )) as fourthCount
+		from deal
 	</select>
 	
 	<!-- 방문자 수 증가 -->

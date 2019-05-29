@@ -14,15 +14,14 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Title  -->
 <title>Billy - adminMain</title>
 <style type="text/css">
-#logoimg{
+#deal-chart{
+	position: relative;
+	top: 100px;
+	left: 250px;
 }
 </style>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	
-});//ready 
-</script>
+
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->
@@ -33,7 +32,6 @@ $(function(){
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </head>
 <body>
-
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
 		<c:import url="common/adminNav.jsp" />
@@ -42,6 +40,7 @@ $(function(){
 			<div><img src="${ pageContext.request.contextPath }/resources/img/core-img/admin.PNG" id="logoimg" width="300" height="200"></div>
 			<div id="login-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>방문자수</div>
 			<div id="signup-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>회원가입수</div>
+			<div id="deal-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>거래량</div>
 		</div>
 		</div>
 	</div>
@@ -52,6 +51,7 @@ $(function(){
 	$(function(){
 		var morrisData = [];
 		var morrisData2 = []; 
+		var morrisData3 = [];
 		var today = new Date();
 		var dd = today.getDate();
 		var mm = today.getMonth()+1;
@@ -70,14 +70,13 @@ $(function(){
 			type: "post",
 			dataType: "json",
 			success: function(obj){
-				console.log("obj값 : " + obj);
 				var objStr = JSON.stringify(obj);
 				var jsonObj = JSON.parse(objStr);
-				console.log("jsonObj : " + jsonObj);
-				
 				for(var i in jsonObj.list){
+					console.log("json : " + jsonObj.list[i].date);
 					morrisData.push({'날짜':jsonObj.list[i].date,'방문자':jsonObj.list[i].count,'회원가입수':jsonObj.list[i].scount});					
-					morrisData2.push({'날짜':jsonObj.list[i].date,'회원가입수':jsonObj.list[i].scount});					
+					morrisData2.push({'날짜':jsonObj.list[i].date,'회원가입수':jsonObj.list[i].scount});		
+					morrisData3.push({'날짜':jsonObj.list[i].date,'거래량':jsonObj.list[i].dcount});
 				}
 				new Morris.Bar({
 					element: 'login-chart',
@@ -103,6 +102,21 @@ $(function(){
 					  barColors: function(row, series, type){
 						  if(type === 'bar'){
 							  return  'rgb(154, 231, 198)';
+						  }else{
+							  return '#000';
+						  }
+					  }
+				});
+				
+				new Morris.Bar({
+				 	element: 'deal-chart',
+					data: morrisData3,
+					  xkey: '날짜',
+					  ykeys: ['거래량'],
+					  labels: ['거래량'],
+					  barColors: function(row, series, type){
+						  if(type === 'bar'){
+							  return  '#FFCC00';
 						  }else{
 							  return '#000';
 						  }
