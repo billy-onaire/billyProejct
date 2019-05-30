@@ -196,8 +196,9 @@ function requestProductListAjax(data) {
             if (restRating >= 0.5) {
                 ratingSection.removeChild(ratingSection.firstChild)
                 const starIcon = document.createElement('i');
-                starIcon.classList = "fa fa-star-half-o";
-                starIcon.setAttribute('aria-hidden', 'true');
+                starIcon.classList = "fas fa-star-half";
+                
+                
                 ratingSection.appendChild(starIcon);
             }
             // 상세보기 처리

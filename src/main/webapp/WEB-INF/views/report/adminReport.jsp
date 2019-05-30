@@ -79,9 +79,9 @@
                 </div>
 			</div>
 			<!-- Product Catagories Area End -->
-			<c:import url="../common/adminFooter.jsp" />
 		</div>
 	</div>	
+	<c:import url="../common/adminFooter.jsp" />
 		<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 		<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 		<!-- Popper js -->
