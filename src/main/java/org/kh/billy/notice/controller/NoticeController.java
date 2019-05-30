@@ -125,6 +125,7 @@ public class NoticeController {
 		//관리자가 상세 조회시 조회수 증가를 시키지 않음
 		
 		Notice notice = noticeService.selectNotice(noticeNo);
+		System.out.println("공지사항 확인 : " + notice);
 		mv.addAttribute("notice", notice);
 		mv.addAttribute("select", select);
 		mv.addAttribute("keyword", keyword);
@@ -219,7 +220,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="noticeupdate.do", method=RequestMethod.POST)
-	public String updateNotice(Notice notice, @RequestParam(name="file")MultipartFile file, HttpServletRequest request) {
+	public String updateNotice(Notice notice, @RequestParam(name="file", defaultValue="")MultipartFile file, HttpServletRequest request) {
 		System.out.println(notice);
 		//System.out.println("이름 확인 : " + request.getParameter("file"));
 		System.out.println("기존 파일 확인 : " + notice.getNotice_originalfile()); 

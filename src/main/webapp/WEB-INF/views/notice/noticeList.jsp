@@ -244,6 +244,26 @@ form.example::after {
 		}
 	}
 </script>
+<script type="text/javascript">
+	
+/* var searchName = '';
+$('#keyword').val('${keyword}');
+if('${select}' == 'title'){
+	searchName = '제목'
+	$('#select').first().text('제목');
+	
+}
+if('${select}' == 'content'){
+	searchName = '내용'
+	$('#select').first().text('??');
+}
+if('${select}' == 'title_content'){
+	searchName = '제목+내용'
+}
+if('${select}' == null || '${select}' == ''){
+	console.log('검색 없음');
+} */
+</script>
 </body>
 
 </html>

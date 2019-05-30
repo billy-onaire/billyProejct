@@ -55,8 +55,8 @@
     <div class="main-content-wrapper d-flex clearfix">
 
         <!-- Product Details Area Start -->
-        <div class="single-product-area section-padding-100 clearfix">
         <c:import url="../common/adminNav.jsp" />
+        <div class="single-product-area section-padding-100 clearfix">
             <div class="container-fluid">
             
                 <div class="row">
@@ -78,10 +78,10 @@
                                 <h2>공지사항 글 쓰기</h2>
                                 <form method="post" action="insertnotice.do" id="noticefrm" enctype="multipart/form-data"  >
                                 <div class="form-group">
-                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." maxlength="20" required>
+                                    <input type="text" name="notice_title" id="notice_title" class="form-control" placeholder="제목을 입력하세요." maxlength="25" required>
                                 </div>
                                 <div class="custom-file mb-3">
-                                  <input type="file" class="custom-file-input" id="file" name="file">
+                                  <input type="file" class="custom-file-input" id="file" name="file"  onchange="checkFile(this)">
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                   <textarea name="notice_content" id="notice_content" rows="10" cols="100" ></textarea>
@@ -101,7 +101,7 @@
 
 
 
-    <c:import url="../common/footer.jsp" />
+    <c:import url="../common/adminFooter.jsp" />
 
         <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 
@@ -129,6 +129,16 @@
               var fileName = $(this).val().split("\\").pop();
               $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });                
+            
+            function checkFile(f){
+            	var file = f.files;
+	            if(file[0].size > 1024 * 1024 * 8){
+	                // 용량 초과시 경고후 해당 파일의 용량도 보여줌
+	                alert('8MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+	                
+	                $('#file').val('');
+	            }	
+            }
         </script>
         
         <!-- 네이버 스마트 에디터 -->

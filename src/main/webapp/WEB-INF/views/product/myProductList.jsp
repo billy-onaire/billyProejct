@@ -107,7 +107,7 @@
                                 <td>${list.product_quantity }</td>
                                 <td>${list.price }원</td>
                                 <td>${list.datecal}<%-- ${list.product_modifydate } --%></td>
-                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post" onsubmit="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">
+                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post" onsubmit="return deletecheck();">
                                 <button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;
                                 <button type="submit" class="btn btn-warning btn-sm" onclick="">삭제</button>
                                 </form></td></tr>
@@ -153,10 +153,14 @@
         
         <script src="/billy/resources/js/active.js"></script>
         <script type="text/javascript">
-        function datecal(){
-        	console.log('t');
-        	console.log('b');
+        function deletecheck(){
+			if(confirm("등록한 상품을 삭제 하시겠습니까?")) { 
+				alert('상품이 삭제되었습니다.');
+            } else {
+            	return false;
+            }
         }
+        
         </script>
         </body>
 
