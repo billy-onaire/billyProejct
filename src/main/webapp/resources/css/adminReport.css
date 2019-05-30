@@ -10,7 +10,7 @@
 
 #adminTable button {
     cursor: pointer;
-    background-color: bisque;
-    color: black;
+    color: white;
     font-size: 12px;
+    font-weight: 300;
 }

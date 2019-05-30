@@ -11,9 +11,9 @@
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 	<!-- Title  -->
-	<title>Billy - main</title>
+	<title>Billy - About us</title>
 	<!-- Favicon  -->
-	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+	<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
 		$(function () {
@@ -169,6 +169,7 @@
 		</div>
 		<!-- Product Catagories Area End -->
 	</div>
+	<c:import url="../common/footer.jsp" />
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
