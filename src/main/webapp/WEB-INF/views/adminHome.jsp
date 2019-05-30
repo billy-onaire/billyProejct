@@ -12,7 +12,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title  -->
-<title>Billy - adminMain</title>
+<title>Billy - 관리자메인</title>
 <style type="text/css">
 </style>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>

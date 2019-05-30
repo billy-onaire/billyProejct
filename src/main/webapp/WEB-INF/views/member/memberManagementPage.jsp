@@ -186,6 +186,6 @@ function optionValue(){
 		</div>
 </div>
 </div>
-<c:import url="../common/footer.jsp" />
+<c:import url="../common/adminFooter.jsp" />
 </body>
 </html>
