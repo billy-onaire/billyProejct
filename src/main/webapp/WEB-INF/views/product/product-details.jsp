@@ -384,8 +384,10 @@
                                     <div class="dropdown">
 										  <p onclick="myFunction()" class="dropbtn">대여자 : ${p.seller_id }</p>
 										  <div id="myDropdown" class="dropdown-content">
-										  	<!-- <a href="#" id="sentmms">쪽지쓰기</a>	 -->									    
+										  	<!-- <a href="#" id="sentmms">쪽지쓰기</a>	 -->	
+										  	<c:if test="${p.seller_id ne loginMember.user_id }">								    
 										    <a href="#" id="sent_mms" onclick="insertPopup();">쪽지쓰기</a>
+										    </c:if>
 										    <input type="hidden" id="mms_pno" value="${p.product_no }">									    
 										    <a href="#">${p.user_mobile }</a>										    	 
 										    <a href="#">${p.email }</a>
