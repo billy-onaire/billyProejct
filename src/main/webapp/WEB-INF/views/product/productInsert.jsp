@@ -12,10 +12,10 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>상품수정</title>
+    <title>상품등록</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -182,7 +182,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="10만원 이하 입력"  required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="1000~100,000원 입력"  required style="width: 50%">
                               </div>
                               
                                 <div class="row">
@@ -594,11 +594,12 @@
               return false;
             }
             
-            if($('#price').val() >100000){
-            	alert('상품은 10만원 이하만 가능합니다.');
+            if($('#price').val() >100000 ||  $('#price').val() < 1000){
+            	alert('금액은 1000~100000원까지 가능합니다.');
             	$('#price').focus();
             	return false;
             }
+            
             if($('#product_startdate').val() == null || $('#product_startdate').val() == ""){
                 alert('대여가능시작일 입력하세요');
                 $('#product_startdate').focus();

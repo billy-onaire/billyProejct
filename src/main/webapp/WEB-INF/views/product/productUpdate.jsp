@@ -15,7 +15,7 @@
     <title>상품수정</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -513,7 +513,7 @@
                     
                               <!-- <input data-toggle="datepicker" type="text"> -->
                               <br><br>
-                              <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품등록하기</button>
+                              <button type="submit" name="addtocart" value="5" class="btn amado-btn">상품수정하기</button>
                       </form>
                     </div>
                 </div>
