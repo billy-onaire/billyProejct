@@ -3,10 +3,7 @@ package org.kh.billy.payment.model.vo;
 import java.io.Serializable;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.sun.media.jfxmedia.logging.Logger;
 
 public class PaymentPageMaker implements Serializable {
 	private static final long serialVersionUID = -5429107361322228526L;

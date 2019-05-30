@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Order Details Table with Search Filter</title>
+<title>구매대기 페이지</title>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -52,16 +52,18 @@ $(document).ready(function(){
 $(function(){
 	setPageEntry();
 	setSearchType();
-	var sss = '${check}';
-	console.log('check : ' + sss);
+	
+	var perPageNum = '${ pageMaker.cri.perPageNum }';
+	$('.current').first().text(perPageNum);
+
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
 	console.log(showPrev);
-	if(showPrev)
+	if(showPrev != 'true')
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(showNext)
+	if(showNext != 'true')
 		$('#page-next').addClass('disabled');
 	
 	var nowPage = '${ pageMaker.cri.page }';
@@ -78,7 +80,7 @@ $(function(){
 	
 	var payNno = tr.find('td:nth-child(2)').html();
 	var seller = tr.find('td:nth-child(3)').html();
-	var goods = tr.find('td:nth-child(4)').html();
+	var goods = tr.find('td:nth-child(4) a').html();
 	var cost = tr.find('td:nth-child(6)').html();
 	
 	//결제확인창 띄우는 js
@@ -223,6 +225,7 @@ function setPageEntry(){
 	console.log(nowPage);
 	console.log(perPageNum);
 	$entries.val(perPageNum).prop('selected', true);
+	/* $entries.html(perPageNum); */
 	$entries.on('change', function(){
 		location.href = 'paymentWaiting.do?page=' + nowPage + '&perPageNum=' + $entries.val();
 	})//change
@@ -302,7 +305,7 @@ function closeWindow() {
                     	<th></th>
                         <th>no</th>
                         <th>판매자</th>
-						<th>제목</th>				
+						<th>상품명</th>				
                         <th>거래상태</th>
                         <th>가격</th>						
 						<th>결제하기</th>
@@ -314,7 +317,7 @@ function closeWindow() {
                 		<td>${ (status.index + 1) }</td>
                 		<td>${ payment.payment_no }</td>
                 		<td class='sellerId'>${ payment.seller_id }</td>
-                		<td class='productName-Je'>${ payment.product_name }</td>
+                		<td class='productName-Je'><a href="pdetail.do?pno=${payment.product_no}">${ payment.product_name }</a></td>
                 		<c:if test='${ payment.status eq 3 }'>
                 			<td><span class="status text-warning">&bull;</span> 구매중</td>
                 			<td class='goPriceJe'>${ payment.payment_price }₩</td>
@@ -338,7 +341,7 @@ function closeWindow() {
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
+                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(idx) }'>${ idx }</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
