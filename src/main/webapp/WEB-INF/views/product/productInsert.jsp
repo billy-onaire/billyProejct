@@ -176,8 +176,8 @@
                               <div class="form-group">
                                   <label for="usr">상품설명(최대 500글자 작성가능):</label><br>
                                   <textarea class="form-control" id="product_content" name="product_content" rows="10" style="resize: none; width:100%;" placeholder="최대 500글자 작성 가능합니다." required>
-거래 가능 지역 : 
-연락 수단 : 카톡, 문자, 전화X
+거래 가능 지역  :   
+연락 수단 : 카톡, 문자, 전화X   
 기타사항 : </textarea>          
                               </div>
                               <div class="form-group">

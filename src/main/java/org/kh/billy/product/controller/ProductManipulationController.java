@@ -79,13 +79,13 @@ public class ProductManipulationController {
 	public String productInsert(Product product, @RequestParam("sel1") String pcategory_name, @RequestParam("sel2") String sub_pcategory_name,
 			@RequestParam(name="files1") MultipartFile file1, @RequestParam(name="files2",defaultValue="") MultipartFile file2, @RequestParam(name="files3",defaultValue="") MultipartFile file3, @RequestParam(name="files4",defaultValue="") MultipartFile file4, 
 			HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException{
-		System.out.println(product);
 		
 		
 		ProductCategory productCategory = new ProductCategory();
 		ProductImg productImg = new ProductImg();
 		
-		
+		product.setProduct_content(product.getProduct_content().replace("\r\n", "<br>"));
+		System.out.println(product);
 		productCategory.setPcategory_name(pcategory_name);
 		productCategory.setSub_pcategory_name(sub_pcategory_name);
 		int pcategory_no = productCategoryService.selectProductCategory(productCategory);
@@ -216,6 +216,7 @@ public class ProductManipulationController {
 		ProductForUpdate product = pms.selectMyProduct(productNo);
 		product.setPcategory_name(product.getPcategory_name().toUpperCase());
 		//System.out.println("상품확인 : " + product);
+		product.setProduct_content(product.getProduct_content().replace("<br>", "\r\n" ));
 		mv.addObject("product",product);
 		mv.setViewName("product/productUpdate");
 		return mv;
@@ -232,6 +233,7 @@ public class ProductManipulationController {
 		//카테고리 이름을 그대로 사용하거나 새로 수정헀을 수 있기 때문에 @RequestParam으로 값을 넘겨 받습니다.
 		product.setPcategory_name(pcategory_name.toLowerCase());
 		product.setSub_pcategory_name(sub_pcategory_name);
+		product.setProduct_content(product.getProduct_content().replace("\r\n", "<br>"));
 		//System.out.println("수정할 상품 : " + product);
 		
 		//기존의 사진 유무, 이름을 확인합니다.
