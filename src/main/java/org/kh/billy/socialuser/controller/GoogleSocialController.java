@@ -100,9 +100,6 @@ public class GoogleSocialController {
            Base64 base64 = new Base64(true);
            String body = new String(base64.decode(tokens[1]));
            String[] bodys = body.split(",");
-           for(int i =0; i<bodys.length; i++) {
-              System.out.println("bodys["+i+"] : " + bodys[i]);
-           }
            
            String name = bodys[5].split(":")[1].substring(1, bodys[5].split(":")[1].length()-1);
            String profile = bodys[6].substring(10).substring(1, bodys[6].substring(10).length()-1);
@@ -144,7 +141,6 @@ public class GoogleSocialController {
     	   
     	   String userId = socialService.selectCheckId(uid);
     	   Member user = socialService.selectDeleteSocial(userId);
-	        System.out.println("구글 user : " + user);
 
     	   member.setUser_id(userId);
     	   gSession.setAttribute("loginMember", member);

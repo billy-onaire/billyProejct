@@ -8,7 +8,7 @@
 <title>Billy - 아이디/비밀번호 찾기</title>
 
 <!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
@@ -186,7 +186,7 @@
 		<div id="findPwd" class="container tab-pane fade">
 			<div class="form-group"><br>
 				<label for="puserId">UserId :</label> <input type="text"
-					class="form-control" id="puserId" placeholder="Enter username"
+					class="form-control" id="puserId" placeholder="Enter userId"
 					name="user_id" required>
 				<div class="valid-feedback">Valid.</div>
 				<div class="invalid-feedback">Please fill out this field.</div>

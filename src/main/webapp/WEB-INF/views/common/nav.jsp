@@ -137,7 +137,7 @@ filter: drop-shadow(0 1px 2px rgba(0,0,0,.5));
        			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>
        			<c:if test="${loginMember.social_type eq 'google'}">
-       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.sname, "+", " ") }님</span>
+       			<img id="google_img"  src="${loginMember.profile }">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>
        			</c:if>
        			<c:if test="${loginMember.social_type eq 'facebook'}">
        			<img id="facebook_img"  src="/billy/resources/img/social-img/fLogo.JPG">&nbsp; <span id="pname">${fn:replace(loginMember.user_name, "+", " ") }님</span>

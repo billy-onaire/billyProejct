@@ -14,14 +14,8 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Title  -->
 <title>Billy - adminMain</title>
 <style type="text/css">
-#deal-chart{
-	position: relative;
-	top: 100px;
-	left: 250px;
-}
 </style>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->
@@ -36,15 +30,24 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<div class="main-content-wrapper d-flex clearfix">
 		<c:import url="common/adminNav.jsp" />
 		<div class="amado_product_area section-padding-100">
+		<div class="text-center"><img src="${ pageContext.request.contextPath }/resources/img/core-img/admin.PNG" id="logoimg" width="300" height="200"></div>
 		<div class="container text-center">
-			<div><img src="${ pageContext.request.contextPath }/resources/img/core-img/admin.PNG" id="logoimg" width="300" height="200"></div>
-			<div id="login-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>방문자수</div>
-			<div id="signup-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>회원가입수</div>
-			<div id="deal-chart" style="height:300px; width: 550px; float:left;"><i class="fas fa-chart-bar" style="font-size:30px;"></i>거래량</div>
+		<div class="row align-items-start">
+			<div class="col " id="login-chart" style="height:300px; width: 300px; float:left;"></div>
+		</div>
+		<br><i class="fas fa-chart-bar" style="font-size:30px;"></i><span>방문자수</span>
+		<div class="row align-items-center">
+			<div class="col " id="signup-chart" style="height:300px; width: 300px; float:left;"></div>
+		</div>
+		<br><i class="fas fa-chart-bar" style="font-size:30px;"></i><span>회원가입수</span>
+		<div class="row align-items-end">	
+			<div class="col " id="deal-chart" style="height:300px; width: 300px; float:left;"></div>
+		</div>
+		<br><i class="fas fa-chart-bar" style="font-size:30px;"></i><span>거래량</span>
 		</div>
 		</div>
 	</div>
-	<c:import url="../common/adminFooter.jsp" />
+	<c:import url="./common/adminFooter.jsp" />
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
@@ -63,7 +66,6 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 			mm='0'+mm
 		}
 		today = yyyy+'/'+mm+'/'+dd;
-		console.log(today);
 		$.ajax({
 			url: "loginVisit.do",
 			data: {today : today},
@@ -73,12 +75,12 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 				var objStr = JSON.stringify(obj);
 				var jsonObj = JSON.parse(objStr);
 				for(var i in jsonObj.list){
-					console.log("json : " + jsonObj.list[i].date);
 					morrisData.push({'날짜':jsonObj.list[i].date,'방문자':jsonObj.list[i].count,'회원가입수':jsonObj.list[i].scount});					
 					morrisData2.push({'날짜':jsonObj.list[i].date,'회원가입수':jsonObj.list[i].scount});		
 					morrisData3.push({'날짜':jsonObj.list[i].date,'거래량':jsonObj.list[i].dcount});
 				}
 				new Morris.Bar({
+					barSizeRatio: 0.35,
 					element: 'login-chart',
 					data: 	morrisData,
 					  xkey: '날짜',
@@ -94,6 +96,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 				});
 				
 				new Morris.Bar({
+					barSizeRatio: 0.35,
 				 	element: 'signup-chart',
 					data: morrisData2,
 					  xkey: '날짜',
@@ -109,6 +112,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 				});
 				
 				new Morris.Bar({
+					barSizeRatio: 0.35,
 				 	element: 'deal-chart',
 					data: morrisData3,
 					  xkey: '날짜',
