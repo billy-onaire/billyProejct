@@ -25,12 +25,13 @@
 		from (select rownum rnum, p.* 
 			from (select * from payment 
 				join product using (product_no) join product_img using (img_no) 
-				where customer = #{userId} and status in (1,2) order by review_status asc, payment_no desc) p) 
+				where customer = #{userId} and status in (1,2) and delete_yn = 'N' order by review_status asc, payment_no desc) p) 
 		where rnum between #{start} and #{last}		
 	</select>
 	
 	<select id="selectTotalListReview" parameterType="String" resultType="int">
 		select count(*) from payment where customer = #{userId} and status in (1,2)
+		
 	</select>
 	
 	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">
