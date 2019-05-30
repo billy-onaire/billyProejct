@@ -16,7 +16,6 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <style type="text/css">
 </style>
 <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->

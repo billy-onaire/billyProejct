@@ -7,7 +7,7 @@
 <head>
 
 <!-- Favicon  -->
-<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+<link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 <!-- Core Style CSS -->
 <link rel="stylesheet" href="/billy/resources/css/core-style.css">
 <meta charset="UTF-8">
@@ -17,6 +17,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#changepwd").on("click", function(){
+		var checkPwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 		var userPwd = $("#userPwd").val();
 		var userPwd2 = $("#userPwd2").val();
 		var userId = $("#userId").val();
@@ -30,13 +31,18 @@ $(function(){
 			$("#userPwd2").focus();
 			return false;
 		}
-		console.log(userPwd+", " + userPwd2);
+		
+		if(!checkPwd.test(userPwd)){
+	          alert("숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다");
+	            $("#userPwd").focus();
+	            return false;
+	    }
+		
 		if(userPwd != userPwd2){
 			alert("비밀번호가 맞지않습니다.");
 			$("#userPwd").focus();
 			return false;
 		}else{
-			console.log("여기 들어와함");
 			$.ajax({
 				url: "changePwd.do",
 				data: {
