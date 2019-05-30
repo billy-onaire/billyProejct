@@ -57,9 +57,11 @@
 			//문자열을 json 객체로 바꿈
 			var jsonObj = JSON.parse(objStr);
 			
+			console.log(jsonObj);
+			
 			var outValues = $("#d3").html();
 			
-			if(jsonObj != null){
+			if(jsonObj.list.length != 0){
 			for(var i in jsonObj.list){
 				outValues += jsonObj.list[i].user_id + "<br>";
 			}		
