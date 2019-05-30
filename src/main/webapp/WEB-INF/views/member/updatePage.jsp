@@ -23,15 +23,26 @@ $(function(){
     var checkPwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/ // 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
        
- 
+    
+    $("#user_pwd").on('keydown', function(e){
+        var pwd = $('#user_pwd').val();
+        
+  	  if(pwd.length > 20){
+         e.preventDefault();
+         alert("비밀번호는 20자리 이하로 사용해야합니다");
+          $(this).val("");
+          $(this).focus();
+  	  } 
+		 });   
+    
+    
+    
        $("#user_pwd").on('blur', function(){
     	  if($(this).val() == '') return;
           var pwd = $('#user_pwd').val();
           var uid = $('#user_id').val();
      	  if(!checkPwd.test(pwd)){
           alert("숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다");
-            $(this).val("");
-            $(this).focus();
        	  }     
      	 if(pwd == uid){
              alert("아이디와 동일한 비밀번호는 지정할 수 없습니다.")
@@ -48,9 +59,7 @@ $(function(){
          var pwd2 = $('#user_pwd2').val();
          
          if(pwd != pwd2){
-            alert("입력하신 비밀번호와 다릅니다. ");
-            $(this).val("");
-            $(this).focus();            
+            alert("입력하신 비밀번호와 다릅니다. ");         
          }
          
       });
@@ -276,14 +285,17 @@ a {
 					<label for="user_pwd2"><b>비밀번호 재입력</b></label> 
 					<input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
+					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" 
+					value="${loginMember.user_mobile }" required> 
 					<label for="email"><b>이메일</b></label> 
-					<input type="text" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" required>
+					<input type="text" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" 
+					value="${loginMember.email }" required>
 			
 			
 				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" 
+				value="${loginMember.address }" required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>
 					</div>
@@ -307,7 +319,8 @@ a {
 				
 				<label for="location_area"><b>주거래가능 지역</b></label> 
 				<div class="input-group mb-4">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" required readonly>
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" 
+				value="${loginMember.location_area }" required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
 					</div>
@@ -364,8 +377,8 @@ a {
 				</script>
 				
 				<label for="my_introduce"><b>본인소개</b></label>
-				<textarea style="background-color: #f1f1f1" class="form-control"
-					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
+				<textarea style="background-color: #f1f1f1" class="form-control" 
+					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요.">${loginMember.my_introduce }</textarea>
 
 				<hr>			
 		</form>
@@ -400,14 +413,17 @@ a {
 					value="${loginMember.user_name }"required readonly> 
 					
 					<label for="user_mobile"><b>핸드폰 번호</b></label> 
-					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
+					<input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" 
+					value="${loginMember.user_mobile }"required> 
 					<label for="email"><b>이메일</b></label> 
-					<input type="text" placeholder="Enter Email" id="email" name="email" required>
+					<input type="text" placeholder="Enter Email" id="email" name="email" 
+					value="${loginMember.email }"required>
 			
 			
 				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" 
+				value="${loginMember.address }"required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>
 					</div>
@@ -431,7 +447,8 @@ a {
 				
 				<label for="location_area"><b>주거래가능 지역</b></label> 
 				<div class="input-group mb-4">	
-				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" required readonly>
+				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" 
+				value="${loginMember.location_area }" required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
 					</div>
@@ -488,7 +505,7 @@ a {
 				
 				<label for="my_introduce"><b>본인소개</b></label>
 				<textarea style="background-color: #f1f1f1" class="form-control"
-					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요."></textarea>
+					rows="5" name="my_introduce" id="my_introduce" placeholder="500자 이내로 작성하세요.">${loginMember.my_introduce }</textarea>
 
 				<hr>	 
 		</form>

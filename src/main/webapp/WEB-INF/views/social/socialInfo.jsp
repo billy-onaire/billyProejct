@@ -18,54 +18,65 @@
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	'<c:if test="${!empty loginMember}">'
-		alert("소셜로그인 시 필요입력정보를 등록하셔야합니다.");
-	'</c:if>'
-	var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+    var checkPwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/ // 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
- 	 
-	$("#user_id").on('keydown', function(e){
-   		var id = $('#user_id').val();
-   	 
-    	if(id.length > 12){
-    		e.preventDefault();
-    		alert("아이디는 4~12자의 영문 대소문자와 숫자로만 입력.");
+    var checkId = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    
+    $("#user_id").on('keydown', function(e){
+         var id = $('#user_id').val();
+       
+       if(id.length > 12){
+          e.preventDefault();
+          alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
             $(this).focus();
        } 
-    	
-   	}).on('blur', function(){
-   		if($(this).val() == '') return;
-   		var id = $('#user_id').val();
-   		if(id.length < 6){
-   			alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
+            
+       
+      }).on('blur', function(e){
+         if($(this).val() == '') return;
+         var id = $('#user_id').val();
+         if(id.length < 6){
+        	 $(".result").text("");
+            alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
-            $(this).focus();	
-   		}
-   	});
-	
-   	  $("#email").on('blur', function(e){
-   		 if($(this).val() == '') return;
-  		 	if(!getMail.test($("#email").val())){
-	        alert("이메일형식에 맞게 입력해주세요")
-	        $('#email').val("");
+            $(this).focus();  
+       			
+         }
+         
+         if (!(e.keyCode >=37 && e.keyCode<=40)) {	
+     		var v = $(this).val();
+     		$(this).val(v.replace(/[^a-z0-9]/gi,''));
+     	}
+
+   
+      });
+		
+       
+        $("#email").on('blur', function(e){
+          if($(this).val() == '') return;
+            if(!getMail.test($("#email").val())){
+           alert("이메일형식에 맞게 입력해주세요")
+           $('#email').val("");
             $('#email').focus();
-  		 	}  
- 	  	});
-   	  
-   	$("#my_introduce").on('keyup', function(e){
-    	if($(this).val() == '') return;	
-  	   var my = $("#my_introduce").val();
-  	   if(my.length > 500){
-  		   alert("500자 이내로 입력하세요");
-  		   $(this).val($(this).val().substring(0,500));
-  	   }
-  	   
-     });
-   	  
-   	  
-   	  
-});   	  
+            
+            }  
+         });
+         
+        $("#my_introduce").on('keyup', function(e){
+        	if($(this).val() == '') return;	
+      	   var my = $("#my_introduce").val();
+      	   if(my.length > 500){
+      		   alert("500자 이내로 입력하세요");
+      		   $(this).val($(this).val().substring(0,500));
+      	   }
+      	   
+         });
+        
+    
+});
+
+
 $(function(){
 
     $("#user_mobile").on('keydown', function(e){
@@ -116,34 +127,39 @@ $(function(){
 
 var idck = 0;
 $(function(){
-	$("#idck").click(function() {
-        console.log("에이작스 먹나요?");
+	 //idck 버튼을 클릭했을 때 
+    $("#idck").click(function() {
+    	$('#checkid').val($("#user_id").val());
+        
         $.ajax({
-        	url : "idCheck.do",
+           url : "idCheck.do",
             type : "post",
             dataType: "json",
             data : {userId : $("#user_id").val()},
             success : function(data) {
-            	console.log("ajax success 확인 : " + data.hashMap.cnt);
-            	
+               console.log("ajax success 확인 : " + data.hashMap.cnt);
+               
                 if (data.hashMap.cnt > 0) {
-                	
-                	$(".result").text("존재하는 아이디입니다.");
+                   
+                   $(".result").text("존재하는 아이디입니다.");
                     $(".result").attr("style", "color:#f00"); 
                     $("#user_id").val('');
                     $("#user_id").focus();
- 
-                	
+ 					idck = 0;
+ 					return false;
+                   
                 } else if($("#user_id").val() == null) {
-                	
-                	$(".result").text("아이디를 입력해주세요.");
+                   
+                   $(".result").text("아이디를 입력해주세요.");
                     $(".result").attr("style", "color:#00f"); 
-                	       	
+                             
                 } else {
-                	 
-                	$(".result").text("사용가능한 아이디입니다.");
+                    
+                   $(".result").text("사용가능한 아이디입니다.");
                     $(".result").attr("style", "color:#00f");
                     idck = 1;
+                    
+
                 }
             },
             error : function(error) {
@@ -151,11 +167,8 @@ $(function(){
                 alert("error : " + error);
             }
         });
-	});
-
-		$("#register").click(function() {
-	    
-		});	   	
+    });
+	 
     //처음에 아이디체크 버튼 누를때 느려서 만든거
         $.ajax({
         	url : "idCheck.do",
@@ -169,33 +182,8 @@ $(function(){
 });
 
 function goSubmit() {
-	
-	if(idck == 0){
-    	alert('아이디 중복체크를 해주세요');
-    	$("#user_id").focus();
-    	return false;
-    	
-	}
-	
-	if($('#user_name').val() == ''){
-		alert("이름을 입력해주세요");
-	}else if($('#user_mobile').val() == ''){
-		alert("핸드폰번호를 입력해주세요");
-	}else if($('#email').val() == ''){
-		alert("이메일을 입력해주세요");
-	}else if($('#address').val() == ''){
-		alert("주소를 입력해주세요");
-	}else if($('#location_area').val() == ''){
-		alert("거래 가능지역을 입력해주세요");
-	}else{
-	    $("#join").submit();
-	    alert("회원가입이 완료되었습니다")
-	}
-}
-
-function goSubmit() {
 	   
-	var loca = $('#location_area').val();
+	   var loca = $('#location_area').val();
 	   var findStr = "서울";	
 		
 	   if(idck == 0){
@@ -204,8 +192,12 @@ function goSubmit() {
 	       return false;
 	       
 	   }
-	   
-	   if($('#user_name').val() == ''){
+    
+	   if(idck = 0){
+		  alert("존재하는 아이디입니다. 아이디 체크 해주세요");	
+	   }else if($('#user_id').val() == ''){
+		  alert("아이디를 입력해주세요");
+	   }else if($('#user_name').val() == ''){
 	      alert("이름을 입력해주세요");
 	   }else if($('#user_pwd').val() == ''){
 	      alert("비밀번호를 입력해주세요");
@@ -220,12 +212,17 @@ function goSubmit() {
 	   }else if($('#location_area').val() == ''){
 	      alert("거래 가능지역을 입력해주세요");
 	   }else if(loca.indexOf(findStr) == -1){
-	   	  alert("서울에서만 서비스 이용 가능합니다")
-	   }else{
-	       $("#join").submit();
-	       alert("입력하신 이메일로 인증해야 로그인이 가능합니다")
+	   	  alert("주 거래가능 지역은 서울만 가능합니다")
+	   }else if($("#user_id").val() != $('#checkid').val()){
+		   alert("다시 아이디 중복체크를 해주세요.");
+		   $("#user_id").focus();
 	   }
-}
+	   else{
+	       $("#join").submit();
+	       alert("회원가입이 완료되었습니다")
+	   }
+	   
+	}
 
 
 </script>
@@ -318,6 +315,7 @@ a {
 		<div class="login-enroll-form clearfix">
 		<div class="container" >
 		<form action="sinsert.do" id="join" name = "join" method="post" enctype="multipart/form-data">
+		<input type="hidden" id="checkid">
 				<input type="hidden" name="social_code" value="${loginMember.social_code }">
 				<input type="hidden" name="social_type" value="${loginMember.social_type }">
 				<input type="hidden" name="profile" value="${loginMember.profile }">
@@ -331,7 +329,7 @@ a {
 					<div class="input-group mb-3">					
 					<input type="text" class="form-control" placeholder="Enter ID" id="user_id" name="user_id" required>
 						<div class="input-group-append">
-						<button id="idck" class="btn btn-dark btn-sm" type="submit">아이디 중복체크</button>
+						<button id="idck" class="btn btn-dark btn-sm" type="button">아이디 중복체크</button>
 						</div>
 					</div>
 					<p class="result"></p>

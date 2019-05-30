@@ -44,7 +44,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		</div>
 		</div>
 	</div>
-	<c:import url="common/footer.jsp" />
+	<c:import url="../common/adminFooter.jsp" />
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">

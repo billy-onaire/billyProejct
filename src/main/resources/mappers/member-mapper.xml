@@ -128,7 +128,7 @@
    
    <insert id = "insertMember" parameterType="Member">
 	  insert into tb_user values(#{user_id}, #{user_pwd}, 
-	  #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'n', #{address}, 
+	  #{user_mobile}, #{user_name}, #{email}, #{authkey}, 'y', #{address}, 
 	  #{my_introduce}, #{location_area}, sysdate, sysdate, default, default, default)
    </insert>
    
