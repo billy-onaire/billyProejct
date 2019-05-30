@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$('.cart_product_desc').on('click',function(){ 
 		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
 		//팝업창에 출력될 페이지 URL 
-		var popOption = "width=450, height=500, resizable=no, scrollbars=no, status=no;"; 
+		var popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no;"; 
 		//팝업창 옵션(optoin) 
 		window.open(popUrl,"",popOption); 
 		
@@ -82,7 +82,7 @@ $(document).ready(function(){
                                         <tr>
                                             <th>받은 사람/<br>보낸 사람</th>
                                             <th>상품명</th>                                            
-                                            <th style="width: 200px">제목</th>
+                                            <th style="width: 300px">제목</th>
                                             <th>받은날짜</th>
                                             <th>복구/<br>삭제</th>         
                                         </tr>

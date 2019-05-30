@@ -21,8 +21,7 @@
   background-color: #fab336; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
-  
+  padding: 13px 28px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

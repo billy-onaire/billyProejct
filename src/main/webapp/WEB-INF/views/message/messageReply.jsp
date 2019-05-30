@@ -20,11 +20,16 @@
 
 function checkContent(){
 	var mms_content = $("#mms_content").val();
-	if(!(mms_content.length >= 1)){
-		alert("반드시 내용을 입력 해주세요.");
+	if(!(mms_content.length >= 10)){
+		alert("문의 내용을 10자 이상 입력 해주세요.");
 		$("#mms_content").select();
 		return false;
 	}
+    if($('#mms_title').val().length < 4 ){
+        alert('제목을 반드시 입력 해주세요.');
+        $('#mms_title').focus();
+        return false;
+    }
 }
 
  function popupClose(form) {
@@ -58,7 +63,7 @@ function checkContent(){
 								name="mms_title" required>
 							<label for="content">내용 : </label> <textarea cols="70" rows="6"
 								class="form-control" placeholder="반드시 작성해주세요." id="mms_content"
-								name="mms_content" required></textarea>
+								name="mms_content" maxlength="500" required></textarea>
 						</div>
 						
 						<input type="submit" class="btn btn-warning btn-block"
@@ -70,7 +75,6 @@ function checkContent(){
 			</div>
 		</div>
 	</div>
-	
 	
 	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>

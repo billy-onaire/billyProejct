@@ -149,7 +149,6 @@ public class MessageController {
 		cri.setRecv_id(userid);
 		
 		logger.info("deletedMessage : " + count + "ea");
-		System.out.println("삭제된 메세지 글 수 : " + count);
 		
 		ArrayList<Message> list = messageService.selectDelList(cri);
 		

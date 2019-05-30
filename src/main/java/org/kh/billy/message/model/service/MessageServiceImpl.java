@@ -52,12 +52,10 @@ public class MessageServiceImpl implements MessageService{
 		
 		int result = 0;
 		if(m.getRecv_id().equals(userid)) {
-			System.out.println("받은 사람 : " + m.getRecv_id());
-			System.out.println("로그인 유저 : " + userid);
+
 			result = messageDao.deleteFinalRecv(mybatisSession, mms_no);
 		}else if(m.getSent_id().equals(userid)) {
-			System.out.println("보낸 사람 : " + m.getSent_id());
-			System.out.println("로그인 유저 : " + userid);
+
 			result = messageDao.deleteFinalSent(mybatisSession, mms_no);
 		}
 		return result;
@@ -85,7 +83,6 @@ public class MessageServiceImpl implements MessageService{
 	
 	@Override
 	public int updateDelSentMessage(int mms_no) {
-		System.out.println("출력확인");
 		return messageDao.updateDelSentMessage(mybatisSession, mms_no);
 	}
 
@@ -94,12 +91,8 @@ public class MessageServiceImpl implements MessageService{
 		MessagePname m = messageDao.selectDetailMessage(mybatisSession, mms_no);
 		int result = 0;
 		if(m.getRecv_id().equals(userid)) {
-			System.out.println("받은 사람 : " + m.getRecv_id());
-			System.out.println("로그인 유저 : " + userid);
 			result = messageDao.updateOriginRecv(mybatisSession, mms_no);
 		}else if(m.getSent_id().equals(userid)) {
-			System.out.println("보낸 사람 : " + m.getSent_id());
-			System.out.println("로그인 유저 : " + userid);
 			result = messageDao.updateOriginSent(mybatisSession, mms_no);
 		}
 		return result;

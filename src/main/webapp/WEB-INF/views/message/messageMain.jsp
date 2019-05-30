@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$('.cart_product_desc').on('click',function(){ 
 		var popUrl = "messageDetail.do?mms_no="+$(this).attr('id');	
 		//팝업창에 출력될 페이지 URL 
-		var popOption = "width=450, height=500, resizable=no, scrollbars=no, status=no;"; 
+		var popOption = "width=500, height=500, resizable=no, scrollbars=no, status=no;"; 
 		//팝업창 옵션(optoin) 
 		window.open(popUrl,"",popOption); 
 		
@@ -92,7 +92,7 @@ $(document).ready(function(){
                                         <tr>
                                             <th>보낸 사람</th>
                                             <th>상품명</th>
-                                            <th>제목</th>
+                                            <th style="width: 300px">제목</th>
                                             <th>발송일</th>
                                             <th>읽음 여부</th>
                                         </tr>
@@ -104,10 +104,10 @@ $(document).ready(function(){
                                             <td class="cart_product_img">
                                                ${mms.sent_id }
                                             </td>
-                                            <td class="cart_product_img" style="cursor:pointer;">
+                                            <td class="cart_product_img" >
                                             	${mms.product_name }
                                             </td>
-                                            <td class="cart_product_desc" id="${mms.mms_no }" >
+                                            <td class="cart_product_desc" id="${mms.mms_no }" style="cursor:pointer;">
                                                 ${mms.mms_title }
                                             </td>
                                             <td class="price">
