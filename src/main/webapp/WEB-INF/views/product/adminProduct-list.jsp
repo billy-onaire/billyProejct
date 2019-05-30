@@ -206,7 +206,7 @@
     </div>
  
     <!-- ##### Main Content Wrapper End ##### -->
-	<c:import url="../common/footer.jsp" />
+	<c:import url="../common/adminFooter.jsp" />
    
 
 

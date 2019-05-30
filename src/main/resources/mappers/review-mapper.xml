@@ -31,6 +31,7 @@
 	
 	<select id="selectTotalListReview" parameterType="String" resultType="int">
 		select count(*) from payment where customer = #{userId} and status in (1,2)
+		
 	</select>
 	
 	<select id="selectPdetailReview" parameterType="ReviewPagingFront" resultType="Review">

@@ -33,6 +33,9 @@
 	<!-- 쪽지 보내기용 -->
 	<script src="/billy/resources/js/messageList.js"></script>
 	
+	<!-- 별찍기 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+	
 	<script type="text/javascript" src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript">
 	//쪽지 보낼 때, sent_id & recv_id & pno & product_name 넘긴다
@@ -417,7 +420,7 @@
 										<div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
 							        	<div class="ratings">
                                         <i class="fa fa-star" aria-hidden="true"></i>                                            
-                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                        <i class="fas fa-star-half" aria-hidden="true"></i>
                                     	</div>	${point }
                                     	</div>
 									</c:if>
@@ -434,7 +437,7 @@
 								        <div class="ratings">
 	                                        <i class="fa fa-star" aria-hidden="true"></i>
 	                                        <i class="fa fa-star" aria-hidden="true"></i>    
-	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+	                                        <i class="fas fa-star-half" aria-hidden="true"></i>
 	                                    </div>	${point }
 	                                    </div> 
 									</c:if>
@@ -453,7 +456,7 @@
 	                                        <i class="fa fa-star" aria-hidden="true"></i>
 	                                        <i class="fa fa-star" aria-hidden="true"></i>    
 	                                        <i class="fa fa-star" aria-hidden="true"></i>
-	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>	                                        
+	                                        <i class="fas fa-star-half" aria-hidden="true"></i>	                                        
 	                                    </div>	${point }
 	                                    </div>	
 									</c:if>
@@ -474,7 +477,7 @@
 	                                        <i class="fa fa-star" aria-hidden="true"></i>    
 	                                        <i class="fa fa-star" aria-hidden="true"></i>
 	                                        <i class="fa fa-star" aria-hidden="true"></i>
-	                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>	                                     	                                       
+	                                        <i class="fas fa-star-half" aria-hidden="true"></i>	                                     	                                       
 	                                    </div>	${point }
 	                                    </div>	
 									</c:if>
