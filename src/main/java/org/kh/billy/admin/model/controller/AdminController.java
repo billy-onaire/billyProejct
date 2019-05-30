@@ -26,6 +26,12 @@ public class AdminController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPE; 
 	
+	@RequestMapping(value="amain.do")
+	public String adminMainPage() {
+		return "adminHome";
+	}
+	
+	
 	@RequestMapping(value="alogin.do", method=RequestMethod.GET)
 	public String adminLoginPage(Admin admin) {
 		if(aService.selectCheckId() > 0) {

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-<title>footer</title>
+<title>adminFooter</title>
 </head>
 <body>
 <!-- ##### Footer Area Start ##### -->
@@ -17,7 +17,7 @@
                     <div class="single_widget_area">
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
-                            <a href="main.do"><img src="/billy/resources/img/core-img/billyGod.png" alt="" width="100" height="100"></a>
+                            <a href="amain.do"><img src="/billy/resources/img/core-img/billyGod.png" alt="" width="100" height="100"></a>
                         </div>
                         <!-- Copywrite Text -->
                         <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -35,16 +35,16 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 <div class="collapse navbar-collapse" id="footerNavContent">
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="main.do">Home</a>
+                                            <a class="nav-link" href="amain.do">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="noticelist.do">Notice</a>
+                                            <a class="nav-link" href="adminnoticelist.do">Notice</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="showlist.do">Product</a>
+                                            <a class="nav-link" href="adminProductList.do">Product</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="aboutUs.do">About us</a>
+                                            <a class="nav-link" href="main.do">billyHome</a>
                                         </li>
                                     </ul>
                                 </div>

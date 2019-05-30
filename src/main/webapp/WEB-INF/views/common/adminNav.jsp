@@ -8,6 +8,7 @@
 <title>Billy - 관리자메뉴</title>
 <!-- Favicon  -->
 <link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <script type="text/javascript" src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
@@ -84,7 +85,7 @@
 			</nav>
 			<!-- Button Group -->
 			<div class="amado-btn-group mt-30 mb-100">
-				<a href="showlist.do"><img src="/billy/resources/img/core-img/chatting.png" class="chat"></a>
+				<a href="amain.do"><img src="/billy/resources/img/core-img/chatting.png" class="chat"></a>
 				<!-- <a href="#" class="btn amado-btn active">Add a Product</a> -->
 			</div>
 		</header>
