@@ -92,7 +92,12 @@ form.example::after {
 .pagination {
    justify-content: center;
 }
+#noticelink {
+	cursor: pointer;
+}
  </style>
+ 
+ 
 </head>
 
 <body>
@@ -157,8 +162,9 @@ form.example::after {
             <!-- <h2>내용이 div</h2> -->
             <ul class="list-group">
                 <c:forEach items="${list }" var="list">
-                <li class="list-group-item list-group-item-action" style="height: 45px;  ">
-                    <div class="notice-title" style="width: 70%; float: left;"><a href="noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;">${list.notice_title }</a></div>
+                <li class="list-group-item list-group-item-action"  id="noticelink" style="height: 45px;" onclick="location.href='noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}'">
+                <%-- <a href="noticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;"> --%>
+                    <div class="notice-title" style="width: 70%; float: left;">${list.notice_title }</div>
                     <div class="notice-eye" style="width: 15%; float: left;">
                         <div>
                             <i class="material-icons" >
@@ -181,7 +187,8 @@ form.example::after {
                             </div>
                             <span style="font-size: 10px;">${list.notice_date }</span>
                         </div>
-                    </div>                                    
+                    </div>   
+                    <!-- </a> -->                                 
                 </li>
             </c:forEach>            
         </ul>
@@ -198,10 +205,7 @@ form.example::after {
                             	</c:if>
                         </ul>
                     </div>
-                        
-		
                 </div>
-              
                     <br>                          
                 </div> 
             </div>
@@ -239,6 +243,26 @@ form.example::after {
 			return false;
 		}
 	}
+</script>
+<script type="text/javascript">
+	
+/* var searchName = '';
+$('#keyword').val('${keyword}');
+if('${select}' == 'title'){
+	searchName = '제목'
+	$('#select').first().text('제목');
+	
+}
+if('${select}' == 'content'){
+	searchName = '내용'
+	$('#select').first().text('??');
+}
+if('${select}' == 'title_content'){
+	searchName = '제목+내용'
+}
+if('${select}' == null || '${select}' == ''){
+	console.log('검색 없음');
+} */
 </script>
 </body>
 

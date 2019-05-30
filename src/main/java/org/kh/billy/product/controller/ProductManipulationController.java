@@ -3,6 +3,7 @@ package org.kh.billy.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -65,6 +66,10 @@ public class ProductManipulationController {
 		
 		ArrayList<Product> list = pms.selectProductList(cri);
 		//System.out.println("리스트 확인 : " + list);
+		for(Product p: list) {
+			System.out.println(p);
+			p.setDatecal(String.valueOf(p.getProduct_startdate()).substring(5, 10) +"~"+ String.valueOf(p.getProduct_enddate()).substring(5, 10));
+		}
 		mv.addAttribute("list", list);
 		mv.addAttribute("pageMaker", pageMaker);
 		return "product/myProductList";
@@ -72,13 +77,66 @@ public class ProductManipulationController {
 	
 	@RequestMapping(value="productinsert.do", method=RequestMethod.POST)
 	public String productInsert(Product product, @RequestParam("sel1") String pcategory_name, @RequestParam("sel2") String sub_pcategory_name,
-				@RequestParam(name="fileUpload[]") MultipartFile[] file/*String[] args*/, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException{
+			@RequestParam(name="files1") MultipartFile file1, @RequestParam(name="files2",defaultValue="") MultipartFile file2, @RequestParam(name="files3",defaultValue="") MultipartFile file3, @RequestParam(name="files4",defaultValue="") MultipartFile file4, 
+			HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException{
 		System.out.println(product);
-		/*System.out.println(args.length);
-		for(int i=0; i<args.length;i++) {
-			System.out.println(args[i]);
-		}*/
-		//System.out.println("받아온 가격정보 확인 : ");
+		
+		
+		ProductCategory productCategory = new ProductCategory();
+		ProductImg productImg = new ProductImg();
+		
+		
+		productCategory.setPcategory_name(pcategory_name);
+		productCategory.setSub_pcategory_name(sub_pcategory_name);
+		int pcategory_no = productCategoryService.selectProductCategory(productCategory);
+		//System.out.println("카테고리 번호 확인 : " + pcategory_no);
+		
+		product.setCategory_code(pcategory_no);
+		String savePath = request.getSession().getServletContext().getRealPath("resources/files/product/");
+
+		String fileRename = String.valueOf(System.nanoTime()) + "." + file1.getOriginalFilename().substring(file1.getOriginalFilename().lastIndexOf(".") + 1);
+		file1.transferTo(new File(savePath +  fileRename));
+		productImg.setFirst_img(fileRename);
+		
+		if(!file2.getOriginalFilename().equals("")) {
+			fileRename = String.valueOf(System.nanoTime()) + "." + file2.getOriginalFilename().substring(file2.getOriginalFilename().lastIndexOf(".") + 1);
+			file2.transferTo(new File(savePath +  fileRename));
+			productImg.setSecond_img(fileRename);
+		}
+		if(!file3.getOriginalFilename().equals("")) {
+			fileRename = String.valueOf(System.nanoTime()) + "." + file3.getOriginalFilename().substring(file3.getOriginalFilename().lastIndexOf(".") + 1);
+			file3.transferTo(new File(savePath +  fileRename));
+			productImg.setThird_img(fileRename);
+		}
+		if(!file4.getOriginalFilename().equals("")) {
+			fileRename = String.valueOf(System.nanoTime()) + "." + file4.getOriginalFilename().substring(file4.getOriginalFilename().lastIndexOf(".") + 1);
+			file4.transferTo(new File(savePath +  fileRename));
+			productImg.setFourth_img(fileRename);
+		}
+		
+			/*String fileRename = String.valueOf(System.nanoTime()) + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1);
+				productImg.setFirst_img(fileRename);
+				productImg.setSecond_img(fileRename);
+				productImg.setThird_img(fileRename);
+				productImg.setFourth_img(fileRename);
+			
+			String savePath = request.getSession().getServletContext().getRealPath("resources/files/product/");
+			file[i].transferTo(new File(savePath +  fileRename));*/
+		
+		productImgService.insertProductImg(productImg);//result 값이 1보다 작을 때 처리 해야 함
+		int img_no = productImgService.selectProductImgNo(productImg.getFirst_img());
+		product.setImg_no(img_no);
+		product.setSeller_id(((Member) session.getAttribute("loginMember")).getUser_id());
+		
+		pms.insertProduct(product);
+		return "redirect:main.do";
+	}
+	
+	/*@RequestMapping(value="productinsert.do", method=RequestMethod.POST)
+	public String productInsert(Product product, @RequestParam("sel1") String pcategory_name, @RequestParam("sel2") String sub_pcategory_name,
+				@RequestParam(name="fileUpload[]") MultipartFile[] fileString[] args, HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException{
+		System.out.println(product);
+		
 		
 		ProductCategory productCategory = new ProductCategory();
 		ProductImg productImg = new ProductImg();
@@ -90,15 +148,12 @@ public class ProductManipulationController {
 		//System.out.println("카테고리 번호 확인 : " + pcategory_no);
 		product.setCategory_code(pcategory_no);
 		int index = file.length;
-		/*productInput.jsp 에 사진업로드하는 네모칸만큼 갯수를 잡아주기 때문에 
-		 * file.length로 for문을 돌릴 경우 파일이 하나 더 생김. 
-		 * 그러므로 사진 갯수가 3개 이하일 경우 for문이 한번 수행 못하게 해야 함*/
+		//productInput.jsp 에 사진업로드하는 네모칸만큼 갯수를 잡아주기 때문에 
+		//file.length로 for문을 돌릴 경우 파일이 하나 더 생김. 
+		//그러므로 사진 갯수가 3개 이하일 경우 for문이 한번 수행 못하게 해야 함
 		if(file.length < 4)	
 			index = file.length - 1;
 		for(int i=0; i<index; i++) {
-			//System.out.println("사진 갯수 : " + index);
-			//System.out.println(file[i].getOriginalFilename());
-			//System.out.println(System.nanoTime());
 			String fileRename = String.valueOf(System.nanoTime()) + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1);
 			if(i == 0)
 				productImg.setFirst_img(fileRename);
@@ -111,9 +166,9 @@ public class ProductManipulationController {
 			
 			String savePath = request.getSession().getServletContext().getRealPath("resources/files/product/");
 			file[i].transferTo(new File(savePath +  fileRename));
-			/* + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1)*/
-			/*String savePath = request.getSession().getServletContext().getRealPath("/resources/files/test");
-			file[i].transferTo(new File(savePath + "\\" + file[i].getOriginalFilename()));*/
+			// + "." + file[i].getOriginalFilename().substring(file[i].getOriginalFilename().lastIndexOf(".") + 1)
+			//String savePath = request.getSession().getServletContext().getRealPath("/resources/files/test");
+			//file[i].transferTo(new File(savePath + "\\" + file[i].getOriginalFilename()));
 		}
 		//System.out.println(productImg);
 		productImgService.insertProductImg(productImg);//result 값이 1보다 작을 때 처리 해야 함
@@ -121,29 +176,27 @@ public class ProductManipulationController {
 		product.setImg_no(img_no);
 		product.setSeller_id(((Member) session.getAttribute("loginMember")).getUser_id());
 		
-		//System.out.println("이미지 키값 확인 : " + img_no);
-		//System.out.println("입력 전 상품정보 확인 : "+product);
 		pms.insertProduct(product);
-		/*if(productInsertService.insertProduct(product) > 0)
-			System.out.println("상품등록 성공");
-		else
-			System.out.println("상품등록 실패");*/
+		//if(productInsertService.insertProduct(product) > 0)
+//			System.out.println("상품등록 성공");
+	//	else
+		//	System.out.println("상품등록 실패");
 		return "redirect:main.do";
 		//파일명 rename 처리 진행
 		//새로운 파일명 만들기 : "년월일시분초.확장자"
-		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date currentTime = new Date(System.currentTimeMillis());
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		//Date currentTime = new Date(System.currentTimeMillis());
 		
-		String renameFileName = sdf.format(currentTime) + "." + originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		//String renameFileName = sdf.format(currentTime) + "." + originalFileName.substring(originalFileName.lastIndexOf(".")+1);
 		//현재시간.확장자
 		
 		//System.out.println(renameFileName);
 		
 		//java.io.File의 renameTo() 사용함
-		File originFile = new File(savePath+"\\"+originalFileName);
-		File renameFile = new File(savePath+"\\"+renameFileName);*/
+		//File originFile = new File(savePath+"\\"+originalFileName);
+		//File renameFile = new File(savePath+"\\"+renameFileName);
 		
-	}
+	}*/
 	
 	/*@RequestMapping(value="productinput.do",method=RequestMethod.POST)
 	public String productInput(Product product, @RequestParam(name="fileUpload[]") List<MultipartFile> file) throws IllegalStateException, IOException{

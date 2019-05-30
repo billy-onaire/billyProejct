@@ -148,7 +148,7 @@
 
 
 
-    <c:import url="../common/footer.jsp" />
+    <c:import url="../common/adminFooter.jsp" />
 
         <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 
