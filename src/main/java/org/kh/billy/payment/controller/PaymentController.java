@@ -6,8 +6,6 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +34,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

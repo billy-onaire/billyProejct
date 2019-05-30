@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Order Details Table with Search Filter</title>
+<title>판매대기 페이지</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,14 +28,18 @@ $(document).ready(function(){
 $(function(){
 	setPageEntry();
 	setSearchType();
+	
+	var perPageNum = '${ pageMaker.cri.perPageNum }'
+	$('.current').first().text(perPageNum);
+	
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
 	console.log(showPrev);
-	if(showPrev)
+	if(showPrev != 'true')
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(showNext)
+	if(showNext != 'true')
 		$('#page-next').addClass('disabled');
 	
 	var nowPage = '${ pageMaker.cri.page }';
@@ -55,46 +59,54 @@ $(function(){
 	$('.ok-je').click(function() {
 	    console.log(".ok-je click function is started");
 		var td = $(this).closest('tr').find('td:nth-child(2)');
-		
+		var icon = $(this).closest('tr').find('td:nth-child(7)');
+		console.log("icon : " + icon.html());
 		console.log("paymentNo : " + td.html());
-		var job = new Object();
-		job.confirmPay = 'ok';
-		job.paymentNo = td.html();
-		$.ajax({
-			url: 'confimPay.do',
-			type: 'post',
-			cache: 'false',
-			data: JSON.stringify(job),
-			contentType: 'application/json; charset=utf-8',
-			success: function(result) {
-				alert('결제를 수락하였습니다.');
-				$('.ok-je').html('');
-				$('.cancel-je').html('');
-				console.log('success');
-			}
-		})//ajax
+		
+		var re = confirm('수락하시겠습니까?');
+		if(re) {
+			var job = new Object();
+			job.confirmPay = 'ok';
+			job.paymentNo = td.html();
+			$.ajax({
+				url: 'confimPay.do',
+				type: 'post',
+				cache: 'false',
+				data: JSON.stringify(job),
+				contentType: 'application/json; charset=utf-8',
+				success: function(result) {
+					alert('결제를 수락하였습니다.');
+					$(icon).html('');
+					console.log('success');
+				}
+			})//ajax
+		}//if문
 	});//click
+	
 	//판매거부
 	$('.cancel-je').click(function() {
 		console.log(".cancel-je click function is started");
 		var td =  $(this).closest('tr').find('td:nth-child(2)');
+		var icon = $(this).closest('tr').find('td:nth-child(7)');
 		
-		var job = new Object();
-		job.confirmPay = 'cancel';
-		job.paymentNo = td.html();
-		$.ajax({
-			url: 'confimPay.do',
-			type: 'post',
-			cache: 'false',
-			data: JSON.stringify(job),
-			contentType: 'application/json; charset=utf-8',
-			success: function(result) {
-				alert('취소가 완료되었습니다');
-				$('.ok-je').html('');
-				$('.cancel-je').html('');
-				console.log('success');
-			}
-		})//ajax
+		var re = confirm('취소하시겠습니까?');
+		if(re) {
+			var job = new Object();
+			job.confirmPay = 'cancel';
+			job.paymentNo = td.html();
+			$.ajax({
+				url: 'confimPay.do',
+				type: 'post',
+				cache: 'false',
+				data: JSON.stringify(job),
+				contentType: 'application/json; charset=utf-8',
+				success: function(result) {
+					alert('취소가 완료되었습니다');
+					$(icon).html('');
+					console.log('success');
+				}
+			})//ajax
+		}
 	});//click
 });//ready
 function setPageEntry(){
@@ -105,7 +117,7 @@ function setPageEntry(){
 	console.log(perPageNum);
 	$entries.val(perPageNum).prop('selected', true);
 	$entries.on('change', function(){
-		location.href = 'paymentSearch.do?page=' + nowPage + '&perPageNum=' + $entries.val();
+		location.href = 'chargeWating.do?page=' + nowPage + '&perPageNum=' + $entries.val();
 	})//change
 }// paging function
 function setSearchType() {
@@ -118,7 +130,7 @@ function setSearchType() {
 		var $inputVal = $('#searchType option:selected').val();
 		$keyword.val($inputVal);
 		console.log($('#keywordInput').val());
-		var url = 'paymentSearch.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
+		var url = 'chargeWating.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()
 		+ '&keyword=' + encodeURIComponent($keyword.val());
 		location.href = url;
@@ -180,7 +192,7 @@ function setSearchType() {
                     	<th></th>
                         <th>no</th>
                         <th>구매자</th>
-						<th>제목</th>				
+						<th>상품명</th>				
                         <th>거래상태</th>
                         <th>가격</th>						
 						<th>수락/취소</th>
@@ -215,16 +227,16 @@ function setSearchType() {
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
                             		<li class='page-item' id='page-prev'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i></a>
+                            			<a class='page-link' href='chargeWating.do${ pageMaker.makeSearchUri(pageMaker.startPage-1) }' ><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i></a>
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
+                            			<a class='page-link' href='chargeWating.do${ pageMaker.makeSearchUri(idx) }'>${ idx }</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
                             		<li class='page-item' id='page-next'>
-                            			<a class='page-link' href='paymentWaiting.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i></a>
+                            			<a class='page-link' href='chargeWating.do${ pageMaker.makeSearchUri(pageMaker.endPage+1) }'><i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i></a>
                             		</li>
                             	</c:if>
                             </ul>

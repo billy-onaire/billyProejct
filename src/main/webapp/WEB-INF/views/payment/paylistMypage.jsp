@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap Order Details Table with Search Filter</title>
+<title>구매완료 및 취소 페이지</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,14 +28,18 @@ $(document).ready(function(){
 $(function(){
 	setPageEntry();
 	setSearchType();
+	
+	var perPageNum = '${ pageMaker.cri.perPageNum }'
+	$('.current').first().text(perPageNum);
+	
 	//prev btn
 	var showPrev = '${ pageMaker.prev }';
 	console.log(showPrev);
-	if(showPrev)
+	if(showPrev != 'true')
 		$('#page-prev').addClass('disabled');
 	//next btn
 	var showNext = '${ pageMaker.next }';
-	if(showNext)
+	if(showNext != 'true')
 		$('#page-next').addClass('disabled');
 	
 	var nowPage = '${ pageMaker.cri.page }';
@@ -139,7 +143,7 @@ function setSearchType() {
                     	<th></th>
                         <th>no</th>
                         <th>판매자</th>
-						<th>제목</th>				
+						<th>상품명</th>				
                         <th>거래상태</th>
                         <th>가격</th>						
 						<th>영수증</th>
@@ -175,7 +179,7 @@ function setSearchType() {
                             		</li>
                             	<c:forEach begin='${ pageMaker.startPage }' end='${ pageMaker.endPage }' var='idx'>
                             		<li class='page-item' id='page${ idx }'>
-                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(idx) }'>${ idx }.</a>
+                            			<a class='page-link' href='paymentSearch.do${ pageMaker.makeSearchUri(idx) }'>${ idx }</a>
                             		</li>
                             	</c:forEach>
                             	<c:if test='${ pageMaker.next && pageMaker.endPage > 0 }'>
