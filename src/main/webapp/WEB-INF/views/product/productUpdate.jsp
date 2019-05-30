@@ -79,6 +79,10 @@
       /*.form-control{
         background-color: #f5f7fa;
       }*/
+      
+      #productdiv{
+      background-color:#FAFAFA;
+      }
     </style>
     
     
@@ -118,7 +122,7 @@
 
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12" id="productdiv">
                      <div class="single_product_desc">
                         <!-- Product Meta Data -->
                         <div class="product-meta-data">
@@ -339,6 +343,15 @@
 									
 									<br><br>
 									<script type="text/javascript">
+                    /*$("input:file").on("change", function() {
+                      var oFile = $(this)[0].files;
+                      if(oFile.length < 1){
+                        console.log('cancel was pressed');
+                      }
+                      else {
+                        console.log(oFile[0].name);
+                      }
+                    });*/
 									function previewImage(f){
                     /*console.log('황니용1 : ' + f);
                     console.log('황니용2 : ' + f.files);
@@ -350,6 +363,14 @@
                     console.log('황니용7 : ' + f.name.split('s')[1]);*/
 										var file = f.files;
 
+                    if(file.length < 1){
+                      //파일이 없을 경우 즉 input file을 클릭하고 취소할 경우 미리보기 삭제
+                      console.log('cancel was pressed');
+                      document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
+                    }else{
+                      console.log('file.name');
+                    }
+
 										// 확장자 체크
 										if(!/\.(jpg|jpeg|png)$/i.test(file[0].name)){
 											alert('jpg, jpeg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
@@ -359,9 +380,9 @@
 
 											document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
 
-										}else if(file[0].size > 1024 * 1024 * 2){
+										}else if(file[0].size > 1024 * 1024 * 5){
                         // 용량 초과시 경고후 해당 파일의 용량도 보여줌
-                        alert('2MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+                        alert('5MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
                         document.getElementById('imgbackground'+f.name.split('s')[1]).innerHTML = '<img class="imgbackground" src="/billy/resources/img/productinput/placeholder.png">';
                     }
 										else {
@@ -382,7 +403,7 @@
                       /*f.value(file[0].name);*/
 
                       /*console.log('파일 확인 용2 :' + $(f).val());*/
-                      
+                      console.log('진짜로 확인용 ');
 
 										}
 									}
@@ -567,43 +588,50 @@
               // 시작일(fromDate)은 종료일(toDate) 이후 날짜 선택 불가
               // 종료일(toDate)은 시작일(fromDate) 이전 날짜 선택 불가
 
-              //시작일.
-              $('#product_startdate').datepicker({
-                showOn: "both",           // 달력을 표시할 타이밍 (both: focus or button)
-                buttonImage: "/billy/resources/img/productinput/calendar.png", // 버튼 이미지
-                buttonImageOnly : true,       // 버튼 이미지만 표시할지 여부
-                buttonText: "날짜선택",       // 버튼의 대체 텍스트
-                dateFormat: "yy-mm-dd",       // 날짜의 형식
-                format: 'yyyy-mm-dd',
-                minDate :0,
-                maxDate :29,
-                changeMonth: true,          // 월을 이동하기 위한 선택상자 표시여부
-                //minDate: 0,           // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
-                onClose: function( selectedDate ) { 
-                  // 시작일(fromDate) datepicker가 닫힐때
-                  // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                  $("#product_enddate").datepicker( "option", "+1d", selectedDate );
-                }       
-              });
-
-              //종료일
-              $('#product_enddate').datepicker({
-                showOn: "both", 
-                buttonImage: "/billy/resources/img/productinput/calendar.png", 
-                buttonImageOnly : true,
-                buttonText: "날짜선택",
-                dateFormat: "yy-mm-dd",
-                format: 'yyyy-mm-dd',
-                minDate : 1,
-                maxDate : 30,
-                changeMonth: true,
-                //minDate: 0, // 오늘 이전 날짜 선택 불가
-                onClose: function( selectedDate ) {
-                  // 종료일(toDate) datepicker가 닫힐때
-                  // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-                  $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
-                }       
-              });
+        	   $('#product_startdate').datepicker({
+                   showOn: "both",           // 달력을 표시할 타이밍 (both: focus or button)
+                   buttonImage: "/billy/resources/img/productinput/calendar.png", // 버튼 이미지
+                   buttonImageOnly : true,       // 버튼 이미지만 표시할지 여부
+                   buttonText: "날짜선택",       // 버튼의 대체 텍스트
+                   dateFormat: "yy-mm-dd",       // 날짜의 형식
+                   format: 'yyyy-mm-dd',
+                   minDate: 0,
+                   maxDate: 29,
+                   changeMonth: true,          // 월을 이동하기 위한 선택상자 표시여부
+                   //minDate: 0,           // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+                   onClose: function( selectedDate ) { 
+                     // 시작일(fromDate) datepicker가 닫힐때
+                     // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                    
+                     var date = new Date(selectedDate);//선택한 날짜
+   				date.setDate(date.getDate() + 1);//내일 날짜 설정
+                      $("#product_enddate").datepicker( "option", "minDate", date); 
+                     //mindate 옵션을 내일 날짜로 설정
+                     if(selectedDate == ''){//startDate에 선택한 날짜가 없을 때
+                   	  date = new Date();
+                   	  date.setDate(date.getDate() + 1);
+                   	  $("#product_enddate").datepicker( "option", "minDate", date);
+                     }
+                   }       
+                 });
+               //종료일
+                 $('#product_enddate').datepicker({
+                   showOn: "both", 
+                   buttonImage: "/billy/resources/img/productinput/calendar.png", 
+                   buttonImageOnly : true,
+                   buttonText: "날짜선택",
+                   dateFormat: "yy-mm-dd",
+                   format: 'yyyy-mm-dd',
+                   minDate: 1,//시작일을 내일로
+                   maxDate: 30,
+                   changeMonth: true,
+                   //minDate: 0, // 오늘 이전 날짜 선택 불가
+                   onClose: function( selectedDate ) {
+                     // 종료일(toDate) datepicker가 닫힐때
+                     // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
+                     $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
+                   }       
+                 });
             });
 
         /*$(function(){
@@ -632,52 +660,52 @@
        
 
         <script type="text/javascript">
-          //가격, 수량 input에 숫자만 입력되게 처리
+      //가격, 수량 input에 숫자만 입력되게 처리
 
-          //3자리 단위마다 콤마 생성
-          function addCommas(x) {
-              return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          }
-             
-          //모든 콤마 제거
-          function removeCommas(x) {
-            if(!x || x.length == 0) return "";
-                else return x.split(",").join("");
-          }
+        //3자리 단위마다 콤마 생성
+        function addCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+           
+        //모든 콤마 제거
+        function removeCommas(x) {
+          if(!x || x.length == 0) return "";
+              else return x.split(",").join("");
+        }
 
-          $("#price").on("focus", function() {
-            var x = $(this).val();
-            x = removeCommas(x);
-            $(this).val(x);
-          }).on("focusout", function() {
-            var x = $(this).val();
-            if(x && x.length > 0) {
-              if(!$.isNumeric(x)) {
-                x = x.replace(/[^0-9]/g,"");
-              }
-              x = addCommas(x);
-              $(this).val(x);
+        $("#price").on("focus", function() {
+          var x = $(this).val();
+          x = removeCommas(x);
+          $(this).val(x);
+        }).on("focusout", function() {
+          var x = $(this).val();
+          if(x && x.length > 0) {
+            if(!$.isNumeric(x)) {
+              x = x.replace(/[^0-9]/g,"");
             }
-          }).on("keyup", function() {
-            //앞자리에 0이 입력 안되게
-            $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
-          });
-
-          $("#product_quantity").on("focus", function() {
-            var x = $(this).val();
+            /* x = addCommas(x); */  //3자리 단위마다 콤마 생성
             $(this).val(x);
-          }).on("focusout", function() {
-            var x = $(this).val();
-            if(x && x.length > 0) {
-              if(!$.isNumeric(x)) {
-                x = x.replace(/[^0-9]/g,"");
-              }
-              $(this).val(x);
+          }
+        }).on("keyup", function() {
+          //앞자리에 0이 입력 안되게
+          $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
+        });
+
+        $("#product_quantity").on("focus", function() {
+          var x = $(this).val();
+          $(this).val(x);
+        }).on("focusout", function() {
+          var x = $(this).val();
+          if(x && x.length > 0) {
+            if(!$.isNumeric(x)) {
+              x = x.replace(/[^0-9]/g,"");
             }
-          }).on("keyup", function() {
-            //앞자리에 0이 입력 안되게
-            $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
-          });
+            $(this).val(x);
+          }
+        }).on("keyup", function() {
+          //앞자리에 0이 입력 안되게
+          $(this).val($(this).val().replace(/[^0-9]|(^0+)/g,""));
+        });
         </script>
         <script type="text/javascript">
           $('#product_content').on('keyup', function() {
@@ -733,16 +761,20 @@
             	$('#price').focus();
             	return false;
             }
-            if($('#product_startdate').val() == null){
-              alert('대여가능시작일 입력하세요');
-              $('#product_startdate').focus();
-              return false;
-            }
-            if($('#product_enddate').val() == null){
-              alert('대여가능종료일 입력하세요');
-              $('#product_enddate').focus();
-              return false;
-            }
+            if($('#product_startdate').val() == null || $('#product_startdate').val() == ""){
+                alert('대여가능시작일 입력하세요');
+                $('#product_startdate').focus();
+                return false;
+              }
+              if($('#product_enddate').val() == null  || $('#product_enddate').val() == ""){
+                alert('대여가능종료일 입력하세요');
+                $('#product_enddate').focus();
+                return false;
+              }
+            if($('#product_startdate').val() == $('#product_enddate').val()){
+				alert('대여가능시작일과 종료일은 동일할 수 없습니다.');
+				return false;
+			}
             /*console.log($('#file-input1').val());
             return false;*/
             console.log('새로운 첫 번째 사진 확인 : ' + $('#realimg1').attr('src'));

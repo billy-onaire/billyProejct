@@ -6,11 +6,12 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Material Bootstrap Wizard by Creative Tim</title>
-
+	<title>예약페이지</title>
+	
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
+	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
 	<link rel="apple-touch-icon" sizes="76x76" href="${ pageContext.request.contextPath }/resources/js/bookf/img/apple-icon.png" />
 	<link rel="icon" type="image/png" href="${ pageContext.request.contextPath }/resources/js/bookf/img/favicon.png" />
 
@@ -80,6 +81,11 @@ $(function() {
 		var pname = '${ payment.product_name }';
 		var content = $('#msgcontent-je').val();
 		var pno = '${ payment.product_no }';
+		
+		if(!$.trim(content)) {
+			alert('쪽지는 내용을 입력해야 보내실 수 있습니다.');
+			return;
+		}
 		
 		var job = new Object();
 		job.seller = seller;
@@ -160,12 +166,6 @@ $(function() {
 		console.log($('#checkthree').val());
 	});
 	
-	
-	
-	$('#checkone').change(function(){
-		console.log('확인요');
-	});
-	
 	$('input[name=next]').click(function(){
 		var inputone = $('#checkone').val();
 		var inputtwo = $('#checktwo').val();
@@ -174,7 +174,6 @@ $(function() {
 		if(!inputone) {
 			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
 			alert('모든 약관을 읽고 동의하셔야 합니다');
-			console.log("inputone1 :  " + inputone);
 		}
 		else if(!inputtwo) {
 			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
@@ -187,6 +186,7 @@ $(function() {
 			$('input[name=finish]').prop('disabled', false).css('background-color', '');
 		}
 	});//click
+	
 });//ready
 function close_pop(flag) {
 	//모달창 닫기
@@ -196,7 +196,7 @@ function close_pop(flag) {
 };
 </script>
 <body id='bookingBody'>
-<input type='text' id='checkone'/>
+<input type='hidden' id='checkone'/>
 <input type='hidden' id='checktwo'/>
 <input type='hidden' id='checkthree'/>
 	<div class="image-container set-full-height">
@@ -349,7 +349,7 @@ function close_pop(flag) {
 													</span>
 													<div class="form-group label-floating">
 			                                          	<label class="control-label">판매자</label>
-			                                          	<input name="name" type="text" class="form-control" value='${ payment.seller_id }'>
+			                                          	<input name="name" type="text" class="form-control" value='${ payment.seller_id }' readonly/>
 			                                        </div>
 												</div>
 
@@ -360,7 +360,7 @@ function close_pop(flag) {
 													</span>
 													<div class="form-group label-floating">
 			                                          	<label class="control-label">Your Email</label>
-			                                          	<input name="name2" type="text" class="form-control" value='${ loginMember.email }'>
+			                                          	<input name="name2" type="text" class="form-control" value='${ loginMember.email }' readonly/>
 			                                        </div>
 												</div>
 
@@ -368,14 +368,14 @@ function close_pop(flag) {
 		                                	<div class="col-sm-6">
 		                                    	<div class="form-group label-floating">
 		                                        	<label class="control-label">Product</label>
-	                                        		<input type='text' class='form-control' value='${ payment.product_name }'/>
+	                                        		<input type='text' class='form-control' value='${ payment.product_name }' readonly//>
 		                                    	</div>
 												<div class="form-group label-floating">
 		                                        	<label class="control-label">Charge</label>
 		                                        	<input type='hidden' id='ed' value='${ payment.payment_enddate }'/> 
 		                                        	<input type='hidden' id='bd' value='${ payment.payment_begindate }'/> 
 		                                        	<input type='hidden' id='won' value='${ payment.payment_price }'/> 
-	                                        		<input type='text' id='resultDate' class='form-control' value=' '/>
+	                                        		<input type='text' id='resultDate' class='form-control' value=' ' readonly//>
 		                                    	</div>
 		                                	</div>
 		                            	</div>

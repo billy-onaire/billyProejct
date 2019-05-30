@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.kh.billy.payment.model.vo.Payment;
 import org.kh.billy.payment.model.vo.PaymentCri;
-import org.kh.billy.payment.model.vo.PaymentSearchCri;
 
 public interface PaymentService {
 

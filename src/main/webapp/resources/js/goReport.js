@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded',()=>{
             newBtn.classList = "btn amado-btn w-100";
             newBtn.textContent = "REPORT CLOSED";
             newBtn.style.backgroundColor = "grey";
-
+            const summary = document.querySelector('.summary-table li:nth-child(5) span:last-child');
+            summary.textContent = '이미 신고된 계정입니다.';
             document.querySelector('.cart-btn').appendChild(newBtn);
         }
     }

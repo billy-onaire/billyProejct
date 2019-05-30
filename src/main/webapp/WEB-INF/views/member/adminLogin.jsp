@@ -40,7 +40,8 @@ function adminCheck(){
 </script>
 <style type="text/css">
 	body {
-		background-image: url("${ pageContext.request.contextPath }/resources/img/core-img/adminLogin.jpg" );
+		/* background-image: url("${ pageContext.request.contextPath }/resources/img/core-img/adminLogin.jpg" ); */
+		background-color: #F2F2F2;
 		font-family: 'Roboto', sans-serif;
 	}
     .form-control {

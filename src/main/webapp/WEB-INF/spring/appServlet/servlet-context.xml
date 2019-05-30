@@ -80,6 +80,7 @@
          <exclude-mapping path="/naverCheck.do"/>
          <exclude-mapping path="/naverLogin.do"/>
          <exclude-mapping path="/facebookLogin.do"/>
+         <exclude-mapping path="/joinUser.do"/>
 
 		 <!-- 사용자 물품리스트 -->
          <exclude-mapping path="/showlist.do"/>

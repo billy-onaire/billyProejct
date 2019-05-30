@@ -13,31 +13,7 @@
 	<!-- Title  -->
 	<title>Billy - main</title>
 	<script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript">
-		$(function () {
-			'<c:if test="${loginMember.social_type eq 'google' or loginMember.social_type eq 'kakao' or loginMember.social_type eq 'naver' or loginMember.social_type eq 'facebook'}">'
-			var sid = "${loginMember.social_code}";
-
-			$.ajax({
-				url: "socialCheck.do",
-				data: {
-					sid: sid
-				},
-				type: "post",
-				dataType: "json",
-				success: function (result) {
-					if (result.hashMap.fail == "fail") {
-						location.href = "socialEnroll.do";
-					}
-				}, error: function (request, status, errorData) {
-					console.log("error code : " + request.status
-						+ "\nmessage : " + request.responseText
-						+ "\nerror : " + errorData);
-				}
-			});//ajax
-			'</c:if>'
-		});//ready 
-	</script>
+	
 	<!-- Favicon  -->
     <link rel="icon" href="/billy/resources/img/core-img/billyTitle.png">
 
@@ -103,6 +79,7 @@
                 </div>
 			</div>
 			<!-- Product Catagories Area End -->
+			<c:import url="../common/adminFooter.jsp" />
 		</div>
 	</div>	
 		<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->

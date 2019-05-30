@@ -53,14 +53,6 @@ public class ReportController {
 	@RequestMapping(value="getAdminReportInfo.do", method=RequestMethod.POST)
 	public void getAdminReportInfo(@RequestBody ReportSetting setting, HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
-		HttpSession session = request.getSession(false);
-	      if(session.getAttribute("admin") == null) {
-	    	  PrintWriter out = response.getWriter();
-	  			out.print("no");
-	  			out.flush();
-	  			out.close();
-	  			return;
-	      }
 		
 		int currentPage = setting.getPage(); // 현재 페이지
 		int listCount =  setting.getListCount(); // 한 페이지에 표시되는 게시물 수

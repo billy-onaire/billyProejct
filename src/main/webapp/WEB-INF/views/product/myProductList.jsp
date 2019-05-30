@@ -99,12 +99,15 @@
                                   <th width="42.5%">상품명</th>
                                   <th width="7.5%">수량</th>
                                   <th width="12.5%">가격</th>
-                                  <th width="15%">최근수정일자</th>                                  
+                                  <th width="15%">대여가능기간</th>                                  
                                   <th width="17.5%">수정/삭제</th>
                               </tr>
                               <c:forEach items="${list }" var="list">
-                                <tr><td><a href="pdetail.do?pno=${list.product_no}" style="font-size: 15px; color: #2a6496;">${list.product_name}</a></td><td>${list.product_quantity }</td><td>${list.price }원</td><td>${list.product_modifydate }</td>
-                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post" onsubmit="if(!confirm(${list.product_name}+' 상품을 삭제 하시겠습니까?')){return false;}">
+                                <tr><td onclick="location.href='pdetail.do?pno=${list.product_no}'" style="cursor:pointer;"><a href="#" style="font-size: 15px; color: #2a6496;">${list.product_name}</a></td>
+                                <td>${list.product_quantity }</td>
+                                <td>${list.price }원</td>
+                                <td>${list.datecal}<%-- ${list.product_modifydate } --%></td>
+                                <td><form action="myproductdelete.do?product_no=${list.product_no}" method="post" onsubmit="return deletecheck();">
                                 <button type="button" class="btn btn-warning btn-sm" onclick="location.href='myproductupdateview.do?product_no=${list.product_no}' ">수정</button>&nbsp;
                                 <button type="submit" class="btn btn-warning btn-sm" onclick="">삭제</button>
                                 </form></td></tr>
@@ -149,7 +152,16 @@
         <script src="/billy/resources/js/plugins.js"></script>
         
         <script src="/billy/resources/js/active.js"></script>
+        <script type="text/javascript">
+        function deletecheck(){
+			if(confirm("등록한 상품을 삭제 하시겠습니까?")) { 
+				alert('상품이 삭제되었습니다.');
+            } else {
+            	return false;
+            }
+        }
         
+        </script>
         </body>
 
 </html>

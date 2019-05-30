@@ -15,11 +15,15 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.kh.billy.common.MailHandler;
+import org.kh.billy.common.TempKey;
 import org.kh.billy.member.model.service.MemberService;
 import org.kh.billy.member.model.vo.BasePage;
 import org.kh.billy.member.model.vo.Member;
 import org.kh.billy.member.model.vo.Paging;
+import org.kh.billy.member.model.vo.mailSendInvoice;
 import org.kh.billy.payment.model.service.PaymentService;
+import org.kh.billy.payment.model.vo.sendInvoice;
 import org.kh.billy.product.model.service.ProductService;
 import org.kh.billy.sms.model.vo.Sms;
 import org.kh.billy.socialuser.model.service.SocialUserService;
@@ -27,6 +31,7 @@ import org.kh.billy.statistics.model.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,6 +68,9 @@ public class MemberController {
    
    @Autowired
    private ProductService ps;
+   
+   @Autowired
+	private JavaMailSender mailSender;
  
    @RequestMapping("mfind.do")
    public String findPage() {
@@ -147,10 +155,7 @@ public class MemberController {
 			   }else {
 				   model.addAttribute("message", "아이디와 비밀번호를 다시 확인해주세요.");
 			   return "member/memberError";
-			   }
-		   }else if(user.getVerify().equals("n") && user.getDelete_yn().equals("N")){
-			   model.addAttribute("message", "이메일 인증을 하셔야 로그인이 가능합니다.");
-			   return "member/memberError";		   
+			   }	   
 		   }else if(user.getVerify().equals("y") && user.getDelete_yn().equals("Y")) {
 			   model.addAttribute("message", "신고 횟수 3회 이상으로 강제 탈퇴된 회원입니다.");
 		   	   return "member/memberError";	
@@ -302,21 +307,46 @@ public class MemberController {
   
    
    @RequestMapping(value = "joinPost.do", method = RequestMethod.POST)
-   public String RegisterPost(Member member, Model model, HttpServletRequest request, HttpSession session) throws Exception {
-	 //패스워드 암호화처리
-	  member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
-       
-      int result = memberService.create(member);
-      /*"redirect:/"*/
-      
-      if(result > 0) {
-    	  	stService.insertSignUp();
+   public ModelAndView RegisterPost(@RequestParam String email, HttpServletRequest request, HttpSession session, ModelAndView mv) throws Exception {
+	  
+	  String authkey = new TempKey().getKey(10, false); // 인증키 생성
+	  System.out.println("authkey 첫번째 : " + authkey);
+	  MailHandler sendMail = new MailHandler(mailSender);
+	  
+	  String content = new mailSendInvoice().sendInvoiceMail(email, authkey);
+	  
+	  //이메일 보내기
+	  sendMail.setSubject("billy 서비스 이메일 인증");
+	  sendMail.setText(new StringBuffer().append(content).toString());
+	  sendMail.setFrom("billy", "billy");
+	  sendMail.setTo(email);
+	  sendMail.send();
+	  
+	  System.out.println("authkey 두번째 : " + authkey);
+	  //authkey 클라이언트로 전송
+	  Map<String, String> map = new HashMap<>();
+	  map.put("auth", authkey);
+	  mv.addObject(map);
+	  mv.setViewName("jsonView");
+
+      return mv;
+		
+   }
+   
+   @RequestMapping(value="joinUser.do", method=RequestMethod.POST)
+   public String insertMember(Member member, Model model, HttpServletRequest request, HttpSession session) {
+     
+	   member.setUser_pwd(bcryptPE.encode(member.getUser_pwd()));
+	   System.out.println("컨트롤러 멤버 : " + member);
+	   
+	   if(memberService.insertMember(member) > 0)
 			return "home";
-      }else {
+		else {
 			model.addAttribute("message", "회원 가입 실패!");
-			return "common/error";
+			return "common/errorPage";
 		}
    }
+   
    
    @RequestMapping(value="joinConfirm.do", method=RequestMethod.GET)
    public String emailConfirm(@ModelAttribute("Member") Member member, Model model) throws Exception {

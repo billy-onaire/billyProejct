@@ -115,14 +115,14 @@
                                     <span>${notice.notice_originalfile } 
                                     </span>
 									<button type="button" onclick="filedelete();">삭제</button>
-                                    <input type="file" class="custom-file-input" id="file" name="file"><!-- 기존파일이 있는 확인용 컨트롤러에서 param file이 없다고 오류 남-->
+                                    <input type="file" class="custom-file-input" id="file" name="file" ><!-- 기존파일이 있는 확인용 컨트롤러에서 param file이 없다고 오류 남-->
                                 </div>
                                 </c:if>
                                 
                                 <c:if test="${empty notice.notice_originalfile  }">
                                 <div class="custom-file mb-3" id="newfile">
                                 
-                                  <input type="file" class="custom-file-input" id="file" name="file">
+                                  <input type="file" class="custom-file-input" id="file" name="file" >
                                   <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                 </c:if>                                  
@@ -142,7 +142,7 @@
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
-    <c:import url="../common/footer.jsp" />
+    <c:import url="../common/adminFooter.jsp" />
 
         <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 
@@ -157,7 +157,7 @@
         <script src="/billy/resources/js/plugins.js"></script>
         <script src="/billy/resources/js/active2.js"></script>
         <!-- naver smart editor js-->
-        <script type="text/javascript" src="/billy/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/billy/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
         
         <!-- 네이버 스마트 에디터 -->
         <script type="text/javascript">
@@ -166,7 +166,7 @@
             nhn.husky.EZCreator.createInIFrame({
              oAppRef: oEditors,
              elPlaceHolder: "notice_content",
-             sSkinURI: "/billy/resources/SE2/SmartEditor2Skin.html",
+             sSkinURI: "/billy/resources/se2/SmartEditor2Skin.html",
              fCreator: "createSEditor2"
             });
             
@@ -193,7 +193,7 @@
             	 $('#notice_originalfile').val('');
             	 $('file').remove();
             	 $('#firstform').append('<div class="custom-file mb-3" id="newfile">'+
-            			 '<input type="file" class="custom-file-input" id="file" name="file">'+
+            			 '<input type="file" class="custom-file-input" id="file" name="file" onchange="checkFile(this)">'+
             			 '<label class="custom-file-label" for="customFile">Choose file</label></div>');
 
                          /*$('#form-group1').append(
@@ -206,6 +206,18 @@
             	 var fileName = $(this).val().split("\\").pop();
                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
              });           
+        </script>
+        <script type="text/javascript">
+        function checkFile(f){
+        	console.log('되냐?');
+        	var file = f.files;
+            if(file[0].size > 1024 * 1024 * 8){
+                // 용량 초과시 경고후 해당 파일의 용량도 보여줌
+                alert('8MB 이하 파일만 등록할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+                
+                $('#file').val('');
+            }	
+        }
         </script>
         </body>
 
