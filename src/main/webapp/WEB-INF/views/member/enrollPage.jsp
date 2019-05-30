@@ -21,7 +21,8 @@
 $(function(){
     var checkPwd = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/ // 숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.
     var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-       
+    var checkId = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    
     $("#user_id").on('keydown', function(e){
          var id = $('#user_id').val();
        
@@ -31,32 +32,53 @@ $(function(){
             $(this).val("");
             $(this).focus();
        } 
+            
        
-      }).on('blur', function(){
+      }).on('blur', function(e){
          if($(this).val() == '') return;
          var id = $('#user_id').val();
          if(id.length < 6){
+        	 $(".result").text("");
             alert("아이디는 6~12자의 영문 대소문자와 숫자로만 입력.");
             $(this).val("");
-            $(this).focus();   
+            $(this).focus();  
+       			
          }
+         
+         if (!(e.keyCode >=37 && e.keyCode<=40)) {	
+     		var v = $(this).val();
+     		$(this).val(v.replace(/[^a-z0-9]/gi,''));
+     	}
+
+   
       });
-      
-    
+		
+    	$("#user_pwd").on('keydown', function(e){
+          var pwd = $('#user_pwd').val();
+          
+    	  if(pwd.length > 20){
+           e.preventDefault();
+           alert("비밀번호는 20자리 이하로 사용해야합니다");
+            $(this).val("");
+            $(this).focus();
+    	  } 
+ 		 });
+ 
        $("#user_pwd").on('blur', function(){
     	  if($(this).val() == '') return;
           var pwd = $('#user_pwd').val();
           var uid = $('#user_id').val();
      	  if(!checkPwd.test(pwd)){
-          alert("숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다");
-            $(this).val("");
-            $(this).focus();
+          alert("숫자+영문자+특수문자 조합으로 8자리 이상 20자리 이하로 사용해야 합니다");
+            
        	  }     
+     	  
      	 if(pwd == uid){
              alert("아이디와 동일한 비밀번호는 지정할 수 없습니다.")
              $(this).val("");
                $(this).focus();
      	 }
+     	 
       });
     
        
@@ -67,9 +89,7 @@ $(function(){
          var pwd2 = $('#user_pwd2').val();
          
          if(pwd != pwd2){
-            alert("입력하신 비밀번호와 다릅니다. ");
-            $(this).val("");
-            $(this).focus();            
+            alert("입력하신 비밀번호와 다릅니다. ");          
          }
          
       });
@@ -148,11 +168,15 @@ $(function(){
 });
 
 var idck = 0;
+var mailck = 0;
 
 $(function() {
 
+	
+	
     //idck 버튼을 클릭했을 때 
     $("#idck").click(function() {
+    	$('#checkid').val($("#user_id").val());
         
         $.ajax({
            url : "idCheck.do",
@@ -168,7 +192,7 @@ $(function() {
                     $(".result").attr("style", "color:#f00"); 
                     $("#user_id").val('');
                     $("#user_id").focus();
- 
+ 					idck = 0;
                    
                 } else if($("#user_id").val() == null) {
                    
@@ -180,6 +204,7 @@ $(function() {
                    $(".result").text("사용가능한 아이디입니다.");
                     $(".result").attr("style", "color:#00f");
                     idck = 1;
+                    
 
                 }
             },
@@ -190,7 +215,56 @@ $(function() {
         });
     });
     
-       
+   //인증번호 버튼을 눌렀을때 
+  $("#eSend").click(function() {
+        
+	  if($("#email").val() == ""){
+		  alert("이메일을 입력해주세요");
+		  $(this).focus(); 
+		  
+	  }else{
+	    alert("인증번호를 발송하였습니다")
+        $.ajax({
+           url : "joinPost.do",
+            type : "post",
+            dataType: "json",
+            data : {email : $("#email").val()},
+            success : function(authdata) {
+               console.log("ajax 이메일 인증 확인 : " + authdata.hashMap.auth);
+               
+               if(authdata.hashMap.auth != null){
+            	   $("#mailResult").val(authdata.hashMap.auth);
+            	   
+               }	
+            	
+            	
+            },
+            error : function(error) {
+                
+                alert("error : " + error);
+            }
+        });
+	  }
+    });
+  
+  $("#everify").click(function() {
+	  var mailin = $("#authkey").val();
+	  var mailResult = $("#mailResult").val();
+	  if(mailin == mailResult){
+		  $(".result5").text("인증되었습니다.");
+		  $(".result5").attr("style", "color:#00f");
+		  mailck = 1;
+		  
+	  }else{
+		  $(".result5").text("인증번호가 다릅니다.");
+		  $(".result5").attr("style", "color:#f00");
+		  mailck = 0;
+		  mailin.val('');
+		  mailin.focus();	  
+	  }
+	  
+	  
+  });
        
 });
     //처음에 아이디체크 버튼 누를때 느려서 만든거
@@ -215,7 +289,19 @@ function goSubmit() {
        
    }
    
-   if($('#user_name').val() == ''){
+   if(mailck == 0){
+       alert('이메일 인증을 해주세요');
+       $("#email").focus();
+       return false;
+       
+   }
+
+    
+   if(idck = 0){
+	  alert("존재하는 아이디입니다. 아이디 체크 해주세요") 
+   }else if($('#user_id').val() == ''){
+	  alert("아이디를 입력해주세요");
+   }else if($('#user_name').val() == ''){
       alert("이름을 입력해주세요");
    }else if($('#user_pwd').val() == ''){
       alert("비밀번호를 입력해주세요");
@@ -231,13 +317,15 @@ function goSubmit() {
       alert("거래 가능지역을 입력해주세요");
    }else if(loca.indexOf(findStr) == -1){
    	  alert("주 거래가능 지역은 서울만 가능합니다")
-   }else{
+   }else if($("#user_id").val() != $('#checkid').val()){
+	   alert("다시 아이디 중복체크를 해주세요.");
+	   $("#user_id").focus();
+   }
+   else{
        $("#join").submit();
-       alert("입력하신 이메일로 인증해야 로그인이 가능합니다")
+       alert("회원가입이 완료되었습니다")
    }
    
-   
- 
 }
 
 </script>
@@ -330,7 +418,8 @@ a {
       <div class="amado_product_area section-padding-100" id="mainv">
       <div class="login-enroll-form clearfix">
       <div class="container">
-      <form action="joinPost.do" id="join" name = "join" method="post" enctype="multipart/form-data">
+      <form action="joinUser.do" id="join" name = "join" method="post" enctype="multipart/form-data">
+      <input type="hidden" id="checkid">
             <h1>회원가입</h1>
             <p>Please fill in this form to create an account.</p>
             <hr>
@@ -341,6 +430,7 @@ a {
                   <button id="idck" class="btn btn-dark btn-sm" type="button">아이디 중복체크</button>
                   </div>
                </div>
+               <p id="pp" style="color: orange">아이디는 6~12자의 영문 대소문자와 숫자로만 입력가능합니다</p>
                <p class="result"></p>
 
                <label for="user_name"><b>이름</b></label> 
@@ -351,12 +441,30 @@ a {
                <input type="password" placeholder="Repeat Password" id="user_pwd2" name="user_pwd2" required> 
                <label for="user_mobile"><b>핸드폰 번호</b></label> 
                <input type="text" placeholder="Enter Phone" id="user_mobile" name="user_mobile" required> 
-               <label for="email"><b>이메일</b></label> 
-               <input type="text" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" required>
+               
+               <label for="email"><b>이메일</b></label>             
+               <div class="input-group mb-4">                       
+               <input type="text" class="form-control" placeholder="abc@abc.com 형식으로 작성해주세요" id="email" name="email" required>
+               <div class="input-group-append">
+               <input type="button" id="eSend" class="btn btn-dark btn-sm" value="인증번호 발송">
+                </div>
+               </div>
                <p id="pp" style="color: orange">E-mail로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다.</p>
+               <!-- 이메일 인증번호  -->
+               <input type="hidden" id="mailResult" required>
+               
+               <label for="email"><b>인증번호 입력</b></label>
+               <div class="input-group mb-4">  
+               <input type="text" class="form-control" id="authkey" name="authkey" placeholder="인증번호를 입력하세요" required>
+               <div class="input-group-append">  
+               <input type="button" id="everify" class="btn btn-dark btn-sm" value="인증 하기">
+               </div>           
+               </div> 
+               <p class="result5"></p>
+               
          
             <label for="address"><b>주소</b></label> 
-            <div class="input-group mb-5">   
+            <div class="input-group mb-4">   
             <input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" required readonly>
                <div class="input-group-append">
                <input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>

@@ -96,6 +96,8 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	
+	
+	
 	@Override
 	public void deleteAutoNo(String userId) {
 		memberDao.deleteAutoNo(mybatisSession, userId);
