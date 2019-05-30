@@ -43,9 +43,18 @@ USER_ID	VARCHAR2(50 BYTE)
 	private int category_code;
 	private String seller_id;
 	private int img_no;
+	private String datecal;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getDatecal() {
+		return datecal;
+	}
+
+	public void setDatecal(String datecal) {
+		this.datecal = datecal;
 	}
 
 	public Product(int product_no, String product_name, int price, int product_quantity, String product_content,

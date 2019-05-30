@@ -93,6 +93,9 @@ form.example::after {
 .pagination  {
    justify-content: center;
 }
+#noticelink {
+	cursor: pointer;
+}
  </style>
 
 </head>
@@ -159,8 +162,13 @@ form.example::after {
 
             <ul class="list-group">
                 <c:forEach items="${list }" var="list">
-                <li class="list-group-item list-group-item-action" style="height: 45px;  ">
-                    <div class="notice-title" style="width: 70%; float: left;"><a href="adminnoticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;">${list.notice_title }</a></div>
+                <li class="list-group-item list-group-item-action" id="noticelink"style="height: 45px;" onclick="location.href='adminnoticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}'">
+                    <div class="notice-title" style="width: 70%; float: left;">
+                    <a href="#" style="font-size: 20px;">
+                    ${list.notice_title }
+                    </a>
+                    <%-- <a href="adminnoticedetail.do?notice_no=${list.notice_no }&select=${select}&keyword=${keyword}&curpage=${curpage}" style="font-size: 20px;">${list.notice_title }</a> --%>
+                    </div>
                     <div class="notice-eye" style="width: 15%; float: left;">
                         <div>
                             <i class="material-icons" >

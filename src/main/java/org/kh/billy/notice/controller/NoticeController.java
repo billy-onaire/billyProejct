@@ -39,7 +39,6 @@ public class NoticeController {
 	@RequestMapping("adminnoticelist.do")
 	public String selectAdminNoticeList(@RequestParam(defaultValue="") String select, @RequestParam(defaultValue="") String keyword, 
 			@RequestParam(defaultValue="1") int curpage, Criteria cri, Notice notice, Model mv) {
-		System.out.println("현재 페이지 확인 : " + curpage);
 		int count = noticeService.selectSearchNoticeCount(select, keyword);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);

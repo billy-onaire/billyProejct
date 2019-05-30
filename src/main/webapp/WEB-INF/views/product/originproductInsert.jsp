@@ -31,6 +31,9 @@
         cursor:pointer;
         width: 8%;
       }
+      .col-12{
+      background-color:#FAFAFA;
+      }
     </style>
 </head>
 
@@ -123,7 +126,7 @@
                               </div>
                               <div class="form-group">
                                   <label for="usr">대여가(원):</label>
-                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="10만원 이하 입력" required style="width: 50%">
+                                  <input type="text" class="form-control" id="price" name="price" maxlength="6" placeholder="1000~100000원 입력해주세요." required style="width: 50%">
                               </div>
                                                           
                                   <div class="form-horizontal">
@@ -138,7 +141,7 @@
                                   </div>             
                              
 
-                          <h3>직거래주말여부</h3>
+                          <h5>직거래주말여부</h5>
                           <div class="form-check">
                               <label class="form-check-label" for="radio1">
                                 <input type="radio" class="form-check-input" id="radio1" name="weekend_yn" value="Y" checked>가능
@@ -214,7 +217,7 @@
 
         <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
 
-        <script src="/billy/resources/js/jquery/jquery-2.2.4.min.js"></script>
+        <script src="/billy/resources/js/jquery/jquery-3.3.1.min.js"></script>
 
         <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script> -->
         <!-- datepicker css,js -->
@@ -287,11 +290,19 @@
                 onClose: function( selectedDate ) { 
                   // 시작일(fromDate) datepicker가 닫힐때
                   // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                  $("#product_enddate").datepicker( "option", "+1d", selectedDate);
+                 
+                  var date = new Date(selectedDate);//선택한 날짜
+				date.setDate(date.getDate() + 1);//내일 날짜 설정
+                   $("#product_enddate").datepicker( "option", "minDate", date); 
+                  //mindate 옵션을 내일 날짜로 설정
+                  if(selectedDate == ''){//startDate에 선택한 날짜가 없을 때
+                	  date = new Date();
+                	  date.setDate(date.getDate() + 1);
+                	  $("#product_enddate").datepicker( "option", "minDate", date);
+                  }
                 }       
               });
-
-              //종료일
+            //종료일
               $('#product_enddate').datepicker({
                 showOn: "both", 
                 buttonImage: "/billy/resources/img/productinput/calendar.png", 
@@ -299,7 +310,7 @@
                 buttonText: "날짜선택",
                 dateFormat: "yy-mm-dd",
                 format: 'yyyy-mm-dd',
-                minDate: 1,
+                minDate: 1,//시작일을 내일로
                 maxDate: 30,
                 changeMonth: true,
                 //minDate: 0, // 오늘 이전 날짜 선택 불가
@@ -307,44 +318,9 @@
                   // 종료일(toDate) datepicker가 닫힐때
                   // 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
                   $("#product_startdate").datepicker( "option", "maxDate", selectedDate );
-                  
-                  //console.log(today.format('yyyy-MM-dd'));
-                  //날짜 설정
-                  //엔드 데이트가 오늘 포함 오늘보다 작으면 alert 나오게
-                  
-					/* var secDate = $("#product_enddate").val();
-                 	console.log('날짜확인 : '+$("#product_enddate").val());
-                 	 var year = secDate.substr(0,4);
-                 	 var month = secDate.substr(5,2);
-                  	var day = secDate.substr(8,2);
-                 	 var date = new Date(year, month, day);
-			         var today = new Date();
-			         console.log(today.getTime());
-			         console.log(date.getTime());
-			         console.log(year);
-			         console.log(month);
-			         console.log(day);
-			        if(today.getTime() > date.getTime()) {
-			             
-			            alert("시작날짜와 종료날짜를 확인해 주세요.");
-			             $("#product_enddate").val('');
-			            return;
-			        } */
-			        
-			        
-			        
-                 // var secDate = $("#product_enddate").val();
-                 // console.log('날짜확인 : '+$("#product_enddate").val());
-                 // var year = secDate.substr(0,4);
-                 // var month = secDate.substr(6,7);
-                  //var day = secDate.substr(9,10);
-                 // var date = new Date(year, month, day);
-                  
-                  //console.log('날짜 확인2 ; '+date.getDate);
-				  
-                  //if("#product_enddate").val()
                 }       
               });
+              
             });
 
         
@@ -470,6 +446,13 @@
 
             if($('#price').val() >100000){
             	alert('상품은 10만원 이하만 가능합니다.');
+            	$('#price').val('');
+            	$('#price').focus();
+            	return false;
+            }
+            
+            if($('#price').val() < 1000){
+            	alert('상품은 1000원 이상 입력해주세요.');
             	$('#price').focus();
             	return false;
             }
@@ -494,13 +477,28 @@
             	alert('대여일자가 잘 못 설정되었습니다.');
             	return false;
             } */
-
+			if($('#product_startdate').val() == $('#product_enddate').val()){
+				alert('대여가능시작일과 종료일은 동일할 수 없습니다.');
+				return false;
+			}
             if(confirm("등록 하시겠습니까?")) {
                 alert('상품이 등록되었습니다.');
             } else {
             return false;
             }
           }
+        </script>
+        <script type="text/javascript">
+          $("input:file").on("change", function() {
+                      var oFile = $(this)[0].files;
+                      if(oFile.length < 1){
+                        console.log('cancel was pressed');
+                      }
+                      else {
+                        console.log(oFile[0].name);
+                      }
+                    });
+
         </script>
 </body>
 </html>

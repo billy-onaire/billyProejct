@@ -19,9 +19,6 @@
 	
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/billy/resources/css/core-style.css">
-    <!-- include summernote css/js-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-    <!-- <link href="/billy/resources/css/summernote-bs4.css" rel="stylesheet"> -->
     <style>
    
     .main-content-wrapper{
@@ -56,11 +53,10 @@
 
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-    <c:import url="../common/nav.jsp" />
 
         <!-- Product Details Area Start -->
         <div class="single-product-area section-padding-100 clearfix">
-        
+        <c:import url="../common/adminNav.jsp" />
             <div class="container-fluid">
             
                 <div class="row">
@@ -120,7 +116,7 @@
         <script src="/billy/resources/js/plugins.js"></script>
         <script src="/billy/resources/js/active2.js"></script>
         <!-- naver smart editor js-->
-        <script type="text/javascript" src="/billy/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/billy/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
         <!-- 파일 첨부 시 이름 미리 보여지기 -->
         <script type="text/javascript">           
@@ -142,7 +138,7 @@
             nhn.husky.EZCreator.createInIFrame({
              oAppRef: oEditors,
              elPlaceHolder: "notice_content",
-             sSkinURI: "/billy/resources/SE2/SmartEditor2Skin.html",
+             sSkinURI: "/billy/resources/se2/SmartEditor2Skin.html",
              fCreator: "createSEditor2"
             });
             
@@ -161,7 +157,6 @@
                 } catch(e) {}
                 
             }
-
         </script>
         <script type="text/javascript">
                         
