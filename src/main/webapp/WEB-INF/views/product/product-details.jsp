@@ -361,7 +361,7 @@
                         </div><hr><br>
                         <h2>상품설명</h2><hr>
                         <div class="short_overview my-5">
-                        	<p>${p.product_content }</p>
+                        	<div style="word-break:break-all;">${p.product_content }</div>
                         </div><br><hr><br> 
                         <h2>거래지역</h2>
                         <hr>
