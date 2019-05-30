@@ -6,9 +6,7 @@ function getAdminReportInfo(){
 
     xhr.onload = ()=>{
         const report = JSON.parse(xhr.responseText);
-        if(xhr.responseText === 'no'){
-            location.href = "main.do";
-        }
+        
         const table = document.querySelector('#adminTable');
         
         for(let i = 0; i < report.list.length; i++){
@@ -30,20 +28,32 @@ function getAdminReportInfo(){
             }
             const btd = document.createElement('td');
             const button1 = document.createElement('button');
+            button1.classList ="btn btn-warning";
             button1.textContent = '신고 승인';
             btd.appendChild(button1);
             button1.addEventListener('click',(e)=>{
                 e.stopPropagation();
-                location.href = "reportApproval.do?rno="+infos.rno+"&rid="+infos.rid;
+                const result = confirm('승인하시겠습니까?');
+                if(result === true){
+                    location.href = "reportApproval.do?rno="+infos.rno+"&rid="+infos.rid;
+                } else {
+                    
+                }
             })
 
             const button2 = document.createElement('button');
+            button2.classList ="btn btn-warning";
             button2.textContent = '승인 거절';
             btd.appendChild(button2);
             tr.appendChild(btd);
             button2.addEventListener('click',(e)=>{
                 e.stopPropagation();
-                location.href = 'reportDisapproval.do?rno='+infos.rno;
+                const result = confirm('승인을 거절하시겠습니까??');
+                if(result === true){
+                    location.href = 'reportDisapproval.do?rno='+infos.rno;
+                } else {
+                    
+                }
             })
             
             
