@@ -555,11 +555,13 @@
                             	<th>가격</th>
                             	<td><p id="price"></td>
                             </tr>
+                            <c:if test="${p.delete_yn eq 'N' }">
                             <tr>
                             	<td colspan="2" style="padding:30px">
                             		<button id='goBooking' type='button' name="addtocart" value="5" class="btn amado-btn" onclick="formSubmit();">대여신청</button>
                             	</td>
                             </tr>
+                            </c:if>
                             </table>
                             <input type='hidden' name='product_name' value='${ p.product_name }'/>
                             <input type='hidden' name='customer' value='${ loginMember.user_id }'/>
