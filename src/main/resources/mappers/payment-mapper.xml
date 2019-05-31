@@ -111,7 +111,7 @@
 		) o
 		where o.rm > #{ pageStart }
 		]]>
-			<include refid="searchSeller"/>
+			<include refid="searchCustomer"/>
 		<![CDATA[
 	]]>
 	</select>
@@ -292,7 +292,14 @@
 	<!-- 거래중 목록 검색조건  sql2 -->
 	<sql id="searchSellerId">
 		<if test="searchType != null">
-			and seller_id like '%'||#{ keyword }||'%'
+			and seller_id like #{ keyword }
+		</if>
+	</sql>
+	
+	<!-- 판매중 목록 검색조건 sql -->
+	<sql id="searchCustomer">
+		<if test="searchType != null">
+			and o.customer like #{ keyword }
 		</if>
 	</sql>
 </mapper>

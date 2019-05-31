@@ -14,7 +14,7 @@
     <title>My Page</title>
 
     <!-- Favicon  -->
-	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+	<link rel="icon" href="${ pageContext.request.contextPath }/resources/img/core-img/billyTitle.png">
     
 
     <!-- Core Style CSS -->

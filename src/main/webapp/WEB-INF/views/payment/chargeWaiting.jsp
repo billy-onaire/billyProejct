@@ -8,6 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>판매대기 페이지</title>
+<link rel="icon" href="${ pageContext.request.contextPath }/resources/img/core-img/billyTitle.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -127,8 +128,6 @@ function setSearchType() {
 	$searchTypeBox.val('${ pageMaker.cri.searchType }').prop('selected', true);
 	
 	$('#idSearch').click(function() {
-		var $inputVal = $('#searchType option:selected').val();
-		$keyword.val($inputVal);
 		console.log($('#keywordInput').val());
 		var url = 'chargeWating.do?page=1' + '&perPageNum=' + '${ pageMaker.cri.perPageNum }'
 		+ '&searchType=' + $searchTypeBox.val()

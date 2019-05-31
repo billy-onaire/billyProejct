@@ -7,11 +7,10 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>예약페이지</title>
-	
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-	<link rel="icon" href="/billy/resources/img/core-img/favicon.ico">
+	<link rel="icon" href="${ pageContext.request.contextPath }/resources/img/core-img/billyTitle.png">
 	<link rel="apple-touch-icon" sizes="76x76" href="${ pageContext.request.contextPath }/resources/js/bookf/img/apple-icon.png" />
 	<link rel="icon" type="image/png" href="${ pageContext.request.contextPath }/resources/js/bookf/img/favicon.png" />
 
@@ -165,28 +164,33 @@ $(function() {
 		$('#checkthree').val('3');
 		console.log($('#checkthree').val());
 	});
-	
-	$('input[name=next]').click(function(){
+	$('.wizard-navigation ul > li').children().css('pointer-events', 'none');
+	$('input[name=next]').click(function(event){
 		var inputone = $('#checkone').val();
 		var inputtwo = $('#checktwo').val();
 		var inputthree = $('#checkthree').val();
 		
 		if(!inputone) {
-			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			event.stopImmediatePropagation();
+			$('#myTab a[href="#captain"]').tab('show');
 			alert('모든 약관을 읽고 동의하셔야 합니다');
 		}
 		else if(!inputtwo) {
-			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			event.stopImmediatePropagation();
+			$('#myTab a[href="#captain"]').tab('show');
 			alert('모든 약관을 읽고 동의하셔야 합니다');
+			
 		}
 		else if(!inputthree) {
-			$('input[name=finish]').prop('disabled', true).css('background-color', 'gray');
+			event.stopImmediatePropagation();
+			$('#myTab a[href="#captain"]').tab('show');
 			alert('모든 약관을 읽고 동의하셔야 합니다');
+			
 		} else {
-			$('input[name=finish]').prop('disabled', false).css('background-color', '');
+			$('.wizard-navigation ul > li').children().css('pointer-events', '');
 		}
+		return false;
 	});//click
-	
 });//ready
 function close_pop(flag) {
 	//모달창 닫기
@@ -220,10 +224,10 @@ function close_pop(flag) {
 									<label>
 										<input type="checkbox" name="optionsCheckboxes" />
 									</label>
-									 예약취소
+									 취소
 								</div>
 								<div class="wizard-navigation">
-									<ul>
+									<ul id='myTab'>
 			                            <li><a href="#captain" data-toggle="tab">이용 약관(terms)</a></li>
 			                            <li><a href="#details" data-toggle="tab">예약 정보(Booking)</a></li>
 			                            <li><a href="#description" data-toggle="tab">예약 완료(finished)</a></li>
@@ -232,7 +236,7 @@ function close_pop(flag) {
 
 		                        <div class="tab-content">
 		                        <div class="tab-pane" id="captain">
-		                                <h4 class="info-text">모든 항목을 읽어주세요.</h4>
+		                                <h4 class="info-text">모든 항목을 읽어야 다음 단계로 진행하실 수 있습니다.</h4>
 		                                <div class="checkbox" style='position: relative; left: 70%;'>
 		                                <label><input type='checkbox' name='weekend-a-je' id='weekend-a-je' onclick='return false;'/></label><i class="material-icons" style='font-size: 16px;'>weekend</i>
 		                             	<label><input type='checkbox' id='home-b-je' onclick='return false;'/></label><i class="material-icons" style='font-size: 16px;'>home</i>
@@ -241,7 +245,7 @@ function close_pop(flag) {
 		                                <div class="row">
 		                                    <div class="col-sm-10 col-sm-offset-1">
 		                                        <div class="col-sm-4">
-		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="This is good if you travel alone.">
+		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="거래시 항상 사기에 유의해주세요!(클릭)">
 		                                                <input type="radio" name="job" value="Design">
 		                                                <div class="icon" id='weekend-je'>
 		                                                    <i class="material-icons">weekend</i>
@@ -271,7 +275,7 @@ function close_pop(flag) {
      		 									</div>
      		 									<!-- ============ -->
 		                                        <div class="col-sm-4">
-		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this room if you're traveling with your family.">
+		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Billy의 결제 정책을 꼭 숙지해주세요!(클릭)">
 		                                                <input type="radio" name="job" value="Code">
 		                                                <div class="icon" id='home-je'>
 		                                                    <i class="material-icons">home</i>
@@ -301,7 +305,7 @@ function close_pop(flag) {
      		 									</div>
      		 									<!-- ============ -->
 												<div class="col-sm-4">
-		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Select this option if you are coming with your team.">
+		                                            <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="이용약관도 꼭 읽어주세요!(클릭)">
 		                                                <input type="radio" name="job" value="Code">
 		                                                <div class="icon" id='business-je'>
 		                                                    <i class="material-icons">business</i>
