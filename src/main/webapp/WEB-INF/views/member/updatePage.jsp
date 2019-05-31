@@ -295,7 +295,7 @@ a {
 				<label for="address"><b>주소</b></label> 
 				<div class="input-group mb-5">	
 				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="address" name="address" 
-				value="${loginMember.address }" required readonly>
+				value="${loginMember.address }" onclick="searchAddress1()" required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress1()" value="주소 검색"><br>
 					</div>
@@ -320,7 +320,7 @@ a {
 				<label for="location_area"><b>주거래가능 지역</b></label> 
 				<div class="input-group mb-4">	
 				<input type="text" class="form-control" placeholder="주소 검색 버튼을 클릭하여 주소를 선택해주세요" id="location_area" name="location_area" 
-				value="${loginMember.location_area }" required readonly>
+				value="${loginMember.location_area }" onclick="searchAddress()" required readonly>
 					<div class="input-group-append">
 					<input type="button" class="btn btn-dark btn-sm" onclick="searchAddress()" value="주소 검색"><br>
 					</div>

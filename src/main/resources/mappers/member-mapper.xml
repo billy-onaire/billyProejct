@@ -65,7 +65,7 @@
    
    <select id="selectMember" parameterType="Member" resultMap="resultMember" useCache="true">
       select * from tb_user where authkey not in (select social_code from socialuser) 
-      and user_mobile = #{user_mobile} and user_name = #{user_name}     
+      and user_mobile = #{user_mobile} and user_name = #{user_name} and verify = 'y' and delete_yn = 'N'    
    </select>
    
    <select id="selectSocialMember" parameterType="Member" resultMap="resultMember" useCache="true">

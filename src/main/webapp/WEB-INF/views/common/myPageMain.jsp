@@ -171,7 +171,13 @@ $(function() {
         <div class="row">
         <input type="hidden" id="user_id" name="user_id" value="${loginMember.user_id }">
           <div class="col-sm-4">
+          	<c:if test="${loginMember.social_type eq 'user' }">
             <label for="comment">Profile:</label>
+            </c:if>
+            <c:if test="${loginMember.social_type eq 'naver' or loginMember.social_type eq 'kakao' or 
+            loginMember.social_type eq 'google' or loginMember.social_type eq 'facebook'}">
+            <label for="comment">Profile: Social 회원</label>
+            </c:if>
             <div class="card" style="width: 350px; height: 300px;">
             <c:if test="${!empty loginMember}">
 							<div class="d-flex justify-content-md">
