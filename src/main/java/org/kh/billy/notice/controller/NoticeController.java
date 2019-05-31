@@ -256,7 +256,7 @@ public class NoticeController {
 		}
 		else {//기존 파일이 없는 경우 새 파일 등록
 			
-			realFile = new File(savePath + "\\" + notice.getNotice_renamefile());
+			realFile = new File(savePath + notice.getNotice_renamefile());
 			if(realFile.delete())
 				System.out.println("삭제 성공");
 			else
@@ -272,7 +272,7 @@ public class NoticeController {
 				notice.setNotice_originalfile(file.getOriginalFilename());
 				notice.setNotice_renamefile(reFileName);
 				
-				file.transferTo(new File(savePath + "\\" + reFileName));
+				file.transferTo(new File(savePath +  reFileName));
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
