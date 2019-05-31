@@ -186,7 +186,7 @@ public class GoogleSocialController {
     			   session.setAttribute("loginMember", member);
     			   stService.insertSignUp();
     			   
-    			   return "home";
+    			   return "redirect:main.do";
     		   }else {
     			   model.addAttribute("message", "소셜회원등록실패!");
     			   return "social/socialError";
